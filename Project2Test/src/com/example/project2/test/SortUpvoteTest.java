@@ -6,15 +6,27 @@ import junit.framework.TestCase;
 
 public class SortUpvoteTest extends TestCase {
 	
-	ArrayList<Questions> listQuestionsTest;
+	public boolean sortOrder;
 	
-	for(int i = 0; i < ListQuestions.size(); i++){
-		listQuestionsTest.add(ListQuestions.get(i));
+	ArrayList<Topics> listTopicsTest;
+	
+	for(int i = 0; i < ListTopics.size(); i++){
+		listTopicsTest.add(ListTopics.get(i));
 	}
+	//highest to lowest sort
+	if (sortOrder == true){
+		listQuestionTest = SortUpVote(sortOrder, listTopicsTest);
 	
-	listQuestionTest = SortUpVote(listQuestionsTest);
-	
-	for(i = 0; i < ListQuestionsTest.size(); i++){
-		assertTrue(listQuestionsTest.get(i).getUpVote() <= listQuestionsTest.get(i++).getUpVote());
+		for(i = 0; i < ListTopicsTest.size(); i++){
+			assertTrue(listTopicsTest.get(i).getUpVote() >= listTopicsTest.get(i++).getUpVote());
+	}
+	}
+	//lowest to highest sort
+	else {
+		listQuestionTest = SortUpVote(sortOrder, listTopicsTest);
+		
+		for(i = 0; i < ListTopicsTest.size(); i++){
+			assertTrue(listTopicsTest.get(i).getUpVote() <= listTopicsTest.get(i++).getUpVote());
+		
 	}
 }

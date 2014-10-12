@@ -6,20 +6,32 @@ import junit.framework.TestCase;
 
 public class PictureSortTest extends TestCase {
 	
-	ArrayList<Questions> listQuestionsTest;
+	public boolean sortOrder;
 	
-	for(int i = 0; i < ListQuestions.size(); i++){
-		listQuestionsTest.add(ListQuestions.get(i));
+	ArrayList<Topics> listTopicsTest;
+	
+	for(int i = 0; i < ListTopics.size(); i++){
+		listTopicsTest.add(ListTopics.get(i));
 	}
 	
-	//sorts from questions with pictures to questions without.
-	listQuestionTest = PictureSort(listQuestionsTest);
-	
-	//Assuming that the questions are sorted from has a to doesn't have a picture,
+	//sorts from Topics with pictures to Topics without.
+	if (sortOrder == true){
+	listQuestionTest = PictureSort(sortOrder, listTopicsTest);
+	//Assuming that the Topics are sorted from has a to doesn't have a picture,
 	//assert false if a previous picture doesn't have one but later one does. 
-	for(i = 0; i < ListQuestionsTest.size(); i++){
-		if(listQuestionsTest.get(i).hasPicture() == false){
-			assertFalse(listQuestionsTest.get(i++).hasPicture() == true);
+		for(i = 0; i < ListTopicsTest.size(); i++){
+			if(listTopicsTest.get(i).hasPicture() == false){
+			assertFalse(listTopicsTest.get(i++).hasPicture() == true);
+			}
 		}
 	}
+	else {
+		for(i = 0; i < ListTopicsTest.size(); i++){
+			if(listTopicsTest.get(i).hasPicture() == true){
+			assertFalse(listTopicsTest.get(i++).hasPicture() == false);
+			}
+		}
+	}
+	
 }
+	

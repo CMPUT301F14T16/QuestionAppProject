@@ -5,17 +5,25 @@ import java.util.ArrayList;
 import junit.framework.TestCase;
 
 public class DateSortTest extends TestCase {
+	public boolean beforeOrAfter;
+ArrayList<Topics> listTopicsTest;
 	
-ArrayList<Questions> listQuestionsTest;
-	
-	for(int i = 0; i < ListQuestions.size(); i++){
-		listQuestionsTest.add(ListQuestions.get(i));
+	for(int i = 0; i < ListTopics.size(); i++){
+		listTopicsTest.add(ListTopics.get(i));
 	}
-	//sorts from questions with pictures to questions without.
-	listQuestionTest = DateSort(listQuestionsTest);
-	
-	for(i = 0; i < ListQuestionsTest.size(); i++){
-			assertTrue(listQuestionsTest.get(i).getDate().before(listQuestionsTest.get(i++).getDate()) );
+	//sorts from Topics with date most recent to oldest.
+	if(beforeOrAfter == true){
+	listQuestionTest = DateSort(beforeOrAfter, listTopicsTest);
+		for(i = 0; i < ListTopicsTest.size(); i++){
+			assertTrue(listTopicsTest.get(i).getDate().before(listTopicsTest.get(i++).getDate()) );
+		}
+	}
+	//sorts from oldest to most recent
+	else{
+	listQuestionTest = DateSort(beforeOrAfter, listTopicsTest);
+		for(i = 0; i < ListTopicsTest.size(); i++){
+			assertTrue(listTopicsTest.get(i).getDate().after(listTopicsTest.get(i++).getDate()) );
+		}
 	}
 }
 
