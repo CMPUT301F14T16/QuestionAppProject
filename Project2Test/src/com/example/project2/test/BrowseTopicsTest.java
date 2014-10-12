@@ -6,7 +6,7 @@ import android.view.View;
 import junit.framework.TestCase;
 
 public class BrowseTopicsTest extends TestCase {
-	
+	//use one topic for the test. this topic will be gotten from a list of topics.
 	Topics topics =  new Topics();
 	Question question = topics.addAnswer("Test Question");
 	Answer answer = topics.addAnswer("Test Answer");
@@ -32,7 +32,7 @@ public class BrowseTopicsTest extends TestCase {
 	//View topic and topic previews this includes favorites, saved, 
 	
 	assertTrue(topics.viewAll() == "Test Question" + "Test Answer" + 
-			question + "Test Submit");
+			question);
 	
 	//View Favorites
 	assertTrue(favorites.viewAll() == topics);
@@ -41,5 +41,13 @@ public class BrowseTopicsTest extends TestCase {
 	
 	assertTrue(savedQuestions.viewAll() == topics);
 	
-	//Topic Previews will be here
+	//Topic Previews 
+	//User will choose what topics he/she would like to browse if he has internet connectivity.
+	//this is assuming topics is in the database. The user will select the topic he/she
+	//would like to browse then the browseTopicPreview will retrieve that topic.
+	assertTrue(browseTopicPreviews(topics.getName) == topics);
+	
+	
+	
+	
 }
