@@ -8,7 +8,7 @@ import junit.framework.TestCase;
 public class BrowseTopicsTest extends TestCase {
 	//use one topic for the test. this topic will be gotten from a list of topics.
 	Topics topics =  new Topics();
-	Question question = topics.addAnswer("Test Question");
+	Question question = topics.addQuestion("Test Question");
 	Answer answer = topics.addAnswer("Test Answer");
 	
 	//Assuming they are all strings adds replies and submits a question
