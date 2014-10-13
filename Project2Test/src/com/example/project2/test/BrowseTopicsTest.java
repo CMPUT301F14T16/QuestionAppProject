@@ -33,7 +33,7 @@ public class BrowseTopicsTest extends TestCase {
 
 	//View topic and topic previews this includes favorites, saved, 
 	
-	assertTrue(topics.viewAll() == "Test Question" + "Test Answer" + 
+	assertTrue(topics.getAll() == "Test Question" + "Test Answer" + 
 			question);
 	
 	//View Favorites
