@@ -1,4 +1,4 @@
-package android.support.v7.appcompat.test;
+package com.example.project2.test;
 
 import junit.framework.TestCase;
 import android.view.View;

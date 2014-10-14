@@ -1,4 +1,4 @@
-package android.support.v7.appcompat.test;
+package com.example.project2.test;
 
 import android.test.ActivityInstrumentationTestCase2;
 import java.security.Timestamp;
@@ -21,31 +21,28 @@ public class SubmitAnswerTest {
 	cal.set(Calendar.SECOND, 2);
 	java.util.Date date = cal.getTime();
 	String author = "Lingbo";
-	String text = "This is the answer.";
+	String text = "This is the answer."
 	int cid = 123;
-	String filename = "lll.jpg";
-	answer.addDate(date);
-	answer.addAuthor(author);
-	answer.addText(text);
-	answer.addCid(cid);
-	answer.addImage(filename);
-	assertNotNull(answer.getText());
-	assertNotNull(answer.getImage());
-	assertSame(answer.getText(),textBody);
-	assertSame(answer.getImage().getname(),filename);
+	Reply Reply = new Reply();
+	Reply.addDate(date);
+	Reply.addAuthor(author);
+	Reply.addText(text);
+	Reply.addCid(cid);
+	answer.addReply(reply);
+	assertNotNull(answer.getReplies());
+	assertSame(answer.getReplies(),reply);
 	
 	
-	public void TestPending() {
+	public void TestCache() {
 		if (connection == 0) {
 			assertTrue(setReconnect());
 		}
 		
-		Pending pending = new Pending();
+		Cache cache = new Cache();
 		
-		Pending.addAnswer(answer);
-		assertNotNull(Pending.getAnswer());
-		assertSame(Pending.getAnswer().getText(),text);
-		assertSame(Pending.getAnswer().getImage().getname(),filename);
+		cache.addAnswer(answer);
+		assertNotNull(Cache.getAnswer());
+		assertSame(answer.getReplies().getText(),text);
 	}
 
 }
