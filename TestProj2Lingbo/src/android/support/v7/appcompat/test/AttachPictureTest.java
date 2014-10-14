@@ -17,10 +17,10 @@ public class AttachPictureTest {
 	if (picname.getsizebykb()> 64) {
 		assertNotNull(question.errorNotification());
 	}
-	question.addfile(picname);
-	assertSame(question.getfile().getname(),picname);
-	answer.addfile(picname);
-	assertSame(answer.getfile().getname(),picname);
+	question.addImage(picname);
+	assertSame(question.getImage().getname(),picname);
+	answer.addImage(picname);
+	assertSame(answer.getImage().getname(),picname);
 	
 	
 	
