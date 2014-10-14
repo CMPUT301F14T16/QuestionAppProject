@@ -11,6 +11,8 @@ import java.io.File;
 
 public class SubmitQuestionTest {
 	
+	
+	//Initialize the Question Input.
 	Question question = new Question();
 	
 	Calender cal = Calender.getInstance();
@@ -22,42 +24,41 @@ public class SubmitQuestionTest {
 	cal.set(Calendar.SECOND, 2);
 	java.util.Date date = cal.getTime();
 	String author = "Lingbo";
+	String title = "What is this?";
 	String text = "This is the answer.";
 	int cid = 123;
 	String filename = "lll.jpg";
 	question.addDate(date);
 	question.addAuthor(author);
+	question.addTitle(title);
 	question.addText(text);
 	question.addCid(cid);
 	question.addImage(filename);
+	assertNotNull(question.getDate());
+	assertNotNull(question.getAuthor());
 	assertNotNull(question.getText());
+	assertNotNull(question.getCid());
 	assertNotNull(question.getImage());
-	assertSame(question.getText(),textBody);
+	assertSame(question.getDate(),date);
+	assertSame(question.getAuthor(),author);
+	assertSame(question.getText().getTitle(),title);
+	assertSame(question.getText().getBody(),text);
+	assertSame(question.getCid(),cid);
 	assertSame(question.getImage().getname(),filename);
 	
-	String title = "what is this?";
-	question.addtitle(title);
-	String textBody = "I have a question for this.";
-	question.addBody(textBody);
-	assertNotNull(question.gettitle());
-	assertNotNull(question.getBody());
-	assertNotNull(question.getFile());
-	assertSame(answer.gettitle(),title);
-	assertSame(answer.getBody(),textBody);
-	assertSame(answer.getFile().getname(),filename);
-	
-	public void TestCache() {
+	public void TestPending() {
 		if (connection == 0) {
 			assertTrue(setReconnect());
 		}
 		
-		Cache cache = new Cache();
+		Pending pending = new Pending();
 		
-		cache.addQuestion(question);
-		assertNotNull(Cache.getQuestion(question));
-		assertSame(answer.gettitle(),title);
-		assertSame(answer.getBody(),textBody);
-		assertSame(answer.getFile().getname(),filename);
+		pending.addQuestion(question);
+		assertNotNull(pending.getQuestion(question));
+		assertSame(question.getDate(),date);
+		assertSame(question.getText().getTitle(),title);
+		assertSame(question.getText().getBody(),textBody);
+		assertSame(question.getFile().getname(),filename);
 	}
 
 }
