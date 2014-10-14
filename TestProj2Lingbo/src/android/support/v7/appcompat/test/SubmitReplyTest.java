@@ -23,7 +23,7 @@ public class SubmitAnswerTest {
 	String author = "Lingbo";
 	String text = "This is the answer."
 	int cid = 123;
-	Content Reply = new Content();
+	Reply Reply = new Reply();
 	Reply.addDate(date);
 	Reply.addAuthor(author);
 	Reply.addText(text);
