@@ -21,26 +21,31 @@ public class SubmitAnswerTest {
 	cal.set(Calendar.SECOND, 2);
 	java.util.Date date = cal.getTime();
 	String author = "Lingbo";
-	String text = "This is the answer."
+	String text = "This is the answer.";
 	int cid = 123;
+	String filename = "lll.jpg";
 	answer.addDate(date);
-	assertNotNull(answer.getBody());
-	assertNotNull(answer.getFile());
-	assertSame(answer.getBody(),textBody);
-	assertSame(answer.getFile().getname(),filename);
+	answer.addAuthor(author);
+	answer.addText(text);
+	answer.addCid(cid);
+	answer.addImage(filename);
+	assertNotNull(answer.getText());
+	assertNotNull(answer.getImage());
+	assertSame(answer.getText(),textBody);
+	assertSame(answer.getImage().getname(),filename);
 	
 	
-	public void TestCache() {
+	public void TestPending() {
 		if (connection == 0) {
 			assertTrue(setReconnect());
 		}
 		
-		Cache cache = new Cache();
+		Pending pending = new Pending();
 		
-		cache.addAnswer(answer);
-		assertNotNull(Cache.getAnswer());
-		assertSame(answer.getttitle(),textBody);
-		assertSame(answer.getFile().getname(),filename);
+		Pending.addAnswer(answer);
+		assertNotNull(Pending.getAnswer());
+		assertSame(Pending.getAnswer().getText(),text);
+		assertSame(Pending.getAnswer().getImage().getname(),filename);
 	}
 
 }
