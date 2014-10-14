@@ -12,10 +12,18 @@ import java.io.File;
 public class SubmitAnswerTest {
 	
 	Answer answer = new Answer();
-	String textBody = "I have an Answer for this.";
-	answer.addBody(textBody);
-	String filename = "kkk.jpg";
-	answer.addFile(filename);
+	Calender cal = Calender.getInstance();
+	cal.set(Calendar.YEAR, 2014);
+	cal.set(Calendar.MONTH, 10);
+	cal.set(Calendar.DAY_OF_MONTH, 1);
+	cal.set(Calendar.HOUR_OF_DAY, 1);
+	cal.set(Calendar.MINUTE, 1);
+	cal.set(Calendar.SECOND, 2);
+	java.util.Date date = cal.getTime();
+	String author = "Lingbo";
+	String text = "This is the answer."
+	int cid = 123;
+	answer.addDate(date);
 	assertNotNull(answer.getBody());
 	assertNotNull(answer.getFile());
 	assertSame(answer.getBody(),textBody);
