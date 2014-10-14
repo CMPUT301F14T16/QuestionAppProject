@@ -12,10 +12,25 @@ import java.io.File;
 public class SubmitAnswerTest {
 	
 	Answer answer = new Answer();
-	String textBody = "I have an Answer for this.";
-	answer.addBody(textBody);
-	assertNotNull(answer.getBody());
-	assertSame(answer.getBody(),textBody);
+	Calender cal = Calender.getInstance();
+	cal.set(Calendar.YEAR, 2014);
+	cal.set(Calendar.MONTH, 10);
+	cal.set(Calendar.DAY_OF_MONTH, 1);
+	cal.set(Calendar.HOUR_OF_DAY, 1);
+	cal.set(Calendar.MINUTE, 1);
+	cal.set(Calendar.SECOND, 2);
+	java.util.Date date = cal.getTime();
+	String author = "Lingbo";
+	String text = "This is the answer."
+	int cid = 123;
+	Content Reply = new Content();
+	Reply.addDate(date);
+	Reply.addAuthor(author);
+	Reply.addText(text);
+	Reply.addCid(cid);
+	answer.addReply(reply);
+	assertNotNull(answer.getReplies());
+	assertSame(answer.getReplies(),reply);
 	
 	
 	public void TestCache() {
