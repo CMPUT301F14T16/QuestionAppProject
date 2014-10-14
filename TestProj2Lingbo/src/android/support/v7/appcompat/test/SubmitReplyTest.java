@@ -42,7 +42,7 @@ public class SubmitAnswerTest {
 		
 		cache.addAnswer(answer);
 		assertNotNull(Cache.getAnswer());
-		assertSame(answer.getttitle(),textBody);
+		assertSame(answer.getReplies().getText(),text);
 	}
 
 }
