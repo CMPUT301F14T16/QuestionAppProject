@@ -8,10 +8,13 @@ public class MarkTopicAsFavoriteTest extends TestCase {
 	
 	//adds topic to favorites;
 	
-	topic.markAsFavorite();
+	Favorite favorite = new Favorite();
+	
+	favorite.markAsFavorite(topic);
+	
 	
 	//checks if topics has been added to favorites.
 	
-	assertTrue(User.getFavorites == topic);
+	assertTrue(favorite.getFavorites() == topic);
 
 }
