@@ -7,8 +7,12 @@ public class UpVoteTopicsTest extends TestCase {
 	
 	Topics topic = new Topics();
 	
-	topic.upVote();
+	Answer answer = new Answers();
 	
-	assertTrue(topic.getUpVotes > 0);
+	topic.addAnswer(answer);
+	
+	answer.upVote();
+	
+	assertTrue(answer.getUpVotes() > 0);
 
 }
