@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">EasyA</string>
+    <string name="title_section1">EasyA</string>
+    <string name="title_section2">Reading list</string>
+    <string name="title_section3">My questions</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="action_example">Example action</string>
+    <string name="action_settings">Settings</string>
+    <string name="search_opt">Search</string>
+    <string name="main_text_call">Ask a question!</string>
+    <string name="highlight_header">Top question</string>
+</resources>
