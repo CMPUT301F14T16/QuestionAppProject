@@ -23,13 +23,13 @@ public class BrowseTopicsTest extends TestCase {
 	topics.saveQuestion(question);
 	//checks if the retrieved are the correct ones 
 	//that the user requested. 
-	assertTrue(topics.getAllQuestions() == "Test Question");
-	assertTrue(topics.getAllAnswers() == "Test Answer");
-	assertTrue(question.getAllReplies() == "Test ReplyQ");
-	assertTrue(answer.getAllReplies() == "Test ReplyA");
-	assertTrue(topics.getAllAnswers() == "Test Answer");
-	assertTrue(topics.getAllSubmittedQuestions() == question);
-	assertTrue(Answer.getAllSavedQuestions() == question);
+	assertTrue(topics.getAllQuestions().equals("Test Question"));
+	assertTrue(topics.getAllAnswers().equals("Test Answer"));
+	assertTrue(question.getAllReplies().equals("Test ReplyQ"));
+	assertTrue(answer.getAllReplies().equals("Test ReplyA"));
+	assertTrue(topics.getAllAnswers().equals("Test Answer"));
+	assertTrue(topics.getAllSubmittedQuestions().equals(question));
+	assertTrue(Answer.getAllSavedQuestions().equals(question));
 
 	//View topic and topic previews this includes favorites, saved, 
 	
@@ -37,17 +37,17 @@ public class BrowseTopicsTest extends TestCase {
 			question);
 	
 	//View Favorites
-	assertTrue(favorites.viewAll() == topics);
+	assertTrue(favorites.viewAll().equals(topics));
 	
 	//View SavedQuestion
 	
-	assertTrue(savedQuestions.viewAll() == topics);
+	assertTrue(savedQuestions.viewAll().equals(topics));
 	
 	//Topic Previews 
 	//User will choose what topics he/she would like to browse if he has internet connectivity.
 	//this is assuming topics is in the database. The user will select the topic he/she
 	//would like to browse then the browseTopicPreview will retrieve that topic.
-	assertTrue(browseTopicPreviews(topics.getName) == topics);
+	assertTrue(browseTopicPreviews(topics.getName).equals(topics));
 	
 	
 	

@@ -14,6 +14,6 @@ public class setUserNameTest {
 	}
 		
 	username.changeusername(newusername);
-	assertTrue(username == newusername);
+	assertTrue(username.equals(newusername));
 	
 }

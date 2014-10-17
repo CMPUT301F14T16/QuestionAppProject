@@ -15,6 +15,6 @@ public class MarkTopicAsFavoriteTest extends TestCase {
 	
 	//checks if topics has been added to favorites.
 	
-	assertTrue(favorite.getFavorites() == topic);
+	assertTrue(favorite.getFavorites().equals(topic));
 
 }

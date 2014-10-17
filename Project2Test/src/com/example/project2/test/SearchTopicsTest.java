@@ -18,5 +18,5 @@ public class SearchTopicsTest extends TestCase {
 	
 	//checks to see if the user input searches correctly.
 	
-	assertTrue(SearchTopics(keyword, topicsListTest) == testTopic1);
+	assertTrue(SearchTopics(keyword, topicsListTest).equals(testTopic1));
 }
