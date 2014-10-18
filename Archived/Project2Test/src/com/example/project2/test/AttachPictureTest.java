@@ -11,8 +11,9 @@ import java.io.File;
 
 public class AttachPictureTest extends TestCase {
 	
-	Question question = new Question();
-	Answer answer = new Answer();
+	MainModel mainmodel = new MainModel();
+	
+	
 	String picname = "this.jpg";
 	if (picname.getsizebykb()> 64) {
 		assertNotNull(question.errorNotification());
