@@ -94,7 +94,6 @@ public class TestForProject extends TestCase {
 			}
 		}
 		assertEqual(Mainmodel.haspending(), false);
-		assertNotNull(Mainmodel.getAllQuestion().getAllAnswer());
 	}
 
 }
