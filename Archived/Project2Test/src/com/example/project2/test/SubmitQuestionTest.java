@@ -14,7 +14,7 @@ public class TestForProject extends TestCase {
 	public void testSubmitQuestion() {
 		//Initialize the Question Input.
 		MainModel mainmodel = new MainModel();
-		mainModel.setUser("123@sample.com","userName");
+		mainModel.setUserName("123@sample.com","userName");
 		mainmodel.addQuestion("title","what is this?");
 		assertTrue(mainmodel.getAllQuestion().size()==1);
 		
@@ -67,7 +67,7 @@ public class TestForProject extends TestCase {
 	//If there is anything already inside the list
 	public void testPending() {
 		MainModel mainModel= new MainModel();
-		mainModel.setUser("123@sample.com","userName");
+		mainModel.setUserName("123@sample.com","userName");
 		try{
 			mainModel.addQuestion("title","this is a question");
 		}
