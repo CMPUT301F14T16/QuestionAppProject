@@ -83,7 +83,7 @@ public class TestForProject extends TestCase {
 				connect=true;
 			}
 		}
-		assertNull(Mainmodel.getContent());
+		assertEqual(Mainmodel.haspending(), false);
 	}
 
 }
