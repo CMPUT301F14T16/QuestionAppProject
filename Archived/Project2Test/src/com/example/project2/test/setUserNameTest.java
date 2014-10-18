@@ -4,16 +4,33 @@ import junit.framework.TestCase;
 import android.view.View;
 import java.util.ArrayList;
 
-public class setUserNameTest {
+public class setUserNameTest extends TestCase {
 	
-	String username = "";
-	String newusername = "Lingbo";
+	//String username = "";
+	//String newusername = "Lingbo";
+	MainModel mainmodel = new MainModel();
+	mainModel.setUserName("123@sample.com","userName");
+	assertNotNull(mainModel.getUserName());
 	
-	if (connection == 0) {
-		assertTrue(setReconnect());
+	public void testPending() {
+		MainModel mainModel= new MainModel();
+		try{
+			mainModel.setUserName("123@sample.com","userName");
+		}
+		catch (Exception e){
+			mainModel.addPending("123@sample.com","userName");
+		}
+		Boolean connect=false;
+		while !connect{
+			try{
+				mainModel.pushPending();
+			}
+			else{
+				connect=true;
+			}
+		}
+		assertEqual(Mainmodel.haspending(), false);	
+		assertNotNull(Mainmodel.getUserName());
 	}
-		
-	username.changeusername(newusername);
-	assertTrue(username.equals(newusername));
 	
 }
