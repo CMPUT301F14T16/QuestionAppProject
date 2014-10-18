@@ -15,7 +15,7 @@ public class MarkQuestionAsReadLater extends TestCase{
 	
 		MainModel ReadLater = new MainModle();
 		
-		ReadLater.setUser("123@sample.com","userName");
+		ReadLater.setUserName("123@sample.com","userName");
 		ReadLater.addQuestion("title","what is this?");
 		assertTrue(ReadLater.getAllQuestion().size()==1);
 	
@@ -45,7 +45,7 @@ public class MarkQuestionAsReadLater extends TestCase{
 		
 		
 		MainModel ReadLater = new MainModel();
-		ReadLater.setUser("123@sample.com","userName");
+		ReadLater.setUserName("123@sample.com","userName");
 		try{
 			ReadLater.addQuestion("title","this is a question");
 		}
