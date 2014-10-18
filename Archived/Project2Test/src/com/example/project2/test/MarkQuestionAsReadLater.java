@@ -62,7 +62,6 @@ public class MarkQuestionAsReadLater extends TestCase{
 			}
 		}
 		assertEqual(ReadLater.haspending(), false);	
-		assertTrue(ReadLater.getAllSubmittedQuestion().size() == 1);
 		/*if (connection == 0) {
 			assertTrue(setReconnect());
 		}
