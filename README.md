@@ -1,4 +1,4 @@
 QuestionAppProject
 ==================
 
-The group project repository for Team 16 of CMPUT 301 Fa14
+All Project Part 2 Deliverables can be found on pages in the wiki. The home page of the wiki has links to each deliverable for quick reference.
