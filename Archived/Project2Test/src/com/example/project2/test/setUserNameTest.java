@@ -29,7 +29,7 @@ public class setUserNameTest extends TestCase {
 				connect=true;
 			}
 		}
-		assertNull(Mainmodel.getContent());
+		assertEqual(Mainmodel.haspending(), false);
 	}
 	
 }
