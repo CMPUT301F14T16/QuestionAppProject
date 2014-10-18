@@ -10,18 +10,37 @@ import java.util.ArrayList;
 import java.io.File;
 
 public class AttachPictureTest extends TestCase {
+
+	int i = 0;
+	int q_id;
 	
-	MainModel mainmodel = new MainModel();
 	
+	try{
+		MainModel mainmodel = new MainModel();
 	
-	String picname = "this.jpg";
-	if (picname.getsizebykb()> 64) {
-		assertNotNull(question.errorNotification());
+		
+		mainModel.setUserName("123@sample.com","userName");
+		mainmodel.addQuestion("title","what is this?");
+		String picname = "this.jpg";
+		q_id= mainmodel.get(i).getQuestionID();
+		mainmodel.getQuestionByID(q_id).addImage(picname);
 	}
-	question.addImage(picname);
+	catch (Exception e){
+		mainModel.addPending("title","this is a question");
+	}
+	while (mainmodel.getQuestionByID(q_id).getImage().getsizebykb()> 64) {
+		try{
+			mainModel.pushPending();
+		}
+		else{
+			mainmodel.getQuestionByID(q_id).addImage(picname);
+		}
+	}
+	assertNotNull(mainmodel.getQuestionByID(q_id).getImage());
+	/*question.addImage(picname);
 	assertSame(question.getImage().getname(),picname);
 	answer.addImage(picname);
-	assertSame(answer.getImage().getname(),picname);
+	assertSame(answer.getImage().getname(),picname);*/
 	
 	
 	
