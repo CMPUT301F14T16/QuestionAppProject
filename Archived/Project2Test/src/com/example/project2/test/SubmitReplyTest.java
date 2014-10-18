@@ -16,7 +16,7 @@ public class SubmitReplyTest extends TestCase {
 		int i = 0;
 		int q_id;
 		MainModel mainmodel = new MainModel();
-		mainModel.setUser("123@sample.com","userName");
+		mainModel.setUserName("123@sample.com","userName");
 		mainmodel.addQuestion("title","what is this?");
 		q_id = mainmodel.get(i).getQuestionID();
 		mainmodel.getQuestionByID(q_id).addReply("This is dog");
@@ -71,7 +71,7 @@ public class SubmitReplyTest extends TestCase {
 	//If there is anything already inside the list
 	public void TestPending() {
 		MainModel mainModel= new MainModel();
-		mainModel.setUser("123@sample.com","userName");
+		mainModel.setUserName("123@sample.com","userName");
 		int i = 0;
 		int q_id;
 		try{
