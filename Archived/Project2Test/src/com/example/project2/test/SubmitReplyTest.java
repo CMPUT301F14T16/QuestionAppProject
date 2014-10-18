@@ -61,6 +61,20 @@ public class SubmitReplyTest extends TestCase {
 		assertSame(question.getImage().getname(),filename);*/
 	}
 	
+	public void testSubmitAnsweReply() {
+		int i = 0;
+		int q_id;
+		int a_id;
+		MainModel mainmodel = new MainModel();
+		mainModel.setUserName("123@sample.com","userName");
+		mainmodel.addQuestion("title","what is this?");
+		q_id = mainmodel.get(i).getQuestionID();
+		mainmodel.addAnswer(q_id,"This is","Lingbo");
+		a_id = mainmodel.get(i).getQuestionByID(i).getAnswerID();
+		
+		mainmodel.get(i).getQuestionByID(i).getAnswerID(a_id).addReply("This is dog");
+		assertTrue(mainmodel.getAllAnswer().getAllReplies().size()==1);
+	}
 	//Pending is cache like container for the edited but unsubmitted content
 	//Once we have the connection, we will push up content to the view and update
 	//I have no idea what to do with the Android Cache
@@ -84,6 +98,42 @@ public class SubmitReplyTest extends TestCase {
 			mainModel.addPending("title","this is a question");
 			q_id = mainModel.get(i).getQid();
 			mainmodel.getQuestionByID(q_id).addReply("This is dog");
+		}
+		Boolean connect=false;
+		while !connect{
+			try{
+				mainModel.pushPending();
+			}
+			else{
+				connect=true;
+			}
+		}
+		assertEqual(Mainmodel.haspending(), false);
+		
+	}
+
+	public void TestPendingB() {
+		MainModel mainModel= new MainModel();
+		mainModel.setUserName("123@sample.com","userName");
+		int i = 0;
+		int q_id;
+		int a_id;
+		try{
+			mainModel.setUser("123@sample.com","userName");
+			mainmodel.addQuestion("title","what is this?");
+			q_id = mainmodel.get(i).getQuestionID();
+			mainmodel.addAnswer(q_id,"This is","Lingbo");
+			a_id = mainmodel.get(i).getQuestionByID(i).getAnswerID();
+		
+			mainmodel.get(i).getQuestionByID(i).getAnswerID(a_id).addReply("This is dog");
+		}
+		catch (Exception e){
+			mainModel.addPending("title","this is a question");
+			q_id = mainModel.get(i).getQid();
+			mainmodel.getQuestionByID(q_id).addReply("This is dog");
+			a_id = mainmodel.get(i).getQuestionByID(i).getAnswerID();
+		
+			mainmodel.get(i).getQuestionByID(i).getAnswerID(a_id).addReply("This is dog");
 		}
 		Boolean connect=false;
 		while !connect{
