@@ -9,7 +9,7 @@ import android.view.View;
 import java.util.ArrayList;
 import java.io.File;
 
-public class AttachPictureTest {
+public class AttachPictureTest extends TestCase {
 	
 	Question question = new Question();
 	Answer answer = new Answer();
