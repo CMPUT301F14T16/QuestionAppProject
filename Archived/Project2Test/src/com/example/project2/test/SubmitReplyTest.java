@@ -20,7 +20,7 @@ public class SubmitReplyTest extends TestCase {
 		mainmodel.addQuestion("title","what is this?");
 		q_id = mainmodel.get(i).getQuestionID();
 		mainmodel.getQuestionByID(q_id).addReply("This is dog");
-		assertTrue(maqnmodel.getAllQuestion().getAllReplies().size()==1);
+		assertTrue(mainmodel.getAllQuestion().getAllReplies().size()==1);
 		
 	
 		/*Calender cal = Calender.getInstance();
@@ -95,7 +95,6 @@ public class SubmitReplyTest extends TestCase {
 			}
 		}
 		assertEqual(Mainmodel.haspending(), false);
-		assertNotNull(Mainmodel.getAllQuestion().getAllReplies());
 		
 	}
 
