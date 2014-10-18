@@ -13,7 +13,6 @@ public class SubmitAnswerTest {
 	
 	public void SubmitQuestion() {
 		//Initialize the Question Input.
-		int r_id;
 		MainModel mainmodel = new MainModel();
 		mainModel.setUser("123@sample.com","userName");
 		mainmodel.addQuestion("title","what is this?").addReply("This is not dog");
