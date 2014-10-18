@@ -9,14 +9,18 @@ import android.view.View;
 import java.util.ArrayList;
 import java.io.File;
 
-public class SubmitAnswerTest {
+public class SubmitReplyTest extends TestCase {
 	
-	public void SubmitQuestion() {
+	public void testSubmitReply() {
 		//Initialize the Question Input.
+		int i = 0;
+		int q_id;
 		MainModel mainmodel = new MainModel();
 		mainModel.setUser("123@sample.com","userName");
-		mainmodel.addQuestion("title","what is this?").addReply("This is not dog");
-		assertTrue(mainmodel.getAllQuestion().getAllReplies().size()==1);
+		mainmodel.addQuestion("title","what is this?");
+		q_id = mainmodel.get(i).getQuestionID();
+		mainmodel.getQuestionByID(q_id).addReply("This is dog");
+		assertTrue(maqnmodel.getAllQuestion().getAllReplies().size()==1);
 		
 	
 		/*Calender cal = Calender.getInstance();
@@ -68,11 +72,18 @@ public class SubmitAnswerTest {
 	public void TestPending() {
 		MainModel mainModel= new MainModel();
 		mainModel.setUser("123@sample.com","userName");
+		int i = 0;
+		int q_id;
 		try{
-			mainModel.addQuestion("title","this is a question").addReply("This is not a cat");
+			mainModel.setUser("123@sample.com","userName");
+			mainmodel.addQuestion("title","what is this?");
+			q_id = mainmodel.get(i).getQuestionID();
+			mainmodel.getQuestionByID(q_id).addReply("This is dog");
 		}
 		catch (Exception e){
-			mainModel.addPending("title","this is a question").addReply("This is not a cat");
+			mainModel.addPending("title","this is a question");
+			q_id = mainModel.get(i).getQid();
+			mainmodel.getQuestionByID(q_id).addReply("This is dog");
 		}
 		Boolean connect=false;
 		while !connect{
