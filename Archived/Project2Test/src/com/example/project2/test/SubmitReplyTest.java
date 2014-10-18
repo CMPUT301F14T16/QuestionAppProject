@@ -73,7 +73,7 @@ public class SubmitAnswerTest {
 			mainModel.addQuestion("title","this is a question").addReply("This is not a cat");
 		}
 		catch (Exception e){
-			mainModel.addPending("title","this is a question");
+			mainModel.addPending("title","this is a question").addReply("This is not a cat");
 		}
 		Boolean connect=false;
 		while !connect{
