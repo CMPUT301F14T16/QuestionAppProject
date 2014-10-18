@@ -11,7 +11,7 @@ import java.io.File;
 
 public class TestForProject extends TestCase {
 	
-	public void SubmitQuestion() {
+	public void testSubmitQuestion() {
 		//Initialize the Question Input.
 		MainModel mainmodel = new MainModel();
 		mainModel.setUser("123@sample.com","userName");
@@ -65,7 +65,7 @@ public class TestForProject extends TestCase {
 	//the content, but since we are still discussing that, we just make it abstract in
 	//our test code.
 	//If there is anything already inside the list
-	public void TestPending() {
+	public void testPending() {
 		MainModel mainModel= new MainModel();
 		mainModel.setUser("123@sample.com","userName");
 		try{
@@ -84,7 +84,7 @@ public class TestForProject extends TestCase {
 			}
 		}
 		assertEqual(Mainmodel.haspending(), false);	
-		
+		assertTrue(Mainmodel.getAllSubmittedQuestion().size() == 1);
 	}
 
 }
