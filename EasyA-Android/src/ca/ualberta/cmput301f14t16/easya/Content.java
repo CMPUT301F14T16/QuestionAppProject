@@ -10,9 +10,9 @@ public class Content {
 	protected String type;
 	
 	public String getType(){
-		
+		return "";
 	}
 	public int getID(){
-		
+		return 0;
 	}
 }
