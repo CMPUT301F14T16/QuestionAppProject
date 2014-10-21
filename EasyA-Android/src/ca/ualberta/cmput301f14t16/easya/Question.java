@@ -2,6 +2,7 @@ package ca.ualberta.cmput301f14t16.easya;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.UUID;
 
 public class Question extends Topic {
 	
@@ -9,8 +10,8 @@ public class Question extends Topic {
 	int answerCount;
 	String title;
 	
-	public Question(String title, String body, Date date, User user) {
-		super(body, date, user);
+	public Question(String title, String body, Date date, String authorEmail) {
+		super(body, date, authorEmail);
 		this.title = title;
 	}
 	

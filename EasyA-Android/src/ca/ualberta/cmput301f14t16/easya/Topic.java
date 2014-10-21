@@ -2,18 +2,19 @@ package ca.ualberta.cmput301f14t16.easya;
 
 import java.util.Date;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * @author Stephane
  *
  */
-public class Topic extends Content {
+public abstract class Topic extends Content {
 
-	private List<Reply> replies;
-	private int voteNumber;
-	private Boolean favourite;
-	private Boolean readLater;
-	private String picture;
+	protected List<Reply> replies;
+	protected int voteNumber;
+	protected Boolean favourite; // Topic can be favourite of >1 user.
+	protected Boolean readLater; // Topic can be readLater of >1 user.
+	protected String picture;
 
 	/**
 	 * @param title
@@ -21,14 +22,8 @@ public class Topic extends Content {
 	 * @param date
 	 * @param author
 	 */
-	public Topic(String body, Date date, User author) {
-		super(body, date, author);
-		
-		/* should be taken care of by super class:
-		this.body = body;
-		this.date = date;
-		this.user = author;
-		*/
+	public Topic(String body, Date date, String authorEmail) {
+		super(body, date, authorEmail);
 	}
 
 	/**

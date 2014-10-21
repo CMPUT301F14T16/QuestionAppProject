@@ -17,12 +17,14 @@ public class InheritanceTest extends ActivityInstrumentationTestCase2<MainActivi
 	}
 	
 	public void testQuestionCreation () {
+		// Create a user.
+		User u = new User("commande@ualberta.ca", "Brett");
 		
-		// Create the question.
+		// Create the question authored by that user.
 		Question q = new Question("My Question", 
 								  "Clarification", 
 								  new Date(), 
-								  new User("commande@ualberta.ca", "Brett"));
+								  u.getEmail());
 		
 		// Ensure question has been created.
 		assertNotNull(q.getCID());

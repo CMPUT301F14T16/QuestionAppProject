@@ -4,17 +4,21 @@ import java.util.List;
 
 public class User {
 	
-		public String userName;
-		public String userID;
+		public String username;
+		public String email;
 		public List<Integer> submittedContent;
 		
-		public User(String userEmail, String userName) {
-			this.userID = userEmail;
-			this.userName = userName;
+		public User(String email, String username) {
+			this.email = email;
+			this.username = username;
 		}
 		
 		public void setUserName(String newName) {
-			this.userName = newName;
+			this.username = newName;
+		}
+		
+		public String getEmail() {
+			return email;
 		}
 		
 }

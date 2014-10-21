@@ -3,11 +3,11 @@ package ca.ualberta.cmput301f14t16.easya;
 import java.util.Date;
 import java.util.UUID;
 
-public class Content {
+public abstract class Content {
 	protected Date date;
 	protected String body;
+	protected String authorEmail;
 	protected UUID cid;
-	protected User user;
 	protected String type;
 	
 	/**
@@ -16,17 +16,14 @@ public class Content {
 	 * @param cid
 	 * @param user
 	 */
-	public Content(String body, Date date, User user) {
+	public Content(String body, Date date, String authorEmail) {
 		super();
 		this.date = date;
 		this.body = body;
-		this.user = user;
+		this.authorEmail = authorEmail;
 		
 		//http://www.javapractices.com/topic/TopicAction.do?Id=56 on Oct21
 		this.cid = UUID.randomUUID();
-	}
-	public String getType(){
-		return null;
 	}
 	
 	public UUID getCID(){
