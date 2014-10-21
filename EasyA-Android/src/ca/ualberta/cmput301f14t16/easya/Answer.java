@@ -4,7 +4,7 @@ import java.util.Date;
 
 public class Answer {
 	
-	public Answer(String title, String body, Date date) {
+	public Answer(String title, String body, Date date, User user) {
 		
 	}
 	

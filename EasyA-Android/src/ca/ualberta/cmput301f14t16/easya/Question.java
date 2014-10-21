@@ -9,7 +9,7 @@ public class Question {
 	int answerCount;
 	
 	//I will add in the User as one of the parameters when it is created.
-	public Question(String title, String body, Date date) {
+	public Question(String title, String body, Date date, User user) {
 		
 	}
 	
