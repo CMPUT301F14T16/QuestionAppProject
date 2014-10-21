@@ -8,7 +8,6 @@ public class Question {
 	ArrayList<Answer> answers;
 	int answerCount;
 	
-	//I will add in the User as one of the parameters when it is created.
 	public Question(String title, String body, Date date, User user) {
 		
 	}
