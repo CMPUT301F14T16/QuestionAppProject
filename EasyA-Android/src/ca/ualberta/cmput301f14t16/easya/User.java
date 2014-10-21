@@ -5,15 +5,16 @@ import java.util.List;
 public class User {
 	
 		public String userName;
+		public String userID;
 		public List<Integer> submittedContent;
 		
-		public String changeUserName(String newName) {
-			String newName1 = null;
-			newName = "abc";
-			return newName1;
+		public User(String userEmail, String userName) {
+			this.userID = userEmail;
+			this.userName = userName;
 		}
 		
-		public void addContent(int id) {
-			Content content = new Content();
+		public void setUserName(String newName) {
+			this.userName = newName;
 		}
+		
 }

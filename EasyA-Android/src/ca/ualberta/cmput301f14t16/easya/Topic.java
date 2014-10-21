@@ -1,6 +1,6 @@
 package ca.ualberta.cmput301f14t16.easya;
 
-import java.sql.Date;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -11,7 +11,6 @@ public class Topic extends Content {
 
 	private List<Reply> replies;
 	private int voteNumber;
-	private String body;
 	private Boolean favourite;
 	private Boolean readLater;
 	private String picture;
@@ -22,11 +21,14 @@ public class Topic extends Content {
 	 * @param date
 	 * @param author
 	 */
-	public Topic(String title, String body, Date date, User author) {
-		this.text = title;
+	public Topic(String body, Date date, User author) {
+		super(body, date, author);
+		
+		/* should be taken care of by super class:
 		this.body = body;
 		this.date = date;
 		this.user = author;
+		*/
 	}
 
 	/**
@@ -85,13 +87,6 @@ public class Topic extends Content {
 	 */
 	public Reply getReply(int ID) {
 		return new Reply();
-	}
-
-	/**
-	 * @return
-	 */
-	public String getTitle() {
-		return text;
 	}
 
 	/**

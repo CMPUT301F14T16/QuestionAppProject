@@ -3,13 +3,15 @@ package ca.ualberta.cmput301f14t16.easya;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Question {
+public class Question extends Topic {
 	
 	ArrayList<Answer> answers;
 	int answerCount;
+	String title;
 	
 	public Question(String title, String body, Date date, User user) {
-		
+		super(body, date, user);
+		this.title = title;
 	}
 	
 	public int getQuestionID() {
