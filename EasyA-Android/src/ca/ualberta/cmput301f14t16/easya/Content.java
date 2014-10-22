@@ -2,7 +2,9 @@ package ca.ualberta.cmput301f14t16.easya;
 
 import java.util.Date;
 import java.util.UUID;
-
+/**                                                                                                            
+ * The content is the base case for the topic and the reply.                                                                                                                        
+ */ 
 public abstract class Content {
 	protected Date date;
 	protected String body;
@@ -26,10 +28,18 @@ public abstract class Content {
 		this.cid = UUID.randomUUID();
 	}
 	
+	/**
+	 * Return the type of the content
+	 * @return 
+	 */
 	public UUID getCID(){
 		return cid;
 	}
 	
+	/**
+	 * Return the type of the content
+	 * @return 
+	 */
 	public String getBody(){
 		return body;
 	}
