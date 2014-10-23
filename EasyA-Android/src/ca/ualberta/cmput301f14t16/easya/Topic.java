@@ -6,6 +6,7 @@ import java.util.UUID;
 
 /**
  * @author Stephane
+ * @author Brett Commandeur
  *
  */
 public abstract class Topic extends Content {
@@ -22,8 +23,8 @@ public abstract class Topic extends Content {
 	 * @param date
 	 * @param author
 	 */
-	public Topic(String body, Date date, String authorEmail) {
-		super(body, date, authorEmail);
+	public Topic(String body, String authorId, Date date, String id) {
+		super(body, authorId, date, id);
 	}
 
 	/**
@@ -98,7 +99,7 @@ public abstract class Topic extends Content {
 		return false;
 	}
 
-	// Change this in the UML
+	// TODO Change this in the UML
 	/**
 	 * @param isFavourite
 	 */
@@ -106,7 +107,7 @@ public abstract class Topic extends Content {
 		favourite = isFavourite;
 	}
 
-	// change in UML
+	// TODO change in UML
 	/**
 	 * @param isReadLater
 	 */

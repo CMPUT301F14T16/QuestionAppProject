@@ -10,8 +10,8 @@ public class Question extends Topic {
 	int answerCount;
 	String title;
 	
-	public Question(String title, String body, Date date, String authorEmail) {
-		super(body, date, authorEmail);
+	public Question(String title, String body, String authorId, Date date, String id) {
+		super(body, authorId, date, id);
 		this.title = title;
 	}
 	

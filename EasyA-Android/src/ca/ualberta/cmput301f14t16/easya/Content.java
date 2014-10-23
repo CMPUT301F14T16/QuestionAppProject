@@ -6,41 +6,57 @@ import java.util.UUID;
  * The content is the base case for the topic and the reply.                                                                                                                        
  */ 
 public abstract class Content {
+	protected String body, authorId, id;
 	protected Date date;
-	protected String body;
-	protected String authorEmail;
-	protected UUID cid;
-	protected String type;
 	
 	/**
-	 * @param date
-	 * @param text
-	 * @param cid
-	 * @param user
+	 * Constructor for Content that does not yet exist. 
+	 * Date and id are generated automatically.
+	 * @param body
+	 * @param authorId
 	 */
-	public Content(String body, Date date, String authorEmail) {
+	public Content(String body, String authorId) {
 		super();
-		this.date = date;
-		this.body = body;
-		this.authorEmail = authorEmail;
 		
-		//http://www.javapractices.com/topic/TopicAction.do?Id=56 on Oct21
-		this.cid = UUID.randomUUID();
+		this.body = body;
+		this.authorId = authorId;
+		
+		// Auto-generate Unique id.
+		// http://www.javapractices.com/topic/TopicAction.do?Id=56 on Oct 21, 21
+		this.id = UUID.randomUUID().toString();
+		
+		// Default date of creation is now.
+		this.date = new Date();
 	}
 	
 	/**
-	 * Return the type of the content
-	 * @return 
+	 * Constructor for Content that already exists (e.g. recreating from object 
+	 * stored on the webservice).
+	 * @param body
+	 * @param authorId
+	 * @param date
+	 * @param id
 	 */
-	public UUID getCID(){
-		return cid;
+	public Content(String body, String authorId, Date date, String id) {
+		this.body = body;
+		this.authorId = authorId;
+		this.date = date;
+		this.id = id;
 	}
 	
-	/**
-	 * Return the type of the content
-	 * @return 
-	 */
 	public String getBody(){
 		return body;
+	}
+	
+	public String getAuthorId() {
+		return authorId;
+	}
+	
+	public Date getDate() {
+		return date;
+	}
+	
+	public String getId(){
+		return id;
 	}
 }
