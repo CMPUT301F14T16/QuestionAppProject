@@ -1,0 +1,39 @@
+// curl -XPOST http://cmput301.softwareprocess.es:8080/testing/t16question/ -d'
+
+{
+    "authorEmail" : "commande@ualberta.ca",
+    "title" : "Title",
+    "body" : "Body", 
+    "replies" : [
+        {
+            "authorEmail" : "commande@ualberta.ca",
+            "body" : "Body"
+        },
+        {
+            "authorEmail" : "commande@ualberta.ca",
+            "body" : "Body"
+        }
+    ],
+    "answers" : [
+        {
+            "authorEmail" : "commande@ualberta.ca",
+            "body" : "Body",
+            "replies" : [
+                {
+                    "authorEmail" : "commande@ualberta.ca",
+                    "body" : "Body"
+                }
+            ]
+        },
+        {
+            "authorEmail" : "commande@ualberta.ca",
+            "body" : "Body",
+            "replies" : [
+                {
+                    "authorEmail" : "commande@ualberta.ca",
+                    "body" : "Body"
+                }
+            ]
+        }
+    ]
+}
