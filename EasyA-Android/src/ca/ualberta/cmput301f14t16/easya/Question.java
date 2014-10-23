@@ -10,6 +10,14 @@ public class Question extends Topic {
 	int answerCount;
 	String title;
 	
+	/**
+	 * Creates a new Question
+	 * @param title
+	 * @param body
+	 * @param authorId
+	 * @param date
+	 * @param id
+	 */
 	public Question(String title, String body, String authorId, Date date, String id) {
 		super(body, authorId, date, id);
 		this.title = title;
