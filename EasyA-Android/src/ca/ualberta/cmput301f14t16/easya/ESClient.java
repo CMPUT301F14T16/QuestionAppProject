@@ -1,17 +1,7 @@
 package ca.ualberta.cmput301f14t16.easya;
 
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
-import java.util.ArrayList;
-import java.util.Date;
-import java.util.List;
-
-import android.util.Log;
-
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -28,30 +18,32 @@ public class ESClient {
 	// JSON Utilities
 	private Gson gson = new Gson();
 
-	public String submitQuestion(Question q) {
+	public void submitQuestion(Question q) {
 		String json = gson.toJson(q);
-		String newId = null;
 		try {
 			// Post the object to the webservice
-			String content = HttpHelper.uploadUrl(HOST_URL, json);
-			// We have to tell GSON what type we expect
-			Type esPostResponseType = new TypeToken<ESPostResponse>(){}.getType();
-			// Now we expect to get a Index-Creation response
-			ESPostResponse esPostResponse = gson.fromJson(content, esPostResponseType);
-			// Get the id, as it is on the server, 
-			// of the created question from the response.
-			newId = esPostResponse._id;
+			HttpHelper.putToUrl(HOST_URL + q.getId(), json);
+			
+//			// We have to tell GSON what type we expect
+//			Type esPostResponseType = new TypeToken<ESPostResponse>(){}.getType();
+//			
+//			// Now we expect to get a Index-Creation response
+//			ESPostResponse esPostResponse = gson.fromJson(content, esPostResponseType);
+//			
+//			// Get the id, as it is on the server, 
+//			// of the created question from the response.
+//			newId = esPostResponse._id;
+			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return newId;
 	}
 
 	public Question getQuestionById(String id) {
 		Question q = null;
 		String questionUrl = HOST_URL + id;
 		try {
-			String content = HttpHelper.downloadUrl(questionUrl);
+			String content = HttpHelper.getFromUrl(questionUrl);
 			
 			// We have to tell GSON what type we expect
 			Type esGetResponseType = new TypeToken<ESGetResponse<Question>>(){}.getType();

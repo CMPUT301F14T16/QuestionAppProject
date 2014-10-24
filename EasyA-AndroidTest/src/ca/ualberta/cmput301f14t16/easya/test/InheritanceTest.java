@@ -1,9 +1,7 @@
 package ca.ualberta.cmput301f14t16.easya.test;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 import ca.ualberta.cmput301f14t16.easya.MainActivity;
 import ca.ualberta.cmput301f14t16.easya.Question;
@@ -25,14 +23,11 @@ public class InheritanceTest extends ActivityInstrumentationTestCase2<MainActivi
 	public void testQuestionCreation () {
 		// Create a user.
 		User u = new User("commande@ualberta.ca", "Brett");
-		String id = UUID.randomUUID().toString();
 		
 		// Create the question authored by that user.
 		Question q = new Question("My Question", 
 								  "Clarification", 
-								  u.getEmail(),
-								  new Date(), 
-								  id);
+								  u.getEmail());
 		
 		// Ensure question has been created.
 		assertNotNull(q.getId());

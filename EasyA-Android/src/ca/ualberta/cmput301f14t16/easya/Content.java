@@ -2,6 +2,7 @@ package ca.ualberta.cmput301f14t16.easya;
 
 import java.util.Date;
 import java.util.UUID;
+
 /**                                                                                                            
  * The content is the base case for the topic and the reply.                                                                                                                        
  */ 
@@ -10,38 +11,23 @@ public abstract class Content {
 	protected Date date;
 	
 	/**
-	 * Constructor for Content that does not yet exist. 
-	 * Date and id are generated automatically.
-	 * @param body
-	 * @param authorId
+	 * No args constructor used by deserializers in recreation of content.
 	 */
-	public Content(String body, String authorId) {
-		super();
-		
-		this.body = body;
-		this.authorId = authorId;
-		
-		// Auto-generate Unique id.
-		// http://www.javapractices.com/topic/TopicAction.do?Id=56 on Oct 21, 21
-		this.id = UUID.randomUUID().toString();
-		
-		// Default date of creation is now.
-		this.date = new Date();
+	public Content() {
 	}
 	
 	/**
-	 * Constructor for Content that already exists (e.g. recreating from object 
-	 * stored on the webservice).
-	 * @param body
-	 * @param authorId
-	 * @param date
-	 * @param id
+	 * Constructor for brand new, unsubmitted content.
+	 * Date and id are automatically generated.
+	 * 
+	 * @param body		Main text of content.
+	 * @param authorId	Unique identifier for author of content.
 	 */
-	public Content(String body, String authorId, Date date, String id) {
+	public Content(String body, String authorId) {
 		this.body = body;
 		this.authorId = authorId;
-		this.date = date;
-		this.id = id;
+		this.date = new Date();
+		this.id = UUID.randomUUID().toString();
 	}
 	
 	public String getBody(){
@@ -58,5 +44,16 @@ public abstract class Content {
 	
 	public String getId(){
 		return id;
+	}
+	
+	/**
+	 * Sets the content's id. 
+	 * Used in recreating a content object from the server.
+	 * 
+	 * @param newId
+	 */
+	// TODO Have server use provided id when creating a submission.
+	public void setId(String newId) {
+		this.id = newId;
 	}
 }

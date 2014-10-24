@@ -11,7 +11,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
-import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -19,18 +18,14 @@ import android.util.Log;
 
 public class HttpHelper {
 	
-	private static final String DEBUG_TAG = "Net";
+	private static final String DEBUG_TAG = "HttpHelper";
 	
 	// This method referenced from http://developer.android.com/training/basics/network-ops/connecting.html On Oct 23, 2014
 	// Given a URL, establishes an HttpUrlConnection and retrieves
 	// the web page content as a InputStream, which it returns as
 	// a string.
-	public static String downloadUrl(String myurl) throws IOException {
+	public static String getFromUrl(String myurl) throws IOException {
 	    InputStream is = null;
-	    // Only display the first 10000 characters of the retrieved
-	    // web page content.
-	    int len = 10000;
-	        
 	    try {
 	        URL url = new URL(myurl);
 	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
@@ -58,20 +53,17 @@ public class HttpHelper {
 	}
 	
 	// http://developer.android.com/reference/java/net/HttpURLConnection.html On Oct 23, 2014
-	public static String uploadUrl(String myurl, String jsonData) throws IOException {
+	public static String putToUrl(String myurl, String jsonData) throws IOException {
 		InputStream is = null;
 		OutputStream os = null;
 		HttpURLConnection conn = null;
-		int len = 10000;
-		
-	    try {
+		try {
 	        URL url = new URL(myurl);
 	        conn = (HttpURLConnection) url.openConnection();
-	        conn.setRequestMethod("POST");
+	        conn.setRequestMethod("PUT");
 	        conn.setDoInput(true);
 	        conn.setDoOutput(true);
 	        conn.setRequestProperty("Content-Type","application/json");
-	        
 	        conn.connect();
 	        
 	        // Send request
@@ -104,15 +96,6 @@ public class HttpHelper {
 	        }
 	    }
 	}
-	
-	// This method referenced from http://developer.android.com/training/basics/network-ops/connecting.html On Oct 23, 2014
-//	private static String readIt(InputStream stream, int len) throws IOException, UnsupportedEncodingException {
-//	    Reader reader = null;
-//	    reader = new InputStreamReader(stream, "UTF-8");        
-//	    char[] buffer = new char[len];
-//	    reader.read(buffer);
-//	    return new String(buffer);
-//	}
 	
 	// This method from http://stackoverflow.com/questions/11766878/sending-files-using-post-with-httpurlconnection on Oct 23, 2014, User Mihai Todor
 	private static String readResponse(InputStream stream) throws IOException, UnsupportedEncodingException {

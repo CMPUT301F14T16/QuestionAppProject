@@ -2,7 +2,6 @@ package ca.ualberta.cmput301f14t16.easya.test;
 
 import java.io.IOException;
 import java.lang.reflect.Type;
-import java.util.Date;
 
 import junit.framework.TestCase;
 import android.util.Log;
@@ -28,7 +27,7 @@ public class HttpHelperTest extends TestCase {
 	public void testDownloadUrl() {
 		String myUrl = HOST_URL + "t16question/m7Byz_5lSO2bJGuejOf8_A?pretty=true";
 		try {
-			String content = HttpHelper.downloadUrl(myUrl);
+			String content = HttpHelper.getFromUrl(myUrl);
 			Log.d(LOG_TAG, content);
 			assertNotNull(content);
 
@@ -42,7 +41,7 @@ public class HttpHelperTest extends TestCase {
 		String myUrl = HOST_URL;
 		String myData = "{\"authorEmail\":\"commande@ualberta.ca\",\"title\":\"Title\",\"body\":\"Body\",\"replies\":[{\"authorEmail\":\"commande@ualberta.ca\",\"body\":\"Body\"},{\"authorEmail\":\"commande@ualberta.ca\",\"body\":\"Body\"}],\"answers\":[{\"authorEmail\":\"commande@ualberta.ca\",\"body\":\"Body\",\"replies\":[{\"authorEmail\":\"commande@ualberta.ca\",\"body\":\"Body\"}]},{\"authorEmail\":\"commande@ualberta.ca\",\"body\":\"Body\",\"replies\":[{\"authorEmail\":\"commande@ualberta.ca\",\"body\":\"Body\"}]}]}";
 		try {
-			String content = HttpHelper.uploadUrl(myUrl, myData);
+			String content = HttpHelper.putToUrl(myUrl, myData);
 			Log.d(LOG_TAG, content);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -52,12 +51,12 @@ public class HttpHelperTest extends TestCase {
 
 	public void testUploadFromObject() {
 		String myUrl = HOST_URL;
-		Question q = new Question("Title from Upload Test", "Body of Question", "test@ualberta.ca", new Date(), "123");
+		Question q = new Question("Title from Upload Test", "Body of Question", "test@ualberta.ca");
 		String json = gson.toJson(q);
 		Log.d(LOG_TAG, "json object: " + json);
 
 		try {
-			String content = HttpHelper.uploadUrl(myUrl, json);
+			String content = HttpHelper.putToUrl(myUrl, json);
 			Log.d(LOG_TAG, "content: " + content);
 
 			// We have to tell GSON what type we expect

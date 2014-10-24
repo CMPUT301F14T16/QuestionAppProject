@@ -1,7 +1,6 @@
 package ca.ualberta.cmput301f14t16.easya;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -18,14 +17,20 @@ public abstract class Topic extends Content {
 	protected String picture;
 
 	/**
-	 * Constructor for a Question.
-	 * @param body
-	 * @param authorId
-	 * @param date
-	 * @param id
+	 * No args constructor used by deserializers when recreating a topic.
 	 */
-	public Topic(String body, String authorId, Date date, String id) {
-		super(body, authorId, date, id);
+	public Topic() {
+		super();
+	}
+	
+	/**
+	 * Constructor for brand new, unsubmitted topic.
+	 * 
+	 * @param body		Main content of the topic; handled by Superclass Content
+	 * @param authorId	Unique identifier for author of the topic; handled by Superclass Content
+	 */
+	public Topic(String body, String authorId) {
+		super(body, authorId);
 		this.replies = new ArrayList<Reply>();
 		this.voteCount = 0;
 	}
@@ -47,24 +52,19 @@ public abstract class Topic extends Content {
 	/**
 	 * @param comment
 	 */
-	public void addReply(String comment) {
-
+	public void addReply(Reply reply) {
+		replies.add(reply);
 	}
 
 	/**
 	 * @return
 	 */
-	public List<Reply> getAllReplies() {
+	// TODO change name in UML
+	public List<Reply> getReplies() {
 		return replies;
 	}
 
-	/**
-	 * @return
-	 */
-	public String getBody() {
-		return body;
-	}
-
+	// TODO Topic is a data class, does not manage files!
 	/**
 	 * 
 	 */
@@ -79,19 +79,20 @@ public abstract class Topic extends Content {
 		return picture;
 	}
 
-	// Change method name in UML
+	// TODO Change method name in UML
 	/**
 	 * @param ID
 	 * @return
 	 */
-	public Reply getReply(int ID) {
+	public Reply getReplyById(int ID) {
 		return new Reply();
 	}
 
 	/**
 	 * @return
 	 */
-	public int getUpVotes() {
+	// TODO change name in UML
+	public int getUpVoteCount() {
 		return voteCount;
 	}
 
@@ -102,7 +103,7 @@ public abstract class Topic extends Content {
 		return false;
 	}
 
-	// TODO Change this in the UML
+	// TODO Remove this method, Change this in the UML
 	/**
 	 * @param isFavourite
 	 */
@@ -110,7 +111,7 @@ public abstract class Topic extends Content {
 		favourite = isFavourite;
 	}
 
-	// TODO change in UML
+	// TODO Remove this method, change in UML
 	/**
 	 * @param isReadLater
 	 */
