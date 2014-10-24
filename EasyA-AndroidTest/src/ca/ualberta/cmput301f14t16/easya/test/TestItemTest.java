@@ -4,6 +4,11 @@ import ca.ualberta.cmput301f14t16.easya.MainActivity;
 import ca.ualberta.cmput301f14t16.easya.data.TestItem;
 import android.test.ActivityInstrumentationTestCase2;
 
+/**
+ * 
+ * @author Brett Commandeur
+ *
+ */
 public class TestItemTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
 	public TestItemTest() {

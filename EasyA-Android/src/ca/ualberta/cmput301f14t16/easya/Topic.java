@@ -1,8 +1,8 @@
 package ca.ualberta.cmput301f14t16.easya;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * @author Stephane
@@ -12,19 +12,22 @@ import java.util.UUID;
 public abstract class Topic extends Content {
 
 	protected List<Reply> replies;
-	protected int voteNumber;
+	protected int voteCount;
 	protected Boolean favourite; // Topic can be favourite of >1 user.
 	protected Boolean readLater; // Topic can be readLater of >1 user.
 	protected String picture;
 
 	/**
-	 * @param title
+	 * Constructor for a Question.
 	 * @param body
+	 * @param authorId
 	 * @param date
-	 * @param author
+	 * @param id
 	 */
 	public Topic(String body, String authorId, Date date, String id) {
 		super(body, authorId, date, id);
+		this.replies = new ArrayList<Reply>();
+		this.voteCount = 0;
 	}
 
 	/**
@@ -88,8 +91,8 @@ public abstract class Topic extends Content {
 	/**
 	 * @return
 	 */
-	public int getUpVote() {
-		return voteNumber;
+	public int getUpVotes() {
+		return voteCount;
 	}
 
 	/**
@@ -119,7 +122,7 @@ public abstract class Topic extends Content {
 	 * 
 	 */
 	public void upVote() {
-		voteNumber += 1;
+		voteCount += 1;
 	}
 
 }

@@ -6,7 +6,7 @@ package ca.ualberta.cmput301f14t16.easya;
  *
  * @param <T>
  */
-public class ElasticSearchResponse<T> {
+public class ESGetResponse<T> {
     String _index;
     String _type;
     String _id;

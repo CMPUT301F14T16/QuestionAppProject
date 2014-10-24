@@ -11,6 +11,11 @@ import ca.ualberta.cmput301f14t16.easya.Topic;
 import ca.ualberta.cmput301f14t16.easya.User;
 import android.test.ActivityInstrumentationTestCase2;
 
+/**
+ * 
+ * @author Brett Commandeur
+ *
+ */
 public class InheritanceTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
 	public InheritanceTest() {

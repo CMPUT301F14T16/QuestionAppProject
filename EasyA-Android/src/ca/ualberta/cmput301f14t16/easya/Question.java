@@ -2,11 +2,12 @@ package ca.ualberta.cmput301f14t16.easya;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.UUID;
 
 public class Question extends Topic {
 	
-	ArrayList<Answer> answers;
+	List<Answer> answers;
 	int answerCount;
 	String title;
 	
@@ -21,23 +22,16 @@ public class Question extends Topic {
 	public Question(String title, String body, String authorId, Date date, String id) {
 		super(body, authorId, date, id);
 		this.title = title;
+		this.answerCount = 0;
+		this.answers = new ArrayList<Answer>(); 
 	}
 	
-	public int getQuestionID() {
-		return 0;
-		
-	}
-	
-	public void setQuestionID() {
-		
-	}
-	
-	public ArrayList<Answer> getAllAnswer() {
+	public List<Answer> getAllAnswer() {
 		return answers;
 	}
 	
-	public Answer getAnswerByID(int ID) {
-		return answers.get(0);
+	public String getTitle() {
+		return title;
 	}
 
 }
