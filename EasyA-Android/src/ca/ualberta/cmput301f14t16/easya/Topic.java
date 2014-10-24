@@ -1,8 +1,7 @@
 package ca.ualberta.cmput301f14t16.easya;
 
-import java.util.Date;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Topic is an extension of the Content class, used to provide various methods
@@ -10,24 +9,34 @@ import java.util.UUID;
  * include various getters and setters for various elements stored by itself,
  * or its subclasses.
  * @author Stephane
+ * @author Brett Commandeur
  *
  */
 public abstract class Topic extends Content {
 
 	protected List<Reply> replies;
-	protected int voteNumber;
+	protected int voteCount;
 	protected Boolean favourite; // Topic can be favourite of >1 user.
 	protected Boolean readLater; // Topic can be readLater of >1 user.
 	protected String picture;
 
 	/**
-	 * @param title
-	 * @param body
-	 * @param date
-	 * @param author
+	 * No args constructor used by deserializers when recreating a topic.
 	 */
-	public Topic(String body, Date date, String authorEmail) {
-		super(body, date, authorEmail);
+	public Topic() {
+		super();
+	}
+	
+	/**
+	 * Constructor for brand new, unsubmitted topic.
+	 * 
+	 * @param body		Main content of the topic; handled by Superclass Content
+	 * @param authorId	Unique identifier for author of the topic; handled by Superclass Content
+	 */
+	public Topic(String body, String authorId) {
+		super(body, authorId);
+		this.replies = new ArrayList<Reply>();
+		this.voteCount = 0;
 	}
 
 	/**
@@ -49,24 +58,19 @@ public abstract class Topic extends Content {
 	 * Append a Reply object to this Topic
 	 * @param comment The text contained by the Reply
 	 */
-	public void addReply(String comment) {
-
+	public void addReply(Reply reply) {
+		replies.add(reply);
 	}
 
 	/**
 	 * @return All replies contained by this Topic
 	 */
-	public List<Reply> getAllReplies() {
+	// TODO change name in UML
+	public List<Reply> getReplies() {
 		return replies;
 	}
 
-	/**
-	 * @return The body text of this Topic
-	 */
-	public String getBody() {
-		return body;
-	}
-
+	// TODO Topic is a data class, does not manage files!
 	/**
 	 * 
 	 */
@@ -81,20 +85,21 @@ public abstract class Topic extends Content {
 		return picture;
 	}
 
-	// Change method name in UML
+	// TODO Change method name in UML
 	/**
 	 * @param ID The unique ID for the requested reply
 	 * @return A single Reply by ID
 	 */
-	public Reply getReply(int ID) {
+	public Reply getReplyById(int ID) {
 		return new Reply();
 	}
 
 	/**
 	 * @return
 	 */
-	public int getUpVote() {
-		return voteNumber;
+	// TODO change name in UML
+	public int getUpVoteCount() {
+		return voteCount;
 	}
 
 	/**
@@ -104,7 +109,7 @@ public abstract class Topic extends Content {
 		return false;
 	}
 
-	// Change this in the UML
+	// TODO Remove this method, Change this in the UML
 	/**
 	 * @param isFavourite
 	 */
@@ -112,7 +117,7 @@ public abstract class Topic extends Content {
 		favourite = isFavourite;
 	}
 
-	// change in UML
+	// TODO Remove this method, change in UML
 	/**
 	 * @param isReadLater
 	 */
@@ -124,7 +129,7 @@ public abstract class Topic extends Content {
 	 * 
 	 */
 	public void upVote() {
-		voteNumber += 1;
+		voteCount += 1;
 	}
 
 }

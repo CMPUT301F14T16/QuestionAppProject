@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class MainModel {
 	
-	// @TODO MVC will keep these up to date.
+	// TODO MVC will keep these up to date.
 	private List<Question> submittedQuestions;
 	private List<Question> myQuestions;
 	private List<Question> savedQuestions;
@@ -144,7 +144,7 @@ public class MainModel {
 	 * @return
 	 */
 	public int generateID() {
-		//@TODO should be private. MainModel should not have responsibility of providing this functionality elsewhere.
+		// TODO Main model should not be responsible for this.
 		//...
 		return 0;
 	}
@@ -173,7 +173,7 @@ public class MainModel {
 	 * @return
 	 */
 	public boolean hasPending() {
-		// @TODO what is this for?
+		// TODO what is this for?
 		//...
 		return false;
 	}
@@ -184,7 +184,7 @@ public class MainModel {
 	 * @return
 	 */
 	public Answer getAnswerByID(int ID) {
-		//@TODO feels like we're not taking advantage of abstractions like Content and Topic.
+		// TODO feels like we're not taking advantage of abstractions like Content and Topic.
 		//...
 		return null;
 	}

@@ -1,0 +1,61 @@
+// curl -XPUT http://cmput301.softwareprocess.es:8080/testing/_mapping/t16question -d '
+{
+    "t16question" : {
+        "properties" : {
+            "authorEmail" : {
+                "type" : "string"
+            },
+            "title" : {
+                "type" : "string"
+            },
+            "body" : {
+                "type" : "string"
+            },
+            "postDate" : {
+                "type" : "date"
+            },
+            "replies" : {
+                "type" : "nested",
+                "properties" : {
+                    "authorEmail" : {
+                        "type" : "string"
+                    }, 
+                    "body" : {
+                        "type" : "string"
+                    },
+                    "postDate" : {
+                        "type" : "date"
+                    }
+                }
+            },
+            "answers" : {
+                "type" : "nested", 
+                "properties" : {
+                    "authorEmail" : {
+                        "type" : "string"
+                    }, 
+                    "body" : {
+                        "type" : "string"
+                    },
+                    "postDate" : {
+                        "type" : "date"
+                    }, 
+                    "replies" : {
+                        "type" : "nested",
+                        "properties" : {
+                            "authorEmail" : {
+                                "type" : "string"
+                            }, 
+                            "body" : {
+                                "type" : "string"
+                            },
+                            "postDate" : {
+                                "type" : "date"
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

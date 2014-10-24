@@ -1,7 +1,6 @@
 package ca.ualberta.cmput301f14t16.easya.test;
 
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import ca.ualberta.cmput301f14t16.easya.MainActivity;
@@ -10,6 +9,11 @@ import ca.ualberta.cmput301f14t16.easya.Topic;
 import ca.ualberta.cmput301f14t16.easya.User;
 import android.test.ActivityInstrumentationTestCase2;
 
+/**
+ * 
+ * @author Brett Commandeur
+ *
+ */
 public class InheritanceTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
 	public InheritanceTest() {
@@ -23,11 +27,10 @@ public class InheritanceTest extends ActivityInstrumentationTestCase2<MainActivi
 		// Create the question authored by that user.
 		Question q = new Question("My Question", 
 								  "Clarification", 
-								  new Date(), 
 								  u.getEmail());
 		
 		// Ensure question has been created.
-		assertNotNull(q.getCID());
+		assertNotNull(q.getId());
 		assertTrue(q.getBody().equals("Clarification"));
 		
 		// Mix question in with answers.

@@ -1,19 +1,27 @@
 package ca.ualberta.cmput301f14t16.easya;
 
-import java.util.Date;
-
-public class Answer {
+/**
+ * 
+ * @author Brett Commandeur (commande)
+ *
+ */
+public class Answer extends Topic {
 	
-	public Answer(String title, String body, Date date, User user) {
-		
+	/**
+	 * No args constructor used by deserializers in recreation of answer.
+	 */
+	public Answer() {
+		super();
 	}
 	
-	public int getAnswerID() {
-		return 0;
-	}
-	
-	public void setAnswerID() {
-		
+	/**
+	 * Constructor for creating brand new, unsubmitted answer.
+	 * 
+	 * @param body
+	 * @param authorId
+	 */
+	public Answer(String body, String authorId) {
+		super(body, authorId);
 	}
 
 }
