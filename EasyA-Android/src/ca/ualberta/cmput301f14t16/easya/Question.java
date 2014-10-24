@@ -26,12 +26,20 @@ public class Question extends Topic {
 		this.answers = new ArrayList<Answer>(); 
 	}
 	
+	/**
+	 * Gets the list of answers
+	 * @return answers
+	 */
 	public List<Answer> getAllAnswer() {
 		return answers;
 	}
 	
-	public String getTitle() {
-		return title;
+	/**
+	 * Gets specific answer
+	 * @return answers
+	 */
+	public Answer getAnswerByID(int ID) {
+		return answers.get(0);
 	}
 
 }
