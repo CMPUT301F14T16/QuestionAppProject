@@ -24,16 +24,6 @@ public class ESClient {
 			// Post the object to the webservice
 			HttpHelper.putToUrl(HOST_URL + q.getId(), json);
 			
-//			// We have to tell GSON what type we expect
-//			Type esPostResponseType = new TypeToken<ESPostResponse>(){}.getType();
-//			
-//			// Now we expect to get a Index-Creation response
-//			ESPostResponse esPostResponse = gson.fromJson(content, esPostResponseType);
-//			
-//			// Get the id, as it is on the server, 
-//			// of the created question from the response.
-//			newId = esPostResponse._id;
-			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -59,6 +49,22 @@ public class ESClient {
 		}
 		
 		return q;
+	}
+
+	public void submitAnswer(Answer answer, String qid) {
+		Question q = this.getQuestionById(qid);
+		
+		q.addAnswer(answer);
+		String json = gson.toJson(q.getAnswers());
+		
+		String updateStr = "{ \"doc\":{ \"answers\":" + json + "} }";
+		
+		try {
+			HttpHelper.putToUrl(HOST_URL + qid +"/_update", updateStr);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 }

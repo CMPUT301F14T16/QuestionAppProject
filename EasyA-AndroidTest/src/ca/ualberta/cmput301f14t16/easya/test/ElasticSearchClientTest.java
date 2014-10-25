@@ -17,9 +17,14 @@ import ca.ualberta.cmput301f14t16.easya.Reply;
 public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<MainActivity> {
 	
 	private static final String LOG_TAG = "ElasticSearchClientTest";
+	private ESClient esclient;
 	
 	public ElasticSearchClientTest() {
 		super(MainActivity.class);
+	}
+	
+	public void setUp() {
+		esclient = new ESClient();
 	}
 	
 	public void testSubmitAndGetQuestion() {
@@ -37,7 +42,6 @@ public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<Ma
 		
 		
 		// submit question to elastic search client
-		ESClient esclient = new ESClient();
 		esclient.submitQuestion(q);
 		
 		// Get question back from elastic search
@@ -55,5 +59,21 @@ public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<Ma
 		assertEquals(q.getAnswerCount(), q.getAnswers().size());
 		assertEquals(returnedQ.getAnswerCount(), returnedQ.getAnswers().size());
 		assertEquals(q.getAnswers().size(), returnedQ.getAnswers().size());
+	}
+	
+	public void testSubmitAndGetAnswer () {
+		String qid = "15c7827d-636a-48fc-8887-94318b98f95c";
+		
+		Question q = esclient.getQuestionById(qid);
+		Answer answer = new Answer("Body of answer in test answer submission", "commande@ualberta.ca");
+		q.addAnswer(answer);
+		
+		esclient.submitAnswer(answer, qid);
+		Question rq = esclient.getQuestionById(qid);
+		
+		Log.d(LOG_TAG, "Size of q: " + q.getAnswers().size());
+		Log.d(LOG_TAG, "Size of rq: " + rq.getAnswers().size());
+		assertEquals(q.getAnswers().size(), rq.getAnswers().size());
+		
 	}
 }
