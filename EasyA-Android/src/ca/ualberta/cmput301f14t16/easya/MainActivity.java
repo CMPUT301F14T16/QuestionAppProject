@@ -9,11 +9,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.ListView;
+import android.widget.ScrollView;
 
 public class MainActivity extends Activity {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private LinearLayout mDrawerList;
+
+    public static Queue mQueueThread;
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +49,10 @@ public class MainActivity extends Activity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
+
+        /////
+        mQueueThread = new Queue();
+        mQueueThread.start();
     }
 
 	@Override
@@ -80,11 +88,31 @@ public class MainActivity extends Activity {
     public boolean onOptionsItemSelected(MenuItem item) {
         // Pass the event to ActionBarDrawerToggle, if it returns
         // true, then it has handled the app icon touch event
-        if (mDrawerToggle.onOptionsItemSelected(item)) {
+        if (mDrawerToggle.onOptionsItemSelected(item))
             return true;
-        }
-        // Handle your other action bar items...
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onDestroy() {
+        //Free up the thread
+        mQueueThread.Stop();
+        super.onDestroy();
+    }
+
+    @Override
+    public void onPause(){
+        mQueueThread.Stop();
+        super.onPause();
+    }
+
+    @Override
+    public void onResume(){
+        if (mQueueThread != null && !mQueueThread.isAlive()) {
+            mQueueThread = new Queue();
+            mQueueThread.start();
+        }
+        super.onResume();
     }
 }
