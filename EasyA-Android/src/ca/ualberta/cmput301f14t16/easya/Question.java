@@ -83,5 +83,5 @@ public class Question extends Topic {
 	public void addReplyToAnswer(Reply r, int index) {
 		answers.get(index).addReply(r);	
 	}
-
+	
 }
