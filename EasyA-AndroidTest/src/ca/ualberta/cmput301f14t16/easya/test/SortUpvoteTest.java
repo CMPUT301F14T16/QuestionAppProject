@@ -2,35 +2,30 @@ package ca.ualberta.cmput301f14t16.easya.test;
 
 import java.util.ArrayList;
 
-import ca.ualberta.cmput301f14t16.easya.Question;
+
+import ca.ualberta.cmput301f14t16.easya.Sort;
+import ca.ualberta.cmput301f14t16.easya.Topic;
 import junit.framework.TestCase;
 
 public class SortUpvoteTest extends TestCase {
 	
 	public void testSortUpvote() {
-		public boolean sortOrder;
-		Question question1 = new Question();
-		
-		ArrayList<Question> listQuestionsTest =  new ArrayList<Question>();
-		listQuestionsTest.add(question1);
+		boolean sortOrder;
+		ArrayList<Topic> listTopicTest =  new ArrayList<Topic>();
 
 		//highest to lowest sort
-		if (sortOrder == true){
-			// TODO SortUpVote needs to be a method of some class.
-			SortUpVote(sortOrder, listQuestionsTest);
-		
-			for(int i = 0; i < listQuestionsTest.size(); i++){
-				assertTrue(listQuestionsTest.get(i).getUpVoteCount() >= listQuestionsTest.get(i++).getUpVoteCount());
+		sortOrder = true;
+			Sort.sortUpVote(sortOrder, listTopicTest);
+			for(int i = 0; i < listTopicTest.size(); i++){
+				assertTrue(listTopicTest.get(i).getUpVoteCount() >= listTopicTest.get(i++).getUpVoteCount());
 			}
-		}
 		//lowest to highest sort
-		else {
-			SortUpVote(sortOrder, listQuestionsTest);
+		sortOrder = false;
+			Sort.sortUpVote(sortOrder, listTopicTest);
 			
-			for(int i = 0; i < listQuestionsTest.size(); i++){
-				assertTrue(listQuestionsTest.get(i).getUpVoteCount() <= listQuestionsTest.get(i++).getUpVoteCount());
+			for(int i = 0; i < listTopicTest.size(); i++){
+				assertTrue(listTopicTest.get(i).getUpVoteCount() <= listTopicTest.get(i++).getUpVoteCount());
 			
 			}
-		}
-	}	
-}
+	}
+}	
