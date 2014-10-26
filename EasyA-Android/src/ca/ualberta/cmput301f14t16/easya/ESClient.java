@@ -18,82 +18,61 @@ public class ESClient {
 	// JSON Utilities
 	private Gson gson = new Gson();
 
-	public Question getQuestionById(String id) {
+	public Question getQuestionById(String id) throws IOException {
 		Question q = null;
 		String questionUrl = HOST_URL + id;
-		try {
-			String content = HttpHelper.getFromUrl(questionUrl);
 			
-			// We have to tell GSON what type we expect
-			Type esGetResponseType = new TypeToken<ESGetResponse<Question>>(){}.getType();
+		String content = HttpHelper.getFromUrl(questionUrl);
 			
-			// Now we expect to get a Index-Creation response
-			ESGetResponse<Question> esGetResponse = gson.fromJson(content, esGetResponseType);
-			
-			// Extract question from elastic search response;
-			q = esGetResponse.getSource();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		// We have to tell GSON what type we expect
+		Type esGetResponseType = new TypeToken<ESGetResponse<Question>>(){}.getType();
+		
+		// Now we expect to get a Index-Creation response
+		ESGetResponse<Question> esGetResponse = gson.fromJson(content, esGetResponseType);
+		
+		// Extract question from elastic search response;
+		q = esGetResponse.getSource();
 		
 		return q;
 	}
 	
-	public void submitQuestion(Question q) {
+	public void submitQuestion(Question q) throws IOException {
 		String json = gson.toJson(q);
-		try {
-			// Post the object to the webservice
-			HttpHelper.putToUrl(HOST_URL + q.getId(), json);
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		
+		// Post the object to the webservice
+		HttpHelper.putToUrl(HOST_URL + q.getId(), json);
 	}
 
-	public void submitAnswer(Answer answer, String qid) {
+	public void submitAnswer(Answer answer, String qid) throws IOException {
 		Question q = this.getQuestionById(qid);
 		q.addAnswer(answer);
 		
 		String json = gson.toJson(q.getAnswers());
 		String updateStr = "{ \"doc\":{ \"answers\":" + json + "} }";
 		
-		try {
-			HttpHelper.putToUrl(HOST_URL + qid +"/_update", updateStr);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		HttpHelper.putToUrl(HOST_URL + qid +"/_update", updateStr);
 	}
 
-	public void submitQuestionReply(Reply reply, String qid) {
+	public void submitQuestionReply(Reply reply, String qid) throws IOException {
 		Question q = this.getQuestionById(qid);
 		q.addReply(reply);
 		
 		String json = gson.toJson(q.getReplies());
 		String updateStr = "{ \"doc\":{ \"replies\":" + json + "} }";
 		
-		try {
-			HttpHelper.putToUrl(HOST_URL + qid + "/_update", updateStr);
-		} catch (Exception e) {
-			e.printStackTrace();
-		} 
+		HttpHelper.putToUrl(HOST_URL + qid + "/_update", updateStr);
 		
 	}
 
-	public void submitAnswerReply(Reply reply, String qid, String aid) {
+	public void submitAnswerReply(Reply reply, String qid, String aid) throws IOException {
 		Question q = this.getQuestionById(qid);
 		q.getAnswerById(aid).addReply(reply);
 		
 		String json = gson.toJson(q.getAnswers());
 		String updateStr = "{ \"doc\":{ \"answers\":" + json + "} }";
 		
-		try {
-			HttpHelper.putToUrl(HOST_URL + qid +"/_update", updateStr);
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+
+		HttpHelper.putToUrl(HOST_URL + qid +"/_update", updateStr);
 	}	
 	
 }

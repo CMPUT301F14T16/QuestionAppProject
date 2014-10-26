@@ -1,5 +1,7 @@
 package ca.ualberta.cmput301f14t16.easya.test;
 
+import java.io.IOException;
+
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 
@@ -41,10 +43,22 @@ public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<Ma
 		q.addReply(r);
 		
 		// submit question to elastic search client
-		esclient.submitQuestion(q);
+		try {
+			esclient.submitQuestion(q);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		// Get question back from elastic search
-		Question returnedQ = esclient.getQuestionById(q.getId());
+		Question returnedQ = null;
+		try {
+			returnedQ = esclient.getQuestionById(q.getId());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		assertNotNull(returnedQ);
 		
 		Log.d(LOG_TAG, "Question id is " + q.getId());
 		
@@ -64,15 +78,34 @@ public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<Ma
 		String qid = "15c7827d-636a-48fc-8887-94318b98f95c";
 		
 		// Get question before answer submission.
-		Question q = esclient.getQuestionById(qid);
+		Question q = null;
+		try {
+			q = esclient.getQuestionById(qid);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		assertNotNull(q);
 		
 		// Create answer and add to received question.
 		Answer answer = new Answer("Body of answer in test answer submission", "commande@ualberta.ca");
 		q.addAnswer(answer);
 		
 		// Submit answer through ES and receive the associated question.
-		esclient.submitAnswer(answer, qid);
-		Question rq = esclient.getQuestionById(qid);
+		try {
+			esclient.submitAnswer(answer, qid);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Question rq = null;
+		try {
+			rq = esclient.getQuestionById(qid);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		assertNotNull(rq);
 		
 		// Test both questions for equality.
 		Log.d(LOG_TAG, "Size of q's answers: " + q.getAnswers().size());
@@ -85,7 +118,14 @@ public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<Ma
 		String qid = "15c7827d-636a-48fc-8887-94318b98f95c";
 		
 		// Get question before answer submission.
-		Question q = esclient.getQuestionById(qid);
+		Question q = null;
+		try {
+			q = esclient.getQuestionById(qid);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		assertNotNull(q);
 		int rsize = q.getReplies().size();
 		
 		// Create reply and manually add to received question.
@@ -93,8 +133,20 @@ public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<Ma
 		q.addReply(reply);
 		
 		// Submit reply through ES and receive the associated question.
-		esclient.submitQuestionReply(reply, qid);
-		Question rq = esclient.getQuestionById(qid);
+		try {
+			esclient.submitQuestionReply(reply, qid);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		Question rq = null;
+		try {
+			rq = esclient.getQuestionById(qid);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		assertNotNull(rq);
 		int rrsize = rq.getReplies().size();
 		
 		// Test both questions for equality.
@@ -107,7 +159,14 @@ public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<Ma
 		String aid = "d8b62533-4ad6-4ca9-9e48-4651b8a4ad8f";
 		
 		// Get question before answer submission.
-		Question q = esclient.getQuestionById(qid);
+		Question q = null;
+		try {
+			q = esclient.getQuestionById(qid);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		assertNotNull(q);
 		Answer a = q.getAnswerById(aid);
 		int arsize = a.getReplies().size();
 		
@@ -118,14 +177,31 @@ public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<Ma
 		// Test add by reference, note that reply was only added to the "extracted" answer.
 		assertEquals(a.getReplies().size(), q.getAnswerById(aid).getReplies().size());
 		
-		// Submit answer reply through ES and receive the associated question.
-		esclient.submitAnswerReply(reply, qid, aid);
-		Question rq = esclient.getQuestionById(qid);
+		// Submit answer reply through ES.
+		try {
+			esclient.submitAnswerReply(reply, qid, aid);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		// receive the associated question from ES
+		Question rq = null;
+		try {
+			rq = esclient.getQuestionById(qid);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		assertNotNull(rq);
 		int arrsize = q.getAnswerById(aid).getReplies().size();
 		
 		// Test both questions for equality.
 		assertEquals(q.getAnswerById(aid).getReplies().size(), rq.getAnswerById(aid).getReplies().size());
 		assertEquals((arsize + 1), (arrsize));
+	}
+	
+	public void testSearchByKeyword(){
 		
 	}
 }
