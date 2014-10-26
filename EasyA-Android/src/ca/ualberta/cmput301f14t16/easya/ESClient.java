@@ -66,5 +66,21 @@ public class ESClient {
 			e.printStackTrace();
 		}
 	}
+
+	public void submitQuestionReply(Reply reply, String qid) {
+		Question q = this.getQuestionById(qid);
+		
+		q.addReply(reply);
+		String json = gson.toJson(q.getReplies());
+		
+		String updateStr = "{ \"doc\":{ \"replies\":" + json + "} }";
+		
+		try {
+			HttpHelper.putToUrl(HOST_URL + qid + "/_update", updateStr);
+		} catch (Exception e) {
+			e.printStackTrace();
+		} 
+		
+	}
 	
 }

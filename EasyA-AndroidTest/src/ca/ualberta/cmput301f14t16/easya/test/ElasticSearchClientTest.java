@@ -64,16 +64,42 @@ public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<Ma
 	public void testSubmitAndGetAnswer () {
 		String qid = "15c7827d-636a-48fc-8887-94318b98f95c";
 		
+		// Get question before answer submission.
 		Question q = esclient.getQuestionById(qid);
+		
+		// Create answer and add to received question.
 		Answer answer = new Answer("Body of answer in test answer submission", "commande@ualberta.ca");
 		q.addAnswer(answer);
 		
+		// Submit answer through ES and receive the associated question.
 		esclient.submitAnswer(answer, qid);
 		Question rq = esclient.getQuestionById(qid);
 		
-		Log.d(LOG_TAG, "Size of q: " + q.getAnswers().size());
-		Log.d(LOG_TAG, "Size of rq: " + rq.getAnswers().size());
+		// Test both questions for equality.
+		Log.d(LOG_TAG, "Size of q's answers: " + q.getAnswers().size());
+		Log.d(LOG_TAG, "Size of rq's answers: " + rq.getAnswers().size());
 		assertEquals(q.getAnswers().size(), rq.getAnswers().size());
 		
+	}
+	
+	public void testSubmitAndGetQuestionReply() {
+		String qid = "15c7827d-636a-48fc-8887-94318b98f95c";
+		
+		// Get question before answer submission.
+		Question q = esclient.getQuestionById(qid);
+		int rsize = q.getReplies().size();
+		
+		// Create reply and manually add to received question.
+		Reply reply = new Reply("Body of reply in question reply submission", "commande@ualberta.ca");
+		q.addReply(reply);
+		
+		// Submit reply through ES and receive the associated question.
+		esclient.submitQuestionReply(reply, qid);
+		Question rq = esclient.getQuestionById(qid);
+		int rrsize = rq.getReplies().size();
+		
+		// Test both questions for equality.
+		assertEquals(q.getReplies().size(), rq.getReplies().size());
+		assertEquals((rsize + 1), (rrsize));
 	}
 }
