@@ -12,13 +12,13 @@ public class SortTest extends TestCase {
 		boolean sortOrder;
 		ArrayList<Topic> listTopicTest =  new ArrayList<Topic>();
 
-		//highest to lowest sort
+		//highest to lowest sort.
 		sortOrder = true;
 			Sort.sortUpVote(sortOrder, listTopicTest);
 			for(int i = 0; i < listTopicTest.size(); i++){
 				assertTrue(listTopicTest.get(i).getUpVoteCount() >= listTopicTest.get(i++).getUpVoteCount());
 			}
-		//lowest to highest sort
+		//lowest to highest sort.
 		sortOrder = false;
 			Sort.sortUpVote(sortOrder, listTopicTest);
 			
