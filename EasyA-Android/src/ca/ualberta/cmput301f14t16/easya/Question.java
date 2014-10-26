@@ -72,16 +72,16 @@ public class Question extends Topic {
 	}
 	
 	/**
-	 * Gets a specific answer by index (where it is in the list of answers).
+	 * Gets a specific answer from within the question by id.
 	 * 
-	 * @return	The answer specified by given index.
+	 * @return	On success, the answer specified by given index.
+	 * 			On failure, null if answer not found.
 	 */
-	public Answer getAnswerByIndex(int index) {
-		return answers.get(index);
+	public Answer getAnswerById(String aid) {
+		for (Answer answer : answers) {
+			if (answer.getId().equals(aid))
+				return answer;
+		}
+		return null;
 	}
-
-	public void addReplyToAnswer(Reply r, int index) {
-		answers.get(index).addReply(r);	
-	}
-	
 }

@@ -8,6 +8,8 @@ import junit.framework.TestCase;
 public class SortUpvoteTest extends TestCase {
 	
 	public void testSortUpvote() {
+		
+		// TODO How does sortOrder get set?
 		public boolean sortOrder;
 		Question question1 = new Question();
 		

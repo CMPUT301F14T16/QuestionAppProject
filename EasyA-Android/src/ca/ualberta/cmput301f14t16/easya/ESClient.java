@@ -18,17 +18,6 @@ public class ESClient {
 	// JSON Utilities
 	private Gson gson = new Gson();
 
-	public void submitQuestion(Question q) {
-		String json = gson.toJson(q);
-		try {
-			// Post the object to the webservice
-			HttpHelper.putToUrl(HOST_URL + q.getId(), json);
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
-
 	public Question getQuestionById(String id) {
 		Question q = null;
 		String questionUrl = HOST_URL + id;
@@ -50,13 +39,23 @@ public class ESClient {
 		
 		return q;
 	}
+	
+	public void submitQuestion(Question q) {
+		String json = gson.toJson(q);
+		try {
+			// Post the object to the webservice
+			HttpHelper.putToUrl(HOST_URL + q.getId(), json);
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public void submitAnswer(Answer answer, String qid) {
 		Question q = this.getQuestionById(qid);
-		
 		q.addAnswer(answer);
-		String json = gson.toJson(q.getAnswers());
 		
+		String json = gson.toJson(q.getAnswers());
 		String updateStr = "{ \"doc\":{ \"answers\":" + json + "} }";
 		
 		try {
@@ -69,10 +68,9 @@ public class ESClient {
 
 	public void submitQuestionReply(Reply reply, String qid) {
 		Question q = this.getQuestionById(qid);
-		
 		q.addReply(reply);
-		String json = gson.toJson(q.getReplies());
 		
+		String json = gson.toJson(q.getReplies());
 		String updateStr = "{ \"doc\":{ \"replies\":" + json + "} }";
 		
 		try {
@@ -82,5 +80,20 @@ public class ESClient {
 		} 
 		
 	}
+
+	public void submitAnswerReply(Reply reply, String qid, String aid) {
+		Question q = this.getQuestionById(qid);
+		q.getAnswerById(aid).addReply(reply);
+		
+		String json = gson.toJson(q.getAnswers());
+		String updateStr = "{ \"doc\":{ \"answers\":" + json + "} }";
+		
+		try {
+			HttpHelper.putToUrl(HOST_URL + qid +"/_update", updateStr);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}	
 	
 }
