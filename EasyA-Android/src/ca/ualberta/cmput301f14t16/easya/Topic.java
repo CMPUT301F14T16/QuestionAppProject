@@ -110,6 +110,10 @@ public abstract class Topic extends Content {
 	public void setFavourite(boolean isFavourite) {
 		favourite = isFavourite;
 	}
+	// TODO add to UML unless this method and the one above get removed. 
+	public boolean getFavourites() {
+		return favourite;
+	}
 
 	// TODO Remove this method, change in UML
 	/**

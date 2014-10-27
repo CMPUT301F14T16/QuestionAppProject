@@ -45,5 +45,29 @@ public class SortTest extends TestCase {
 				assertTrue(listTopicsTest.get(i).getDate().after(listTopicsTest.get(i++).getDate()) );
 			}
 		}
+	
+	public void PictureSortTest() {
+		boolean sortOrder;
+		
+		ArrayList<Topic> listTopicsTest = new ArrayList<Topic>();
+		
+		//sorts from Topics with pictures to Topics without.
+		sortOrder = true;
+		Sort.pictureSort(sortOrder, listTopicsTest);
+		//Assuming that the Topics are sorted from has a to doesn't have a picture,
+		//assert false if a previous picture doesn't have one but later one does. 
+			for(int i = 0; i < listTopicsTest.size(); i++){
+				if(listTopicsTest.get(i).hasPicture() == false){
+				assertFalse(listTopicsTest.get(i++).hasPicture() == true);
+				}
+			}
+		sortOrder = false;
+			for(int i = 0; i < listTopicsTest.size(); i++){
+				if(listTopicsTest.get(i).hasPicture() == true){
+				assertFalse(listTopicsTest.get(i++).hasPicture() == false);
+				}
+			}
+		}
+		
 	}
 
