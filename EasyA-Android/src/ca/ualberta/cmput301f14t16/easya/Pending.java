@@ -14,22 +14,19 @@ package ca.ualberta.cmput301f14t16.easya;
  * @return rid The Reply_id for elastic search in database	update the UML later
  * @return content The content that is retrived in the pending
  * @author Lingbo Tang
- * @version 1.0 Build 1000 Oct 21st, 2014.
+ * @author Cauani
+ * @version 1.1 Build 1000 Oct 27st, 2014. * 
  */
 
 
 import java.util.Date;
-import java.util.List;
-
-import android.util.Log;
-import java.lang.reflect.Type;
 
 public class Pending {
 
-	protected String body, authorId;
-	protected Date date;
-
-	private Content content;
+	private String QuestionId;
+	private String AnswerId;
+	private Content Content;
+	private Date createdOn;
 	
 	/**
 	 * No args constructor used by deserializers in recreation of content.
@@ -40,50 +37,45 @@ public class Pending {
 	/**
 	 * Constructor for brand new, unsubmitted content.
 	 * Date and id are automatically generated.
-	 * 
-	 * @param body			Main text of content
-	 * @param authorId		Unique identifier for author of content.
 	 */
-	public Pending(String body, String authorId) {
-		this.body = body;
-		this.authorId = authorId;
-		this.date = new Date();
+	private Pending(String qID, String aID, Content c, String i) {
+		this.QuestionId = qID;
+		this.AnswerId = aID;
+		this.Content = c;
+		this.createdOn = new Date();
 	}
 	
-	/**
-	 * Check content view
-	 * 
-	 * @return content
+	/*
+	 * Constructor for Creating a question
 	 */
+	public Pending(Content c, String i) {
+		this(null, null, c, i);
+	}
+	
+	/*
+	 * Constructor for creating an answer
+	 */
+	public Pending(String qID, Content c, String i) {
+		this(qID, null, c, i);
+	}
+	
+	/*
+	 * Constructor for creating a reply
+	 */
+	public Pending(String qID, String aID, Content c) {
+		this(qID, aID, c, null);
+	}
+	
+		 
 	public Content getContent() {
-		return content;
+		return this.Content;
+	}	
+	
+	public String getQuestionId(){
+		return this.QuestionId;
 	}
 	
-	/**
-	 * Check content body
-	 * 
-	 * @return body
-	 */
-	public String getBody() {
-		return body;
+	public String getAnswerId(){
+		return this.AnswerId;
 	}
-	
-	/**
-	 * Check content authorId
-	 * 
-	 * @return authorId
-	 */
-	public String getAuthorId() {
-		return authorId;
-	}
-	
-	/**
-	 * Check content date
-	 * 
-	 * @return date
-	 */
-	public Date getDate() {
-		return date;
-	}
-	
 }
