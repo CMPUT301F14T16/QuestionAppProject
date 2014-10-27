@@ -14,6 +14,7 @@ public abstract class Content {
 	 * No args constructor used by deserializers in recreation of content.
 	 */
 	public Content() {
+		
 	}
 	
 	/**
