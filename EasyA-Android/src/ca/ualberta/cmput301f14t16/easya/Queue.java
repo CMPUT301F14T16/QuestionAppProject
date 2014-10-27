@@ -3,11 +3,13 @@ package ca.ualberta.cmput301f14t16.easya;
 import android.view.View;
 import android.widget.Toast;
 
+import java.io.IOException;
 import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.Date;
+import java.util.EmptyStackException;
 import java.util.List;
 
 /**
@@ -24,6 +26,8 @@ public class Queue extends Thread
     private Date lastCheck;
     private boolean haveInternet;
     private boolean isActive = true;
+    
+    private ESClient escClient = new ESClient();
 
     //TODO: add a instance of the model that holds all the questions
 
@@ -84,21 +88,31 @@ public class Queue extends Thread
         Method that deals with processing the pending objects list and passing them forward to the class that will
         manipulate the elastic search
      */
-    public void ProcessPendings(){
-        try{
-            for(Pending p : pendings){
-                try {
-                    //TODO: process and pass p forward
-                }
-                catch(Exception ex){}//deals silently
-                //Todo: deal with no-internet-exception
-                finally {
-                    RemovePending(p);
+    public void ProcessPendings() throws NoClassTypeSpecifiedException, NoInternetException, IOException{
+        for(Pending p : pendings){
+        	Content c = p.getContent();
+            try {
+                if(c instanceof Question){
+                	escClient.submitQuestion((Question)c);
+                }else if (c instanceof Answer){
+                	escClient.submitAnswer((Answer)c, p.getAnswerId());
+                }else if (c instanceof Reply){
+                	if (p.getAnswerId() != null && !p.getAnswerId().isEmpty()){
+                		escClient.submitAnswerReply((Reply)c, p.getQuestionId(), p.getAnswerId());
+                	}else{
+                		escClient.submitQuestionReply((Reply)c, p.getQuestionId());
+                	}
+                }else{
+                	throw new NoClassTypeSpecifiedException();
                 }
             }
-        }catch(Exception ex){
-            //TODO: filter the kind of exception and deal with it accordingly
-            //silently deal with the exception
+            catch(NoClassTypeSpecifiedException ex){
+            	throw ex;
+            }catch(NoInternetException ex){
+            	return;
+            }finally {            
+                RemovePending(p);
+            }
         }
     }
 
