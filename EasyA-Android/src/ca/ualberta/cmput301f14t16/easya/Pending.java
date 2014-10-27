@@ -18,6 +18,7 @@ package ca.ualberta.cmput301f14t16.easya;
  */
 
 
+import java.util.Collection;
 import java.util.Date;
 import java.util.List;
 
@@ -28,7 +29,8 @@ public class Pending {
 
 	protected String body, authorId;
 	protected Date date;
-
+	protected List<Pending> pending;
+	
 	private Content content;
 	
 	/**
@@ -50,6 +52,9 @@ public class Pending {
 		this.date = new Date();
 	}
 	
+	public void addContent(Content content) {
+		pending.addAll((Collection<? extends Pending>) content);
+	}
 	/**
 	 * Check content view
 	 * 
