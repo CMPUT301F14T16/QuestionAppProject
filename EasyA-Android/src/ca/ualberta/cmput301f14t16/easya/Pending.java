@@ -1,6 +1,6 @@
 package ca.ualberta.cmput301f14t16.easya;
 
-/** Description of Pending  
+/** Description of Pending   
  *
  * <p>
  * Pending is cache like buffer used to store
@@ -17,85 +17,73 @@ package ca.ualberta.cmput301f14t16.easya;
  * @version 1.0 Build 1000 Oct 21st, 2014.
  */
 
-import java.io.BufferedReader; 
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStream;
-import java.io.UnsupportedEncodingException;
-import java.net.HttpURLConnection;
-import java.net.URL;
+
+import java.util.Date;
 import java.util.List;
 
 import android.util.Log;
 import java.lang.reflect.Type;
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
 
 public class Pending {
 
-	
-	private int qid;
-	private int aid;
-	private int rid;
-	private Content content;
-	private User user;
-	private List<Question> unsubQuestion;
-	private List<Answer> unsubAnswers;
-	protected List<Reply> unsubreplies;
-	protected int voteCount;
-	protected Boolean favourite; 
-	protected Boolean readLater; 
-	protected String picture;
-	
+	protected String body, authorId;
+	protected Date date;
 
+	private Content content;
+	
 	/**
-	 * Get unsubmitted question id from the device (pending).
-	 * <p>
-	 * For elastic search, always submit the top item in
-	 * pending and release the space.
-	 * <p>
-	 * @return qid
-	 * 
+	 * No args constructor used by deserializers in recreation of content.
 	 */
-	public int getQid() {
-		return qid;
+	public Pending() {
 	}
+	
 	/**
-	 * Get unsubmitted answer id from the device (pending).
-	 * <p>
-	 * For elastic search, always submit the top item in
-	 * pending and release the space.
-	 * <p>
-	 * @return aid
+	 * Constructor for brand new, unsubmitted content.
+	 * Date and id are automatically generated.
 	 * 
+	 * @param body			Main text of content
+	 * @param authorId		Unique identifier for author of content.
 	 */
-	public int getAid() {
-		return aid;
+	public Pending(String body, String authorId) {
+		this.body = body;
+		this.authorId = authorId;
+		this.date = new Date();
 	}
+	
 	/**
-	 * Get unsubmitted reply id from the device (pending).
-	 * <p>
-	 * For elastic search, always submit the top item in
-	 * pending and release the space.
-	 * <p>
-	 * @return rid
+	 * Check content view
 	 * 
-	 */
-	public int getRid() {
-		return rid;
-	}
-	/**
-	 * Get unsubmitted content from the device (pending).
-	 * <p>
-	 * For elastic search, always submit the top item in
-	 * pending and release the space.
-	 * <p>
 	 * @return content
-	 * 
 	 */
 	public Content getContent() {
 		return content;
+	}
+	
+	/**
+	 * Check content body
+	 * 
+	 * @return body
+	 */
+	public String getBody() {
+		return body;
+	}
+	
+	/**
+	 * Check content authorId
+	 * 
+	 * @return authorId
+	 */
+	public String getAuthorId() {
+		return authorId;
+	}
+	
+	/**
+	 * Check content date
+	 * 
+	 * @return date
+	 */
+	public Date getDate() {
+		return date;
 	}
 	
 }
