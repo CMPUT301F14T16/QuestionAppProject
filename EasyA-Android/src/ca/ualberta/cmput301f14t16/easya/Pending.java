@@ -1,5 +1,6 @@
 package ca.ualberta.cmput301f14t16.easya;
 
+//TODO: update the javadoc
 /** Description of Pending   
  *
  * <p>
@@ -18,11 +19,9 @@ package ca.ualberta.cmput301f14t16.easya;
  * @version 1.1 Build 1000 Oct 27st, 2014. * 
  */
 
-
 import java.util.Date;
 
 public class Pending {
-
 	private String QuestionId;
 	private String AnswerId;
 	private Content Content;
@@ -38,34 +37,20 @@ public class Pending {
 	 * Constructor for brand new, unsubmitted content.
 	 * Date and id are automatically generated.
 	 */
-	private Pending(String qID, String aID, Content c, String i) {
+	public Pending(String qID, String aID, Content c) {
 		this.QuestionId = qID;
 		this.AnswerId = aID;
 		this.Content = c;
 		this.createdOn = new Date();
 	}
 	
-	/*
-	 * Constructor for Creating a question
-	 */
 	public Pending(Content c, String i) {
-		this(null, null, c, i);
+		this(null, null, c);
 	}
 	
-	/*
-	 * Constructor for creating an answer
-	 */
-	public Pending(String qID, Content c, String i) {
-		this(qID, null, c, i);
+	public Pending(String qID, Content c) {
+		this(qID, null, c);
 	}
-	
-	/*
-	 * Constructor for creating a reply
-	 */
-	public Pending(String qID, String aID, Content c) {
-		this(qID, aID, c, null);
-	}
-	
 		 
 	public Content getContent() {
 		return this.Content;
