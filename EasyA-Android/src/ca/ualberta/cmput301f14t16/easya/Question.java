@@ -84,5 +84,4 @@ public class Question extends Topic {
 		}
 		return null;
 	}
-
 }

@@ -129,5 +129,4 @@ public abstract class Topic extends Content {
 	public void upVote() {
 		voteCount += 1;
 	}
-
 }

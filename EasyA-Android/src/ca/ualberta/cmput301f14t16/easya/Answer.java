@@ -22,6 +22,5 @@ public class Answer extends Topic {
 	 */
 	public Answer(String body, String authorId) {
 		super(body, authorId);
-	}
-
+	}	
 }
