@@ -54,11 +54,16 @@ public class ESClient {
 	 * @param question		The question object to be submitted.	
 	 * @throws IOException
 	 */
-	public void submitQuestion(Question question) throws IOException {
+	public boolean submitQuestion(Question question) throws IOException, NoInternetException {
 		String json = gson.toJson(question);
 		
 		// Post the object to the webservice
 		HttpHelper.putToUrl(HOST_URL + question.getId(), json);
+		
+		//TODO: if have no internet, throw a NoInternetException
+		
+		//TODO: change that based on ESS response
+		return true;
 	}
 	
 
@@ -69,7 +74,7 @@ public class ESClient {
 	 * @param qid			The id of the question the answer should be added to.
 	 * @throws IOException
 	 */
-	public void submitAnswer(Answer answer, String qid) throws IOException {
+	public boolean submitAnswer(Answer answer, String qid) throws IOException, NoInternetException {
 		Question q = this.getQuestionById(qid);
 		q.addAnswer(answer);
 		
@@ -77,6 +82,11 @@ public class ESClient {
 		String updateStr = "{ \"doc\":{ \"answers\":" + json + "} }";
 		
 		HttpHelper.putToUrl(HOST_URL + qid +"/_update", updateStr);
+		
+		//TODO: if have no internet, throw a NoInternetException
+		
+		//TODO: change that based on ESS response
+		return true;
 	}
 
 	/**
@@ -86,7 +96,7 @@ public class ESClient {
 	 * @param qid			The id of the question the reply should be added to.
 	 * @throws IOException
 	 */
-	public void submitQuestionReply(Reply reply, String qid) throws IOException {
+	public boolean submitQuestionReply(Reply reply, String qid) throws IOException, NoInternetException {
 		Question q = this.getQuestionById(qid);
 		q.addReply(reply);
 		
@@ -95,6 +105,10 @@ public class ESClient {
 		
 		HttpHelper.putToUrl(HOST_URL + qid + "/_update", updateStr);
 		
+		//TODO: if have no internet, throw a NoInternetException
+		
+		//TODO: change that based on ESS response
+		return true;
 	}
 
 	/**
@@ -105,7 +119,7 @@ public class ESClient {
 	 * @param aid			The id of the answer the reply should be added to.
 	 * @throws IOException
 	 */
-	public void submitAnswerReply(Reply reply, String qid, String aid) throws IOException {
+	public boolean submitAnswerReply(Reply reply, String qid, String aid) throws IOException, NoInternetException {
 		Question q = this.getQuestionById(qid);
 		q.getAnswerById(aid).addReply(reply);
 		
@@ -113,6 +127,11 @@ public class ESClient {
 		String updateStr = "{ \"doc\":{ \"answers\":" + json + "} }";
 		
 		HttpHelper.putToUrl(HOST_URL + qid +"/_update", updateStr);
+		
+		//TODO: if have no internet, throw a NoInternetException
+		
+		//TODO: change that based on ESS response
+		return true;
 	}
 
 	/**
