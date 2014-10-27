@@ -4,11 +4,11 @@ import java.lang.reflect.Type;
 
 public class ESSubmission {
 	String type;
-	Object object;
+	Object object; // Question, Answer, or Reply
 	String questionId;
 	String answerId;
 	/**
-	 * No args constructor.
+	 * No args constructor, used by deserializers in recreation of object.
 	 */
 	public ESSubmission() {
 		// no args constructor
