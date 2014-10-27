@@ -9,8 +9,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.ListView;
-import android.widget.ScrollView;
 
 public class MainActivity extends Activity {
     private DrawerLayout mDrawerLayout;
@@ -89,7 +87,7 @@ public class MainActivity extends Activity {
         // Pass the event to ActionBarDrawerToggle, if it returns
         // true, then it has handled the app icon touch event
         if (mDrawerToggle.onOptionsItemSelected(item))
-            return true;
+        	return true;
 
         return super.onOptionsItemSelected(item);
     }

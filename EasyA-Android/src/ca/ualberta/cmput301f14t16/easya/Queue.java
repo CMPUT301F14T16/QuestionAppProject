@@ -1,15 +1,10 @@
 package ca.ualberta.cmput301f14t16.easya;
 
-import android.view.View;
-import android.widget.Toast;
 
 import java.io.IOException;
 import java.net.InetAddress;
 import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.Collection;
 import java.util.Date;
-import java.util.EmptyStackException;
 import java.util.List;
 
 /**
@@ -19,7 +14,7 @@ public class Queue extends Thread
 {
     //TODO: Handle the logic for updating Cache as well
 
-    final String ping_url = "bing.com"; //TODO: swith the host name to our elastic server
+    final String ping_url = "bing.com"; //TODO: switch the host name to our elastic server
     final long loop_interval = 5000; //in milliseconds
     final int check_for_internet = 300000; //in milliseconds
 
@@ -51,8 +46,11 @@ public class Queue extends Thread
                     this.sleep(loop_interval);
             }
             catch(InterruptedException ex) {} //Do nothing
-            catch(Exception ex){
-                //deal with the exception
+            catch(IOException ex){
+            	//TODO: deal with IOException or pass it forward
+            }catch(Exception ex){
+                //TODO: deal with all other exceptions
+            	//Currently dealing with them by shutting the Queue System off, may not be the best thing to do
                 isActive = false;
                 return;
             }

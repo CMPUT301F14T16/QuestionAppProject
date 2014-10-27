@@ -37,19 +37,33 @@ public class Pending {
 	 * Constructor for brand new, unsubmitted content.
 	 * Date and id are automatically generated.
 	 */
-	public Pending(String qID, String aID, Content c) {
+	private Pending(String qID, String aID, Content c) {
 		this.QuestionId = qID;
 		this.AnswerId = aID;
 		this.Content = c;
 		this.createdOn = new Date();
 	}
 	
-	public Pending(Content c, String i) {
+	/*
+	 * New Question
+	 */
+	public Pending(Question c) {
 		this(null, null, c);
 	}
 	
-	public Pending(String qID, Content c) {
+	/*
+	 * New Answer
+	 */
+	public Pending(String qID, Answer c) {
 		this(qID, null, c);
+	}
+	/*
+	 * New Reply
+	 * (Had to change the order of the objects for the compiler not to interpret
+	 * this constructor as the base constructor)
+	 */
+	public Pending(Reply c, String qID, String aID) {
+		this(qID, aID, c);
 	}
 		 
 	public Content getContent() {
