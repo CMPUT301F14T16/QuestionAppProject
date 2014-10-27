@@ -1,6 +1,8 @@
 package ca.ualberta.cmput301f14t16.easya.test;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.util.List;
 
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
@@ -202,6 +204,17 @@ public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<Ma
 	}
 	
 	public void testSearchByKeyword(){
-		
+		List<Question> rqs = null;
+		try {
+			rqs = esclient.searchQuestionsByQuery("Test");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		assertNotNull(rqs);
+		assertTrue(rqs.size() > 0);
 	}
 }
