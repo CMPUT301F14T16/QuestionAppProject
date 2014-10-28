@@ -6,6 +6,11 @@ import ca.ualberta.cmput301f14t16.easya.Sort;
 import ca.ualberta.cmput301f14t16.easya.Topic;
 import junit.framework.TestCase;
 
+/**
+ * 
+ * @author Klinton Shmeit
+ *
+ */
 public class SortTest extends TestCase {
 	
 	public void testSortUpvote() {
