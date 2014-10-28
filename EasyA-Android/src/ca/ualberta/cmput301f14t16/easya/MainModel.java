@@ -17,6 +17,7 @@ public class MainModel<V extends MainView> {
 	private List<Question> myQuestions;
 	private List<Question> savedQuestions;
 	private List<Pending> pendingQuestion;
+	private ArrayList<V> views;
 	private User user;
 
 
