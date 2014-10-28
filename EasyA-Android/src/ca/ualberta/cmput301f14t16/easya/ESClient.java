@@ -54,7 +54,7 @@ public class ESClient {
 	 * @param question		The question object to be submitted.	
 	 * @throws IOException
 	 */
-	public boolean submitQuestion(Question question) throws IOException, NoInternetException {
+	public boolean submitQuestion(Question question) throws IOException {
 		String json = gson.toJson(question);
 		
 		// Post the object to the webservice
@@ -74,7 +74,7 @@ public class ESClient {
 	 * @param qid			The id of the question the answer should be added to.
 	 * @throws IOException
 	 */
-	public boolean submitAnswer(Answer answer, String qid) throws IOException, NoInternetException {
+	public boolean submitAnswer(Answer answer, String qid) throws IOException {
 		Question q = this.getQuestionById(qid);
 		q.addAnswer(answer);
 		
@@ -96,7 +96,7 @@ public class ESClient {
 	 * @param qid			The id of the question the reply should be added to.
 	 * @throws IOException
 	 */
-	public boolean submitQuestionReply(Reply reply, String qid) throws IOException, NoInternetException {
+	public boolean submitQuestionReply(Reply reply, String qid) throws IOException {
 		Question q = this.getQuestionById(qid);
 		q.addReply(reply);
 		
@@ -119,7 +119,7 @@ public class ESClient {
 	 * @param aid			The id of the answer the reply should be added to.
 	 * @throws IOException
 	 */
-	public boolean submitAnswerReply(Reply reply, String qid, String aid) throws IOException, NoInternetException {
+	public boolean submitAnswerReply(Reply reply, String qid, String aid) throws IOException {
 		Question q = this.getQuestionById(qid);
 		q.getAnswerById(aid).addReply(reply);
 		
@@ -137,15 +137,15 @@ public class ESClient {
 	/**
 	 * Submits a search to elastic search and returns a list of questions containing content that matches the search.
 	 * 
-	 * @param query
-	 * @return A list of up to 100 resulting questions.
-	 * @throws UnsupportedEncodingException
-	 * @throws IOException
+	 * @param query			The query to search by.
+	 * @param numResults	The number of results to return.
+	 * @return 				A list of up to the requested number of resulting questions.
+	 * @throws IOException	If reading from server fails in any way.
 	 */
-	public List<Question> searchQuestionsByQuery(String query) throws UnsupportedEncodingException, IOException {
+	public List<Question> searchQuestionsByQuery(String query, int numResults) throws IOException {
 		List<Question> qlist = new ArrayList<Question>();
 		
-		String response = HttpHelper.getFromUrl(HOST_URL + "_search/?size=100&q=" + URLEncoder.encode(query, "UTF-8"));
+		String response = HttpHelper.getFromUrl(HOST_URL + "_search/?size="+ numResults + "&q=" + URLEncoder.encode(query, "UTF-8"));
 		
 		Type esSearchResponseType = new TypeToken<ESSearchResponse<Question>>(){}.getType();
 		ESSearchResponse<Question> esResponse = gson.fromJson(response, esSearchResponseType);

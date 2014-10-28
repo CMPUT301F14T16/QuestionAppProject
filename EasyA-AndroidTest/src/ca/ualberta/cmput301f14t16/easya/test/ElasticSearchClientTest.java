@@ -2,6 +2,7 @@ package ca.ualberta.cmput301f14t16.easya.test;
 
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
+import java.net.SocketTimeoutException;
 import java.util.List;
 
 import android.test.ActivityInstrumentationTestCase2;
@@ -10,6 +11,7 @@ import android.util.Log;
 import ca.ualberta.cmput301f14t16.easya.Answer;
 import ca.ualberta.cmput301f14t16.easya.ESClient;
 import ca.ualberta.cmput301f14t16.easya.MainActivity;
+import ca.ualberta.cmput301f14t16.easya.NoInternetException;
 import ca.ualberta.cmput301f14t16.easya.Question;
 import ca.ualberta.cmput301f14t16.easya.Reply;
 
@@ -47,6 +49,9 @@ public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<Ma
 		// submit question to elastic search client
 		try {
 			esclient.submitQuestion(q);
+		} catch (SocketTimeoutException e) {
+			Log.d(LOG_TAG, "Timeout caught!");
+			return;
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -86,6 +91,8 @@ public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<Ma
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			Log.d(LOG_TAG, "No internet caught!");
+			return;
 		}
 		assertNotNull(q);
 		
@@ -99,6 +106,8 @@ public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<Ma
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			Log.d(LOG_TAG, "No internet caught!");
+			return;
 		}
 		Question rq = null;
 		try {
@@ -106,6 +115,8 @@ public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<Ma
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			Log.d(LOG_TAG, "No internet caught!");
+			return;
 		}
 		assertNotNull(rq);
 		
@@ -126,6 +137,8 @@ public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<Ma
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			Log.d(LOG_TAG, "No internet caught!");
+			return;
 		}
 		assertNotNull(q);
 		int rsize = q.getReplies().size();
@@ -140,13 +153,18 @@ public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<Ma
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			Log.d(LOG_TAG, "No internet caught!");
+			return;
 		}
+		
 		Question rq = null;
 		try {
 			rq = esclient.getQuestionById(qid);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			Log.d(LOG_TAG, "No internet caught!");
+			return;
 		}
 		assertNotNull(rq);
 		int rrsize = rq.getReplies().size();
@@ -167,6 +185,8 @@ public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<Ma
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			Log.d(LOG_TAG, "No internet caught!");
+			return;
 		}
 		assertNotNull(q);
 		Answer a = q.getAnswerById(aid);
@@ -185,6 +205,8 @@ public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<Ma
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			Log.d(LOG_TAG, "No internet caught!");
+			return;
 		}
 		
 		// receive the associated question from ES
@@ -194,6 +216,8 @@ public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<Ma
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			Log.d(LOG_TAG, "No internet caught!");
+			return;
 		}
 		assertNotNull(rq);
 		int arrsize = q.getAnswerById(aid).getReplies().size();
@@ -206,13 +230,12 @@ public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<Ma
 	public void testSearchByKeyword(){
 		List<Question> rqs = null;
 		try {
-			rqs = esclient.searchQuestionsByQuery("Test");
-		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			rqs = esclient.searchQuestionsByQuery("Test", 10);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
+			Log.d(LOG_TAG, "No internet caught!");
+			return;
 		}
 		assertNotNull(rqs);
 		assertTrue(rqs.size() > 0);

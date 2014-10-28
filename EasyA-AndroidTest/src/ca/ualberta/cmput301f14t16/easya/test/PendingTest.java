@@ -36,15 +36,15 @@ public class PendingTest {
 	}
 	
 	public void testGetBody() {
-		assert pending.getBody() != null;
+		assert pending.getContent().getBody() != null;
 	}
 	
 	public void testGetAuthorId() {
-		assert pending.getAuthorId() != null;
-		assert pending.getAuthorId() == "test@ualberta.ca";
+		assert pending.getContent().getAuthorId() != null;
+		assert pending.getContent().getAuthorId() == "test@ualberta.ca";
 	}
 	
 	public void testgetDate() {
-		assert pending.getDate() != null;
+		assert pending.getContent().getDate() != null;
 	}
 }

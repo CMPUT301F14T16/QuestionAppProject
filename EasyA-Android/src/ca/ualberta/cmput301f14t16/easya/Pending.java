@@ -22,9 +22,9 @@ package ca.ualberta.cmput301f14t16.easya;
 import java.util.Date;
 
 public class Pending {
-	private String QuestionId;
-	private String AnswerId;
-	private Content Content;
+	private String questionId;
+	private String answerId;
+	private Content content;
 	private Date createdOn;
 	
 	/**
@@ -38,9 +38,9 @@ public class Pending {
 	 * Date and id are automatically generated.
 	 */
 	private Pending(String qID, String aID, Content c) {
-		this.QuestionId = qID;
-		this.AnswerId = aID;
-		this.Content = c;
+		this.questionId = qID;
+		this.answerId = aID;
+		this.content = c;
 		this.createdOn = new Date();
 	}
 	
@@ -67,14 +67,19 @@ public class Pending {
 	}
 		 
 	public Content getContent() {
-		return this.Content;
+		return this.content;
 	}	
 	
 	public String getQuestionId(){
-		return this.QuestionId;
+		return this.questionId;
 	}
 	
 	public String getAnswerId(){
-		return this.AnswerId;
+		return this.answerId;
+	}
+
+	public void addContent(Content content) {
+		this.content = content;
+		
 	}
 }

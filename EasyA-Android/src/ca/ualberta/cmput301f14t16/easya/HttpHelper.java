@@ -29,8 +29,8 @@ public class HttpHelper {
 	    try {
 	        URL url = new URL(myurl);
 	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-	        conn.setReadTimeout(10000 /* milliseconds */);
-	        conn.setConnectTimeout(15000 /* milliseconds */);
+	        conn.setReadTimeout(5000 /* milliseconds */);
+	        conn.setConnectTimeout(3000 /* milliseconds */);
 	        conn.setRequestMethod("GET");
 	        conn.setDoInput(true);
 	        // Starts the query
@@ -60,6 +60,8 @@ public class HttpHelper {
 		try {
 	        URL url = new URL(myurl);
 	        conn = (HttpURLConnection) url.openConnection();
+	        conn.setReadTimeout(5000 /* milliseconds */);
+	        conn.setConnectTimeout(3000 /* milliseconds */);
 	        conn.setRequestMethod("POST");
 	        conn.setDoInput(true);
 	        conn.setDoOutput(true);
