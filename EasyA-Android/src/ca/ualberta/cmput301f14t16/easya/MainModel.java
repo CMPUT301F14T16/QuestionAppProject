@@ -10,7 +10,7 @@ import java.util.List;
  * 
  * @author Brett Commandeur (commande)
  */
-public class MainModel {
+public class MainModel<V extends MainView> {
 	
 	// TODO MVC will keep these up to date.
 	private List<Question> submittedQuestions;
@@ -19,6 +19,34 @@ public class MainModel {
 	private List<Pending> pendingQuestion;
 	private User user;
 
+
+	/**
+	 * Design rationale: MVC format
+ 	* 
+	 * @reference https://github.com/LingboTang/FillerCreepForAndroid/blob/master/src/es/softwareprocess/fillercreep/FModel.java
+ 	* @author Abram Hindle
+	 */
+	public MainModel() {
+		views = new ArrayList<V>();
+	}
+	
+	public void addView(V view) {
+        	if (!views.contains(view)) {
+            	views.add(view);
+        	}
+    	}
+	
+	public void deleteView(V view) {
+        	views.remove(view);
+    	}
+	
+	public void notifyViews() {
+        	for (V view : views) {
+            	view.update(this);
+        	}
+    	}
+	
+	
 	/**
 	 * Adds submitted question to the webservice or device (pending).
 	 * @param title
