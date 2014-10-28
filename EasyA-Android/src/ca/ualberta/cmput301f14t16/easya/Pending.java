@@ -37,7 +37,7 @@ public class Pending {
 	 * Constructor for brand new, unsubmitted content.
 	 * Date and id are automatically generated.
 	 */
-	private Pending(String qID, String aID, Content c) {
+	public Pending(String qID, String aID, Content c) {
 		this.questionId = qID;
 		this.answerId = aID;
 		this.content = c;

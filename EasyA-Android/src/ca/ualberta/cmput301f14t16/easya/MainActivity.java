@@ -1,5 +1,7 @@
 package ca.ualberta.cmput301f14t16.easya;
 
+import java.util.ArrayList;
+
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.app.Activity;
@@ -14,6 +16,9 @@ public class MainActivity extends Activity {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private LinearLayout mDrawerList;
+    //will use this array list to add to custom adapter
+    private ArrayList<Question> questions;
+    
 
     public static Queue mQueueThread;
 

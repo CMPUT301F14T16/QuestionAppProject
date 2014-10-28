@@ -1,7 +1,6 @@
 package ca.ualberta.cmput301f14t16.easya.test;
 
 import java.util.ArrayList;
-
 import ca.ualberta.cmput301f14t16.easya.Answer;
 import ca.ualberta.cmput301f14t16.easya.Question;
 import ca.ualberta.cmput301f14t16.easya.Reply;
@@ -9,6 +8,11 @@ import ca.ualberta.cmput301f14t16.easya.Topic;
 import android.view.View;
 import junit.framework.TestCase;
 
+/**
+ * 
+ * @author Klinton Shmeit
+ *
+ */
 public class BrowseTopicsTest extends TestCase {
 	
 	public BrowseTopicsTest() {
@@ -17,7 +21,9 @@ public class BrowseTopicsTest extends TestCase {
 	Answer answer = new Answer("A body test", "A author id test");
 	Reply reply = new Reply("R body test", "R author id test");
 	
-	//adds necessary replies, answers, and questions for the test. 
+	/**
+	 * adds necessary replies, answers, and questions for the test. 
+	 */
 	question.addAnswer(answer);
 	question.addReply(reply);
 	question.setFavourite(true);

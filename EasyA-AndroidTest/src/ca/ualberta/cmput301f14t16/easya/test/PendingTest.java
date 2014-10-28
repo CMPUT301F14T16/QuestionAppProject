@@ -34,7 +34,7 @@ public class PendingTest extends TestCase{
 		QId = q.getId();
 		AId = a.getId();
 		RId = r.getId();
-		pending(QId,AId,content);
+		pending = new Pending(QId,AId,content);
 	}
 	
 	public void testGetContent() {
