@@ -106,8 +106,6 @@ public class Queue extends Thread
             }
             catch(NoClassTypeSpecifiedException ex){
             	throw ex;
-            }catch(NoInternetException ex){
-            	return;
             }finally {            
                 RemovePending(p);
             }
