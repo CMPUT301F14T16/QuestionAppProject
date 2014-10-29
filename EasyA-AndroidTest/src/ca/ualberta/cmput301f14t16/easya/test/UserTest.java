@@ -9,7 +9,7 @@ import ca.ualberta.cmput301f14t16.easya.User;
 
 public class UserTest extends TestCase{
 	
-	private static final String LOG_TAG = "PendingTest";
+	private static final String LOG_TAG = "UserTest";
 	private String username;
 	private String email;
 	private String userid;
