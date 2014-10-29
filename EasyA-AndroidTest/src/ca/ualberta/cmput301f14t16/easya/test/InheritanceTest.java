@@ -3,6 +3,7 @@ package ca.ualberta.cmput301f14t16.easya.test;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.ualberta.cmput301f14t16.easya.Answer;
 import ca.ualberta.cmput301f14t16.easya.MainActivity;
 import ca.ualberta.cmput301f14t16.easya.Question;
 import ca.ualberta.cmput301f14t16.easya.Topic;
@@ -42,5 +43,16 @@ public class InheritanceTest extends ActivityInstrumentationTestCase2<MainActivi
 		
 		// Check to see if you're a question or answer.
 		assertTrue(p instanceof Question);
+	}
+	
+	public void testMixedTopicList() {
+		List<Topic> topics = new ArrayList<Topic>();
+		
+		topics.add(new Question("Title", "Body", "name@email.com"));
+		topics.add(new Answer("Body", "name@email.com"));
+		
+		assertTrue(topics.get(0) instanceof Question);
+		assertTrue(topics.get(1) instanceof Answer);
+		
 	}
 }

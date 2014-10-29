@@ -4,7 +4,7 @@ package ca.ualberta.cmput301f14t16.easya;
  * 
  * @reference https://github.com/rayzhangcl/ESDemo/blob/master/ESDemo/src/ca/ualberta/cs/CMPUT301/chenlei/ElasticSearchResponse.java on Oct 23, 2014
  *
- * @param <T>
+ * @param <T>	Type of object in _source field of response.
  */
 public class ESGetResponse<T> {
     String _index;

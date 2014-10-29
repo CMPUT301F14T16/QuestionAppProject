@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/EasyA.iml" filepath="$PROJECT_DIR$/EasyA.iml" />
+      <module fileurl="file://$PROJECT_DIR$/EasyA_Interface.iml" filepath="$PROJECT_DIR$/EasyA_Interface.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
     </modules>
   </component>

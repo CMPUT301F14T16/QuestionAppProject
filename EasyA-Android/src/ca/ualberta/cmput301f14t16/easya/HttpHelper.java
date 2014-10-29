@@ -29,8 +29,8 @@ public class HttpHelper {
 	    try {
 	        URL url = new URL(myurl);
 	        HttpURLConnection conn = (HttpURLConnection) url.openConnection();
-	        conn.setReadTimeout(10000 /* milliseconds */);
-	        conn.setConnectTimeout(15000 /* milliseconds */);
+	        conn.setReadTimeout(5000 /* milliseconds */);
+	        conn.setConnectTimeout(3000 /* milliseconds */);
 	        conn.setRequestMethod("GET");
 	        conn.setDoInput(true);
 	        // Starts the query
@@ -60,7 +60,9 @@ public class HttpHelper {
 		try {
 	        URL url = new URL(myurl);
 	        conn = (HttpURLConnection) url.openConnection();
-	        conn.setRequestMethod("PUT");
+	        conn.setReadTimeout(5000 /* milliseconds */);
+	        conn.setConnectTimeout(3000 /* milliseconds */);
+	        conn.setRequestMethod("POST");
 	        conn.setDoInput(true);
 	        conn.setDoOutput(true);
 	        conn.setRequestProperty("Content-Type","application/json");
@@ -75,7 +77,7 @@ public class HttpHelper {
 	     
 	        // Get Response
 	        int response = conn.getResponseCode();
-	        Log.d(DEBUG_TAG, "The response is: " + response);
+	        Log.d(DEBUG_TAG, "The response is for post is: " + response);
 	        is = conn.getInputStream();
 
 	        // Convert the InputStream into a string

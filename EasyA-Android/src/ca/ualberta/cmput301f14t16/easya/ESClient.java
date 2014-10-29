@@ -1,14 +1,20 @@
 package ca.ualberta.cmput301f14t16.easya;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+import java.util.List;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 /**
+ * Design rationale: caller/user of ESClient should handle exceptions.
+ * 
  * @reference https://github.com/rayzhangcl/ESDemo/blob/master/ESDemo/src/ca/ualberta/cs/CMPUT301/chenlei/ESClient.java on Oct 23, 2014
  * @author Brett Commandeur
- *
  */
 public class ESClient {
 	
@@ -18,47 +24,137 @@ public class ESClient {
 	// JSON Utilities
 	private Gson gson = new Gson();
 
-	public void submitQuestion(Question q) {
-		String json = gson.toJson(q);
-		try {
-			// Post the object to the webservice
-			HttpHelper.putToUrl(HOST_URL + q.getId(), json);
+	/**
+	 * Gets a particular question from elastic search.
+	 * 
+	 * @param id			The id of the question to be retrieved.
+	 * @return				A question object matching the given id.
+	 * @throws IOException
+	 */
+	public Question getQuestionById(String id) throws IOException {
+
+		// Get a response after submitting the request for the question.
+		String content = HttpHelper.getFromUrl(HOST_URL + id);
 			
-//			// We have to tell GSON what type we expect
-//			Type esPostResponseType = new TypeToken<ESPostResponse>(){}.getType();
-//			
-//			// Now we expect to get a Index-Creation response
-//			ESPostResponse esPostResponse = gson.fromJson(content, esPostResponseType);
-//			
-//			// Get the id, as it is on the server, 
-//			// of the created question from the response.
-//			newId = esPostResponse._id;
-			
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+		// We have to tell GSON what type we expect
+		Type esGetResponseType = new TypeToken<ESGetResponse<Question>>(){}.getType();
+		
+		// Now we expect to get a Index-Creation response
+		ESGetResponse<Question> esGetResponse = gson.fromJson(content, esGetResponseType);
+		
+		// Extract question from elastic search response;
+		Question question = esGetResponse.getSource();
+		
+		return question;
+	}
+	
+	/**
+	 * Submits a question to elastic search.
+	 * 
+	 * @param question		The question object to be submitted.	
+	 * @throws IOException
+	 */
+	public boolean submitQuestion(Question question) throws IOException {
+		String json = gson.toJson(question);
+		
+		// Post the object to the webservice
+		HttpHelper.putToUrl(HOST_URL + question.getId(), json);
+		
+		//TODO: if have no internet, throw a NoInternetException
+		
+		//TODO: change that based on ESS response
+		return true;
+	}
+	
+
+	/**
+	 * Submits an answer-to-a-question to elastic search.
+	 * 
+	 * @param answer		The answer object to be submitted.
+	 * @param qid			The id of the question the answer should be added to.
+	 * @throws IOException
+	 */
+	public boolean submitAnswer(Answer answer, String qid) throws IOException {
+		Question q = this.getQuestionById(qid);
+		q.addAnswer(answer);
+		
+		String json = gson.toJson(q.getAnswers());
+		String updateStr = "{ \"doc\":{ \"answers\":" + json + "} }";
+		
+		HttpHelper.putToUrl(HOST_URL + qid +"/_update", updateStr);
+		
+		//TODO: if have no internet, throw a NoInternetException
+		
+		//TODO: change that based on ESS response
+		return true;
 	}
 
-	public Question getQuestionById(String id) {
-		Question q = null;
-		String questionUrl = HOST_URL + id;
-		try {
-			String content = HttpHelper.getFromUrl(questionUrl);
-			
-			// We have to tell GSON what type we expect
-			Type esGetResponseType = new TypeToken<ESGetResponse<Question>>(){}.getType();
-			
-			// Now we expect to get a Index-Creation response
-			ESGetResponse<Question> esGetResponse = gson.fromJson(content, esGetResponseType);
-			
-			// Extract question from elastic search response;
-			q = esGetResponse.getSource();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+	/**
+	 * Submits a reply-to-a-question to elastic search.
+	 * 
+	 * @param reply			The reply object to be submitted.
+	 * @param qid			The id of the question the reply should be added to.
+	 * @throws IOException
+	 */
+	public boolean submitQuestionReply(Reply reply, String qid) throws IOException {
+		Question q = this.getQuestionById(qid);
+		q.addReply(reply);
+		
+		String json = gson.toJson(q.getReplies());
+		String updateStr = "{ \"doc\":{ \"replies\":" + json + "} }";
+		
+		HttpHelper.putToUrl(HOST_URL + qid + "/_update", updateStr);
+		
+		//TODO: if have no internet, throw a NoInternetException
+		
+		//TODO: change that based on ESS response
+		return true;
+	}
+
+	/**
+	 * Submits a reply-to-an-answer to elastic search.
+	 * 
+	 * @param reply			The reply object to be submitted.
+	 * @param qid			The id of the question containing the answer.
+	 * @param aid			The id of the answer the reply should be added to.
+	 * @throws IOException
+	 */
+	public boolean submitAnswerReply(Reply reply, String qid, String aid) throws IOException {
+		Question q = this.getQuestionById(qid);
+		q.getAnswerById(aid).addReply(reply);
+		
+		String json = gson.toJson(q.getAnswers());
+		String updateStr = "{ \"doc\":{ \"answers\":" + json + "} }";
+		
+		HttpHelper.putToUrl(HOST_URL + qid +"/_update", updateStr);
+		
+		//TODO: if have no internet, throw a NoInternetException
+		
+		//TODO: change that based on ESS response
+		return true;
+	}
+
+	/**
+	 * Submits a search to elastic search and returns a list of questions containing content that matches the search.
+	 * 
+	 * @param query			The query to search by.
+	 * @param numResults	The number of results to return.
+	 * @return 				A list of up to the requested number of resulting questions.
+	 * @throws IOException	If reading from server fails in any way.
+	 */
+	public List<Question> searchQuestionsByQuery(String query, int numResults) throws IOException {
+		List<Question> qlist = new ArrayList<Question>();
+		
+		String response = HttpHelper.getFromUrl(HOST_URL + "_search/?size="+ numResults + "&q=" + URLEncoder.encode(query, "UTF-8"));
+		
+		Type esSearchResponseType = new TypeToken<ESSearchResponse<Question>>(){}.getType();
+		ESSearchResponse<Question> esResponse = gson.fromJson(response, esSearchResponseType);
+		for (ESGetResponse<Question> q : esResponse.getHits()) {
+			Question question = q.getSource();
+			qlist.add(question);
 		}
 		
-		return q;
+		return qlist;
 	}
 	
 }

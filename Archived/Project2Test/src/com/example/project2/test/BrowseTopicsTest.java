@@ -48,8 +48,4 @@ public class BrowseTopicsTest extends TestCase {
 	//this is assuming topics is in the database. The user will select the topic he/she
 	//would like to browse then the browseTopicPreview will retrieve that topic.
 	assertTrue(browseTopicPreviews(topics.getName).equals(topics));
-	
-	
-	
-	
 }
