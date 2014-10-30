@@ -9,7 +9,11 @@ import junit.framework.TestCase;
 /**
  * 
  * @author Klinton Shmeit
- *
+ * 
+ * this tests covers the 
+ * use cases of SortUpVote, 
+ * DateSort, and PictureSort.
+ * 
  */
 public class SortTest extends TestCase {
 	
