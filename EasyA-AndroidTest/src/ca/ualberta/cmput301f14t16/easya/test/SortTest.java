@@ -2,6 +2,7 @@ package ca.ualberta.cmput301f14t16.easya.test;
 
 import java.util.ArrayList;
 
+import ca.ualberta.cmput301f14t16.easya.Question;
 import ca.ualberta.cmput301f14t16.easya.Sort;
 import ca.ualberta.cmput301f14t16.easya.Topic;
 import junit.framework.TestCase;
@@ -19,6 +20,7 @@ public class SortTest extends TestCase {
 	
 	public void testSortUpvote() {
 		boolean sortOrder;
+		Question q = new Question();
 		ArrayList<Topic> listTopicTest =  new ArrayList<Topic>();
 
 		//highest to lowest sort.
