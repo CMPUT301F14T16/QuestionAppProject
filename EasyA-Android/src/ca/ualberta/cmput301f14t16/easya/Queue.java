@@ -9,6 +9,7 @@ import java.util.List;
 
 /**
  * Created by Cauani on 2014-10-25.
+ * @author Cauani
  */
 public class Queue extends Thread
 {
