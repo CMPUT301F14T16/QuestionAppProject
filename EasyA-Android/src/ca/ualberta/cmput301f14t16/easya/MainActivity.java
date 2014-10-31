@@ -68,9 +68,6 @@ public class MainActivity extends Activity {
     public List<Question> getListQuestions(){
     	if (mQuestionList == null)
     		mQuestionList = new ArrayList<Question>();
-    	Question qu = new Question("Title", "Body", "111");
-    	qu.addAnswer(new Answer("body", "111"));
-    	mQuestionList.add(qu);
     	return mQuestionList;
     }
 
