@@ -1,7 +1,9 @@
-package ca.ualberta.cmput301f14t16.easya;
+package ca.ualberta.cmput301f14t16.easya.Model;
 
 import java.util.ArrayList; // Used in list creation.
 import java.util.List;
+
+import ca.ualberta.cmput301f14t16.easya.View.MainView;
 
 /**
  * The main model used to interact with the data of the application.

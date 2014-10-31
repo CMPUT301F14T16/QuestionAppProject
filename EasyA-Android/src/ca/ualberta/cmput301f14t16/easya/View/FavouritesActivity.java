@@ -1,11 +1,12 @@
-package ca.ualberta.cmput301f14t16.easya;
+package ca.ualberta.cmput301f14t16.easya.View;
 
 import android.os.Bundle;
 
-public class MyQuestionAcitvity extends MainActivity {
+public class FavouritesActivity extends MainActivity {
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 	}
-
+	
+	
 }

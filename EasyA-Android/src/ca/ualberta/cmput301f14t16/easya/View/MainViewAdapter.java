@@ -1,6 +1,11 @@
-package ca.ualberta.cmput301f14t16.easya;
+package ca.ualberta.cmput301f14t16.easya.View;
 
 import java.util.List;
+
+import ca.ualberta.cmput301f14t16.easya.R;
+import ca.ualberta.cmput301f14t16.easya.Model.Question;
+import ca.ualberta.cmput301f14t16.easya.R.id;
+import ca.ualberta.cmput301f14t16.easya.R.layout;
 
 import android.content.Context;
 import android.view.LayoutInflater;

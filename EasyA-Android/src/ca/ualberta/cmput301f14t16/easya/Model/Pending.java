@@ -1,4 +1,4 @@
-package ca.ualberta.cmput301f14t16.easya;
+package ca.ualberta.cmput301f14t16.easya.Model;
 
 //TODO: update the javadoc
 /** Description of Pending   

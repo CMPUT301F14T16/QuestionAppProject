@@ -1,4 +1,4 @@
-package ca.ualberta.cmput301f14t16.easya;
+package ca.ualberta.cmput301f14t16.easya.Model;
 
 /**
  * The Reply class extends the {@link Content} class, providing no extra

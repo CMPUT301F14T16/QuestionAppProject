@@ -1,4 +1,4 @@
-package ca.ualberta.cmput301f14t16.easya;
+package ca.ualberta.cmput301f14t16.easya.Model;
 
 /**
  * The Answer class extends the {@link Topic} class, providing no extra

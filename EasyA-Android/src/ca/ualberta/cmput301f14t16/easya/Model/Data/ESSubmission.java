@@ -1,6 +1,8 @@
-package ca.ualberta.cmput301f14t16.easya;
+package ca.ualberta.cmput301f14t16.easya.Model.Data;
 
 import java.lang.reflect.Type;
+
+import ca.ualberta.cmput301f14t16.easya.Model.Content;
 
 public class ESSubmission {
 	String type;

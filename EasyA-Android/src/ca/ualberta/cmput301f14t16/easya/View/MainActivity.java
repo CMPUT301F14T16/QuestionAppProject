@@ -1,7 +1,16 @@
-package ca.ualberta.cmput301f14t16.easya;
+package ca.ualberta.cmput301f14t16.easya.View;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import ca.ualberta.cmput301f14t16.easya.R;
+import ca.ualberta.cmput301f14t16.easya.Model.Question;
+import ca.ualberta.cmput301f14t16.easya.Model.Queue;
+import ca.ualberta.cmput301f14t16.easya.R.drawable;
+import ca.ualberta.cmput301f14t16.easya.R.id;
+import ca.ualberta.cmput301f14t16.easya.R.layout;
+import ca.ualberta.cmput301f14t16.easya.R.menu;
+import ca.ualberta.cmput301f14t16.easya.R.string;
 
 import android.content.res.Configuration;
 import android.os.Bundle;

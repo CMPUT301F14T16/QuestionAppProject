@@ -1,4 +1,4 @@
-package ca.ualberta.cmput301f14t16.easya;
+package ca.ualberta.cmput301f14t16.easya.Exceptions;
 
 public class NoClassTypeSpecifiedException extends Exception{
 	public NoClassTypeSpecifiedException(){		

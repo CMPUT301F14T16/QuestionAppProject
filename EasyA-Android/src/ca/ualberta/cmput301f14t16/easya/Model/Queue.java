@@ -1,4 +1,4 @@
-package ca.ualberta.cmput301f14t16.easya;
+package ca.ualberta.cmput301f14t16.easya.Model;
 
 
 import java.io.IOException;
@@ -6,6 +6,10 @@ import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+
+import ca.ualberta.cmput301f14t16.easya.Exceptions.NoClassTypeSpecifiedException;
+import ca.ualberta.cmput301f14t16.easya.Exceptions.NoInternetException;
+import ca.ualberta.cmput301f14t16.easya.Model.Data.ESClient;
 
 /**
  * Created by Cauani on 2014-10-25.
