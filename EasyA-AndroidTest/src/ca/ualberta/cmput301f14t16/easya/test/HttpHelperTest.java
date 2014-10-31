@@ -5,9 +5,9 @@ import java.lang.reflect.Type;
 
 import junit.framework.TestCase;
 import android.util.Log;
-import ca.ualberta.cmput301f14t16.easya.ESPostResponse;
-import ca.ualberta.cmput301f14t16.easya.HttpHelper;
-import ca.ualberta.cmput301f14t16.easya.Question;
+import ca.ualberta.cmput301f14t16.easya.Model.Data.ESPostResponse;
+import ca.ualberta.cmput301f14t16.easya.Model.Data.HttpHelper;
+import ca.ualberta.cmput301f14t16.easya.Model.Question;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

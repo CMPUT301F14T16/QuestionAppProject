@@ -10,7 +10,6 @@ import java.util.List;
 import ca.ualberta.cmput301f14t16.easya.Model.Answer;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Model.Reply;
-import ca.ualberta.cmput301f14t16.easya.View.HttpHelper;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;

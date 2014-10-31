@@ -5,11 +5,11 @@ import java.lang.reflect.Type;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-import ca.ualberta.cmput301f14t16.easya.Answer;
-import ca.ualberta.cmput301f14t16.easya.ESGetResponse;
-import ca.ualberta.cmput301f14t16.easya.ESSubmission;
-import ca.ualberta.cmput301f14t16.easya.MainActivity;
-import ca.ualberta.cmput301f14t16.easya.Question;
+import ca.ualberta.cmput301f14t16.easya.Model.Answer;
+import ca.ualberta.cmput301f14t16.easya.Model.Data.ESGetResponse;
+import ca.ualberta.cmput301f14t16.easya.Model.Data.ESSubmission;
+import ca.ualberta.cmput301f14t16.easya.View.MainActivity;
+import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import android.test.ActivityInstrumentationTestCase2;
 
 public class ESSubmissionTest extends ActivityInstrumentationTestCase2<MainActivity> {
