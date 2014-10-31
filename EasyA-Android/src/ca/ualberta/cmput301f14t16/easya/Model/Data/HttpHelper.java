@@ -4,7 +4,7 @@
  * On Oct 23, 2014
  */
 
-package ca.ualberta.cmput301f14t16.easya.View;
+package ca.ualberta.cmput301f14t16.easya.Model.Data;
 
 import java.io.BufferedReader;
 import java.io.IOException;

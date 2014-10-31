@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.UUID;
 import android.test.ActivityInstrumentationTestCase2;
 import junit.framework.TestCase;
-import ca.ualberta.cmput301f14t16.easya.User;
+import ca.ualberta.cmput301f14t16.easya.Model.User;
 
 public class UserTest extends TestCase{
 	
