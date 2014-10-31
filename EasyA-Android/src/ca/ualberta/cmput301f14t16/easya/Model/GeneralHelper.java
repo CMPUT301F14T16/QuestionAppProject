@@ -9,13 +9,20 @@ import android.util.Patterns;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.UnableToGetUserEmailException;
 
 /**
- * Responsible for holding methods that will be used across the entire application,
- * or are too generic to be within a class
+ * Provides a helper class containing general-use methods for repeated use
+ * across several classes.
+ * 
  * @author Cauani
  *
  */
 public class GeneralHelper {
 
+	/**
+	 * @param c
+	 * @return
+	 * @throws UnableToGetUserEmailException
+	 */
+	//TODO Docstring method description
 	public String retrieveEmail(Context c) throws UnableToGetUserEmailException{
 		Pattern emailPattern = Patterns.EMAIL_ADDRESS;
 		Account[] accounts = AccountManager.get(c).getAccounts();
@@ -24,6 +31,6 @@ public class GeneralHelper {
 		        return account.name;
 		    }
 		}
-		throw new UnableToGetUserEmailException("Unable to get an user email");
+		throw new UnableToGetUserEmailException("Unable to get user email");
 	}
 }

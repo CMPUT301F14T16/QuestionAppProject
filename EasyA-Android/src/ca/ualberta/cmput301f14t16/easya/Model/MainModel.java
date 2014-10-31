@@ -6,9 +6,13 @@ import java.util.List;
 import ca.ualberta.cmput301f14t16.easya.View.MainView;
 
 /**
- * The main model used to interact with the data of the application.
- * Manages saving and retrieving data to/from the webservice and device. 
- * Design rationale: user id does not change, but their displayed name can.
+ * Provides a method of interacting with the data created and stored by the
+ * application. Includes several methods to save and retrieve data from a
+ * webservice, or local memory..
+ * 
+ * Design rationale: a unique user is associated with a unique and immutable ID.
+ * However, this user and ID may also be associated with a non-unique and
+ * mutable screen name.
  * 
  * @author Brett Commandeur (commande)
  */
@@ -25,9 +29,11 @@ public class MainModel<V extends MainView> {
 
 	/**
 	 * Design rationale: MVC format
- 	* 
-	 * @reference https://github.com/LingboTang/FillerCreepForAndroid/blob/master/src/es/softwareprocess/fillercreep/FModel.java
- 	* @author Abram Hindle
+	 * 
+	 * @reference 
+	 *            https://github.com/LingboTang/FillerCreepForAndroid/blob/master
+	 *            /src/es/softwareprocess/fillercreep/FModel.java
+	 * @author Abram Hindle
 	 */
 	public MainModel() {
 		views = new ArrayList<V>();
