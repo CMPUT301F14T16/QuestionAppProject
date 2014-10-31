@@ -6,22 +6,19 @@ import java.util.List;
 /**
  * @author Stephane
  * @author Brett Commandeur
+ * @author Cauani
  *
  */
-public abstract class Topic extends Content {
-
-	protected List<Reply> replies;
-	protected int voteCount;
-	protected Boolean favourite; // Topic can be favourite of >1 user.
-	protected Boolean readLater; // Topic can be readLater of >1 user.
-	protected String picture;
-
+public abstract class Topic extends Content {		
+	private String picture;
+	private List<Reply> replies;
+	private List<String> favourites; // Topic can be favourite of >1 user.
+	private List<String> upVotes;
+	
 	/**
 	 * No args constructor used by deserializers when recreating a topic.
 	 */
-	public Topic() {
-		super();
-	}
+	public Topic() {}
 	
 	/**
 	 * Constructor for brand new, unsubmitted topic.
@@ -29,31 +26,24 @@ public abstract class Topic extends Content {
 	 * @param body		Main content of the topic; handled by Superclass Content
 	 * @param authorId	Unique identifier for author of the topic; handled by Superclass Content
 	 */
-	public Topic(String body, String authorId) {
-		super(body, authorId);
+	public Topic(String body, String userId) {
+		super(body, userId);
 		this.replies = new ArrayList<Reply>();
-		this.voteCount = 0;
-	}
-
-	/**
-	 * 
-	 */
-	public void addImage() {
-
+		this.upVotes = new ArrayList<String>();
 	}
 
 	/**
 	 * @param filename
 	 */
 	public void addImage(String filename) {
-
+		//TODO: create the AddImage method
 	}
 
 	/**
 	 * @param comment
 	 */
 	public void addReply(Reply reply) {
-		replies.add(reply);
+		this.replies.add(reply);
 	}
 
 	/**
@@ -61,7 +51,7 @@ public abstract class Topic extends Content {
 	 */
 	// TODO change name in UML
 	public List<Reply> getReplies() {
-		return replies;
+		return this.replies;
 	}
 
 	// TODO Topic is a data class, does not manage files!
@@ -76,57 +66,56 @@ public abstract class Topic extends Content {
 	 * @return
 	 */
 	public String getImage() {
-		return picture;
-	}
-
-	// TODO Change method name in UML
-	/**
-	 * @param ID
-	 * @return
-	 */
-	public Reply getReplyById(int ID) {
-		return new Reply();
+		return this.picture;
 	}
 
 	/**
 	 * @return
 	 */
 	// TODO change name in UML
-	public int getUpVoteCount() {
-		return voteCount;
+	public String getUpVoteCount() {
+		return this.upVotes.size() <= 99 ? String.valueOf(this.upVotes.size()) : "99+";
 	}
 
+	/*
+	 * A switch for setting upvote
+	 * If the user have already upvoted, redo that
+	 * if not, upvote it
+	 */
+	public void setUpvote(User user){
+		if (this.upVotes.contains(user.getId())){
+			this.upVotes.remove(user.getId());
+		}else{
+			this.upVotes.add(user.getId());
+		}
+		
+		//TODO: call Queue to add this update to the Queue
+	}
+	
 	/**
 	 * @return
 	 */
 	public boolean hasPicture() {
-		return false;
+		return (this.picture != null && !this.picture.isEmpty());
 	}
 
 	// TODO Remove this method, Change this in the UML
 	/**
+	 * A switch for setting a content as favorite
+	 * If the user have already favorited this, unfavorite
+	 * If the user never favorited this, favorite
 	 * @param isFavourite
 	 */
-	public void setFavourite(boolean isFavourite) {
-		favourite = isFavourite;
+	public void setFavourite(User user) {
+		if (this.favourites.contains(user.getId())){
+			this.favourites.remove(user.getId());
+		}else{
+			this.favourites.add(user.getId());
+		}
+		//TODO: call Queue to add this update to the queue
 	}
-	// TODO add to UML unless this method and the one above get removed. 
-	public boolean getFavourites() {
-		return favourite;
-	}
-
-	// TODO Remove this method, change in UML
-	/**
-	 * @param isReadLater
-	 */
-	public void setReadLater(boolean isReadLater) {
-		readLater = isReadLater;
-	}
-
-	/**
-	 * 
-	 */
-	public void upVote() {
-		voteCount += 1;
+ 
+	public boolean checkFavorite(User user) {
+		return this.favourites.contains(user.getId());
 	}
 }

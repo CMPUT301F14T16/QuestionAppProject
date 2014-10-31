@@ -1,21 +1,28 @@
 package ca.ualberta.cmput301f14t16.easya;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import android.content.res.Configuration;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.ListActivity;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 
 public class MainActivity extends Activity {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private LinearLayout mDrawerList;
-
-    public static Queue mQueueThread;
+    private List<Question> mQuestionList;
+    
+    public static Queue mQueueThread; 
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +58,20 @@ public class MainActivity extends Activity {
         /////
         mQueueThread = new Queue();
         mQueueThread.start();
+        
+        /////
+        ArrayAdapter<Question> adapter = new MainViewAdapter(this, getListQuestions());
+        ((ListView)findViewById(R.id.question_list)).setAdapter(adapter);
+        //TODO: Organize this mess
+    }
+    
+    public List<Question> getListQuestions(){
+    	if (mQuestionList == null)
+    		mQuestionList = new ArrayList<Question>();
+    	Question qu = new Question("Title", "Body", "111");
+    	qu.addAnswer(new Answer("body", "111"));
+    	mQuestionList.add(qu);
+    	return mQuestionList;
     }
 
 	@Override

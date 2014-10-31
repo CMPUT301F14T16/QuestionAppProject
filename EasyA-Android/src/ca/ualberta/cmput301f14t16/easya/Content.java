@@ -7,8 +7,8 @@ import java.util.UUID;
  * The content is the base case for the topic and the reply.                                                                                                                        
  */ 
 public abstract class Content {
-	protected String body, authorId, id;
-	protected Date date;
+	private String body, id, userId;
+	private Date date;
 	
 	/**
 	 * No args constructor used by deserializers in recreation of content.
@@ -24,11 +24,11 @@ public abstract class Content {
 	 * @param body		Main text of content.
 	 * @param authorId	Unique identifier for author of content.
 	 */
-	public Content(String body, String authorId) {
+	public Content(String body, String userId) {
 		this.body = body;
-		this.authorId = authorId;
+		this.userId = userId;
 		this.date = new Date();
-		this.id = UUID.randomUUID().toString();
+		this.id = UUID.randomUUID().toString(); //TODO: unify the creation of ID's method
 	}
 	
 	public String getBody(){
@@ -36,7 +36,15 @@ public abstract class Content {
 	}
 	
 	public String getAuthorId() {
-		return authorId;
+		return this.userId;
+	}
+	
+	public String getAuthorName(){
+		try{
+			return (User.getUserById(this.userId)).getUsername();
+		}catch(Exception ex){
+			return "";
+		}
 	}
 	
 	public Date getDate() {

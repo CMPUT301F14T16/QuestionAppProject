@@ -7,12 +7,13 @@ import java.util.List;
 /**
  * 
  * @author Brett Commandeur (commande)
+ * @author Cauani
  *
  */
 public class Question extends Topic {
 	
-	List<Answer> answers;
-	String title;
+	private List<Answer> Answers;
+	private String Title;
 	
 	/**
 	 * No args constructor 
@@ -28,10 +29,10 @@ public class Question extends Topic {
 	 * @param body		The main text content of the question; handled by Superclass Content.
 	 * @param authorId	A unique identifier to the user who authored the question; handled by Superclass Content.
 	 */
-	public Question(String title, String body, String authorId) {
-		super(body, authorId);
-		this.title = title;
-		this.answers = new ArrayList<Answer>(); 
+	public Question(String title, String body, String userId) {
+		super(body, userId);
+		this.Title = title;
+		this.Answers = new ArrayList<Answer>();
 	}
 	
 	/**
@@ -40,7 +41,7 @@ public class Question extends Topic {
 	 * @return	The title as a string.
 	 */
 	public String getTitle() {
-		return title;
+		return this.Title;
 	}
 	
 	/**
@@ -49,16 +50,18 @@ public class Question extends Topic {
 	 * @param answer	The answer to be added to the list of this question's answers.
 	 */
 	public void addAnswer(Answer answer) {
-		answers.add(answer);
+		if (this.Answers == null)
+			this.Answers = new ArrayList<Answer>();
+		this.Answers.add(answer);
 	}
 	
 	/**
-	 * Gets the number of answers.
+	 * Gets the quantity of answers.
 	 * 
-	 * @return	Size of answer list. 
+	 * @return	Bounded quantity of answers. 
 	 */
-	public int getAnswerCount() {
-		return answers.size();
+	public String getAnswerCount() {
+		return this.Answers.size() <= 99 ? String.valueOf(this.Answers.size()) : "99+";
 	}
 	
 	/**
@@ -68,7 +71,7 @@ public class Question extends Topic {
 	 */
 	// TODO change name in UML.
 	public List<Answer> getAnswers() {
-		return answers;
+		return this.Answers;
 	}
 	
 	/**
@@ -78,7 +81,7 @@ public class Question extends Topic {
 	 * 			On failure, null if answer not found.
 	 */
 	public Answer getAnswerById(String aid) {
-		for (Answer answer : answers) {
+		for (Answer answer : this.Answers) {
 			if (answer.getId().equals(aid))
 				return answer;
 		}
