@@ -8,12 +8,11 @@ import java.util.List;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 
-import ca.ualberta.cmput301f14t16.easya.Answer;
-import ca.ualberta.cmput301f14t16.easya.ESClient;
-import ca.ualberta.cmput301f14t16.easya.MainActivity;
-import ca.ualberta.cmput301f14t16.easya.NoInternetException;
-import ca.ualberta.cmput301f14t16.easya.Question;
-import ca.ualberta.cmput301f14t16.easya.Reply;
+import ca.ualberta.cmput301f14t16.easya.Model.Answer;
+import ca.ualberta.cmput301f14t16.easya.Model.Data.ESClient;
+import ca.ualberta.cmput301f14t16.easya.View.MainActivity;
+import ca.ualberta.cmput301f14t16.easya.Model.Question;
+import ca.ualberta.cmput301f14t16.easya.Model.Reply;
 
 /**
  * 
