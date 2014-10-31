@@ -23,7 +23,7 @@ public class Queue extends Thread
     final long loop_interval = 5000; //in milliseconds
     final int check_for_internet = 300000; //in milliseconds
 
-    private Date lastCheck;
+    public Date lastCheck; // TODO made public because test case uses it.
     private boolean haveInternet;
     private boolean isActive = true;
     
@@ -123,7 +123,8 @@ public class Queue extends Thread
         Checks whether the phone can reach a certain url or not
         (so even if the user have internet, if our server can't be reached, assume something is wrong)
      */
-    private boolean checkForInternet()
+    // TODO made public because test case uses it.
+    public boolean checkForInternet()
     {
         try {
             InetAddress address = InetAddress.getByName(ping_url);

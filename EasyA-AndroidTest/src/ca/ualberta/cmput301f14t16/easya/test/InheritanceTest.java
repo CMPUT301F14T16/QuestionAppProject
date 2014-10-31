@@ -3,11 +3,11 @@ package ca.ualberta.cmput301f14t16.easya.test;
 import java.util.ArrayList;
 import java.util.List;
 
-import ca.ualberta.cmput301f14t16.easya.Answer;
-import ca.ualberta.cmput301f14t16.easya.MainActivity;
-import ca.ualberta.cmput301f14t16.easya.Question;
-import ca.ualberta.cmput301f14t16.easya.Topic;
-import ca.ualberta.cmput301f14t16.easya.User;
+import ca.ualberta.cmput301f14t16.easya.Model.Answer;
+import ca.ualberta.cmput301f14t16.easya.View.MainActivity;
+import ca.ualberta.cmput301f14t16.easya.Model.Question;
+import ca.ualberta.cmput301f14t16.easya.Model.Topic;
+import ca.ualberta.cmput301f14t16.easya.Model.User;
 import android.test.ActivityInstrumentationTestCase2;
 
 /**
@@ -26,7 +26,7 @@ public class InheritanceTest extends ActivityInstrumentationTestCase2<MainActivi
 		List<Integer> NSC = null;
 		NSC.add(1);
 		NSC.add(2);
-		User u = new User("commande@ualberta.ca", "Brett",NSC);
+		User u = new User("commande@ualberta.ca", "Brett");
 		
 		// Create the question authored by that user.
 		Question q = new Question("My Question", 

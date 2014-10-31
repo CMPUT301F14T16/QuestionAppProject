@@ -33,7 +33,7 @@
             android:layout_gravity="center_vertical"
             android:layout_alignParentLeft="true"
             android:layout_below="@id/questionCommentsIcon"
-            android:src="@drawable/ic_action_good" />/
+            android:src="@drawable/ic_action_good" />
         <TextView
             android:id="@+id/questionUpvotes"
             android:layout_width="0dp"

@@ -1,10 +1,10 @@
 package ca.ualberta.cmput301f14t16.easya.test;
 
 import java.util.ArrayList;
-import ca.ualberta.cmput301f14t16.easya.Answer;
-import ca.ualberta.cmput301f14t16.easya.Question;
-import ca.ualberta.cmput301f14t16.easya.Reply;
-import ca.ualberta.cmput301f14t16.easya.Topic;
+import ca.ualberta.cmput301f14t16.easya.Model.Answer;
+import ca.ualberta.cmput301f14t16.easya.Model.Question;
+import ca.ualberta.cmput301f14t16.easya.Model.Reply;
+import ca.ualberta.cmput301f14t16.easya.Model.Topic;
 import android.view.View;
 import junit.framework.TestCase;
 
@@ -47,8 +47,8 @@ public class BrowseTopicsTest extends TestCase {
 	
 	
 	//View if Favourited.
-	assertTrue(question.getFavourites() == true);
-	assertTrue(answer.getFavourites() == true);
+	assertTrue(question.getFavourite() == true);
+	assertTrue(answer.getFavourite() == true);
 	
 	//View if ReadLater question/Answer, 
 	

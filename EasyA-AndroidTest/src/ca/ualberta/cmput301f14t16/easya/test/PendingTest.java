@@ -3,6 +3,7 @@ package ca.ualberta.cmput301f14t16.easya.test;
 import android.test.ActivityInstrumentationTestCase2; 
 import android.util.Log;
 import ca.ualberta.cmput301f14t16.easya.*;
+import ca.ualberta.cmput301f14t16.easya.Model.*;
 import ca.ualberta.cmput301f14t16.easya.test.*;
 
 import java.util.Date;
@@ -34,6 +35,8 @@ public class PendingTest extends TestCase{
 		QId = q.getId();
 		AId = a.getId();
 		RId = r.getId();
+		
+		// TODO content is empty here, you should pass the question.
 		pending = new Pending(QId,AId,content);
 	}
 	

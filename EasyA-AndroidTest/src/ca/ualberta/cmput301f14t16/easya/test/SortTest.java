@@ -2,7 +2,7 @@ package ca.ualberta.cmput301f14t16.easya.test;
 
 import java.util.ArrayList;
 
-import ca.ualberta.cmput301f14t16.easya.Question;
+import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Sort;
 import ca.ualberta.cmput301f14t16.easya.Topic;
 import junit.framework.TestCase;

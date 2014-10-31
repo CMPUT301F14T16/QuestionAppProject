@@ -9,7 +9,9 @@ import java.util.List;
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
 import junit.framework.TestCase;
-import ca.ualberta.cmput301f14t16.easya.*;
+import ca.ualberta.cmput301f14t16.easya.Model.*;
+import ca.ualberta.cmput301f14t16.easya.Model.Data.*;
+import ca.ualberta.cmput301f14t16.easya.Exceptions.*;
 
 public class QueueTest extends TestCase{
 	

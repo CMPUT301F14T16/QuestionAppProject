@@ -23,7 +23,8 @@ import com.google.gson.reflect.TypeToken;
 public class ESClient {
 	
 	//ElasticSeach Urls
-	private static final String HOST_URL = "http://cmput301.softwareprocess.es:8080/testing/t16question/";
+	private static final String HOST_URL = "http://cmput301.softwareprocess.es:8080/testing/";
+	private static final String QUESTION_PATH = "t16question/";
 	
 	// JSON Utilities
 	private Gson gson = new Gson();
@@ -38,7 +39,7 @@ public class ESClient {
 	public Question getQuestionById(String id) throws IOException {
 
 		// Get a response after submitting the request for the question.
-		String content = HttpHelper.getFromUrl(HOST_URL + id);
+		String content = HttpHelper.getFromUrl(HOST_URL + QUESTION_PATH + id);
 			
 		// We have to tell GSON what type we expect
 		Type esGetResponseType = new TypeToken<ESGetResponse<Question>>(){}.getType();
@@ -62,7 +63,7 @@ public class ESClient {
 		String json = gson.toJson(question);
 		
 		// Post the object to the webservice
-		HttpHelper.putToUrl(HOST_URL + question.getId(), json);
+		HttpHelper.putToUrl(HOST_URL + QUESTION_PATH + question.getId(), json);
 		
 		//TODO: if have no internet, throw a NoInternetException
 		
@@ -85,7 +86,7 @@ public class ESClient {
 		String json = gson.toJson(q.getAnswers());
 		String updateStr = "{ \"doc\":{ \"answers\":" + json + "} }";
 		
-		HttpHelper.putToUrl(HOST_URL + qid +"/_update", updateStr);
+		HttpHelper.putToUrl(HOST_URL + QUESTION_PATH + qid +"/_update", updateStr);
 		
 		//TODO: if have no internet, throw a NoInternetException
 		
@@ -107,7 +108,7 @@ public class ESClient {
 		String json = gson.toJson(q.getReplies());
 		String updateStr = "{ \"doc\":{ \"replies\":" + json + "} }";
 		
-		HttpHelper.putToUrl(HOST_URL + qid + "/_update", updateStr);
+		HttpHelper.putToUrl(HOST_URL + QUESTION_PATH + qid + "/_update", updateStr);
 		
 		//TODO: if have no internet, throw a NoInternetException
 		
@@ -130,7 +131,7 @@ public class ESClient {
 		String json = gson.toJson(q.getAnswers());
 		String updateStr = "{ \"doc\":{ \"answers\":" + json + "} }";
 		
-		HttpHelper.putToUrl(HOST_URL + qid +"/_update", updateStr);
+		HttpHelper.putToUrl(HOST_URL + QUESTION_PATH + qid +"/_update", updateStr);
 		
 		//TODO: if have no internet, throw a NoInternetException
 		
@@ -149,7 +150,7 @@ public class ESClient {
 	public List<Question> searchQuestionsByQuery(String query, int numResults) throws IOException {
 		List<Question> qlist = new ArrayList<Question>();
 		
-		String response = HttpHelper.getFromUrl(HOST_URL + "_search/?size="+ numResults + "&q=" + URLEncoder.encode(query, "UTF-8"));
+		String response = HttpHelper.getFromUrl(HOST_URL + QUESTION_PATH + "_search/?size="+ numResults + "&q=" + URLEncoder.encode(query, "UTF-8"));
 		
 		Type esSearchResponseType = new TypeToken<ESSearchResponse<Question>>(){}.getType();
 		ESSearchResponse<Question> esResponse = gson.fromJson(response, esSearchResponseType);
