@@ -11,6 +11,8 @@ import junit.framework.TestCase;
 /**
  * 
  * @author Klinton Shmeit
+ * 
+ * This test covers tests for the use case Browse Topic Test.
  *
  */
 public class BrowseTopicsTest extends TestCase {
