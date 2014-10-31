@@ -3,38 +3,72 @@ package ca.ualberta.cmput301f14t16.easya;
 import java.util.Date;
 import java.util.UUID;
 
-/**                                                                                                            
- * The content is the base case for the topic and the reply.                                                                                                                        
- */ 
+/**
+ * The Content class is an abstract class that provides several utility methods
+ * to its subclasses. The entirety of its functionality involves getters and
+ * setters for its members.
+ * 
+ * Content subclasses exist to package and store information including and
+ * relevant to a {@link String}, {@link Content#body}, as a framework for a
+ * question and response system.
+ */
 public abstract class Content {
-	private String body, id, userId;
-	private Date date;
-	
 	/**
-	 * No args constructor used by deserializers in recreation of content.
+	 * The main collection of data stored by the Content subclass.
 	 */
+	private String body;
+	/**
+	 * An identifier used to refer to the unique creator of the data stored as
+	 * {@link Content#body}.
+	 */
+	private String userId;
+	/**
+	 * A unique identifier used to refer to a specific instance of Content.
+	 */
+	private String id;
+	/**
+	 * The date at which the instance of Content was created.
+	 */
+	private Date createdOn;
+
+	/**
+	 * Creates an empty {@link Content} object.
+	 */
+	// No args constructor used by deserializers in recreation of content.
 	public Content() {
-		
+
 	}
 	
 	/**
-	 * Constructor for brand new, unsubmitted content.
-	 * Date and id are automatically generated.
+	 * Creates a new instance of Content containing the body text provided, and
+	 * associated with the given author ID. {@link Content#date} and
+	 * {@link Content#id} will be automatically generated.
 	 * 
-	 * @param body		Main text of content.
-	 * @param authorId	Unique identifier for author of content.
+	 * @param body
+	 *            {@link String} stored by the new instance of Content. Setter
+	 *            for {@link Content#body}
+	 * @param authorId
+	 *            Unique identifier for author of content. Setter for
+	 *            {@link Content#authorID}
 	 */
 	public Content(String body, String userId) {
 		this.body = body;
 		this.userId = userId;
-		this.date = new Date();
+		this.createdOn = new Date();
 		this.id = UUID.randomUUID().toString(); //TODO: unify the creation of ID's method
 	}
 	
+	
+	/**
+	 * @return {@link Content#body}
+	 */
 	public String getBody(){
 		return body;
 	}
 	
+	/**
+	 * @return {@link Content#authorId}
+	 */
 	public String getAuthorId() {
 		return this.userId;
 	}
@@ -46,20 +80,26 @@ public abstract class Content {
 			return "";
 		}
 	}
-	
+
+	/**
+	 * @return {@link Content#date}
+	 */
 	public Date getDate() {
-		return date;
+		return createdOn;
 	}
-	
+
+	/**
+	 * @return {@link Content#id}
+	 */
 	public String getId(){
 		return id;
 	}
 	
 	/**
-	 * Sets the content's id. 
-	 * Used in recreating a content object from the server.
+	 * Sets {@link Content#id}
 	 * 
 	 * @param newId
+	 *            ID to set
 	 */
 	// TODO Have server use provided id when creating a submission.
 	public void setId(String newId) {
