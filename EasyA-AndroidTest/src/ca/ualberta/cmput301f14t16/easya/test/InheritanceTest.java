@@ -23,7 +23,10 @@ public class InheritanceTest extends ActivityInstrumentationTestCase2<MainActivi
 	
 	public void testQuestionCreation () {
 		// Create a user.
-		User u = new User("commande@ualberta.ca", "Brett");
+		List<Integer> NSC = null;
+		NSC.add(1);
+		NSC.add(2);
+		User u = new User("commande@ualberta.ca", "Brett",NSC);
 		
 		// Create the question authored by that user.
 		Question q = new Question("My Question", 
