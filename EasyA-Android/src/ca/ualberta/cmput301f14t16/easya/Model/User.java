@@ -5,6 +5,16 @@ import java.util.Date;
 import java.util.List; 
 import java.util.Random;
 import java.util.UUID;
+import java.util.regex.Pattern;
+
+import ca.ualberta.cmput301f14t16.easya.R;
+import ca.ualberta.cmput301f14t16.easya.View.MainActivity;
+
+import android.accounts.Account;
+import android.accounts.AccountManager;
+import android.content.Context;
+import android.text.style.EasyEditSpan;
+import android.util.Patterns;
 
 public class User {
 		private String username;
@@ -19,8 +29,8 @@ public class User {
 		}
 		
 		public User(String email, String username) {
-			this.email = email.equals("") ? retrieveEmail() : email;
-			this.username = username.equals("") ? generateUserName() : username;
+			this.email = email;
+			this.username = username.equals("") ? generateNewUserName() : username;
 			this.id = UUID.randomUUID().toString();
 			this.createdOn = new Date();
 			this.favorites = getFavorites();
@@ -61,14 +71,8 @@ public class User {
 		public String getId()  {
 			return id;
 		}
-		
-		private String retrieveEmail(){
-			//TODO: retrieve email from the system
-			//If not possible, throw an exception
-			return "";
-		}
-		
-		private String generateUserName(){
+				
+		private String generateNewUserName(){
 			Random ran = new Random();
 			int name = ran.nextInt(5) + 1;
 			int number = ran.nextInt(8999) + 1000;

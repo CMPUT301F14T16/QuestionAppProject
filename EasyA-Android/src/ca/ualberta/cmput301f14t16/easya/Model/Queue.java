@@ -13,6 +13,7 @@ import ca.ualberta.cmput301f14t16.easya.Model.Data.ESClient;
 
 /**
  * Created by Cauani on 2014-10-25.
+ * @author Cauani
  */
 public class Queue extends Thread
 {
