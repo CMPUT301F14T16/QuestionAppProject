@@ -12,11 +12,11 @@
         android:paddingBottom="2dp">
         <ImageView
             android:id="@+id/questionCommentsIcon"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_gravity="center_vertical"
-            android:layout_marginBottom="4dp"
-            android:src="@android:drawable/sym_action_chat"/>
+            android:layout_marginBottom="2dp"
+            android:src="@drawable/ic_action_chat"/>
         <TextView
             android:id="@+id/questionComments"
             android:layout_width="0dp"
@@ -25,11 +25,12 @@
             android:layout_toRightOf="@id/questionCommentsIcon"
             android:layout_marginBottom="4dp"
             android:singleLine="true"
-            android:gravity="center_vertical"/>
+            android:gravity="center_vertical"
+            android:text="test"/>
         <ImageView
             android:id="@+id/questionUpvotesIcon"
-            android:layout_width="16dp"
-            android:layout_height="16dp"
+            android:layout_width="20dp"
+            android:layout_height="20dp"
             android:layout_gravity="center_vertical"
             android:layout_alignParentLeft="true"
             android:layout_below="@id/questionCommentsIcon"
@@ -43,7 +44,8 @@
             android:layout_toRightOf="@id/questionUpvotesIcon"
             android:singleLine="true"
             android:fadingEdge="horizontal"
-            android:gravity="center_vertical"/>
+            android:gravity="center_vertical"
+            android:text="test"/>
     </RelativeLayout>
     <TextView
         android:id="@+id/questionTitle"

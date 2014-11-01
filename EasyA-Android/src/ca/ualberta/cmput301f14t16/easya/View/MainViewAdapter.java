@@ -19,7 +19,7 @@ public class MainViewAdapter extends ArrayAdapter<Question> {
 
     public MainViewAdapter( Context context, List<Question> questions)
     {
-        super( context, R.layout.main_list, R.id.question_list, questions );
+        super( context, R.layout.main_questions_fragment, R.id.question_list, questions );
         inflater = LayoutInflater.from(context);
     }
 
@@ -34,7 +34,7 @@ public class MainViewAdapter extends ArrayAdapter<Question> {
         // Create a new row for the list
         if ( view == null )
         {
-            view = inflater.inflate(R.layout.main_list, null);
+            view = inflater.inflate(R.layout.main_questions_fragment, null);
 
             qTitle = (TextView) view.findViewById( R.id.questionTitle);
             qAuthor= (TextView) view.findViewById( R.id.questionAuthor);
