@@ -1,8 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical" >
-    
-
-</LinearLayout>
+    android:layout_margin="10dp">
+    <RelativeLayout
+        android:id="@+id/answer_fragment_rPanel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true">
+        <ImageButton
+            android:id="@+id/answer_fragment_upvoteBtn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_alignParentLeft="true"
+            android:src="@android:drawable/ic_dialog_info"
+            android:layout_centerHorizontal="true"/>
+        <TextView
+            android:id="@+id/answer_fragment_upvoteText"
+            android:layout_width="40dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_below="@id/answer_fragment_upvoteBtn"
+            android:gravity="center"
+            android:layout_marginBottom="5dp"
+            android:textSize="18sp"
+            android:fadingEdge="horizontal"
+            android:text="99+"/>
+        <TextView
+            android:id="@+id/answer_fragment_body"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@id/answer_fragment_upvoteBtn"
+            android:paddingLeft="10dp"
+            android:text="really silly text about the given title that will grow much much longer to test some things really silly text about the given title that will grow much much longer to test some things really silly text about the given title that will grow much much longer to test some things really silly text about the given title that will grow much much longer to test some things really silly text about the given title that will grow much much longer to test some things"/>
+        <TextView
+            android:id="@+id/answer_fragment_authorDate"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/answer_fragment_body"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:textStyle="italic"
+            android:text="2014-10-31, 09:20 by @Guest999"/>
+    </RelativeLayout>
+    <LinearLayout
+        android:id="@+id/answer_fragment_replies"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/answer_fragment_rPanel"
+        android:layout_alignParentLeft="true"
+        android:background="#c9c9c9"
+        android:orientation="vertical">
+        <LinearLayout 
+            android:id="@+id/answer_fragment_replies_list"
+            android:layout_width="match_parent"
+        	android:layout_height="wrap_content"
+        	android:orientation="vertical">            
+        </LinearLayout>
+        <EditText
+            android:id="@+id/answer_fragment_submitReplyEdt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+</RelativeLayout>
