@@ -32,8 +32,7 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@id/answer_fragment_upvoteBtn"
-            android:paddingLeft="10dp"
-            android:text="really silly text about the given title that will grow much much longer to test some things really silly text about the given title that will grow much much longer to test some things really silly text about the given title that will grow much much longer to test some things really silly text about the given title that will grow much much longer to test some things really silly text about the given title that will grow much much longer to test some things"/>
+            android:paddingLeft="10dp"/>
         <TextView
             android:id="@+id/answer_fragment_authorDate"
             android:layout_width="wrap_content"
@@ -41,8 +40,7 @@
             android:layout_below="@id/answer_fragment_body"
             android:layout_alignParentRight="true"
             android:layout_marginTop="10dp"
-            android:textStyle="italic"
-            android:text="2014-10-31, 09:20 by @Guest999"/>
+            android:textStyle="italic"/>
     </RelativeLayout>
     <LinearLayout
         android:id="@+id/answer_fragment_replies"
