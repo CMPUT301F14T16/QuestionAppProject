@@ -7,6 +7,7 @@ import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Model.Answer;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
+import ca.ualberta.cmput301f14t16.easya.Model.QuestionList;
 import ca.ualberta.cmput301f14t16.easya.Model.Queue;
 import ca.ualberta.cmput301f14t16.easya.R.drawable;
 import ca.ualberta.cmput301f14t16.easya.R.id;
@@ -80,27 +81,11 @@ public class MainActivity extends Activity {
         mQueueThread.start();
         
         /////
-        ArrayAdapter<Question> adapter = new MainViewAdapter(this, getListQuestions());
+        ArrayAdapter<QuestionList> adapter = new MainViewAdapter(this, mm.getAllQuestions());
         ((ListView)findViewById(R.id.question_list)).setAdapter(adapter);
         //TODO: Organize this mess
     }
     
-    public List<Question> getListQuestions(){
-    	if (mQuestionList == null)
-    		mQuestionList = new ArrayList<Question>();
-    	//Test only
-    	//*
-    	Question q = new Question("Title", "Body", "userI");
-    	q.addAnswer(new Answer("New Answer 1", "NoAuthor"));
-		q.addAnswer(new Answer("New Answer 2", "NoAuthor"));
-		q.addAnswer(new Answer("New Answer 3", "NoAuthor"));
-
-    	mQuestionList.add(q);
-    	mQuestionList.add(new Question("Title", "Body", "userI"));
-    	// */
-    	return mQuestionList;
-    }
-
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.

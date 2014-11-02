@@ -120,7 +120,7 @@ public class Cache {
 		List<QuestionList> lst = new ArrayList<QuestionList>();
 		for (Question q : aux){
 			if (q.getAuthorId().equals(u.getId()))
-				lst.add(new QuestionList(q.getId(), q.getTitle(), q.getAuthorName(), q.getAnswerCountString(), q.getUpVoteCount(), q.hasPicture()));
+				lst.add(new QuestionList(q.getId(), q.getTitle(), q.getAuthorName(), q.getAnswerCountString(), q.getUpVoteCountString(), q.hasPicture()));
 		}
 		return lst;
 	}
@@ -131,7 +131,7 @@ public class Cache {
 		List<Question> aux = gson.fromJson(PMDataParser.loadJson(ctx, PMFilesEnum.CACHEQUESTIONS), listType);
 		List<QuestionList> lst = new ArrayList<QuestionList>();
 		for (Question q : aux){
-			lst.add(new QuestionList(q.getId(), q.getTitle(), q.getAuthorName(), q.getAnswerCountString(), q.getUpVoteCount(), q.hasPicture()));
+			lst.add(new QuestionList(q.getId(), q.getTitle(), q.getAuthorName(), q.getAnswerCountString(), q.getUpVoteCountString(), q.hasPicture()));
 		}
 		return lst;
 	}
@@ -166,9 +166,13 @@ public class Cache {
 		throw new NoContentAvailableException();
 	}
 
-	public static void getAllQuestions(Context ctx) {
+	public static List<QuestionList> getAllQuestions() {
 		ESClient es = new ESClient();
-		
-		
-	}	
+		try{
+			return es.searchQuestionListsByQuery("", 100);			
+		}catch(IOException ex){
+			//TODO: deal with this later
+			return null;
+		}		
+	}
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
+import ca.ualberta.cmput301f14t16.easya.Model.QuestionList;
 import ca.ualberta.cmput301f14t16.easya.R.id;
 import ca.ualberta.cmput301f14t16.easya.R.layout;
 
@@ -15,10 +16,10 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-public class MainViewAdapter extends ArrayAdapter<Question> {
+public class MainViewAdapter extends ArrayAdapter<QuestionList> {
     private LayoutInflater inflater;
 
-    public MainViewAdapter( Context context, List<Question> questions)
+    public MainViewAdapter( Context context, List<QuestionList> questions)
     {
         super( context, R.layout.main_questions_fragment, R.id.question_list, questions );
         inflater = LayoutInflater.from(context);
@@ -28,7 +29,7 @@ public class MainViewAdapter extends ArrayAdapter<Question> {
     public View getView(int id, View view, ViewGroup parent)
     {
         // Question item to display
-        Question qItem = (Question)this.getItem(id);
+        QuestionList qItem = (QuestionList)this.getItem(id);
         // The child views in each row.
         TextView qTitle, qAuthor, qAnswers, qUpVotes;
 
@@ -69,9 +70,9 @@ public class MainViewAdapter extends ArrayAdapter<Question> {
         qTitle.setTag(qItem);
 
         qTitle.setText(qItem.getTitle());
-        qAuthor.setText(qItem.getAuthorName());
-        qAnswers.setText(qItem.getAnswerCountString());
-        qUpVotes.setText(qItem.getUpVoteCountString());
+        qAuthor.setText(""); //TODO: finish this
+        qAnswers.setText(qItem.getAnswers());
+        qUpVotes.setText(qItem.getUpvotes());
 
         return view;
     }    
