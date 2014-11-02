@@ -80,13 +80,15 @@ public class MainActivity extends Activity {
     public List<Question> getListQuestions(){
     	if (mQuestionList == null)
     		mQuestionList = new ArrayList<Question>();
+    	//Test only
+    	/*
     	Question q = new Question("Title", "Body", "userI");
     	q.addAnswer(new Answer("New Answer 1", "NoAuthor"));
 		q.addAnswer(new Answer("New Answer 2", "NoAuthor"));
 		q.addAnswer(new Answer("New Answer 3", "NoAuthor"));
 
     	mQuestionList.add(q);
-    	mQuestionList.add(new Question("Title", "Body", "userI"));
+    	mQuestionList.add(new Question("Title", "Body", "userI"));*/
     	return mQuestionList;
     }
 

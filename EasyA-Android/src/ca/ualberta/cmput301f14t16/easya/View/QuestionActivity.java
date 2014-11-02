@@ -19,10 +19,11 @@ public class QuestionActivity extends Activity {
 			//Get the question id from the intent, and retrieve a question object from ESClient
 			this.q = Question.getQuestionById((getIntent()).getStringExtra(MainActivity.QUESTION_KEY));
 			//test only
+			/*
 			this.q = new Question("Title", "Body", "userI");
 			this.q.addAnswer(new Answer("New Answer 1", "NoAuthor"));
 			this.q.addAnswer(new Answer("New Answer 2", "NoAuthor"));
-			this.q.addAnswer(new Answer("New Answer 3", "NoAuthor"));
+			this.q.addAnswer(new Answer("New Answer 3", "NoAuthor"));*/
 		}catch (NoContentAvailableException ex){
 			//TODO: display the NoContentAvailable layout instead of the question_view
 			
