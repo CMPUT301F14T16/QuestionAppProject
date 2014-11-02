@@ -10,7 +10,10 @@ public class Sort {
 			ArrayList<Topic> topicList) {
 		Collections.sort(topicList, new Comparator<Topic>(){
 			public int compare(Topic topic1, Topic topic2){
-				return topic1.getUpVoteCount().compareTo(topic2.getUpVoteCount());
+				// int cmp = a > b ? +1 : a < b ? -1 : 0;
+				// compares the 2 ints.
+				return topic1.getUpVoteCount() > topic2.getUpVoteCount() ? 1 :
+						topic1.getUpVoteCount() < topic2.getUpVoteCount() ? -1 : 0;
 			}
 		});
 	}
