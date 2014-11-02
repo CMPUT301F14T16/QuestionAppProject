@@ -77,7 +77,7 @@ public class MainModel<V extends MainView> {
 	}
 
 	public List<QuestionList> getAllQuestions() {
-		return Cache.getAllQuestions();
+		return Cache.getAllQuestions(ctx);
 	}	
 		
 	/**

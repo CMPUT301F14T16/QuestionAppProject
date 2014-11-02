@@ -21,16 +21,7 @@ import android.content.Context;
  * @author Cauani
  *
  */
-public class Cache {	
-	public static List<QuestionList> getQuestionList(Context ctx){
-		 if (MainActivity.mQueueThread.haveInternetConnection()){
-			 //TODO: return questionslist from the ESClient
-			 return new ArrayList<QuestionList>();
-		 }else{
-			 return getQuestionListFromQuestionsCache(ctx);				
-		 }
-	}
-	
+public class Cache {		
 	public static List<QuestionList> getUserQuestions(Context ctx, User u){
 		if (MainActivity.mQueueThread.haveInternetConnection()){
 			//TODO: return all questionslist from the ESClient,
@@ -168,13 +159,17 @@ public class Cache {
 		throw new NoContentAvailableException();
 	}
 
-	public static List<QuestionList> getAllQuestions() {
-		ESClient es = new ESClient();
-		try{
-			return es.searchQuestionListsByQuery("*", 100);			
-		}catch(IOException ex){
-			//TODO: deal with this later
-			return null;
-		}		
+	public static List<QuestionList> getAllQuestions(Context ctx) {
+		if (MainActivity.mQueueThread.haveInternetConnection()){
+			ESClient es = new ESClient();
+			try{
+				return es.searchQuestionListsByQuery("*", 100);			
+			}catch(IOException ex){
+				//TODO: deal with this later
+				return null;
+			}	
+		 }else{
+			 return getQuestionListFromQuestionsCache(ctx);				
+		 }
 	}
 }
