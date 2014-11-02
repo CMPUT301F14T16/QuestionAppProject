@@ -89,7 +89,7 @@ public abstract class Topic extends Content {
 			this.upVotes.add(user.getId());
 		}
 		
-		//TODO: call Queue to add this update to the Queue
+		//TODO: Try to call directly if have internet, if have no internet, throw exception
 	}
 	
 	/**
@@ -115,7 +115,11 @@ public abstract class Topic extends Content {
 		//TODO: call Queue to add this update to the queue
 	}
  
-	public boolean checkFavorite(User user) {
+	public boolean checkFavourite(User user) {
+		return this.favourites.contains(user.getId());
+	}
+	
+	public boolean checkUpVote(User user) {
 		return this.favourites.contains(user.getId());
 	}
 }

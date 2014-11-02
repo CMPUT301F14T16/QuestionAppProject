@@ -4,8 +4,10 @@ import java.util.List;
 
 import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Model.Answer;
+import ca.ualberta.cmput301f14t16.easya.Model.Content;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Model.Reply;
+import ca.ualberta.cmput301f14t16.easya.Model.Topic;
 import android.content.Context;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -37,15 +39,24 @@ public class QuestionViewAdapter {
     OnEditorActionListener newReply = new OnEditorActionListener() {
 		@Override
 		public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-			// TODO Auto-generated method stub
-			return false;
+			if ((event.getAction() == KeyEvent.ACTION_DOWN) && (actionId == KeyEvent.KEYCODE_ENTER)) {
+	            //TODO: pass to the controller to add a new Reply
+				return true;
+	        }
+	        return false;
 		}        
     };
     
     OnClickListener upVote = new OnClickListener() {
         @Override
         public void onClick(View v) {
-            
+            try{
+            	//TODO: pass all this to the controller
+	        	Topic t = (Topic)v.getTag();
+	            t.setUpvote(null); //TODO: set the user (get it from mainmodel?)
+            }catch(Exception ex){
+            	//TODO: do something with the exception
+            }
         }
     };    
 
@@ -79,6 +90,10 @@ public class QuestionViewAdapter {
     	((EditText)v.findViewById(R.id.question_fragment_submitReplyEdt)).setTag(0);
     	((ImageButton)v.findViewById(R.id.question_fragment_upvoteBtn)).setTag(q);
     	((ImageButton)v.findViewById(R.id.question_fragment_upvoteBtn)).setOnClickListener(upVote);
+    	if (q.checkUpVote(null)){ //TODO: get the current user to check
+    		//TODO: set a different image for when the user have already upvoted the topic
+    		//((ImageButton)v.findViewById(R.id.question_fragment_upvoteBtn)).setImageDrawable(R.drawable.)
+    	}
     	
     	container.addView(v);
     }
@@ -104,6 +119,10 @@ public class QuestionViewAdapter {
     	((EditText)v.findViewById(R.id.answer_fragment_submitReplyEdt)).setTag(a.getId());
     	((ImageButton)v.findViewById(R.id.answer_fragment_upvoteBtn)).setTag(a);
     	((ImageButton)v.findViewById(R.id.answer_fragment_upvoteBtn)).setOnClickListener(upVote);
+    	if (q.checkUpVote(null)){ //TODO: get the current user to check
+    		//TODO: set a different image for when the user have already upvoted the topic
+    		//((ImageButton)v.findViewById(R.id.question_fragment_upvoteBtn)).setImageDrawable(R.drawable.)
+    	}
     	
     	container.addView(v);
     }
