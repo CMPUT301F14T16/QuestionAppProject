@@ -116,4 +116,31 @@ public class Question extends Topic {
 		//TODO: connect with ESClient and return a question
 		return new Question();
 	}
+	
+	@Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
+
+        Question q = (Question) obj;
+        return (getId() != null && getId().equals(q.getId()))
+                && (Title == q.Title
+                     || (getTitle() != null && getTitle().equals(q.getTitle())))
+                && (getBody() != null && getBody().equals(q.getBody()));
+    }
+   
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result
+                + ((getId() == null) ? 0 : getId().hashCode());
+        result = prime * result
+                + ((getTitle() == null) ? 0 : getTitle().hashCode());
+        return result;
+    }
 }

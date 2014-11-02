@@ -3,6 +3,8 @@ package ca.ualberta.cmput301f14t16.easya.Model;
 import java.util.ArrayList; // Used in list creation.
 import java.util.List;
 
+import android.content.Context;
+
 import ca.ualberta.cmput301f14t16.easya.View.MainView;
 
 /**
@@ -17,15 +19,8 @@ import ca.ualberta.cmput301f14t16.easya.View.MainView;
  * @author Brett Commandeur (commande)
  */
 public class MainModel<V extends MainView> {
-	
-	// TODO MVC will keep these up to date.
-	private List<Question> submittedQuestions;
-	private List<Question> myQuestions;
-	private List<Question> savedQuestions;
-	private List<Pending> pendingQuestion;
 	private ArrayList<V> views;
-	private User user;
-
+	private Context ctx;
 
 	/**
 	 * Design rationale: MVC format
@@ -35,8 +30,9 @@ public class MainModel<V extends MainView> {
 	 *            /src/es/softwareprocess/fillercreep/FModel.java
 	 * @author Abram Hindle
 	 */
-	public MainModel() {
-		views = new ArrayList<V>();
+	public MainModel(Context ctx) {
+		this.ctx = ctx;
+		this.views = new ArrayList<V>();
 	}
 	
 	public void addView(V view) {
@@ -61,6 +57,7 @@ public class MainModel<V extends MainView> {
 	 * @param title
 	 * @param body
 	 */
+	/*
 	public void addQuestion(String title, String body) {
 		//...
 	}
@@ -71,6 +68,7 @@ public class MainModel<V extends MainView> {
 	 * @param title
 	 * @param body
 	 */
+	/*
 	public void addAnswer(int questionID, String title, String body) {
 		//...
 	}
@@ -79,6 +77,7 @@ public class MainModel<V extends MainView> {
 	 * Returns a list of all questions submitted to the system by all users.
 	 * @return
 	 */
+	/*
 	public List<Question> getAllQuestions(){
 		// @TODO Update pluralized name on UML
 		//...
@@ -90,6 +89,7 @@ public class MainModel<V extends MainView> {
 	 * @param questionID
 	 * @return
 	 */
+	/*
 	public List<Question> getAllAnswers(int questionID){
 		// @TODO Update pluralized name on UML
 		//...
@@ -100,6 +100,7 @@ public class MainModel<V extends MainView> {
 	 * Returns a list of all questions submitted by the user.
 	 * @return 
 	 */
+	/*
 	public List<Question> getAllSubmittedQuestions() {
 		// @TODO change method name to getQuestionsSubmittedByUser
 		//...
@@ -110,6 +111,7 @@ public class MainModel<V extends MainView> {
 	 * Returns a list of all questions the user has chosen to save to their device.
 	 * @return
 	 */
+	/*
 	public List<Answer> getAllSavedQuestions() {
 		//...
 		return null;
@@ -119,6 +121,7 @@ public class MainModel<V extends MainView> {
 	 * ...
 	 * @return
 	 */
+	/*
 	public List<Question> sortByDate() {
 		//@TODO Extract the sort methods, should be part of a controller. 
 		//@TODO Needs an argument, how does it know what to sort?
@@ -130,6 +133,7 @@ public class MainModel<V extends MainView> {
 	 * ...
 	 * @return
 	 */
+	/*
 	public List<Question> sortByUpvote(){
 		//@TODO Update name typo on UML.
 		//...
@@ -140,6 +144,7 @@ public class MainModel<V extends MainView> {
 	 * ...
 	 * @return
 	 */
+	/*
 	public List<Question> sortByHasQuestion(){
 		//...
 		return null;
@@ -149,6 +154,7 @@ public class MainModel<V extends MainView> {
 	 * ...
 	 * @param newName
 	 */
+	/*
 	public void changeUserName(String newName) {
 		//@TODO How is this different from setUserName?
 		//...
@@ -160,6 +166,7 @@ public class MainModel<V extends MainView> {
 	 * @param pendings
 	 * @return
 	 */
+	/*
 	public boolean pushPending(List<Pending> pendings) {
 		//@TODO design of this method needs reconsideration. Why have pendingQuestion attribute?
 		//...
@@ -171,6 +178,7 @@ public class MainModel<V extends MainView> {
 	 * @param name
 	 * @param emailID
 	 */
+	/*
 	public void setUserName(String name, String emailID) {
 		//@TODO Why do we have this and changeUserName() ?
 		//...
@@ -180,6 +188,7 @@ public class MainModel<V extends MainView> {
 	 * Generates a content ID for content submission.
 	 * @return
 	 */
+	/*
 	public int generateID() {
 		// TODO Main model should not be responsible for this.
 		//...
@@ -191,6 +200,7 @@ public class MainModel<V extends MainView> {
 	 * @param ID
 	 * @return
 	 */
+	/*
 	public Question getQuestionByID(int ID) {
 		//...
 		return null;
@@ -200,6 +210,7 @@ public class MainModel<V extends MainView> {
 	 * Returns the username of the active user on the device.
 	 * @return
 	 */
+	/*
 	public String getUserName() {
 		//...
 		return null;
@@ -209,6 +220,7 @@ public class MainModel<V extends MainView> {
 	 * Returns whether there is content waiting to be pushed to the webservice.
 	 * @return
 	 */
+	/*
 	public boolean hasPending() {
 		// TODO what is this for?
 		//...
@@ -220,6 +232,7 @@ public class MainModel<V extends MainView> {
 	 * @param ID
 	 * @return
 	 */
+	/*
 	public Answer getAnswerByID(int ID) {
 		// TODO feels like we're not taking advantage of abstractions like Content and Topic.
 		//...
@@ -227,4 +240,5 @@ public class MainModel<V extends MainView> {
 	}
 	
 	//@TODO If mainmodel adds questions and answers, should it also add replies?
+	 * */
 }
