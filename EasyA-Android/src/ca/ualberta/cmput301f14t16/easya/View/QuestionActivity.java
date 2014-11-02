@@ -9,7 +9,7 @@ import android.os.Bundle;
 import android.widget.LinearLayout;
 
 public class QuestionActivity extends Activity {
-	private static Question q;
+	private Question q;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -28,6 +28,12 @@ public class QuestionActivity extends Activity {
 		return;
 	}
 	
+	private void SetAdapter(Question q){
+		this.q = q;
+    	QuestionViewAdapter adapter = new QuestionViewAdapter(getApplicationContext(), this.q, (LinearLayout)findViewById(R.id.question_scrollview_container));
+        adapter.build();
+	}
+	
 	private class GetQuestionListTask extends AsyncTask<Void, Void, Question> {
         protected Question doInBackground(Void...voids) {
         	try{
@@ -44,9 +50,7 @@ public class QuestionActivity extends Activity {
         	if (result == null){
         		ShowNoContentView();
         	}else{
-        		q = result;
-	        	QuestionViewAdapter adapter = new QuestionViewAdapter(getApplicationContext(), result, (LinearLayout)findViewById(R.id.question_scrollview_container));
-	            adapter.build();
+        		SetAdapter(result);
         	}
         }
     }

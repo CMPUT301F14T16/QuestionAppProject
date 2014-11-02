@@ -147,14 +147,18 @@ public class MainActivity extends Activity {
         super.onResume();
     }
     
+    private void SetAdapter(List<QuestionList> lst){
+    	ArrayAdapter<QuestionList> adapter = new MainViewAdapter(this, lst);
+        ((ListView)findViewById(R.id.question_list)).setAdapter(adapter);
+    }
+    
     private class GetQuestionListTask extends AsyncTask<Void, Void, List<QuestionList>> {
         protected List<QuestionList> doInBackground(Void...voids) {
             return mm.getAllQuestions();
         }
 
         protected void onPostExecute(List<QuestionList> result) {
-        	ArrayAdapter<QuestionList> adapter = new MainViewAdapter(getApplicationContext(), result);
-            ((ListView)findViewById(R.id.question_list)).setAdapter(adapter);
+        	SetAdapter(result);
         }
     }
 

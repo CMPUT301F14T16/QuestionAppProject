@@ -73,6 +73,8 @@ public class Cache {
 		Gson gson = new Gson();
 		Type listType = new TypeToken<List<Question>>(){}.getType();
 		List<Question> aux = gson.fromJson(PMDataParser.loadJson(ctx, PMFilesEnum.CACHEQUESTIONS), listType);
+		if (aux == null)
+			aux = new ArrayList<Question>();
 		if (aux.contains(q)){
 			int i = aux.indexOf(q);
 			aux.remove(i);
