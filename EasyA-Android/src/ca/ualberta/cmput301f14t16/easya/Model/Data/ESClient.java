@@ -9,6 +9,7 @@ import java.util.List;
 
 import ca.ualberta.cmput301f14t16.easya.Model.Answer;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
+import ca.ualberta.cmput301f14t16.easya.Model.QuestionList;
 import ca.ualberta.cmput301f14t16.easya.Model.Reply;
 
 import com.google.gson.Gson;
@@ -162,4 +163,19 @@ public class ESClient {
 		return qlist;
 	}
 	
+	public List<QuestionList> searchQuestionListsByQuery(String query, int numResults) throws IOException {
+		List<QuestionList> qlist = new ArrayList<QuestionList>();
+		
+		String response = HttpHelper.getFromUrl(HOST_URL + QUESTION_PATH + "_search/?size="+ numResults + "&q=" + URLEncoder.encode(query, "UTF-8"));
+		
+		Type esSearchResponseType = new TypeToken<ESSearchResponse<Question>>(){}.getType();
+		ESSearchResponse<Question> esResponse = gson.fromJson(response, esSearchResponseType);
+		for (ESGetResponse<Question> q : esResponse.getHits()) {
+			Question question = q.getSource();
+			QuestionList questionList = new QuestionList(question.getId(), question.getTitle(), question.getAuthorId(), question.getAnswerCountString(), question.getUpVoteCountString(), question.hasPicture());
+			qlist.add(questionList);
+		}
+		
+		return qlist;
+	}
 }

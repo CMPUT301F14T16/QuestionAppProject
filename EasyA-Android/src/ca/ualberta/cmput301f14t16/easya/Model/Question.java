@@ -10,7 +10,8 @@ import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
  * provides functions for associating and retrieving relevant {@link Answer} and
  * {@link Reply} objects.
  * 
- * @author Brett Commandeur (commande), Cauani
+ * @author Brett Commandeur (commande)
+ * @author Cauani
  *
  */
 public class Question extends Topic {
@@ -73,7 +74,11 @@ public class Question extends Topic {
 	 * @return The number of {@link Answer} objects stored by the instance of
 	 *         Question.
 	 */
-	public String getAnswerCount() {
+	public int getAnswerCount() {
+		return this.Answers.size();
+	}
+	
+	public String getAnswerCountAsString() {
 		try{
 			return this.Answers.size() <= 99 ? String.valueOf(this.Answers.size()) : "99+";
 		}catch(Exception ex){
