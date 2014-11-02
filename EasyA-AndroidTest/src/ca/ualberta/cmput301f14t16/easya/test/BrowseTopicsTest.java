@@ -1,10 +1,12 @@
 package ca.ualberta.cmput301f14t16.easya.test;
 
 import java.util.ArrayList;
+
 import ca.ualberta.cmput301f14t16.easya.Model.Answer;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Model.Reply;
 import ca.ualberta.cmput301f14t16.easya.Model.Topic;
+import ca.ualberta.cmput301f14t16.easya.Model.User;
 import android.view.View;
 import junit.framework.TestCase;
 
@@ -22,16 +24,14 @@ public class BrowseTopicsTest extends TestCase {
 	Question question = new Question("Q title test", "Q body test", "Q author id test");
 	Answer answer = new Answer("A body test", "A author id test");
 	Reply reply = new Reply("R body test", "R author id test");
-	
+	User user = new User();
 	/**
 	 * adds necessary replies, answers, and questions for the test. 
 	 */
 	question.addAnswer(answer);
 	question.addReply(reply);
-	question.setFavourite(true);
-	answer.setFavourite(true);
-	question.setReadLater(true);
-	answer.setReadLater(true);
+	question.setFavourite(user);
+	answer.setFavourite(user);
 	answer.addReply(reply);
 	//adds the question of the topic to an array of saved questions
 	//checks if the retrieved are the correct ones 
@@ -47,8 +47,8 @@ public class BrowseTopicsTest extends TestCase {
 	
 	
 	//View if Favourited.
-	assertTrue(question.getFavourite() == true);
-	assertTrue(answer.getFavourite() == true);
+	assertTrue(question.checkFavourite(user) == true);
+	assertTrue(answer.checkFavourite(user) == true);
 	
 	//View if ReadLater question/Answer, 
 	

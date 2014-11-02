@@ -19,7 +19,16 @@ public class QuestionActivity extends Activity {
 		try{
 			MainModel mm = new MainModel(getApplicationContext());
 			//Get the question id from the intent, and retrieve a question object from ESClient
+			
 			this.q = mm.getQuestionById((getIntent()).getStringExtra(MainActivity.QUESTION_KEY));
+			// */
+		}catch (NoContentAvailableException ex){
+			//TODO: display the NoContentAvailable layout instead of the question_view
+			
+			//setContentView(R.layout.no_content_view);
+			getActionBar().setDisplayHomeAsUpEnabled(true);
+	        getActionBar().setHomeButtonEnabled(true);
+			return;
 			//test only
 			/*
 			this.q = new Question("Title", "Body", "userI");
@@ -45,13 +54,6 @@ public class QuestionActivity extends Activity {
 			this.q.addAnswer(new Answer("New Answer 2", "NoAuthor"));
 			this.q.addAnswer(new Answer("New Answer 3", "NoAuthor"));
 			// */
-		}catch (NoContentAvailableException ex){
-			//TODO: display the NoContentAvailable layout instead of the question_view
-			
-			//setContentView(R.layout.no_content_view);
-			getActionBar().setDisplayHomeAsUpEnabled(true);
-	        getActionBar().setHomeButtonEnabled(true);
-			return;
 		}catch(Exception ex){
 			//TODO: deal with exceptions here
 			ex.printStackTrace();
