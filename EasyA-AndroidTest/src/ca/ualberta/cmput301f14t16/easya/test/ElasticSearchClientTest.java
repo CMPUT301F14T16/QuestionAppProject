@@ -91,7 +91,6 @@ public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<Ma
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			Log.d(LOG_TAG, "No internet caught!");
-			return;
 		}
 		assertNotNull(q);
 		
@@ -106,7 +105,6 @@ public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<Ma
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			Log.d(LOG_TAG, "No internet caught!");
-			return;
 		}
 		Question rq = null;
 		try {
@@ -115,7 +113,6 @@ public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<Ma
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			Log.d(LOG_TAG, "No internet caught!");
-			return;
 		}
 		assertNotNull(rq);
 		
@@ -137,7 +134,6 @@ public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<Ma
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 			Log.d(LOG_TAG, "No internet caught!");
-			return;
 		}
 		assertNotNull(q);
 		int rsize = q.getReplies().size();
@@ -153,7 +149,6 @@ public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<Ma
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			Log.d(LOG_TAG, "No internet caught!");
-			return;
 		}
 		
 		Question rq = null;
@@ -163,7 +158,6 @@ public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<Ma
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			Log.d(LOG_TAG, "No internet caught!");
-			return;
 		}
 		assertNotNull(rq);
 		int rrsize = rq.getReplies().size();
@@ -185,7 +179,6 @@ public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<Ma
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 			Log.d(LOG_TAG, "No internet caught!");
-			return;
 		}
 		assertNotNull(q);
 		Answer a = q.getAnswerById(aid);
@@ -205,7 +198,6 @@ public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<Ma
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			Log.d(LOG_TAG, "No internet caught!");
-			return;
 		}
 		
 		// receive the associated question from ES
@@ -216,7 +208,6 @@ public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<Ma
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			Log.d(LOG_TAG, "No internet caught!");
-			return;
 		}
 		assertNotNull(rq);
 		int arrsize = q.getAnswerById(aid).getReplies().size();

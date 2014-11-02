@@ -41,6 +41,7 @@ public class HttpHelper {
 
 	        // Convert the InputStream into a string
 	        String contentAsString = readResponse(is);
+	        Log.d(DEBUG_TAG, contentAsString);
 	        return contentAsString;
 	        
 	    // Makes sure that the InputStream is closed after the app is
@@ -82,6 +83,7 @@ public class HttpHelper {
 
 	        // Convert the InputStream into a string
 	        String contentAsString = readResponse(is);
+	        Log.d(DEBUG_TAG, contentAsString);
 	        return contentAsString;
 	        
 	    // Makes sure that the InputStream is closed after the app is
