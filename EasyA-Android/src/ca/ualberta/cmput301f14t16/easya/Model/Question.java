@@ -74,9 +74,10 @@ public class Question extends Topic {
 	 *         Question.
 	 */
 	public String getAnswerCount() {
-		try{
-			return this.Answers.size() <= 99 ? String.valueOf(this.Answers.size()) : "99+";
-		}catch(Exception ex){
+		try {
+			return this.Answers.size() <= 99 ? String.valueOf(this.Answers
+					.size()) : "99+";
+		} catch (Exception ex) {
 			return "0";
 		}
 	}
@@ -100,42 +101,47 @@ public class Question extends Topic {
 	 *         {@link Answer} is not found.
 	 */
 	public Answer getAnswerById(String aid) {
-		try{
+		try {
 			for (Answer answer : this.Answers) {
 				if (answer.getId().equals(aid))
 					return answer;
 			}
 			return null;
-		}catch(Exception ex){
-			//TODO: deal with exception
+		} catch (Exception ex) {
+			// TODO: deal with exception
 			return null;
 		}
 	}
-	
-	@Override
-    public boolean equals(Object obj) {
-        if (obj == this) {
-            return true;
-        }
-        if (obj == null || obj.getClass() != this.getClass()) {
-            return false;
-        }
 
-        Question q = (Question) obj;
-        return (getId() != null && getId().equals(q.getId()))
-                && (Title == q.Title
-                     || (getTitle() != null && getTitle().equals(q.getTitle())))
-                && (getBody() != null && getBody().equals(q.getBody()));
-    }
-   
-    @Override
-    public int hashCode() {
-        final int prime = 31;
-        int result = 1;
-        result = prime * result
-                + ((getId() == null) ? 0 : getId().hashCode());
-        result = prime * result
-                + ((getTitle() == null) ? 0 : getTitle().hashCode());
-        return result;
-    }
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == this) {
+			return true;
+		}
+		if (obj == null || obj.getClass() != this.getClass()) {
+			return false;
+		}
+
+		Question q = (Question) obj;
+		return (getId() != null && getId().equals(q.getId()))
+				&& (Title == q.Title || (getTitle() != null && getTitle()
+						.equals(q.getTitle())))
+				&& (getBody() != null && getBody().equals(q.getBody()));
+	}
+
+	/**
+	 * @see java.lang.Object#hashCode()
+	 */
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + ((getId() == null) ? 0 : getId().hashCode());
+		result = prime * result
+				+ ((getTitle() == null) ? 0 : getTitle().hashCode());
+		return result;
+	}
 }

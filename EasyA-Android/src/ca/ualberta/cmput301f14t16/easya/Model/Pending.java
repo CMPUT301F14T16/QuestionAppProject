@@ -125,6 +125,9 @@ public class Pending {
 		return this.answerId;
 	}
 	
+	/**
+	 * @see java.lang.Object#equals(java.lang.Object)
+	 */
 	@Override
     public boolean equals(Object obj) {
         if (obj == this) {
@@ -142,6 +145,9 @@ public class Pending {
                 && (content != null && content.getId().equals(p.content.getId()));
     }
    
+    /**
+     * @see java.lang.Object#hashCode()
+     */
     @Override
     public int hashCode() {
         final int prime = 31;
