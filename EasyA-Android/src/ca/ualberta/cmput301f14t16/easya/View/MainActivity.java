@@ -89,7 +89,7 @@ public class MainActivity extends Activity {
     	if (mQuestionList == null)
     		mQuestionList = new ArrayList<Question>();
     	//Test only
-    	/*
+    	//*
     	Question q = new Question("Title", "Body", "userI");
     	q.addAnswer(new Answer("New Answer 1", "NoAuthor"));
 		q.addAnswer(new Answer("New Answer 2", "NoAuthor"));
