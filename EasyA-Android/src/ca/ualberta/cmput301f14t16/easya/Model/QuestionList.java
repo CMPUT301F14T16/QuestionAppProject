@@ -9,13 +9,13 @@ public class QuestionList {
 	private String id;
 	private String title;
 	private String comments;
-	private String upvotes;
+	private int upvotes;
 	private boolean image;
 	public QuestionList(){
 		
 	}
 	
-	public QuestionList(String id, String title, String username, String comments, String upvotes, boolean image){
+	public QuestionList(String id, String title, String username, String comments, int upvotes, boolean image){
 		this.id = id;
 		this.title = title;
 		this.comments = comments;
@@ -35,7 +35,7 @@ public class QuestionList {
 		return this.comments;
 	}
 
-	public String getUpvotes() {
+	public int getUpvotes() {
 		return this.upvotes;
 	}
 	
