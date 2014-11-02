@@ -169,7 +169,7 @@ public class Cache {
 	public static List<QuestionList> getAllQuestions() {
 		ESClient es = new ESClient();
 		try{
-			return es.searchQuestionListsByQuery("", 100);			
+			return es.searchQuestionListsByQuery("*", 100);			
 		}catch(IOException ex){
 			//TODO: deal with this later
 			return null;
