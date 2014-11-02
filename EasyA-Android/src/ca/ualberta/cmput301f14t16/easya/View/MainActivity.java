@@ -16,6 +16,7 @@ import ca.ualberta.cmput301f14t16.easya.R.menu;
 import ca.ualberta.cmput301f14t16.easya.R.string;
 
 import android.content.res.Configuration;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.ListActivity;
@@ -81,8 +82,7 @@ public class MainActivity extends Activity {
         mQueueThread.start();
         
         /////
-        ArrayAdapter<QuestionList> adapter = new MainViewAdapter(this, mm.getAllQuestions());
-        ((ListView)findViewById(R.id.question_list)).setAdapter(adapter);
+        (new GetQuestionListTask()).execute();
         //TODO: Organize this mess
     }
     
@@ -146,4 +146,16 @@ public class MainActivity extends Activity {
         }
         super.onResume();
     }
+    
+    private class GetQuestionListTask extends AsyncTask<Void, Void, List<QuestionList>> {
+        protected List<QuestionList> doInBackground(Void...voids) {
+            return mm.getAllQuestions();
+        }
+
+        protected void onPostExecute(List<QuestionList> result) {
+        	ArrayAdapter<QuestionList> adapter = new MainViewAdapter(getApplicationContext(), result);
+            ((ListView)findViewById(R.id.question_list)).setAdapter(adapter);
+        }
+    }
+
 }
