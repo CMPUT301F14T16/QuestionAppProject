@@ -105,4 +105,10 @@ public abstract class Content {
 	public void setId(String newId) {
 		this.id = newId;
 	}
+	
+	public String getAuthorDate(){
+		//TODO: return the author and date in the format: 
+		//yyyy-MM-dd, hh:mm by @[author]
+		return "";
+	}
 }

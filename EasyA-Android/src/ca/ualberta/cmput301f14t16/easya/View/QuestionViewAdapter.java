@@ -1,0 +1,120 @@
+package ca.ualberta.cmput301f14t16.easya.View;
+
+import java.util.List;
+
+import ca.ualberta.cmput301f14t16.easya.R;
+import ca.ualberta.cmput301f14t16.easya.Model.Answer;
+import ca.ualberta.cmput301f14t16.easya.Model.Question;
+import ca.ualberta.cmput301f14t16.easya.Model.Reply;
+import android.content.Context;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.View.OnClickListener;
+import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.LinearLayout;
+import android.widget.ScrollView;
+import android.widget.TextView;
+import android.widget.TextView.OnEditorActionListener;
+
+/**
+ * 
+ * @author Cauani
+ *
+ */
+public class QuestionViewAdapter {
+	private LayoutInflater inflater;
+	private ScrollView container;
+	private Question q;
+
+    public QuestionViewAdapter( Context context, Question q, ScrollView v) {        
+        this.inflater = LayoutInflater.from(context);
+        this.q = q;
+        this.container = v;
+    }
+    
+    OnEditorActionListener newReply = new OnEditorActionListener() {
+		@Override
+		public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
+			// TODO Auto-generated method stub
+			return false;
+		}        
+    };
+    
+    OnClickListener upVote = new OnClickListener() {
+        @Override
+        public void onClick(View v) {
+            
+        }
+    };    
+
+    public void build() {
+    	inflateQuestion();
+    	for (Answer a : q.getAnswers()){
+    		inflateAnswer(a);
+    	}
+    }
+    
+    private void inflateQuestion(){
+    	View v = inflater.inflate(R.layout.question_question_fragment, null);
+    	    	
+    	TextView title, body, upvotescount, authordate;
+    	LinearLayout replies;
+    	
+    	title = (TextView)v.findViewById(R.id.question_fragment_title);
+    	body = (TextView)v.findViewById(R.id.question_fragment_body);
+    	authordate = (TextView)v.findViewById(R.id.question_fragment_authorDate);
+    	upvotescount = (TextView)v.findViewById(R.id.question_fragment_upvoteText);
+    	
+    	replies = (LinearLayout)v.findViewById(R.id.question_fragment_replies_list);
+    	
+    	replies = inflateReplies(replies, q.getReplies());
+    	
+    	title.setText(q.getTitle());
+    	body.setText(q.getBody());
+    	authordate.setText(q.getAuthorDate());
+    	upvotescount.setText(q.getUpVoteCount());
+    	
+    	((EditText)v.findViewById(R.id.question_fragment_submitReplyEdt)).setTag(0);
+    	((ImageButton)v.findViewById(R.id.question_fragment_upvoteBtn)).setTag(q);
+    	((ImageButton)v.findViewById(R.id.question_fragment_upvoteBtn)).setOnClickListener(upVote);
+    	
+    	container.addView(v);
+    }
+    
+    private void inflateAnswer(Answer a){
+    	View v = inflater.inflate(R.layout.question_answer_fragment, null);
+    	    	
+    	TextView body, upvotescount, authordate;
+    	LinearLayout replies;
+    	
+    	body = (TextView)v.findViewById(R.id.answer_fragment_body);
+    	authordate = (TextView)v.findViewById(R.id.answer_fragment_authorDate);
+    	upvotescount = (TextView)v.findViewById(R.id.answer_fragment_upvoteText);
+    	
+    	replies = (LinearLayout)v.findViewById(R.id.answer_fragment_replies_list);
+    	
+    	replies = inflateReplies(replies, q.getReplies());
+    	
+    	body.setText(a.getBody());
+    	authordate.setText(a.getAuthorDate());
+    	upvotescount.setText(a.getUpVoteCount());
+    	
+    	((EditText)v.findViewById(R.id.answer_fragment_submitReplyEdt)).setTag(a.getId());
+    	((ImageButton)v.findViewById(R.id.answer_fragment_upvoteBtn)).setTag(a);
+    	((ImageButton)v.findViewById(R.id.answer_fragment_upvoteBtn)).setOnClickListener(upVote);
+    	
+    	container.addView(v);
+    }
+    
+    private LinearLayout inflateReplies(LinearLayout ll, List<Reply> replies){
+    	for (Reply r : replies){
+    		View v = inflater.inflate(R.layout.question_reply_fragment, null);
+    		((TextView)v.findViewById(R.id.reply_fragment_body)).setText(r.getBody());
+    		((TextView)v.findViewById(R.id.reply_fragment_authorDate)).setText(r.getAuthorDate());
+    		ll.addView(v);
+    	}
+    	return ll;
+    }       
+}
