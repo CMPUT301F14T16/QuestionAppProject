@@ -5,6 +5,7 @@ import java.util.List;
 
 import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Model.Answer;
+import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Model.Queue;
 import ca.ualberta.cmput301f14t16.easya.R.drawable;
@@ -35,6 +36,7 @@ public class MainActivity extends Activity {
     public final static String QUESTION_KEY = "ca.ualberta.cmput301f14t16.easya.QUESTIONKEY"; 
     
     public static Queue mQueueThread; 
+    public static MainModel mm;
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,6 +47,7 @@ public class MainActivity extends Activity {
 		//TODO: if no user is found, try to create/load one from internet
 		// If still not able, block ui with the create user screen.
 		
+		mm = new MainModel(getApplicationContext());
 		
         //Creation of the drawer menu
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);

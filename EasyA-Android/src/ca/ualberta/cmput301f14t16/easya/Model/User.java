@@ -103,26 +103,5 @@ public class User {
 		}
 		return aux + number;
 	}
-
-	public static User getUserById(String userId) throws NoContentAvailableException {
-		//TODO: get user from ESClient
-		return new User();
-	}
-	
-	public static final User getCurrentUser(Context ctx){
-		try{
-			PMClient pmclient = new PMClient();
-			return pmclient.getUser(ctx);
-		}catch(NoContentAvailableException ex){
-			try{
-				return getUserById(GeneralHelper.retrieveEmail(ctx));
-			}catch(UnableToGetUserEmailException ex2){
-				return null;
-			}catch(NoContentAvailableException ex2){
-				//TODO: create a new user if have internet, if not, throw nointernetexception
-				return null;
-			}
-		}
-	}
 }
 

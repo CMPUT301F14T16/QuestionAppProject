@@ -112,11 +112,6 @@ public class Question extends Topic {
 		}
 	}
 	
-	public static Question getQuestionById(String id) throws NoContentAvailableException{
-		//TODO: connect with ESClient and return a question
-		return new Question();
-	}
-	
 	@Override
     public boolean equals(Object obj) {
         if (obj == this) {

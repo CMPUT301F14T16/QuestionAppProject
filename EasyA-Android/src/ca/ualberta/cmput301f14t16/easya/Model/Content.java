@@ -3,6 +3,8 @@ package ca.ualberta.cmput301f14t16.easya.Model;
 import java.util.Date;
 import java.util.UUID;
 
+import ca.ualberta.cmput301f14t16.easya.View.MainActivity;
+
 /**
  * The Content class is an abstract class that provides several utility methods
  * to its subclasses. The entirety of its functionality involves getters and
@@ -75,7 +77,7 @@ public abstract class Content {
 	
 	public String getAuthorName(){
 		try{
-			return (User.getUserById(this.userId)).getUsername();
+			return (MainActivity.mm.getUserById(this.userId)).getUsername();
 		}catch(Exception ex){
 			return "";
 		}

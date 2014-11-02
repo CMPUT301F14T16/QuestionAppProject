@@ -1,10 +1,13 @@
 package ca.ualberta.cmput301f14t16.easya.Model;
 
 import java.util.ArrayList; // Used in list creation.
-import java.util.List;
 
 import android.content.Context;
 
+import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
+import ca.ualberta.cmput301f14t16.easya.Exceptions.UnableToGetUserEmailException;
+import ca.ualberta.cmput301f14t16.easya.Model.Data.Cache;
+import ca.ualberta.cmput301f14t16.easya.Model.Data.PMClient;
 import ca.ualberta.cmput301f14t16.easya.View.MainView;
 
 /**
@@ -51,7 +54,27 @@ public class MainModel<V extends MainView> {
         	}
     	}
 	
+	public Question getQuestionById(String id) throws NoContentAvailableException{
+		return Cache.getQuestionById(ctx, id);
+	}
 	
+	public User getUserById(String id) throws NoContentAvailableException{
+		return Cache.getUserById(ctx, id);
+	}
+	
+	public User getCurrentUser() throws NoContentAvailableException{
+		try{
+			PMClient pmclient = new PMClient();
+			return pmclient.getUser(ctx);
+		}catch(NoContentAvailableException ex){
+			try{
+				return getUserById(GeneralHelper.retrieveEmail(ctx));
+			}catch(UnableToGetUserEmailException ex2){
+				return null;
+			}
+		}
+	}	
+		
 	/**
 	 * Adds submitted question to the webservice or device (pending).
 	 * @param title

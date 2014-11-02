@@ -3,6 +3,7 @@ package ca.ualberta.cmput301f14t16.easya.View;
 import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
 import ca.ualberta.cmput301f14t16.easya.Model.Answer;
+import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import android.app.Activity;
 import android.os.Bundle;
@@ -16,8 +17,9 @@ public class QuestionActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		
 		try{
+			MainModel mm = new MainModel(getApplicationContext());
 			//Get the question id from the intent, and retrieve a question object from ESClient
-			this.q = Question.getQuestionById((getIntent()).getStringExtra(MainActivity.QUESTION_KEY));
+			this.q = mm.getQuestionById((getIntent()).getStringExtra(MainActivity.QUESTION_KEY));
 			//test only
 			/*
 			this.q = new Question("Title", "Body", "userI");

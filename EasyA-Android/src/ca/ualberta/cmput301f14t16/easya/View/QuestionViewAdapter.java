@@ -3,6 +3,7 @@ package ca.ualberta.cmput301f14t16.easya.View;
 import java.util.List;
 
 import ca.ualberta.cmput301f14t16.easya.R;
+import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
 import ca.ualberta.cmput301f14t16.easya.Model.Answer;
 import ca.ualberta.cmput301f14t16.easya.Model.Content;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
@@ -64,13 +65,17 @@ public class QuestionViewAdapter {
     };    
 
     public void build() {
-    	inflateQuestion();
-    	for (Answer a : q.getAnswers()){
-    		inflateAnswer(a);
+    	try{
+	    	inflateQuestion();
+	    	for (Answer a : q.getAnswers()){
+	    		inflateAnswer(a);
+	    	}
+    	}catch(NoContentAvailableException ex){
+    		//TODO: display the NoContentAvailable screen
     	}
     }
     
-    private void inflateQuestion(){
+    private void inflateQuestion() throws NoContentAvailableException{
     	View v = inflater.inflate(R.layout.question_question_fragment, null);
     	    	
     	TextView title, body, upvotescount, authordate;
@@ -93,7 +98,7 @@ public class QuestionViewAdapter {
     	((EditText)v.findViewById(R.id.question_fragment_submitReplyEdt)).setTag(0);
     	((ImageButton)v.findViewById(R.id.question_fragment_upvoteBtn)).setTag(q);
     	((ImageButton)v.findViewById(R.id.question_fragment_upvoteBtn)).setOnClickListener(upVote);
-    	if (q.checkUpVote(User.getCurrentUser(ctx))){ //TODO: get the current user to check
+    	if (q.checkUpVote(MainActivity.mm.getCurrentUser())){ //TODO: get the current user to check
     		//TODO: set a different image for when the user have already upvoted the topic
     		//((ImageButton)v.findViewById(R.id.question_fragment_upvoteBtn)).setImageDrawable(R.drawable.)
     	}
@@ -101,7 +106,7 @@ public class QuestionViewAdapter {
     	container.addView(v);
     }
     
-    private void inflateAnswer(Answer a){
+    private void inflateAnswer(Answer a) throws NoContentAvailableException{
     	View v = inflater.inflate(R.layout.question_answer_fragment, null);
     	    	
     	TextView body, upvotescount, authordate;
@@ -124,7 +129,7 @@ public class QuestionViewAdapter {
     	((ImageButton)v.findViewById(R.id.answer_fragment_upvoteBtn)).setTag(a);
     	((ImageButton)v.findViewById(R.id.answer_fragment_upvoteBtn)).setOnClickListener(upVote);
     	
-    	if (q.checkUpVote(User.getCurrentUser(ctx))){ //TODO: get the current user to check
+    	if (q.checkUpVote(MainActivity.mm.getCurrentUser())){ //TODO: get the current user to check
     		//TODO: set a different image for when the user have already upvoted the topic
     		//((ImageButton)v.findViewById(R.id.question_fragment_upvoteBtn)).setImageDrawable(R.drawable.)
     	}

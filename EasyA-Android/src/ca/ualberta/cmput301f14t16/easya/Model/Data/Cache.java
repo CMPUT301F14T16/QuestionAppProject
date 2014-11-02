@@ -6,6 +6,8 @@ import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+
+import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Model.QuestionList;
 import ca.ualberta.cmput301f14t16.easya.Model.User;
@@ -39,18 +41,26 @@ public class Cache {
 		 }
 	}
 	
-	public static Question getQuestionById(Context ctx, String id){
-		//TODO: get it from ESClient
-		// Save the returned object in cache
-		// SaveSingleQuestion(ctx, q);
-		return new Question();
+	public static Question getQuestionById(Context ctx, String id) throws NoContentAvailableException{
+		if (MainActivity.mQueueThread.haveInternetConnection()){
+			//TODO: get it from ESClient
+			// Save the returned object in cache
+			// SaveSingleQuestion(ctx, q);
+			 return new Question();
+		 }else{
+			 return getQuestionFromCache(ctx, id);				
+		 }
 	}
 	
-	public static User getUserById(Context ctx, String id){
-		//TODO: get it from ESClient
-		// Save the returned object in cache
-		// SaveSingleUser(ctx, u);
-		return new User();
+	public static User getUserById(Context ctx, String id) throws NoContentAvailableException{
+		if (MainActivity.mQueueThread.haveInternetConnection()){
+			//TODO: get it from ESClient
+			// Save the returned object in cache
+			// SaveSingleUser(ctx, u);
+			 return new User();
+		 }else{
+			 return getUserFromCache(ctx, id);
+		 }
 	}
 		
 	public static void SaveSingleQuestion(Context ctx, Question q){
@@ -120,9 +130,31 @@ public class Cache {
 		return lst;
 	}
 	
-	private static List<User> getUsersFromCache(Context ctx){
+	private static List<User> getUserListFromCache(Context ctx){
 		Gson gson = new Gson();
 		Type listType = new TypeToken<List<User>>(){}.getType();
 		return gson.fromJson(PMDataParser.loadJson(ctx, PMFilesEnum.CACHEUSERS), listType);		
+	}	
+	
+	private static Question getQuestionFromCache(Context ctx, String id) throws NoContentAvailableException{
+		Gson gson = new Gson();
+		Type listType = new TypeToken<List<Question>>(){}.getType();
+		List<Question> lst = gson.fromJson(PMDataParser.loadJson(ctx, PMFilesEnum.CACHEQUESTIONS), listType);
+		for (Question q : lst){
+			if (q.getId().equals(id))
+			return q;
+		}
+		throw new NoContentAvailableException();
+	}
+	
+	private static User getUserFromCache(Context ctx, String id) throws NoContentAvailableException{
+		Gson gson = new Gson();
+		Type listType = new TypeToken<List<User>>(){}.getType();
+		List<User> lst = gson.fromJson(PMDataParser.loadJson(ctx, PMFilesEnum.CACHEUSERS), listType);
+		for (User u : lst){
+			if (u.getId().equals(id))
+			return u;
+		}
+		throw new NoContentAvailableException();
 	}	
 }
