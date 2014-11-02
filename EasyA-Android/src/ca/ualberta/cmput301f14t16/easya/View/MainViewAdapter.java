@@ -8,6 +8,7 @@ import ca.ualberta.cmput301f14t16.easya.R.id;
 import ca.ualberta.cmput301f14t16.easya.R.layout;
 
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -32,8 +33,7 @@ public class MainViewAdapter extends ArrayAdapter<Question> {
         TextView qTitle, qAuthor, qAnswers, qUpVotes;
 
         // Create a new row for the list
-        if ( view == null )
-        {
+        if ( view == null ){
             view = inflater.inflate(R.layout.main_questions_fragment, null);
 
             qTitle = (TextView) view.findViewById( R.id.questionTitle);
@@ -47,7 +47,12 @@ public class MainViewAdapter extends ArrayAdapter<Question> {
                  {
                      public void onClick(View v)
                      {
-                         //TODO: Add hook to a question view (fire up a question view)
+                         Intent i = new Intent(getContext(), QuestionActivity.class);
+                         // Get the object in the title tag
+                         // TODO: instead of using a Question object, need to use a QuestionList object (a lightweight version of it, for performance concerns)
+                         String qId = ((Question)((MainViewAdapterHolder)v.getTag()).getTitle().getTag()).getId();
+                         i.putExtra(MainActivity.QUESTION_KEY, qId);
+                         getContext().startActivity(i);
                      }
                  }
             );

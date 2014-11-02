@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import ca.ualberta.cmput301f14t16.easya.R;
+import ca.ualberta.cmput301f14t16.easya.Model.Answer;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Model.Queue;
 import ca.ualberta.cmput301f14t16.easya.R.drawable;
@@ -30,6 +31,8 @@ public class MainActivity extends Activity {
     private ActionBarDrawerToggle mDrawerToggle;
     private LinearLayout mDrawerList;
     private List<Question> mQuestionList;
+    
+    public final static String QUESTION_KEY = "ca.ualberta.cmput301f14t16.easya.QUESTIONKEY"; 
     
     public static Queue mQueueThread; 
 
@@ -77,6 +80,13 @@ public class MainActivity extends Activity {
     public List<Question> getListQuestions(){
     	if (mQuestionList == null)
     		mQuestionList = new ArrayList<Question>();
+    	Question q = new Question("Title", "Body", "userI");
+    	q.addAnswer(new Answer("New Answer 1", "NoAuthor"));
+		q.addAnswer(new Answer("New Answer 2", "NoAuthor"));
+		q.addAnswer(new Answer("New Answer 3", "NoAuthor"));
+
+    	mQuestionList.add(q);
+    	mQuestionList.add(new Question("Title", "Body", "userI"));
     	return mQuestionList;
     }
 
