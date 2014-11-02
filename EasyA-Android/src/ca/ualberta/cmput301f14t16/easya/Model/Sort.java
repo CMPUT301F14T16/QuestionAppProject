@@ -8,6 +8,11 @@ public class Sort {
 	
 	public static void sortUpVote(boolean sortOrder,
 			ArrayList<Topic> topicList) {
+		Collections.sort(topicList, new Comparator<Topic>(){
+			public int compare(Topic topic1, Topic topic2){
+				return topic1.getUpVoteCount().compareTo(topic2.getUpVoteCount());
+			}
+		});
 	}
 	public static void pictureSort(boolean sortOrder,
 			ArrayList<Topic> topicList) {
