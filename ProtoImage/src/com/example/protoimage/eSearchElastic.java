@@ -16,6 +16,9 @@ import org.json.JSONObject;
 import android.net.ParseException;
 import android.os.AsyncTask;
 
+//All referenced from http://stackoverflow.com/questions/13591944/load-images-in-a-gallery-and-elasticsearch
+
+
 public class eSearchElastic {
 	
 	 public static void ESE (final ImageAdapter imgAdapter)throws ClientProtocolException, IOException {
