@@ -1,7 +1,6 @@
 package ca.ualberta.cmput301f14t16.easya.Model.Data;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -25,7 +24,7 @@ public class ESClient {
 	
 	//ElasticSeach Urls
 	private static final String HOST_URL = "http://cmput301.softwareprocess.es:8080/testing/";
-	private static final String QUESTION_PATH = "t16question/";
+	private static final String QUESTION_PATH = "t16newquestion/";
 	
 	// JSON Utilities
 	private Gson gson = new Gson();

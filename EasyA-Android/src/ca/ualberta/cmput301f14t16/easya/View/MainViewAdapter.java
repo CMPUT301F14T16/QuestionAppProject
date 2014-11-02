@@ -50,8 +50,7 @@ public class MainViewAdapter extends ArrayAdapter<QuestionList> {
                      {
                          Intent i = new Intent(getContext(), QuestionActivity.class);
                          // Get the object in the title tag
-                         // TODO: instead of using a Question object, need to use a QuestionList object (a lightweight version of it, for performance concerns)
-                         String qId = ((Question)((MainViewAdapterHolder)v.getTag()).getTitle().getTag()).getId();
+                         String qId = ((QuestionList)((MainViewAdapterHolder)v.getTag()).getTitle().getTag()).getId();
                          i.putExtra(MainActivity.QUESTION_KEY, qId);
                          getContext().startActivity(i);
                      }

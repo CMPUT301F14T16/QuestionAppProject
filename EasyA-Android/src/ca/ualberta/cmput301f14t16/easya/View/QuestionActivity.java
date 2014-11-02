@@ -2,10 +2,9 @@ package ca.ualberta.cmput301f14t16.easya.View;
 
 import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
-import ca.ualberta.cmput301f14t16.easya.Model.Answer;
-import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import android.app.Activity;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 
@@ -15,54 +14,44 @@ public class QuestionActivity extends Activity {
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		
-		try{
-			MainModel mm = new MainModel(getApplicationContext());
-			//Get the question id from the intent, and retrieve a question object from ESClient
-			
-			this.q = mm.getQuestionById((getIntent()).getStringExtra(MainActivity.QUESTION_KEY));
-			// */
-		}catch (NoContentAvailableException ex){
-			//TODO: display the NoContentAvailable layout instead of the question_view
-			
-			//setContentView(R.layout.no_content_view);
-			getActionBar().setDisplayHomeAsUpEnabled(true);
-	        getActionBar().setHomeButtonEnabled(true);
-			return;
-			//test only
-			/*
-			this.q = new Question("Title", "Body", "userI");
-			this.q.addAnswer(new Answer("New Answer 1", "NoAuthor"));
-			this.q.addAnswer(new Answer("New Answer 2", "NoAuthor"));
-			this.q.addAnswer(new Answer("New Answer 3", "NoAuthor"));
-			this.q.addAnswer(new Answer("New Answer 1", "NoAuthor"));
-			this.q.addAnswer(new Answer("New Answer 2", "NoAuthor"));
-			this.q.addAnswer(new Answer("New Answer 3", "NoAuthor"));
-			this.q.addAnswer(new Answer("New Answer 1", "NoAuthor"));
-			this.q.addAnswer(new Answer("New Answer 2", "NoAuthor"));
-			this.q.addAnswer(new Answer("New Answer 3", "NoAuthor"));
-			this.q.addAnswer(new Answer("New Answer 1", "NoAuthor"));
-			this.q.addAnswer(new Answer("New Answer 2", "NoAuthor"));
-			this.q.addAnswer(new Answer("New Answer 3", "NoAuthor"));
-			this.q.addAnswer(new Answer("New Answer 1", "NoAuthor"));
-			this.q.addAnswer(new Answer("New Answer 2", "NoAuthor"));
-			this.q.addAnswer(new Answer("New Answer 3", "NoAuthor"));
-			this.q.addAnswer(new Answer("New Answer 1", "NoAuthor"));
-			this.q.addAnswer(new Answer("New Answer 2", "NoAuthor"));
-			this.q.addAnswer(new Answer("New Answer 3", "NoAuthor"));
-			this.q.addAnswer(new Answer("New Answer 1", "NoAuthor"));
-			this.q.addAnswer(new Answer("New Answer 2", "NoAuthor"));
-			this.q.addAnswer(new Answer("New Answer 3", "NoAuthor"));
-			// */
-		}catch(Exception ex){
-			//TODO: deal with exceptions here
-			ex.printStackTrace();
-		}
 		setContentView(R.layout.question_view);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
-        
-        QuestionViewAdapter adapter = new QuestionViewAdapter(this, q, (LinearLayout)this.findViewById(R.id.question_scrollview_container));
-        adapter.build();
+        getActionBar().setHomeButtonEnabled(true);        
+        (new GetQuestionListTask()).execute();
 	}	
+	
+	private void ShowNoContentView(){
+		//TODO: display the NoContentView
+		//setContentView(R.layout.no_content_view);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);        
+		return;
+	}
+	
+	private void SetAdapter(Question q){
+		this.q = q;
+    	QuestionViewAdapter adapter = new QuestionViewAdapter(getApplicationContext(), this.q, (LinearLayout)findViewById(R.id.question_scrollview_container));
+        adapter.build();
+	}
+	
+	private class GetQuestionListTask extends AsyncTask<Void, Void, Question> {
+        protected Question doInBackground(Void...voids) {
+        	try{
+        		String aux = (getIntent()).getStringExtra(MainActivity.QUESTION_KEY);
+        		if (aux == null || aux.equals(""))
+        			return null;
+        		return MainActivity.mm.getQuestionById(aux);
+        	}catch(NoContentAvailableException ex){
+        		return null;
+        	}
+        }
+
+        protected void onPostExecute(Question result){
+        	if (result == null){
+        		ShowNoContentView();
+        	}else{
+        		SetAdapter(result);
+        	}
+        }
+    }
 }

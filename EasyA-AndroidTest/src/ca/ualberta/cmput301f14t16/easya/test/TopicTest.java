@@ -6,18 +6,14 @@ import ca.ualberta.cmput301f14t16.easya.Model.Topic;
 import ca.ualberta.cmput301f14t16.easya.Model.User;
 import junit.framework.TestCase;
 
-/**
- * 
- * @author Klinton
- * 
- *Tests for Topic functions involving Q and A.
- *
- */
+
+ //Tests for Topic functions involving Q and A.
 
 public class TopicTest extends TestCase {
 	
 	User u =  new User();
 	
+	//test for UpVoteTopicsTest
 	public void UpVoteTopicsTest() {
 		Answer answer = new Answer();
 		Question question = new Question();

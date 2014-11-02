@@ -19,11 +19,11 @@ public class Question extends Topic {
 	/**
 	 * A list of {@link Answer} objects associated with this Question.
 	 */
-	private List<Answer> Answers;
+	private List<Answer> answers;
 	/**
 	 * A title String for this Question
 	 */
-	private String Title;
+	private String title;
 
 	/**
 	 * Creates an empty Question object.
@@ -46,15 +46,15 @@ public class Question extends Topic {
 	 */
 	public Question(String title, String body, String userId) {
 		super(body, userId);
-		this.Title = title;
-		this.Answers = new ArrayList<Answer>();
+		this.title = title;
+		this.answers = new ArrayList<Answer>();
 	}
 
 	/**
 	 * @return {@link Question#Title}
 	 */
 	public String getTitle() {
-		return this.Title;
+		return this.title;
 	}
 
 	/**
@@ -65,9 +65,9 @@ public class Question extends Topic {
 	 *            {@link Answer} objects.
 	 */
 	public void addAnswer(Answer answer) {
-		if (this.Answers == null)
-			this.Answers = new ArrayList<Answer>();
-		this.Answers.add(answer);
+		if (this.answers == null)
+			this.answers = new ArrayList<Answer>();
+		this.answers.add(answer);
 	}
 
 	/**
@@ -75,7 +75,7 @@ public class Question extends Topic {
 	 *         Question (as an int).
 	 */
 	public int getAnswerCount() {
-		return this.Answers.size();
+		return this.answers.size();
 	}
 
 	/**
@@ -84,7 +84,7 @@ public class Question extends Topic {
 	 */
 	public String getAnswerCountString() {
 		try {
-			return this.Answers.size() <= 99 ? String.valueOf(this.Answers
+			return this.answers.size() <= 99 ? String.valueOf(this.answers
 					.size()) : "99+";
 		} catch (Exception ex) {
 			return "0";
@@ -96,9 +96,9 @@ public class Question extends Topic {
 	 */
 	// TODO change name in UML.
 	public List<Answer> getAnswers() {
-		if (this.Answers == null)
-			this.Answers = new ArrayList<Answer>();
-		return this.Answers;
+		if (this.answers == null)
+			this.answers = new ArrayList<Answer>();
+		return this.answers;
 	}
 
 	/**
@@ -111,7 +111,7 @@ public class Question extends Topic {
 	 */
 	public Answer getAnswerById(String aid) {
 		try {
-			for (Answer answer : this.Answers) {
+			for (Answer answer : this.answers) {
 				if (answer.getId().equals(aid))
 					return answer;
 			}
@@ -136,7 +136,7 @@ public class Question extends Topic {
 
 		Question q = (Question) obj;
 		return (getId() != null && getId().equals(q.getId()))
-				&& (Title == q.Title || (getTitle() != null && getTitle()
+				&& (title == q.title || (getTitle() != null && getTitle()
 						.equals(q.getTitle())))
 				&& (getBody() != null && getBody().equals(q.getBody()));
 	}
