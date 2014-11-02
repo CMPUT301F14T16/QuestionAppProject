@@ -73,7 +73,7 @@ public class MainActivity extends Activity {
         getActionBar().setHomeButtonEnabled(true);
 
         /////
-        mQueueThread = new Queue();
+        mQueueThread = new Queue(getApplicationContext());
         mQueueThread.start();
         
         /////
@@ -93,7 +93,8 @@ public class MainActivity extends Activity {
 		q.addAnswer(new Answer("New Answer 3", "NoAuthor"));
 
     	mQuestionList.add(q);
-    	mQuestionList.add(new Question("Title", "Body", "userI"));*/
+    	mQuestionList.add(new Question("Title", "Body", "userI"));
+    	// */
     	return mQuestionList;
     }
 
@@ -152,7 +153,7 @@ public class MainActivity extends Activity {
     @Override
     public void onResume(){
         if (mQueueThread != null && !mQueueThread.isAlive()) {
-            mQueueThread = new Queue();
+            mQueueThread = new Queue(getApplicationContext());
             mQueueThread.start();
         }
         super.onResume();

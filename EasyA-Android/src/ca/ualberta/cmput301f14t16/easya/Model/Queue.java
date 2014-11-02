@@ -7,9 +7,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import android.content.Context;
+
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoClassTypeSpecifiedException;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoInternetException;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.ESClient;
+import ca.ualberta.cmput301f14t16.easya.Model.Data.PMClient;
 
 /**
  * Created by Cauani on 2014-10-25.
@@ -23,15 +26,15 @@ public class Queue extends Thread{
     public Date lastCheck; // TODO made public because test case uses it.
     private boolean haveInternet;
     private boolean isActive = true;
+    private Context ctx;
     
-    private ESClient escClient = new ESClient();
-
     //TODO: add a instance of the model that holds all the questions
 
     private List<Pending> pendings;
 
-    public Queue()
+    public Queue(Context ctx)
     {
+    	this.ctx = ctx;
         this.pendings = GetAllPendings();
     }
 
@@ -63,7 +66,8 @@ public class Queue extends Thread{
         Add new pending items to the queue
      */
     public void AddPendingToQueue(Pending p){
-        //TODO: add the pending to a file on phone internal memory
+    	PMClient pm = new PMClient();
+    	pm.savePending(this.ctx, p);
         this.pendings.add(p);
     }
 
@@ -71,7 +75,8 @@ public class Queue extends Thread{
         Remove a processed pending from both phone memory and list
      */
     private void RemovePending(Pending p){
-        //Todo: remove the given pending object from the phone internal memory
+    	PMClient pm = new PMClient();
+    	pm.deletePending(this.ctx, p);
         this.pendings.remove(p);
     }
 
@@ -79,8 +84,8 @@ public class Queue extends Thread{
         Retrieve all pendings from the phone internal memory
      */
     private List<Pending> GetAllPendings(){
-        //TODO: return all pendings from the phone internal memory
-        return new ArrayList<Pending>();
+    	PMClient pm = new PMClient();
+        return pm.getPendings(this.ctx);
     }
 
 
@@ -89,18 +94,19 @@ public class Queue extends Thread{
         manipulate the elastic search
      */
     public void ProcessPendings() throws NoClassTypeSpecifiedException, NoInternetException, IOException{
-        for(Pending p : pendings){
+        ESClient esClient = new ESClient();
+    	for(Pending p : pendings){
         	Content c = p.getContent();
             try {
                 if(c instanceof Question){
-                	escClient.submitQuestion((Question)c);
+                	esClient.submitQuestion((Question)c);
                 }else if (c instanceof Answer){
-                	escClient.submitAnswer((Answer)c, p.getAnswerId());
+                	esClient.submitAnswer((Answer)c, p.getAnswerId());
                 }else if (c instanceof Reply){
                 	if (p.getAnswerId() != null && !p.getAnswerId().isEmpty()){
-                		escClient.submitAnswerReply((Reply)c, p.getQuestionId(), p.getAnswerId());
+                		esClient.submitAnswerReply((Reply)c, p.getQuestionId(), p.getAnswerId());
                 	}else{
-                		escClient.submitQuestionReply((Reply)c, p.getQuestionId());
+                		esClient.submitQuestionReply((Reply)c, p.getQuestionId());
                 	}
                 }else{
                 	throw new NoClassTypeSpecifiedException();
@@ -109,6 +115,7 @@ public class Queue extends Thread{
             catch(NoClassTypeSpecifiedException ex){
             	throw ex;
             }catch(IOException ex){
+            	//TODO: check whether internet is available or not
             	return;
             }finally {            
                 RemovePending(p);
@@ -120,8 +127,7 @@ public class Queue extends Thread{
         Checks whether the phone can reach a certain url or not
         (so even if the user have internet, if our server can't be reached, assume something is wrong)
      */
-    // TODO made public because test case uses it.
-    public boolean checkForInternet()
+    private boolean checkForInternet()
     {
         try {
             InetAddress address = InetAddress.getByName(ping_url);
@@ -130,7 +136,7 @@ public class Queue extends Thread{
             } else {
                 return true;
             }
-        } catch (Exception e) {
+        } catch (Exception ex) {
             return false;
         }
     }

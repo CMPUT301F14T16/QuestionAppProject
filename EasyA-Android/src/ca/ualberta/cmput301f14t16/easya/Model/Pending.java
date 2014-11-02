@@ -32,11 +32,7 @@ public class Pending {
 	 * The {@link Content} that is to be pushed to the ElasticSearch database.
 	 */
 	private Content content;
-	/**
-	 * @deprecated No getters or setters implemented.
-	 */
-	// TODO If you want them, make them. Otherwise, remove this member from the
-	// class. It's useless.
+
 	private Date createdOn;
 
 	/**
@@ -57,10 +53,8 @@ public class Pending {
 	 * @param c
 	 *            Content stored by the Pending object. Setter for
 	 *            {@link Pending#content}
-	 * @deprecated Use one of the specialized constructors instead.
 	 */
-	// TODO get rid of this constructor. It's not useful.
-	public Pending(String qID, String aID, Content c) {
+	private Pending(String qID, String aID, Content c) {
 		this.questionId = qID;
 		this.answerId = aID;
 		this.content = c;
@@ -130,13 +124,34 @@ public class Pending {
 	public String getAnswerId() {
 		return this.answerId;
 	}
+	
+	@Override
+    public boolean equals(Object obj) {
+        if (obj == this) {
+            return true;
+        }
+        if (obj == null || obj.getClass() != this.getClass()) {
+            return false;
+        }
 
-	/**
-	 * @param content
-	 *            Setter for {@link Pending#content}
-	 */
-	public void addContent(Content content) {
-		this.content = content;
-
-	}
+        Pending p = (Pending) obj;
+        return (questionId == p.questionId
+                     || (questionId != null && questionId.equals(p.getQuestionId())))
+                && (answerId == p.answerId
+                     || (answerId != null && answerId.equals(p.getAnswerId())))
+                && (content != null && content.getId().equals(p.content.getId()));
+    }
+   
+    @Override
+    public int hashCode() {
+        final int prime = 31;
+        int result = 1;
+        result = prime * result
+                + ((questionId == null) ? 0 : questionId.hashCode());
+        result = prime * result
+                + ((answerId == null) ? 0 : answerId.hashCode());
+        result = prime * result
+                + ((content == null) ? 0 : content.getId().hashCode());
+        return result;
+    }
 }

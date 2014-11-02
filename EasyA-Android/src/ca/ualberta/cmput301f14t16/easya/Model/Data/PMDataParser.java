@@ -21,8 +21,7 @@ import android.content.SharedPreferences;
  *
  */
 public class PMDataParser {
-	public final static void saveJson(Context c, PMFilesEnum filename, String json)
-    {
+	public final static void saveJson(Context c, PMFilesEnum filename, String json){
         FileOutputStream outputStream;
         try
         {
@@ -37,8 +36,7 @@ public class PMDataParser {
         }
     }
 
-    public final static String loadJson(Context c, PMFilesEnum filename)
-    {
+    public final static String loadJson(Context c, PMFilesEnum filename){
         StringBuffer sBuffer = new StringBuffer("");
         try
         {
@@ -74,8 +72,7 @@ public class PMDataParser {
         return sBuffer.toString();
     }
     
-    public final static void saveUserPreference(Context c, String key, String content)
-    {
+    public final static void saveUserPreference(Context c, String key, String content){
     	Gson gson = new Gson();
         SharedPreferences sharedPref = c.getSharedPreferences(
                 key, Context.MODE_PRIVATE);
@@ -84,8 +81,7 @@ public class PMDataParser {
         editor.commit();
     }
 
-    public final static String recoverUserPreference(Context c, String key)
-    {
+    public final static String recoverUserPreference(Context c, String key){
         SharedPreferences sharedPref = c.getSharedPreferences(
                 key, Context.MODE_PRIVATE);
         return sharedPref.getString(key, "");
