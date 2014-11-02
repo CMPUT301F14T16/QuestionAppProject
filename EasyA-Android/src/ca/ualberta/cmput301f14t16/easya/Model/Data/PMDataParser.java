@@ -5,10 +5,15 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.lang.reflect.Type;
+
+import com.google.gson.Gson;
 
 import ca.ualberta.cmput301f14t16.easya.Model.Content;
+import ca.ualberta.cmput301f14t16.easya.Model.Question;
 
 import android.content.Context;
+import android.content.SharedPreferences;
 
 /**
  * Responsible for dealing with the Json files at a more lower level
@@ -16,7 +21,7 @@ import android.content.Context;
  *
  */
 public class PMDataParser {
-	public final static void SaveJson(Context c, PMFilesEnum filename, String json)
+	public final static void saveJson(Context c, PMFilesEnum filename, String json)
     {
         FileOutputStream outputStream;
         try
@@ -32,7 +37,7 @@ public class PMDataParser {
         }
     }
 
-    public final static String LoadJson(Context c, PMFilesEnum filename)
+    public final static String loadJson(Context c, PMFilesEnum filename)
     {
         StringBuffer sBuffer = new StringBuffer("");
         try
@@ -67,5 +72,22 @@ public class PMDataParser {
             e.printStackTrace();
         }
         return sBuffer.toString();
+    }
+    
+    public final static void saveUserPreference(Context c, String key, String content)
+    {
+    	Gson gson = new Gson();
+        SharedPreferences sharedPref = c.getSharedPreferences(
+                key, Context.MODE_PRIVATE);
+        SharedPreferences.Editor editor = sharedPref.edit();
+        editor.putString(key, content);
+        editor.commit();
+    }
+
+    public final static String recoverUserPreference(Context c, String key)
+    {
+        SharedPreferences sharedPref = c.getSharedPreferences(
+                key, Context.MODE_PRIVATE);
+        return sharedPref.getString(key, "");
     }
 }

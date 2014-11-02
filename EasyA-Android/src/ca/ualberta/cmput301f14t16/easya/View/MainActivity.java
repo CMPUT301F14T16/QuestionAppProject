@@ -41,6 +41,11 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_master);
 
+		////
+		//TODO: if no user is found, try to create/load one from internet
+		// If still not able, block ui with the create user screen.
+		
+		
         //Creation of the drawer menu
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (LinearLayout) findViewById(R.id.drawer_menu);

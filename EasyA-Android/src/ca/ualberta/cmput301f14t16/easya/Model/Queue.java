@@ -15,13 +15,10 @@ import ca.ualberta.cmput301f14t16.easya.Model.Data.ESClient;
  * Created by Cauani on 2014-10-25.
  * @author Cauani
  */
-public class Queue extends Thread
-{
-    //TODO: Handle the logic for updating Cache as well
-
+public class Queue extends Thread{
     final String ping_url = "bing.com"; //TODO: switch the host name to our elastic server
     final long loop_interval = 5000; //in milliseconds
-    final int check_for_internet = 300000; //in milliseconds
+    final int check_for_internet = 300000; //in milliseconds 5 minutes
 
     public Date lastCheck; // TODO made public because test case uses it.
     private boolean haveInternet;

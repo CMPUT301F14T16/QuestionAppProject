@@ -23,7 +23,7 @@ public class GeneralHelper {
 	 * @throws UnableToGetUserEmailException
 	 */
 	//TODO Docstring method description
-	public String retrieveEmail(Context c) throws UnableToGetUserEmailException{
+	public final static String retrieveEmail(Context c) throws UnableToGetUserEmailException{
 		Pattern emailPattern = Patterns.EMAIL_ADDRESS;
 		Account[] accounts = AccountManager.get(c).getAccounts();
 		for (Account account : accounts) {
