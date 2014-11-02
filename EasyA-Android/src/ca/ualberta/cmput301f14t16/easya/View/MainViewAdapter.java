@@ -70,7 +70,7 @@ public class MainViewAdapter extends ArrayAdapter<Question> {
 
         qTitle.setText(qItem.getTitle());
         qAuthor.setText(qItem.getAuthorName());
-        qAnswers.setText(qItem.getAnswerCount());
+        qAnswers.setText(qItem.getAnswerCountString());
         qUpVotes.setText(qItem.getUpVoteCountString());
 
         return view;

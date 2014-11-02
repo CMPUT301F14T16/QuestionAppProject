@@ -73,7 +73,7 @@ public class Question extends Topic {
 	 * @return The number of {@link Answer} objects stored by the instance of
 	 *         Question.
 	 */
-	public String getAnswerCount() {
+	public String getAnswerCountString() {
 		try{
 			return this.Answers.size() <= 99 ? String.valueOf(this.Answers.size()) : "99+";
 		}catch(Exception ex){
