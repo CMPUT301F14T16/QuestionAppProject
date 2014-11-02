@@ -8,17 +8,17 @@ package ca.ualberta.cmput301f14t16.easya.Model;
 public class QuestionList {
 	private String id;
 	private String title;
-	private String comments;
-	private int upvotes;
+	private String answers;
+	private String upvotes;
 	private boolean image;
 	public QuestionList(){
 		
 	}
 	
-	public QuestionList(String id, String title, String username, String comments, int upvotes, boolean image){
+	public QuestionList(String id, String title, String username, String answers, String upvotes, boolean image){
 		this.id = id;
 		this.title = title;
-		this.comments = comments;
+		this.answers  = answers;
 		this.upvotes = upvotes;
 		this.image = image;
 	}
@@ -31,11 +31,11 @@ public class QuestionList {
 		return this.title;
 	}
 
-	public String getComments() {
-		return this.comments;
+	public String getAnswers() {
+		return this.answers;
 	}
 
-	public int getUpvotes() {
+	public String getUpvotes() {
 		return this.upvotes;
 	}
 	

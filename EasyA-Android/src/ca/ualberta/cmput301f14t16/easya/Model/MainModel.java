@@ -1,6 +1,7 @@
 package ca.ualberta.cmput301f14t16.easya.Model;
 
 import java.util.ArrayList; // Used in list creation.
+import java.util.List;
 
 import android.content.Context;
 
@@ -73,6 +74,10 @@ public class MainModel<V extends MainView> {
 				return null;
 			}
 		}
+	}
+
+	public List<QuestionList> getAllQuestions() {
+		return Cache.getAllQuestions();
 	}	
 		
 	/**

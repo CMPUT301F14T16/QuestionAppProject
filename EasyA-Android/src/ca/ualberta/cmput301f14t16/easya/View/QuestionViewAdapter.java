@@ -93,7 +93,7 @@ public class QuestionViewAdapter {
     	title.setText(q.getTitle());
     	body.setText(q.getBody());
     	authordate.setText(q.getAuthorDate());
-    	upvotescount.setText(q.getUpVoteCount());
+    	upvotescount.setText(q.getUpVoteCountString());
     	
     	((EditText)v.findViewById(R.id.question_fragment_submitReplyEdt)).setTag(0);
     	((ImageButton)v.findViewById(R.id.question_fragment_upvoteBtn)).setTag(q);
@@ -123,7 +123,7 @@ public class QuestionViewAdapter {
     	
     	body.setText(a.getBody());
     	authordate.setText(a.getAuthorDate());
-    	upvotescount.setText(a.getUpVoteCount());
+    	upvotescount.setText(a.getUpVoteCountString());
     	
     	((EditText)v.findViewById(R.id.answer_fragment_submitReplyEdt)).setTag(a.getId());
     	((ImageButton)v.findViewById(R.id.answer_fragment_upvoteBtn)).setTag(a);

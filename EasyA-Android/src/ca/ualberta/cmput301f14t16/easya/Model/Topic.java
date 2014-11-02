@@ -82,14 +82,14 @@ public abstract class Topic extends Content {
 	// TODO change name in UML
 	public int getUpVoteCount() {
 		return this.upVotes.size();
-		
-		// TODO have the code calling getUpvoteCount implement this functionality
-		// OR implement getUpvoteCountAsString();
-//		try{
-//		return this.upVotes.size() <= 99 ? String.valueOf(this.upVotes.size()) : "99+";
-//		}catch(Exception ex){
-//			return "0";
-//		}
+	}
+	
+	public String getUpVoteCountString(){
+		try{
+		return this.upVotes.size() <= 99 ? String.valueOf(this.upVotes.size()) : "99+";
+		}catch(Exception ex){
+			return "0";
+		}
 	}
 
 	/*

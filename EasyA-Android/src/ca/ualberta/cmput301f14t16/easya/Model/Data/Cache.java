@@ -1,5 +1,6 @@
 package ca.ualberta.cmput301f14t16.easya.Model.Data;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.List;
@@ -43,10 +44,15 @@ public class Cache {
 	
 	public static Question getQuestionById(Context ctx, String id) throws NoContentAvailableException{
 		if (MainActivity.mQueueThread.haveInternetConnection()){
-			//TODO: get it from ESClient
-			// Save the returned object in cache
-			// SaveSingleQuestion(ctx, q);
-			 return new Question();
+			 try{
+				 ESClient es = new ESClient();			 
+				 Question aux = es.getQuestionById(id);
+				 SaveSingleQuestion(ctx, aux);
+				 return aux;
+			 }catch(IOException ex){
+				 //TODO: deal with it later
+				 return null;
+			 }
 		 }else{
 			 return getQuestionFromCache(ctx, id);				
 		 }
@@ -114,7 +120,7 @@ public class Cache {
 		List<QuestionList> lst = new ArrayList<QuestionList>();
 		for (Question q : aux){
 			if (q.getAuthorId().equals(u.getId()))
-				lst.add(new QuestionList(q.getId(), q.getTitle(), q.getAuthorName(), q.getAnswerCount(), q.getUpVoteCount(), q.hasPicture()));
+				lst.add(new QuestionList(q.getId(), q.getTitle(), q.getAuthorName(), q.getAnswerCountString(), q.getUpVoteCountString(), q.hasPicture()));
 		}
 		return lst;
 	}
@@ -125,7 +131,7 @@ public class Cache {
 		List<Question> aux = gson.fromJson(PMDataParser.loadJson(ctx, PMFilesEnum.CACHEQUESTIONS), listType);
 		List<QuestionList> lst = new ArrayList<QuestionList>();
 		for (Question q : aux){
-			lst.add(new QuestionList(q.getId(), q.getTitle(), q.getAuthorName(), q.getAnswerCount(), q.getUpVoteCount(), q.hasPicture()));
+			lst.add(new QuestionList(q.getId(), q.getTitle(), q.getAuthorName(), q.getAnswerCountString(), q.getUpVoteCountString(), q.hasPicture()));
 		}
 		return lst;
 	}
@@ -140,6 +146,8 @@ public class Cache {
 		Gson gson = new Gson();
 		Type listType = new TypeToken<List<Question>>(){}.getType();
 		List<Question> lst = gson.fromJson(PMDataParser.loadJson(ctx, PMFilesEnum.CACHEQUESTIONS), listType);
+		if (lst == null)
+			throw new NoContentAvailableException();
 		for (Question q : lst){
 			if (q.getId().equals(id))
 			return q;
@@ -156,5 +164,15 @@ public class Cache {
 			return u;
 		}
 		throw new NoContentAvailableException();
-	}	
+	}
+
+	public static List<QuestionList> getAllQuestions() {
+		ESClient es = new ESClient();
+		try{
+			return es.searchQuestionListsByQuery("", 100);			
+		}catch(IOException ex){
+			//TODO: deal with this later
+			return null;
+		}		
+	}
 }

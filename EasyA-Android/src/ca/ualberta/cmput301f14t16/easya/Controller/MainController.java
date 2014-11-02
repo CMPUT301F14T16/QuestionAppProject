@@ -16,5 +16,7 @@ public class MainController {
 		MV = V;
 	}
 	
-	
+	public void updateView(){
+		
+	}
 }
