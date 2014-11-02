@@ -43,7 +43,11 @@ public abstract class Topic extends Content {
 	 * @param comment
 	 */
 	public void addReply(Reply reply) {
-		this.replies.add(reply);
+		try{
+			this.replies.add(reply);
+		}catch(Exception ex){
+			//TODO: deal with exception
+		}
 	}
 
 	/**
@@ -51,6 +55,9 @@ public abstract class Topic extends Content {
 	 */
 	// TODO change name in UML
 	public List<Reply> getReplies() {
+		if (this.replies == null){
+			this.replies = new ArrayList<Reply>();
+		}
 		return this.replies;
 	}
 
@@ -74,7 +81,11 @@ public abstract class Topic extends Content {
 	 */
 	// TODO change name in UML
 	public String getUpVoteCount() {
+		try{
 		return this.upVotes.size() <= 99 ? String.valueOf(this.upVotes.size()) : "99+";
+		}catch(Exception ex){
+			return "0";
+		}
 	}
 
 	/*
@@ -83,12 +94,15 @@ public abstract class Topic extends Content {
 	 * if not, upvote it
 	 */
 	public void setUpvote(User user){
-		if (this.upVotes.contains(user.getId())){
-			this.upVotes.remove(user.getId());
-		}else{
-			this.upVotes.add(user.getId());
+		try{
+			if (this.upVotes.contains(user.getId())){
+				this.upVotes.remove(user.getId());
+			}else{
+				this.upVotes.add(user.getId());
+			}
+		}catch(Exception ex){
+			//TODO: deal with exception
 		}
-		
 		//TODO: Try to call directly if have internet, if have no internet, throw exception
 	}
 	
@@ -97,9 +111,8 @@ public abstract class Topic extends Content {
 	 */
 	public boolean hasPicture() {
 		return (this.picture != null && !this.picture.isEmpty());
-	}
-
-	// TODO Remove this method, Change this in the UML
+	} 
+	
 	/**
 	 * A switch for setting a content as favorite
 	 * If the user have already favorited this, unfavorite
@@ -107,12 +120,16 @@ public abstract class Topic extends Content {
 	 * @param isFavourite
 	 */
 	public void setFavourite(User user) {
-		if (this.favourites.contains(user.getId())){
-			this.favourites.remove(user.getId());
-		}else{
-			this.favourites.add(user.getId());
+		try{
+			if (this.favourites.contains(user.getId())){
+				this.favourites.remove(user.getId());
+			}else{
+				this.favourites.add(user.getId());
+			}
+		}catch(Exception ex){
+			
 		}
-		//TODO: call Queue to add this update to the queue
+		//TODO: Try to call directly if have internet, if have no internet, throw exception
 	}
  
 	public boolean checkFavourite(User user) {
@@ -120,6 +137,10 @@ public abstract class Topic extends Content {
 	}
 	
 	public boolean checkUpVote(User user) {
-		return this.favourites.contains(user.getId());
+		try{
+			return this.favourites.contains(user.getId());
+		}catch(Exception ex){
+			return false;
+		}
 	}
 }

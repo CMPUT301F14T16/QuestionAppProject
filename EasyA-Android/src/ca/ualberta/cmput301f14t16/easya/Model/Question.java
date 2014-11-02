@@ -3,6 +3,8 @@ package ca.ualberta.cmput301f14t16.easya.Model;
 import java.util.ArrayList;
 import java.util.List;
 
+import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
+
 /**
  * The Question class is an extension of the {@link Content} class, that
  * provides functions for associating and retrieving relevant {@link Answer} and
@@ -72,8 +74,11 @@ public class Question extends Topic {
 	 *         Question.
 	 */
 	public String getAnswerCount() {
-		return this.Answers.size() <= 99 ? String.valueOf(this.Answers.size())
-				: "99+";
+		try{
+			return this.Answers.size() <= 99 ? String.valueOf(this.Answers.size()) : "99+";
+		}catch(Exception ex){
+			return "0";
+		}
 	}
 
 	/**
@@ -81,6 +86,8 @@ public class Question extends Topic {
 	 */
 	// TODO change name in UML.
 	public List<Answer> getAnswers() {
+		if (this.Answers == null)
+			this.Answers = new ArrayList<Answer>();
 		return this.Answers;
 	}
 
@@ -93,10 +100,20 @@ public class Question extends Topic {
 	 *         {@link Answer} is not found.
 	 */
 	public Answer getAnswerById(String aid) {
-		for (Answer answer : this.Answers) {
-			if (answer.getId().equals(aid))
-				return answer;
+		try{
+			for (Answer answer : this.Answers) {
+				if (answer.getId().equals(aid))
+					return answer;
+			}
+			return null;
+		}catch(Exception ex){
+			//TODO: deal with exception
+			return null;
 		}
-		return null;
+	}
+	
+	public static Question getQuestionById(String id) throws NoContentAvailableException{
+		//TODO: connect with ESClient and return a question
+		return new Question();
 	}
 }
