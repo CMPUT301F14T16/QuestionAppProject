@@ -17,26 +17,17 @@ public class UserTest extends TestCase{
 	private Date date;
 	private User user;
 	private String newname;
-	private int a;
-	private int b;
-	private int c;
 	
 	public void setup() {
 		username = "Lingbo";
 		email = "lingbo19.tang@gmail.com";
-		a = 1;
-		b = 2;
-		c = 3;
-		submittedContent.add(a);
-		submittedContent.add(b);
-		submittedContent.add(c);
-		user = new User(email,username,submittedContent);
+		user = new User(email,username);
 	}
 	
 	public void testSetUsername() {
 		newname = "Lingbo747";
 		user.setUserName(newname);
-		assertEquals(user.getUserName(),newname);
+		assertEquals(user.getUsername(),newname);
 	}
 	
 	public void testGetEmail() {
@@ -44,10 +35,7 @@ public class UserTest extends TestCase{
 	}
 	
 	public void testGetUserId() {
-		assertEquals(user.getUserId(),userid);
+		assertEquals(user.getId(),userid);
 	}
 	
-	public void testGetNsubmittedContent() {
-		assertSame(user.getNsubmittedContent().get(1),1);
-	}
 }
