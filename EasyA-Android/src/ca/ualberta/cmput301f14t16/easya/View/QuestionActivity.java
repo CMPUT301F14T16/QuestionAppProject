@@ -31,7 +31,10 @@ public class QuestionActivity extends Activity {
 	private class GetQuestionListTask extends AsyncTask<Void, Void, Question> {
         protected Question doInBackground(Void...voids) {
         	try{
-        		return MainActivity.mm.getQuestionById((getIntent()).getStringExtra(MainActivity.QUESTION_KEY));
+        		String aux = (getIntent()).getStringExtra(MainActivity.QUESTION_KEY);
+        		if (aux == null || aux.equals(""))
+        			return null;
+        		return MainActivity.mm.getQuestionById(aux);
         	}catch(NoContentAvailableException ex){
         		return null;
         	}
