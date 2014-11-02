@@ -4,6 +4,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
+/**
+ * 
+ * @author Klinton
+ *
+ * Sorts by the method specified.
+ * These methods sort by up vote, picture, and date. 
+ *  
+ */
+
 public class Sort {
 	
 	public static void sortUpVote(boolean sortOrder,
