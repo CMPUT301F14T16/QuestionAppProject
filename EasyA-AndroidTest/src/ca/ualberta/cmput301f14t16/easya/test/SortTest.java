@@ -3,8 +3,8 @@ package ca.ualberta.cmput301f14t16.easya.test;
 import java.util.ArrayList;
 
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
-import ca.ualberta.cmput301f14t16.easya.Sort;
-import ca.ualberta.cmput301f14t16.easya.Topic;
+import ca.ualberta.cmput301f14t16.easya.Model.Sort;
+import ca.ualberta.cmput301f14t16.easya.Model.Topic;
 import junit.framework.TestCase;
 
 /**
