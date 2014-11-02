@@ -27,16 +27,16 @@ import android.widget.TextView.OnEditorActionListener;
  */
 public class QuestionViewAdapter {
 	private LayoutInflater inflater;
-	private ScrollView container;
+	private LinearLayout container;
 	private Question q;
 
-    public QuestionViewAdapter( Context context, Question q, ScrollView v) {        
+    public QuestionViewAdapter( Context context, Question q, LinearLayout v) {        
         this.inflater = LayoutInflater.from(context);
         this.q = q;
         this.container = v;
     }
     
-    OnEditorActionListener newReply = new OnEditorActionListener() {
+    private OnEditorActionListener newReply = new OnEditorActionListener() {
 		@Override
 		public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
 			if ((event.getAction() == KeyEvent.ACTION_DOWN) && (actionId == KeyEvent.KEYCODE_ENTER)) {
@@ -47,7 +47,7 @@ public class QuestionViewAdapter {
 		}        
     };
     
-    OnClickListener upVote = new OnClickListener() {
+    private OnClickListener upVote = new OnClickListener() {
         @Override
         public void onClick(View v) {
             try{
