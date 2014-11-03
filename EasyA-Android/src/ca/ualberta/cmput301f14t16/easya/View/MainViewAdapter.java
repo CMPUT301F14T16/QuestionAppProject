@@ -69,7 +69,7 @@ public class MainViewAdapter extends ArrayAdapter<QuestionList> {
         qTitle.setTag(qItem);
 
         qTitle.setText(qItem.getTitle());
-        qAuthor.setText(qItem.getUsername());
+        qAuthor.setText(qItem.getUsername()); // TODO You can get user id, not username from question.
         qAnswers.setText(qItem.getAnswers());
         qUpVotes.setText(qItem.getUpvotes());
 
