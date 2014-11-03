@@ -30,6 +30,7 @@ public class User {
 	 */
 	private Date createdOn;
 	/**
+<<<<<<< HEAD
 	 * A list of all IDs associated to {@link Content} objects created by the
 	 * user.
 	 */

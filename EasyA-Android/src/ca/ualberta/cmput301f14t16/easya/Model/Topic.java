@@ -61,14 +61,6 @@ public abstract class Topic extends Content {
 		return this.replies;
 	}
 
-	// TODO Topic is a data class, does not manage files!
-	/**
-	 * 
-	 */
-	public void getFile() {
-
-	}
-
 	/**
 	 * @return
 	 */

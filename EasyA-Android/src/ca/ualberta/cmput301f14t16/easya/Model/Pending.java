@@ -4,6 +4,8 @@ package ca.ualberta.cmput301f14t16.easya.Model;
 
 import java.util.Date;
 
+import ca.ualberta.cmput301f14t16.easya.View.MainActivity;
+
 /**
  *
  * Pending is cache like buffer used to store a {@link Question}, {@link Answer}
@@ -59,6 +61,8 @@ public class Pending {
 		this.answerId = aID;
 		this.content = c;
 		this.createdOn = new Date();
+		
+		
 	}
 
 	/**
