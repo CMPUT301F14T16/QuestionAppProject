@@ -24,13 +24,22 @@ import android.content.Context;
 public class Cache {		
 	public static List<QuestionList> getUserQuestions(Context ctx, User u){
 		if (MainActivity.mQueueThread.haveInternetConnection()){
-			//TODO: return all questionslist from the ESClient,
-			// then loop thru them and only return the ones that matches
-			// the user
-			 return new ArrayList<QuestionList>();
-		 }else{
-			 return getQuestionListFromQuestionsCache(ctx);				
-		 }
+			try{
+				ESClient es = new ESClient();
+				List<QuestionList> lst = es.searchQuestionListsByQuery("*", 100);
+				List<QuestionList> lstUser = new ArrayList<QuestionList>();
+				for (QuestionList q : lst){
+					if (q.getUsername().equals(u.getUsername()))
+						lstUser.add(q);
+				}
+				return lstUser;
+			}catch(IOException ex){
+				//TODO: deal with this exception
+			}			
+			return new ArrayList<QuestionList>();
+		}else{
+			return getUserQuestionsFromQuestionsCache(ctx, u);				
+		}
 	}
 	
 	public static Question getQuestionById(Context ctx, String id) throws NoContentAvailableException{
@@ -51,7 +60,7 @@ public class Cache {
 	
 	public static User getUserById(Context ctx, String id) throws NoContentAvailableException{
 		if (MainActivity.mQueueThread.haveInternetConnection()){
-			//TODO: get it from ESClient
+			//TODO: get it from ESClient when the User database is online
 			// Save the returned object in cache
 			// SaveSingleUser(ctx, u);
 			 return new User();
@@ -75,7 +84,7 @@ public class Cache {
 		}
 		PMDataParser.saveJson(ctx, PMFilesEnum.CACHEQUESTIONS, gson.toJson(aux));
 		
-		//TODO: call MM and tell it to update
+		MainActivity.mm.notifyViews();
 	}
 
 	/**
@@ -96,14 +105,14 @@ public class Cache {
 		}
 		PMDataParser.saveJson(ctx, PMFilesEnum.CACHEUSERS, gson.toJson(aux));
 		
-		//TODO: call MM and tell it to update
+		MainActivity.mm.notifyViews();
 	}
 	
 	private static void UpdateUsers(Context ctx, List<User> lst){
 		Gson gson = new Gson();
 		PMDataParser.saveJson(ctx, PMFilesEnum.CACHEUSERS, gson.toJson(lst));
 		
-		//TODO: call MM and tell it to update
+		MainActivity.mm.notifyViews();
 	}
 		
 	private static List<QuestionList> getUserQuestionsFromQuestionsCache(Context ctx, User u){

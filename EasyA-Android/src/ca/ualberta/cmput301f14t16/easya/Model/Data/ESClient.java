@@ -65,8 +65,6 @@ public class ESClient {
 		// Post the object to the webservice
 		HttpHelper.putToUrl(HOST_URL + QUESTION_PATH + question.getId(), json);
 		
-		//TODO: if have no internet, throw a NoInternetException
-		
 		//TODO: change that based on ESS response
 		return true;
 	}
@@ -88,8 +86,6 @@ public class ESClient {
 		
 		HttpHelper.putToUrl(HOST_URL + QUESTION_PATH + qid +"/_update", updateStr);
 		
-		//TODO: if have no internet, throw a NoInternetException
-		
 		//TODO: change that based on ESS response
 		return true;
 	}
@@ -109,8 +105,6 @@ public class ESClient {
 		String updateStr = "{ \"doc\":{ \"replies\":" + json + "} }";
 		
 		HttpHelper.putToUrl(HOST_URL + QUESTION_PATH + qid + "/_update", updateStr);
-		
-		//TODO: if have no internet, throw a NoInternetException
 		
 		//TODO: change that based on ESS response
 		return true;
@@ -132,8 +126,6 @@ public class ESClient {
 		String updateStr = "{ \"doc\":{ \"answers\":" + json + "} }";
 		
 		HttpHelper.putToUrl(HOST_URL + QUESTION_PATH + qid +"/_update", updateStr);
-		
-		//TODO: if have no internet, throw a NoInternetException
 		
 		//TODO: change that based on ESS response
 		return true;

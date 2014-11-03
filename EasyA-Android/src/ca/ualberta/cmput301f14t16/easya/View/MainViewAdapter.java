@@ -35,7 +35,7 @@ public class MainViewAdapter extends ArrayAdapter<QuestionList> {
 
         // Create a new row for the list
         if ( view == null ){
-            view = inflater.inflate(R.layout.main_questions_fragment, null);
+            view = inflater.inflate(R.layout.main_questions_fragment, parent, false);
 
             qTitle = (TextView) view.findViewById( R.id.questionTitle);
             qAuthor= (TextView) view.findViewById( R.id.questionAuthor);
@@ -69,7 +69,7 @@ public class MainViewAdapter extends ArrayAdapter<QuestionList> {
         qTitle.setTag(qItem);
 
         qTitle.setText(qItem.getTitle());
-        qAuthor.setText(""); //TODO: finish this
+        qAuthor.setText(qItem.getUsername());
         qAnswers.setText(qItem.getAnswers());
         qUpVotes.setText(qItem.getUpvotes());
 

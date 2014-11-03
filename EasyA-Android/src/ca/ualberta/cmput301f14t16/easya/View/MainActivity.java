@@ -1,25 +1,16 @@
 package ca.ualberta.cmput301f14t16.easya.View;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import ca.ualberta.cmput301f14t16.easya.R;
-import ca.ualberta.cmput301f14t16.easya.Model.Answer;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
-import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Model.QuestionList;
 import ca.ualberta.cmput301f14t16.easya.Model.Queue;
-import ca.ualberta.cmput301f14t16.easya.R.drawable;
-import ca.ualberta.cmput301f14t16.easya.R.id;
-import ca.ualberta.cmput301f14t16.easya.R.layout;
-import ca.ualberta.cmput301f14t16.easya.R.menu;
-import ca.ualberta.cmput301f14t16.easya.R.string;
 
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
-import android.app.ListActivity;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
@@ -33,7 +24,6 @@ public class MainActivity extends Activity {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private LinearLayout mDrawerList;
-    private List<Question> mQuestionList;
     
     public final static String QUESTION_KEY = "ca.ualberta.cmput301f14t16.easya.QUESTIONKEY"; 
     

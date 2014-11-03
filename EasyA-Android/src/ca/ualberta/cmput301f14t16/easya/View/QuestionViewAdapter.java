@@ -5,20 +5,18 @@ import java.util.List;
 import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
 import ca.ualberta.cmput301f14t16.easya.Model.Answer;
-import ca.ualberta.cmput301f14t16.easya.Model.Content;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Model.Reply;
 import ca.ualberta.cmput301f14t16.easya.Model.Topic;
-import ca.ualberta.cmput301f14t16.easya.Model.User;
 import android.content.Context;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
-import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
 
@@ -31,13 +29,11 @@ public class QuestionViewAdapter {
 	private LayoutInflater inflater;
 	private LinearLayout container;
 	private Question q;
-	private Context ctx;
 
     public QuestionViewAdapter( Context context, Question q, LinearLayout v) {        
         this.inflater = LayoutInflater.from(context);
         this.q = q;
         this.container = v;
-        this.ctx = context;
     }
     
     private OnEditorActionListener newReply = new OnEditorActionListener() {
@@ -57,7 +53,7 @@ public class QuestionViewAdapter {
             try{
             	//TODO: pass all this to the controller
 	        	Topic t = (Topic)v.getTag();
-	            t.setUpvote(null); //TODO: set the user (get it from mainmodel?)
+	            t.setUpvote(MainActivity.mm.getCurrentUser());
             }catch(Exception ex){
             	//TODO: do something with the exception
             }
@@ -76,7 +72,7 @@ public class QuestionViewAdapter {
     }
     
     private void inflateQuestion() throws NoContentAvailableException{
-    	View v = inflater.inflate(R.layout.question_question_fragment, null);
+    	View v = inflater.inflate(R.layout.question_question_fragment, (ViewGroup)container, false);
     	    	
     	TextView title, body, upvotescount, authordate;
     	LinearLayout replies;
@@ -98,7 +94,7 @@ public class QuestionViewAdapter {
     	((EditText)v.findViewById(R.id.question_fragment_submitReplyEdt)).setTag(0);
     	((ImageButton)v.findViewById(R.id.question_fragment_upvoteBtn)).setTag(q);
     	((ImageButton)v.findViewById(R.id.question_fragment_upvoteBtn)).setOnClickListener(upVote);
-    	if (q.checkUpVote(MainActivity.mm.getCurrentUser())){ //TODO: get the current user to check
+    	if (q.checkUpVote(MainActivity.mm.getCurrentUser())){
     		//TODO: set a different image for when the user have already upvoted the topic
     		//((ImageButton)v.findViewById(R.id.question_fragment_upvoteBtn)).setImageDrawable(R.drawable.)
     	}
@@ -107,7 +103,7 @@ public class QuestionViewAdapter {
     }
     
     private void inflateAnswer(Answer a) throws NoContentAvailableException{
-    	View v = inflater.inflate(R.layout.question_answer_fragment, null);
+    	View v = inflater.inflate(R.layout.question_answer_fragment, (ViewGroup)container, false);
     	    	
     	TextView body, upvotescount, authordate;
     	LinearLayout replies;
@@ -129,7 +125,7 @@ public class QuestionViewAdapter {
     	((ImageButton)v.findViewById(R.id.answer_fragment_upvoteBtn)).setTag(a);
     	((ImageButton)v.findViewById(R.id.answer_fragment_upvoteBtn)).setOnClickListener(upVote);
     	
-    	if (q.checkUpVote(MainActivity.mm.getCurrentUser())){ //TODO: get the current user to check
+    	if (q.checkUpVote(MainActivity.mm.getCurrentUser())){
     		//TODO: set a different image for when the user have already upvoted the topic
     		//((ImageButton)v.findViewById(R.id.question_fragment_upvoteBtn)).setImageDrawable(R.drawable.)
     	}
@@ -139,7 +135,7 @@ public class QuestionViewAdapter {
     
     private LinearLayout inflateReplies(LinearLayout ll, List<Reply> replies){
     	for (Reply r : replies){
-    		View v = inflater.inflate(R.layout.question_reply_fragment, null);
+    		View v = inflater.inflate(R.layout.question_reply_fragment, (ViewGroup)container, false);
     		((TextView)v.findViewById(R.id.reply_fragment_body)).setText(r.getBody());
     		((TextView)v.findViewById(R.id.reply_fragment_authorDate)).setText(r.getAuthorDate());
     		ll.addView(v);
