@@ -5,18 +5,6 @@ import java.util.Date;
 import java.util.List;
 import java.util.Random;
 import java.util.UUID;
-import java.util.regex.Pattern;
-
-import ca.ualberta.cmput301f14t16.easya.R;
-import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
-import ca.ualberta.cmput301f14t16.easya.Exceptions.UnableToGetUserEmailException;
-import ca.ualberta.cmput301f14t16.easya.Model.Data.PMClient;
-import ca.ualberta.cmput301f14t16.easya.View.MainActivity;
-import android.accounts.Account;
-import android.accounts.AccountManager;
-import android.content.Context;
-import android.text.style.EasyEditSpan;
-import android.util.Patterns;
 
 /**
  * Provides a method of storing and accessing all data relevant to a single
@@ -45,12 +33,12 @@ public class User {
 	 * A list of all IDs associated to {@link Content} objects created by the
 	 * user.
 	 */
-	private List<Integer> createdContent;
+	private List<String> createdContent;
 	/**
 	 * A list of all IDs associated to {@link Content} objects marked as
 	 * "favourite" by the user.
 	 */
-	private List<Integer> favorites;
+	private List<String> favorites;
 
 	public final static String USERKEY = "ca.ualberta.cmput301f14t16.easya.USERKEY";
 
@@ -78,40 +66,27 @@ public class User {
 		this.username = username.equals("") ? generateNewUserName() : username;
 		this.id = UUID.randomUUID().toString();
 		this.createdOn = new Date();
-		this.favorites = new ArrayList<Integer>();
-		this.createdContent = new ArrayList<Integer>();
+		this.favorites = new ArrayList<String>();
+		this.createdContent = new ArrayList<String>();
 	}
 
 	/**
-	 * Queries the ElasticSearch database to find any {@link Content} objects
-	 * marked as favourite by the user.
+	 * Returns a list of question ids for questions marked as favourite by the user.
 	 * 
 	 * @return A list of IDs {@link Content} objects marked as favourite by the
 	 *         user.
 	 */
-	private List<Integer> getFavorites() {
-		try {
-			// TODO: look for this user in ESClient and return the favorites
-			return new ArrayList<Integer>();
-		} catch (Exception ex) {
-			return new ArrayList<Integer>();
-		}
+	public List<String> getFavorites() {
+		return favorites;
 	}
 
 	/**
-	 * Queries the ElasticSearch database to find any {@link Content} objects
-	 * created by the user.
+	 * Returns a list of question ids for questions created by the user.
 	 * 
 	 * @return A list of IDs {@link Content} objects created by the user.
 	 */
-	private List<Integer> getCreatedContent() {
-		try {
-			// TODO: look for this user in ESClient and return the list of
-			// created contents for him
-			return new ArrayList<Integer>();
-		} catch (Exception ex) {
-			return new ArrayList<Integer>();
-		}
+	public List<String> getCreatedContent() {
+		return createdContent;
 	}
 
 	/**
@@ -179,5 +154,9 @@ public class User {
 			aux = "Guest";
 		}
 		return aux + number;
+	}
+
+	public Date getCreatedOn() {
+		return createdOn;
 	}
 }

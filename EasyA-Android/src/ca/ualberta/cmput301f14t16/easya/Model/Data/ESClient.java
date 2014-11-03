@@ -10,6 +10,7 @@ import ca.ualberta.cmput301f14t16.easya.Model.Answer;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Model.QuestionList;
 import ca.ualberta.cmput301f14t16.easya.Model.Reply;
+import ca.ualberta.cmput301f14t16.easya.Model.User;
 
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -25,6 +26,7 @@ public class ESClient {
 	//ElasticSeach Urls
 	private static final String HOST_URL = "http://cmput301.softwareprocess.es:8080/testing/";
 	private static final String QUESTION_PATH = "t16newquestion/";
+	private static final String USER_PATH = "t16newuser/";
 	
 	// JSON Utilities
 	private Gson gson = new Gson();
@@ -162,6 +164,8 @@ public class ESClient {
 		return qlist;
 	}
 	
+	// Same as method above, but returns a preview of a question instead of the full question object.
+	// Above method will most likely not be used...
 	public List<QuestionList> searchQuestionListsByQuery(String query, int numResults) throws IOException {
 		List<QuestionList> qlist = new ArrayList<QuestionList>();
 		
@@ -176,5 +180,53 @@ public class ESClient {
 		}
 		
 		return qlist;
+	}
+	
+	public boolean submitUser(User user) throws IOException {
+		String json = gson.toJson(user);
+		
+		// TODO throw exception if email is already in use.
+		
+		// Post the object to the webservice
+		HttpHelper.putToUrl(HOST_URL + USER_PATH + user.getId(), json);
+		
+		//TODO: if have no internet, throw a NoInternetException
+		
+		//TODO: change that based on ESS response
+		return true;
+	}
+	
+	public User getUserById(String id) throws IOException {
+		// Get a response after submitting the request for the question.
+		String content = HttpHelper.getFromUrl(HOST_URL + USER_PATH + id);
+			
+		// We have to tell GSON what type we expect
+		Type esGetResponseType = new TypeToken<ESGetResponse<User>>(){}.getType();
+		
+		// Now we expect to get a Index-Creation response
+		ESGetResponse<User> esGetResponse = gson.fromJson(content, esGetResponseType);
+		
+		// Extract question from elastic search response;
+		User user = esGetResponse.getSource();
+		
+		return user;
+	}
+	
+	public boolean setUsernameById(String uid, String newUsername) throws IOException {
+
+		String updateStr = "{ \"doc\":{ \"username\":\"" + newUsername + "\"} }";
+		
+		HttpHelper.putToUrl(HOST_URL + USER_PATH + uid + "/_update", updateStr);
+		
+		return true;
+	}
+	
+	
+	// TODO finish below method.
+	public String getUserIdByEmail(String email) {
+		
+		List<User> returnedUsers = new ArrayList<User>();
+		
+		return returnedUsers.get(0).getId();
 	}
 }
