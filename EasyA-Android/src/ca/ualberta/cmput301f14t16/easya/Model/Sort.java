@@ -15,6 +15,15 @@ import java.util.Comparator;
 
 public class Sort {
 	
+	/**
+	 * Creates a comparable to sort by up votes. 
+	 * 
+	 * @param sortOrder 
+	 * 			checks if the sort is from greatest to smallest or vice versa.
+	 * @param topicList
+	 *           list of topics to be sorted.
+	 *           
+	 */
 	public static void sortUpVote(boolean sortOrder,
 			ArrayList<Topic> topicList) {
 		Collections.sort(topicList, new Comparator<Topic>(){
@@ -26,6 +35,16 @@ public class Sort {
 			}
 		});
 	}
+	
+	/**
+	 * Sorts by if it has or doesn't have a picture. 
+	 * 
+	 * @param sortOrder 
+	 * 			checks if the sort is from greatest to smallest or vice versa.
+	 * @param topicList
+	 *           list of topics to be sorted.
+	 *           
+	 */
 	public static void pictureSort(boolean sortOrder,
 			ArrayList<Topic> topicList) {
 		Collections.sort(topicList, new Comparator<Topic>(){
@@ -35,6 +54,16 @@ public class Sort {
 			}
 		});
 	}
+	
+	/**
+	 * Sorts topics by date. 
+	 * 
+	 * @param sortOrder 
+	 * 			checks if the sort is from greatest to smallest or vice versa.
+	 * @param topicList
+	 *           list of topics to be sorted.
+	 *           
+	 */
 	public static void dateSort(boolean sortOrder,
 			ArrayList<Topic> topicList) {
 		Collections.sort(topicList, new Comparator<Topic>(){
