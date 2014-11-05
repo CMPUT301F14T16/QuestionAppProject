@@ -27,8 +27,6 @@ public class Queue extends Thread{
     private boolean haveInternet;
     private boolean isActive = true;
     private Context ctx;
-    
-    //TODO: add a instance of the model that holds all the questions
 
     private List<Pending> pendings;
 
@@ -48,7 +46,7 @@ public class Queue extends Thread{
                     if (haveInternetConnection())
                         ProcessPendings();
                 }
-                    this.sleep(loop_interval);
+                    Thread.sleep(loop_interval);
             }
             catch(InterruptedException ex) {} //Do nothing
             catch(IOException ex){
@@ -95,6 +93,7 @@ public class Queue extends Thread{
      */
     public void ProcessPendings() throws NoClassTypeSpecifiedException, NoInternetException, IOException{
         ESClient esClient = new ESClient();
+        int tries = 0;
     	for(Pending p : pendings){
         	Content c = p.getContent();
             try {
@@ -115,8 +114,11 @@ public class Queue extends Thread{
             catch(NoClassTypeSpecifiedException ex){
             	throw ex;
             }catch(IOException ex){
-            	//TODO: check whether internet is available or not
-            	return;
+            	if (!haveInternetConnection())
+            		return;
+        		if (tries >3)
+        			return;
+        		tries++;
             }finally {            
                 RemovePending(p);
             }

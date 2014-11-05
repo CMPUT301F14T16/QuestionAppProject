@@ -13,6 +13,7 @@ import ca.ualberta.cmput301f14t16.easya.Model.Data.ESClient;
 import ca.ualberta.cmput301f14t16.easya.View.MainActivity;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Model.Reply;
+import ca.ualberta.cmput301f14t16.easya.Model.User;
 
 /**
  * 
@@ -22,6 +23,8 @@ import ca.ualberta.cmput301f14t16.easya.Model.Reply;
 public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<MainActivity> {
 	
 	private static final String LOG_TAG = "ElasticSearchClientTest";
+	private static final String Q_ID = "82f6d4fd-d8a6-4537-a703-11d16bb81306";
+	private static final String A_ID = "96a36b39-c994-4529-8981-f756eb862d9f";
 	private ESClient esclient;
 	
 	public ElasticSearchClientTest() {
@@ -81,7 +84,7 @@ public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<Ma
 	}
 	
 	public void testSubmitAndGetAnswer () {
-		String qid = "15c7827d-636a-48fc-8887-94318b98f95c";
+		String qid = "82f6d4fd-d8a6-4537-a703-11d16bb81306";
 		
 		// Get question before answer submission.
 		Question q = null;
@@ -124,7 +127,7 @@ public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<Ma
 	}
 	
 	public void testSubmitAndGetQuestionReply() {
-		String qid = "15c7827d-636a-48fc-8887-94318b98f95c";
+		String qid = Q_ID;
 		
 		// Get question before answer submission.
 		Question q = null;
@@ -168,8 +171,8 @@ public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<Ma
 	}
 	
 	public void testSubmitAndGetAnswerReply() {
-		String qid = "15c7827d-636a-48fc-8887-94318b98f95c";
-		String aid = "d8b62533-4ad6-4ca9-9e48-4651b8a4ad8f";
+		String qid = Q_ID;
+		String aid = A_ID;
 		
 		// Get question before answer submission.
 		Question q = null;
@@ -230,4 +233,55 @@ public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<Ma
 		assertNotNull(rqs);
 		assertTrue(rqs.size() > 0);
 	}
+	
+	public void testSubmitAndGetUser() {
+		User u = new User();
+		
+		try {
+			esclient.submitUser(u);
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		User ru = null;
+		try {
+			ru = esclient.getUserById(u.getId());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		assertNotNull(ru);
+		
+		// Test that returned user is the same as produced user.
+		assertEquals(u.getId(), ru.getId());
+		assertEquals(u.getEmail(), ru.getEmail());
+		assertEquals(u.getUsername(), ru.getUsername());
+		
+		// test change username
+		u.setUserName("Bobby");
+		try {
+			esclient.setUsernameById(u.getId(), "Bobby");
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		ru = null;
+		try {
+			ru = esclient.getUserById(u.getId());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		assertNotNull(ru);
+		
+		assertEquals(u.getUsername(), ru.getUsername());
+		
+		// test get user id by providing ES an email address
+		
+		// TODO finish below test...
+		String userId = esclient.getUserIdByEmail("commande@ualberta.ca");
+	}
+	
 }

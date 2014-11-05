@@ -18,6 +18,9 @@ public class PendingTest extends TestCase{
 	private Pending pending2;
 	private Pending pending3;
 	private Pending pending4;
+	private Pending pending5;
+	private Pending pending6;
+	private Pending pending7;
 	private String QId;
 	private String AId;
 	private String RId;
@@ -32,7 +35,12 @@ public class PendingTest extends TestCase{
 	private Reply r2;
 	
 	
-	public void setUp() {
+	//public void setUp() {
+		
+		
+	//}
+	
+	public void testGetContent() {
 		Question q1 = new Question("Title Submission Test", "Body of Question", "test@ualberta.ca");
 		
 		Answer a1 = new Answer("Body of answer", "someone@ualberta.ca");
@@ -59,26 +67,83 @@ public class PendingTest extends TestCase{
 		pending2 = new Pending(QId2,a2);
 		pending3 = new Pending(r1,QId,AId);
 		pending4 = new Pending();
-		
-	}
-	
-	public void testGetContent() {
 		assertTrue(pending1.getContent() == q1);
 		assertTrue(pending2.getContent() == a2);
 		assertTrue(pending3.getContent() == r1);
 	}
 	
 	public void testGetId() {
-		assertEquals(pending1.getQuestionId(),QId);
-		assertEquals(pending2.getAnswerId(),AId2);
-		assertEquals(pending3.getQuestionId(),QId2);
-		assertEquals(pending1.getQuestionId(),pending3.getQuestionId());
+		Question q1 = new Question("Title Submission Test", "Body of Question", "test@ualberta.ca");
+		
+		Answer a1 = new Answer("Body of answer", "someone@ualberta.ca");
+		q1.addAnswer(a1);
+		
+		Reply r1 = new Reply("Body of reply", "reply@ualberta.ca");
+		a1.addReply(r1);
+		q1.addReply(r1);
+		QId = q1.getId();
+		AId = a1.getId();
+		RId = r1.getId();
+		Question q2 = new Question("Title Submission Test2", "Body of Question2", "test2@ualberta.ca");
+		Answer a2 = new Answer("Body of answer2","someone2@ualberta.ca");
+		
+		Reply r2 = new Reply("Body of reply","reply@ualberta.ca");
+		a2.addReply(r2);
+		q2.addReply(r2);
+		QId2 = q2.getId();
+		AId2 = a2.getId();
+		RId2 = r2.getId();
+		
+		// TODO content is empty here, you should pass the question.
+		pending1 = new Pending(q1);
+		pending2 = new Pending(QId2,a2);
+		pending3 = new Pending(r1,QId,AId);
+		pending4 = new Pending();
+		assertEquals(pending1.getQuestionId(),null);
+		assertEquals(pending2.getQuestionId(),QId2);
+		assertEquals(pending3.getQuestionId(),QId);
+		assertEquals(pending3.getAnswerId(),AId);
+		assertEquals(pending1.getQuestionId(),pending4.getQuestionId());
 	}
 	
 	public void testPendingEquals() {
-		assertTrue(pending1.equals(q1));
+		Question q1 = new Question("Title Submission Test", "Body of Question", "test@ualberta.ca");
+		
+		Answer a1 = new Answer("Body of answer", "someone@ualberta.ca");
+		q1.addAnswer(a1);
+		
+		Reply r1 = new Reply("Body of reply", "reply@ualberta.ca");
+		a1.addReply(r1);
+		q1.addReply(r1);
+		QId = q1.getId();
+		AId = a1.getId();
+		RId = r1.getId();
+		Question q2 = new Question("Title Submission Test2", "Body of Question2", "test2@ualberta.ca");
+		Answer a2 = new Answer("Body of answer2","someone2@ualberta.ca");
+		
+		Reply r2 = new Reply("Body of reply","reply@ualberta.ca");
+		a2.addReply(r2);
+		q2.addReply(r2);
+		QId2 = q2.getId();
+		AId2 = a2.getId();
+		RId2 = r2.getId();
+		
+		// TODO content is empty here, you should pass the question.
+		pending1 = new Pending(q1);
+		pending2 = new Pending(QId2,a2);
+		pending3 = new Pending(r1,QId,AId);
+		pending4 = new Pending();
+		pending5 = new Pending(r1,QId,AId);
+		pending6 = new Pending(QId,a1);
+		pending7 = new Pending(QId,a1);
+		
+		assertFalse(pending1.equals(null));
 		assertFalse(pending1.equals(a2));
-		assertFalse(pending1.equals(pending4));
+		assertTrue(pending1.equals(pending1));
+		//assertFalse(pending1.equals(pending4));
+		assertTrue(pending5.equals(pending3));
+		assertFalse(pending6.equals(pending2));
+		assertTrue(pending7.equals(pending6));
 	}
 	
 }

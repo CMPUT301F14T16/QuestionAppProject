@@ -9,6 +9,7 @@ public class QuestionList {
 	private String id;
 	private String title;
 	private String answers;
+	private String username;
 	private String upvotes;
 	private boolean image;
 	public QuestionList(){
@@ -20,6 +21,7 @@ public class QuestionList {
 		this.title = title;
 		this.answers  = answers;
 		this.upvotes = upvotes;
+		this.username = username;
 		this.image = image;
 	}
 
@@ -37,6 +39,10 @@ public class QuestionList {
 
 	public String getUpvotes() {
 		return this.upvotes;
+	}
+	
+	public String getUsername(){
+		return this.username;
 	}
 	
 	public boolean getImage() {

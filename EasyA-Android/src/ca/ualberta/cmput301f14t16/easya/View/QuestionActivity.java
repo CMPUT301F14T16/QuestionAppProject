@@ -30,7 +30,7 @@ public class QuestionActivity extends Activity {
 	
 	private void SetAdapter(Question q){
 		this.q = q;
-    	QuestionViewAdapter adapter = new QuestionViewAdapter(getApplicationContext(), this.q, (LinearLayout)findViewById(R.id.question_scrollview_container));
+    	QuestionViewAdapter adapter = new QuestionViewAdapter(this, this.q, (LinearLayout)findViewById(R.id.question_scrollview_container));
         adapter.build();
 	}
 	

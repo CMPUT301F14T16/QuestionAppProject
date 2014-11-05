@@ -10,6 +10,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.GridView;
 
+//All referenced from http://stackoverflow.com/questions/13591944/load-images-in-a-gallery-and-elasticsearch
+
 public class ImagePage extends Activity {
 
 	@Override

@@ -14,7 +14,7 @@ public class TopicTest extends TestCase {
 	User u =  new User();
 	
 	//test for UpVoteTopicsTest
-	public void UpVoteTopicsTest() {
+	public void testUpVoteTopics() {
 		Answer answer = new Answer();
 		Question question = new Question();
 		answer.setUpvote(u);

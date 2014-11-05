@@ -1,6 +1,6 @@
 package ca.ualberta.cmput301f14t16.easya.test;
 
-import java.util.Date;
+import java.util.Date; 
 import java.util.List; 
 import java.util.UUID;
 import android.test.ActivityInstrumentationTestCase2;
@@ -18,23 +18,32 @@ public class UserTest extends TestCase{
 	private User user;
 	private String newname;
 	
-	public void setup() {
+	
+	//public void UserTestSetup() {
+		
+	//}
+	
+	public void testSetUsername() {
 		username = "Lingbo";
 		email = "lingbo19.tang@gmail.com";
 		user = new User(email,username);
-	}
-	
-	public void testSetUsername() {
 		newname = "Lingbo747";
 		user.setUserName(newname);
 		assertEquals(user.getUsername(),newname);
 	}
 	
 	public void testGetEmail() {
+		username = "Lingbo";
+		email = "lingbo19.tang@gmail.com";
+		user = new User(email,username);
 		assertEquals(user.getEmail(),email);
 	}
 	
 	public void testGetUserId() {
+		username = "Lingbo";
+		email = "lingbo19.tang@gmail.com";
+		user = new User(email,username);
+		userid = user.getId();
 		assertEquals(user.getId(),userid);
 	}
 	

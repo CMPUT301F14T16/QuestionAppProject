@@ -18,6 +18,8 @@ import android.widget.BaseAdapter;
 import android.widget.GridView;
 import android.widget.ImageView;
 
+//All referenced from http://stackoverflow.com/questions/13591944/load-images-in-a-gallery-and-elasticsearch
+
 public class ImageAdapter extends BaseAdapter {
 	private Context mContext;
 	Bitmap bmImg;
