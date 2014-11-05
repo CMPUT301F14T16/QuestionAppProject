@@ -31,7 +31,7 @@ public class MainViewAdapter extends ArrayAdapter<QuestionList> {
         // Question item to display
         QuestionList qItem = (QuestionList)this.getItem(id);
         // The child views in each row.
-        TextView qTitle, qAuthor, qAnswers, qUpVotes;
+        TextView qTitle, qAuthor, qAnswers, qUpVotes, qDate;
 
         // Create a new row for the list
         if ( view == null ){
@@ -41,8 +41,9 @@ public class MainViewAdapter extends ArrayAdapter<QuestionList> {
             qAuthor= (TextView) view.findViewById( R.id.questionAuthor);
             qAnswers = (TextView) view.findViewById( R.id.questionComments);
             qUpVotes = (TextView) view.findViewById( R.id.questionUpvotes);
+            qDate = (TextView) view.findViewById( R.id.questionDate);
 
-            view.setTag(new MainViewAdapterHolder(qTitle, qAuthor, qAnswers, qUpVotes));
+            view.setTag(new MainViewAdapterHolder(qTitle, qAuthor, qAnswers, qUpVotes, qDate));
             view.setOnClickListener(
                 new View.OnClickListener()
                  {
@@ -64,6 +65,7 @@ public class MainViewAdapter extends ArrayAdapter<QuestionList> {
             qAuthor = viewHolder.getAuthor();
             qAnswers = viewHolder.getAnswers();
             qUpVotes = viewHolder.getUpVotes();
+            qDate = viewHolder.getDate();
         }
     	//The title will hold the Question object for when we need it
         qTitle.setTag(qItem);
@@ -72,18 +74,20 @@ public class MainViewAdapter extends ArrayAdapter<QuestionList> {
         qAuthor.setText(qItem.getUsername()); // TODO You can get user id, not username from question.
         qAnswers.setText(qItem.getAnswers());
         qUpVotes.setText(qItem.getUpvotes());
+        qDate.setText(qItem.getDate().toString());
 
         return view;
     }    
     
     protected static class MainViewAdapterHolder {
-        private TextView qTitle, qAuthor, qAnswers, qUpVotes;
+        private TextView qTitle, qAuthor, qAnswers, qUpVotes, qDate;
         
-        public MainViewAdapterHolder( TextView t, TextView a, TextView an, TextView u) {
+        public MainViewAdapterHolder( TextView t, TextView a, TextView an, TextView u, TextView date) {
             this.qTitle = t ;
             this.qAuthor = a ;
             this.qAnswers= an ;
             this.qUpVotes = u ;
+            this.qDate = date;
         }
         public TextView getTitle() {
             return qTitle;
@@ -96,6 +100,9 @@ public class MainViewAdapter extends ArrayAdapter<QuestionList> {
         }
         public TextView getUpVotes() {
             return qUpVotes;
+        }
+        public TextView getDate() {
+        	return qDate;
         }
     }
 }
