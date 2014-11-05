@@ -6,7 +6,10 @@ import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import android.app.Activity;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 public class QuestionActivity extends Activity {
 	private Question q;
@@ -19,6 +22,13 @@ public class QuestionActivity extends Activity {
         getActionBar().setHomeButtonEnabled(true);        
         (new GetQuestionListTask()).execute();
 	}	
+	
+	@Override
+	public boolean onCreateOptionsMenu(Menu menu) {
+		// Inflate the menu; this adds items to the action bar if it is present.
+		getMenuInflater().inflate(R.menu.question, menu);
+		return true;
+	}
 	
 	private void ShowNoContentView(){
 		//TODO: display the NoContentView
@@ -53,5 +63,17 @@ public class QuestionActivity extends Activity {
         		SetAdapter(result);
         	}
         }
+    }
+	
+	@Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Pass the event to ActionBarDrawerToggle, if it returns
+        // true, then it has handled the app icon touch event
+        if (item.getItemId() == R.id.menu_question_favourite){
+        	Toast.makeText(getApplicationContext(), "To be implemented", Toast.LENGTH_SHORT).show();
+        	//TODO: favourite a question
+        	return true;
+        }
+        return super.onOptionsItemSelected(item);
     }
 }

@@ -60,10 +60,18 @@ public class Cache {
 	
 	public static User getUserById(Context ctx, String id) throws NoContentAvailableException{
 		if (MainActivity.mQueueThread.haveInternetConnection()){
-			//TODO: get it from ESClient when the User database is online
-			// Save the returned object in cache
-			// SaveSingleUser(ctx, u);
-			 return new User();
+			try{
+				ESClient es = new ESClient();
+				User u = es.getUserById(id);
+				if (u == null)
+					throw new NoContentAvailableException();
+				SaveSingleUser(ctx, u);
+				return u;
+			}catch(IOException ex){
+				return getUserFromCache(ctx, id);
+			}catch(NoContentAvailableException ex){
+				return getUserFromCache(ctx, id);
+			}
 		 }else{
 			 return getUserFromCache(ctx, id);
 		 }
@@ -122,19 +130,21 @@ public class Cache {
 		List<QuestionList> lst = new ArrayList<QuestionList>();
 		for (Question q : aux){
 			if (q.getAuthorId().equals(u.getId()))
-				lst.add(new QuestionList(q.getId(), q.getTitle(), q.getAuthorName(), q.getAnswerCountString(), q.getUpVoteCountString(), q.hasPicture()));
+				lst.add(new QuestionList(q.getId(), q.getTitle(), q.getAuthorName(), q.getAnswerCountString(), q.getUpVoteCountString(), q.hasPicture(), q.getDate()));
 		}
 		return lst;
 	}
 	
-	private static List<QuestionList> getQuestionListFromQuestionsCache(Context ctx){
+	private static List<QuestionList> getQuestionListFromQuestionsCache(Context ctx) throws NoContentAvailableException{
 		Gson gson = new Gson();
 		Type listType = new TypeToken<List<Question>>(){}.getType();
 		List<Question> aux = gson.fromJson(PMDataParser.loadJson(ctx, PMFilesEnum.CACHEQUESTIONS), listType);
 		List<QuestionList> lst = new ArrayList<QuestionList>();
 		for (Question q : aux){
-			lst.add(new QuestionList(q.getId(), q.getTitle(), q.getAuthorName(), q.getAnswerCountString(), q.getUpVoteCountString(), q.hasPicture()));
+			lst.add(new QuestionList(q.getId(), q.getTitle(), q.getAuthorName(), q.getAnswerCountString(), q.getUpVoteCountString(), q.hasPicture(), q.getDate()));
 		}
+		if (lst.size() <= 0)
+			throw new NoContentAvailableException();
 		return lst;
 	}
 	
@@ -168,14 +178,14 @@ public class Cache {
 		throw new NoContentAvailableException();
 	}
 
-	public static List<QuestionList> getAllQuestions(Context ctx) {
+	public static List<QuestionList> getAllQuestions(Context ctx) throws NoContentAvailableException {
 		if (MainActivity.mQueueThread.haveInternetConnection()){
 			ESClient es = new ESClient();
 			try{
 				return es.searchQuestionListsByQuery("*", 100);			
 			}catch(IOException ex){
 				//TODO: deal with this later
-				return null;
+				return new ArrayList<QuestionList>();
 			}	
 		 }else{
 			 return getQuestionListFromQuestionsCache(ctx);				

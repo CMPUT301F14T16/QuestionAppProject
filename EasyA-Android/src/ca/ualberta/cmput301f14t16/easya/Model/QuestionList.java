@@ -1,5 +1,7 @@
 package ca.ualberta.cmput301f14t16.easya.Model;
 
+import java.util.Date;
+
 /**
  * Provides a lightweight implementation of {@link Question}, to be used as a
  * condensed view of a {@link Question} object when several such objects are
@@ -36,6 +38,10 @@ public class QuestionList {
 	 */
 	private String upvotes;
 	/**
+	 * The date at which the instance of Content was created.
+	 */
+	private Date date;
+	/**
 	 * True if the original {@link Question} contained an image, False if not.
 	 */
 	private boolean image;
@@ -71,6 +77,7 @@ public class QuestionList {
 		this.upvotes = upvotes;
 		this.username = username;
 		this.image = image;
+		this.date = date;
 	}
 
 	/**
@@ -113,5 +120,8 @@ public class QuestionList {
 	 */
 	public boolean getImage() {
 		return this.image;
+	}
+	public Date getDate() {
+		return this.date;
 	}
 }

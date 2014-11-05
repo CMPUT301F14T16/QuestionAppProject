@@ -3,10 +3,12 @@ package ca.ualberta.cmput301f14t16.easya.View;
 import java.util.List;
 
 import ca.ualberta.cmput301f14t16.easya.R;
+import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.QuestionList;
 import ca.ualberta.cmput301f14t16.easya.Model.Queue;
-
+import android.content.Intent;
+import ca.ualberta.cmput301f14t16.easya.Model.Sort;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -29,6 +31,7 @@ public class MainActivity extends Activity {
     
     public static Queue mQueueThread; 
     public static MainModel mm;
+    public static List<QuestionList> displayedQuestions;
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -89,6 +92,8 @@ public class MainActivity extends Activity {
         boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
         menu.findItem(R.id.menu_search).setVisible(!drawerOpen);
         menu.findItem(R.id.menu_sort).setVisible(!drawerOpen);
+        menu.findItem(R.id.menu_sortByDate).setVisible(!drawerOpen);
+        //menu.findItem(R.id.menu_sortByPicture).setVisible(!drawerOpen);
         return super.onPrepareOptionsMenu(menu);
     }
 
@@ -112,6 +117,13 @@ public class MainActivity extends Activity {
         if (mDrawerToggle.onOptionsItemSelected(item))
         	return true;
 
+        switch (item.getItemId()) {
+        case R.id.menu_sortByDate: 
+        	displayedQuestions = Sort.dateSort(true, displayedQuestions);
+        	SetAdapter(displayedQuestions);
+        	return true;
+        }
+        
         return super.onOptionsItemSelected(item);
     }
 
@@ -144,12 +156,27 @@ public class MainActivity extends Activity {
     
     private class GetQuestionListTask extends AsyncTask<Void, Void, List<QuestionList>> {
         protected List<QuestionList> doInBackground(Void...voids) {
-            return mm.getAllQuestions();
+            try{
+            	return mm.getAllQuestions();
+            }catch(NoContentAvailableException ex){
+            	return null;
+            }
         }
 
         protected void onPostExecute(List<QuestionList> result) {
+        	if (result == null){
+        		//TODO: display the no content available screen
+        	}else{
+        		
         	SetAdapter(result);
+        	displayedQuestions = result;
+        	}
         }
+    }
+    
+    public void AddNewQuestion(View v){
+    	Intent i = new Intent(this, SubmitQuestionActivity.class);
+        this.startActivity(i);
     }
 
 }
