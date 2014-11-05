@@ -130,7 +130,7 @@ public class Cache {
 		List<QuestionList> lst = new ArrayList<QuestionList>();
 		for (Question q : aux){
 			if (q.getAuthorId().equals(u.getId()))
-				lst.add(new QuestionList(q.getId(), q.getTitle(), q.getAuthorName(), q.getAnswerCountString(), q.getUpVoteCountString(), q.hasPicture()));
+				lst.add(new QuestionList(q.getId(), q.getTitle(), q.getAuthorName(), q.getAnswerCountString(), q.getUpVoteCountString(), q.hasPicture(), q.getDate()));
 		}
 		return lst;
 	}
@@ -141,7 +141,7 @@ public class Cache {
 		List<Question> aux = gson.fromJson(PMDataParser.loadJson(ctx, PMFilesEnum.CACHEQUESTIONS), listType);
 		List<QuestionList> lst = new ArrayList<QuestionList>();
 		for (Question q : aux){
-			lst.add(new QuestionList(q.getId(), q.getTitle(), q.getAuthorName(), q.getAnswerCountString(), q.getUpVoteCountString(), q.hasPicture()));
+			lst.add(new QuestionList(q.getId(), q.getTitle(), q.getAuthorName(), q.getAnswerCountString(), q.getUpVoteCountString(), q.hasPicture(), q.getDate()));
 		}
 		if (lst.size() <= 0)
 			throw new NoContentAvailableException();

@@ -13,5 +13,6 @@
     <string name="sync">Sync</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
+    <string name="sortByDate">Sort By Date</string>
 
 </resources>
