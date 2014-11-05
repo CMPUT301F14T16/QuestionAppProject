@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.List;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoClassTypeSpecifiedException;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoInternetException;
@@ -19,7 +21,6 @@ import ca.ualberta.cmput301f14t16.easya.Model.Data.PMClient;
  * @author Cauani
  */
 public class Queue extends Thread{
-    final String ping_url = "bing.com"; //TODO: switch the host name to our elastic server
     final long loop_interval = 5000; //in milliseconds
     final int check_for_internet = 300000; //in milliseconds 5 minutes
 
@@ -132,12 +133,12 @@ public class Queue extends Thread{
     private boolean checkForInternet()
     {
         try {
-            InetAddress address = InetAddress.getByName(ping_url);
-            if (address.equals("")) {
-                return false;
-            } else {
-                return true;
-            }
+        	ConnectivityManager cm =
+        	        (ConnectivityManager)ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
+        	 
+        	NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
+        	return activeNetwork != null &&
+        	                      activeNetwork.isConnectedOrConnecting();
         } catch (Exception ex) {
             return false;
         }

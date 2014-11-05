@@ -32,7 +32,7 @@ public class PMClient {
 	public User getUser(Context ctx) throws NoContentAvailableException{
 		Gson gson = new Gson();
 		String aux = PMDataParser.recoverUserPreference(ctx, User.USERKEY);
-		if (aux.equals("")){
+		if (aux == null|| aux.equals("")){
 			throw new NoContentAvailableException();
 		}
 		return gson.fromJson(aux, User.class);

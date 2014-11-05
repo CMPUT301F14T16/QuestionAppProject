@@ -3,10 +3,13 @@ package ca.ualberta.cmput301f14t16.easya.View;
 import java.util.List;
 
 import ca.ualberta.cmput301f14t16.easya.R;
+import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.QuestionList;
 import ca.ualberta.cmput301f14t16.easya.Model.Queue;
+import ca.ualberta.cmput301f14t16.easya.View.MainViewAdapter.MainViewAdapterHolder;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -144,12 +147,24 @@ public class MainActivity extends Activity {
     
     private class GetQuestionListTask extends AsyncTask<Void, Void, List<QuestionList>> {
         protected List<QuestionList> doInBackground(Void...voids) {
-            return mm.getAllQuestions();
+            try{
+            	return mm.getAllQuestions();
+            }catch(NoContentAvailableException ex){
+            	return null;
+            }
         }
 
         protected void onPostExecute(List<QuestionList> result) {
-        	SetAdapter(result);
+        	if (result == null){
+        		//TODO: display the no content available screen
+        	}else
+        		SetAdapter(result);
         }
+    }
+    
+    public void AddNewQuestion(View v){
+    	Intent i = new Intent(this, SubmitQuestionActivity.class);
+        this.startActivity(i);
     }
 
 }

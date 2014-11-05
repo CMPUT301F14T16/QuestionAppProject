@@ -22,7 +22,10 @@
                 android:id="@+id/add_question"
 	            android:layout_width="match_parent"
 	            android:layout_height="wrap_content"
-	            android:hint="@string/create_question_hint"/>
+	            android:hint="@string/create_question_hint"
+	            android:focusableInTouchMode="false"
+	            android:focusable="false"	            
+	            android:onClick="AddNewQuestion"/>
 	    </LinearLayout>        
     </LinearLayout>
     <LinearLayout
