@@ -20,6 +20,11 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/**
+ * 
+ * @author Cauani
+ *
+ */
 public class SubmitQuestionActivity extends Activity {
 	private ProgressDialog pd;
 	

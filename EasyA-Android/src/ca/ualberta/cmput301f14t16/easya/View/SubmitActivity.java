@@ -8,6 +8,11 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 
+/**
+ * 
+ * @author Cauani
+ *
+ */
 public class SubmitActivity extends Activity{
 	private static final int Phone = 1; 
 	private static final int TakeAPictuer = 2; 

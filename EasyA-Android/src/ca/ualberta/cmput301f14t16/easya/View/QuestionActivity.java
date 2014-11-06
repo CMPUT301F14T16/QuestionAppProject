@@ -16,6 +16,11 @@ import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
+/**
+ * 
+ * @author Cauani
+ *
+ */
 public class QuestionActivity extends Activity {
 	private static Question question;
 	private ProgressDialog pd;

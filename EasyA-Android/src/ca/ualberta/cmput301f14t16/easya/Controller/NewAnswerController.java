@@ -5,8 +5,6 @@ import ca.ualberta.cmput301f14t16.easya.Exceptions.MissingContentException;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoInternetException;
 import ca.ualberta.cmput301f14t16.easya.Model.Answer;
 import ca.ualberta.cmput301f14t16.easya.Model.Pending;
-import ca.ualberta.cmput301f14t16.easya.Model.Question;
-import ca.ualberta.cmput301f14t16.easya.View.MainActivity;
 
 
 public class NewAnswerController extends MainController {
@@ -15,7 +13,7 @@ public class NewAnswerController extends MainController {
 		this.ctx = ctx;
 	}
 	
-	public static NewQuestionController create(Context ctx, String qId, String body, String authorID) throws MissingContentException{
+	public static NewAnswerController create(Context ctx, String qId, String body, String authorID) throws MissingContentException{
 		if (body.equals(""))
 			throw new MissingContentException("body");
 		if (authorID.equals(""))
@@ -23,7 +21,7 @@ public class NewAnswerController extends MainController {
 		
 		Answer newAnswer = new Answer(body, authorID);
 		Pending newPending = new Pending(qId, newAnswer);
-		return new NewQuestionController(newPending, ctx);
+		return new NewAnswerController(newPending, ctx);
 	}	
 	
 	public boolean submit(){

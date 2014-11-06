@@ -16,6 +16,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+/**
+ * 
+ * @author Cauani
+ *
+ */
 public class MainViewAdapter extends ArrayAdapter<QuestionList> {
     private LayoutInflater inflater;
 

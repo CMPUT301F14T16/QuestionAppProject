@@ -17,6 +17,11 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
+/**
+ * 
+ * @author Cauani
+ *
+ */
 public class SubmitAnswerActivity extends Activity {
 	private ProgressDialog pd;
 	
@@ -61,7 +66,7 @@ public class SubmitAnswerActivity extends Activity {
     }
     
     private class submitAnswerTask extends AsyncTask<Void, Void, Boolean> {
-    	private NewQuestionController controller;
+    	private NewAnswerController controller;
     	private Context ctx;
     	
     	public submitAnswerTask(Context ctx){
@@ -120,7 +125,7 @@ public class SubmitAnswerActivity extends Activity {
     			}
     		}else{    			
     			finish();
-    			Toast.makeText(getApplicationContext(), "Something bad happened, try posting your question again!", Toast.LENGTH_LONG).show();
+    			Toast.makeText(getApplicationContext(), "Something bad happened, try posting your answer again!", Toast.LENGTH_LONG).show();
     		}
         	
         	if (pd!=null) {

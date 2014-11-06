@@ -6,6 +6,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="create_question_hint">Ask a question!</string>
     <string name="create_answer_hint">Answer this!</string>
+    <string name="create_reply_hint">Reply this!</string>
     <string name="sort">Sort</string>
     <string name="title_hint">Title</string>
     <string name="hint_submit_question">Enter your question</string>

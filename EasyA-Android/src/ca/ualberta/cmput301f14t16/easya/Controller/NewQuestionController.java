@@ -5,9 +5,6 @@ import ca.ualberta.cmput301f14t16.easya.Exceptions.MissingContentException;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoInternetException;
 import ca.ualberta.cmput301f14t16.easya.Model.Pending;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
-import ca.ualberta.cmput301f14t16.easya.Model.Data.Cache;
-import ca.ualberta.cmput301f14t16.easya.View.MainActivity;
-
 
 public class NewQuestionController extends MainController {
 	protected NewQuestionController(Pending p, Context ctx){
