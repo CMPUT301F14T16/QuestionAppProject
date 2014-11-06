@@ -30,7 +30,7 @@ public abstract class MainController {
 	            if(c instanceof Question){
 	            	return es.submitQuestion((Question)c);
 	            }else if (c instanceof Answer){
-	            	return es.submitAnswer((Answer)c, pending.getAnswerId());
+	            	return es.submitAnswer((Answer)c, pending.getQuestionId());
 	            }else if (c instanceof Reply){
 	            	if (pending.getAnswerId() != null && !pending.getAnswerId().isEmpty()){
 	            		return es.submitAnswerReply((Reply)c, pending.getQuestionId(), pending.getAnswerId());

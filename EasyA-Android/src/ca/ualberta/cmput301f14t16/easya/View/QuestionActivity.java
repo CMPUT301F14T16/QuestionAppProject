@@ -2,17 +2,20 @@ package ca.ualberta.cmput301f14t16.easya.View;
 
 import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
+import ca.ualberta.cmput301f14t16.easya.Model.GeneralHelper;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.Toast;
 
 public class QuestionActivity extends Activity {
-	private Question q;
+	private static Question question;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -39,8 +42,8 @@ public class QuestionActivity extends Activity {
 	}
 	
 	private void SetAdapter(Question q){
-		this.q = q;
-    	QuestionViewAdapter adapter = new QuestionViewAdapter(this, this.q, (LinearLayout)findViewById(R.id.question_scrollview_container));
+		question = q;
+    	QuestionViewAdapter adapter = new QuestionViewAdapter(this, question, (LinearLayout)findViewById(R.id.question_scrollview_container));
         adapter.build();
 	}
 	
@@ -76,4 +79,13 @@ public class QuestionActivity extends Activity {
         }
         return super.onOptionsItemSelected(item);
     }
+	
+	public void AddNewAnswer(View v){
+		if (question != null){
+			Intent i = new Intent(v.getContext(), SubmitAnswerActivity.class);
+	    	i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+	    	i.putExtra(GeneralHelper.AQUESTION_KEY, question.getId());
+	        this.startActivity(i);
+		}
+	}
 }

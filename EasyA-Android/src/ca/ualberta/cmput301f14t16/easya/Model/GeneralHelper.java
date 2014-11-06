@@ -20,6 +20,7 @@ public class GeneralHelper {
 	public final static String QTITLE = "ca.ualberta.cmput301f14t16.easya.QTITLE";
 	public final static String QBODY = "ca.ualberta.cmput301f14t16.easya.QBODY";
 	public final static String ABODY = "ca.ualberta.cmput301f14t16.easya.ABODY";
+	public static final String AQUESTION_KEY = "ca.ualberta.cmput301f14t16.easya.AQUESTIONKEY";
 	
 	/**
 	 * @param c

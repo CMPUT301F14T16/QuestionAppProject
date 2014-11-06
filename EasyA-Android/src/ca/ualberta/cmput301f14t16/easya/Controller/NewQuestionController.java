@@ -18,9 +18,9 @@ public class NewQuestionController extends MainController {
 	public static NewQuestionController create(Context ctx, String title, String body, String authorID) throws MissingContentException{
 		if (title.equals(""))
 			throw new MissingContentException("title");
-		if (title.equals(""))
+		if (body.equals(""))
 			throw new MissingContentException("body");
-		if (title.equals(""))
+		if (authorID.equals(""))
 			throw new MissingContentException("authorId");
 		
 		Question newQuestion = new Question(title, body, authorID);

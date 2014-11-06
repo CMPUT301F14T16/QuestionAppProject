@@ -70,7 +70,7 @@ public class QuestionList {
 	 *            Setter for {@link QuestionList#image}
 	 */
 	public QuestionList(String id, String title, String username,
-			String answers, String upvotes, boolean image) {
+			String answers, String upvotes, boolean image, Date date) {
 		this.id = id;
 		this.title = title;
 		this.answers = answers;

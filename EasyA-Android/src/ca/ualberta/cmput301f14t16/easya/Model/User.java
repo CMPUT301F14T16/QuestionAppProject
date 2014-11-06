@@ -67,7 +67,6 @@ public class User {
 		this.id = UUID.randomUUID().toString();
 		this.createdOn = new Date();
 		this.favorites = new ArrayList<String>();
-		this.createdContent = new ArrayList<String>();
 	}
 
 	/**
@@ -78,15 +77,6 @@ public class User {
 	 */
 	public List<String> getFavorites() {
 		return favorites;
-	}
-
-	/**
-	 * Returns a list of question ids for questions created by the user.
-	 * 
-	 * @return A list of IDs {@link Content} objects created by the user.
-	 */
-	public List<String> getCreatedContent() {
-		return createdContent;
 	}
 
 	/**
@@ -125,7 +115,7 @@ public class User {
 	 * word selected from a list, followed by a random number from 1000 to 9999.
 	 * The list of possible words is as follows:
 	 * 
-	 * [Guest, Greenhorn, Inquirer, Newcomer, Newbie, Guest]
+	 * [Guest, Greenhorn, Inquirer, Newcomer, Newbie]
 	 * 
 	 * @return a {@link String} containing the randomly generated username.
 	 */

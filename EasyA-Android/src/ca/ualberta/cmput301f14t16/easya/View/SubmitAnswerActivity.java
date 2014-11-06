@@ -1,12 +1,9 @@
 package ca.ualberta.cmput301f14t16.easya.View;
 
-import java.util.List;
-
 import ca.ualberta.cmput301f14t16.easya.R;
+import ca.ualberta.cmput301f14t16.easya.Controller.NewAnswerController;
 import ca.ualberta.cmput301f14t16.easya.Controller.NewQuestionController;
-import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
-import ca.ualberta.cmput301f14t16.easya.Model.QuestionList;
-import ca.ualberta.cmput301f14t16.easya.Model.Queue;
+import ca.ualberta.cmput301f14t16.easya.Model.GeneralHelper;
 import ca.ualberta.cmput301f14t16.easya.Model.User;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.PMClient;
 import android.app.Activity;
@@ -20,13 +17,13 @@ import android.view.MenuItem;
 import android.widget.EditText;
 import android.widget.Toast;
 
-public class SubmitQuestionActivity extends Activity {
+public class SubmitAnswerActivity extends Activity {
 	private ProgressDialog pd;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.submit_question);
+		setContentView(R.layout.submit_answer);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
 	}	
@@ -42,7 +39,7 @@ public class SubmitQuestionActivity extends Activity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
 	        case R.id.menu_submit:
-	        	(new submitQuestionTask(this)).execute();
+	        	(new submitAnswerTask(this)).execute();
 	        	return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
@@ -52,31 +49,29 @@ public class SubmitQuestionActivity extends Activity {
 	@Override
     public void onPause(){
         PMClient pm = new PMClient();
-        pm.saveQTitle(this, ((EditText)findViewById(R.id.submit_question_title)).getText().toString());
-        pm.saveQBody(this, ((EditText)findViewById(R.id.submit_question_body)).getText().toString());
+        pm.saveABody(this, ((EditText)findViewById(R.id.submit_answer_body)).getText().toString());
         super.onPause();
     }
 
     @Override
     public void onResume(){
     	PMClient pm = new PMClient();
-    	((EditText)findViewById(R.id.submit_question_title)).setText(pm.getQTitle(this));
-    	((EditText)findViewById(R.id.submit_question_body)).setText(pm.getQBody(this));
+    	((EditText)findViewById(R.id.submit_answer_body)).setText(pm.getABody(this));
         super.onResume();
     }
     
-    private class submitQuestionTask extends AsyncTask<Void, Void, Boolean> {
+    private class submitAnswerTask extends AsyncTask<Void, Void, Boolean> {
     	private NewQuestionController controller;
     	private Context ctx;
     	
-    	public submitQuestionTask(Context ctx){
+    	public submitAnswerTask(Context ctx){
     		this.ctx = ctx;
     	}
     	
     	@Override
 		protected void onPreExecute() {
     		pd = new ProgressDialog(ctx);
-			pd.setTitle("Submitting question...");
+			pd.setTitle("Submitting answer...");
 			pd.setMessage("Please wait.");
 			pd.setCancelable(false);
 			pd.setIndeterminate(true);
@@ -88,10 +83,10 @@ public class SubmitQuestionActivity extends Activity {
             try{
             	try{
 	        		controller = 
-	        				NewQuestionController.create(
+	        				NewAnswerController.create(
 	        						ctx, 
-	        						((EditText)findViewById(R.id.submit_question_title)).getText().toString(), 
-	        						((EditText)findViewById(R.id.submit_question_body)).getText().toString(), 
+	        						(getIntent()).getStringExtra(GeneralHelper.AQUESTION_KEY), 
+	        						((EditText)findViewById(R.id.submit_answer_body)).getText().toString(), 
 	        						//MainActivity.mm.getCurrentUser().getId());
 	        						(new User("creide", "juvenaldo")).getId());
 	        						//TODO: remove this bogus user
@@ -111,12 +106,12 @@ public class SubmitQuestionActivity extends Activity {
         @Override
         protected void onPostExecute(Boolean result) {
         	if (result){
+        		PMClient pm = new PMClient();	        			
+    			pm.clearA(ctx);
     			if (controller.submitedOffline){
     				finish();
-    				Toast.makeText(getApplicationContext(), "Your Question will be posted online when you connect to the internet!", Toast.LENGTH_LONG).show();
-    			}else{
-        			PMClient pm = new PMClient();	        			
-        			pm.clearQ(ctx);
+    				Toast.makeText(getApplicationContext(), "Your answer will be posted online when you connect to the internet!", Toast.LENGTH_LONG).show();
+    			}else{        			
         			String aux = controller.getQuestionId();
         			Intent i = new Intent(ctx,QuestionActivity.class);
         			i.putExtra(MainActivity.QUESTION_KEY, aux);

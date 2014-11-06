@@ -171,7 +171,7 @@ public class ESClient {
 		ESSearchResponse<Question> esResponse = gson.fromJson(response, esSearchResponseType);
 		for (ESGetResponse<Question> q : esResponse.getHits()) {
 			Question question = q.getSource();
-			QuestionList questionList = new QuestionList(question.getId(), question.getTitle(), question.getAuthorId(), question.getAnswerCountString(), question.getUpVoteCountString(), question.hasPicture(), question.getDate());
+			QuestionList questionList = new QuestionList(question.getId(), question.getTitle(), question.getAuthorName(), question.getAnswerCountString(), question.getUpVoteCountString(), question.hasPicture(), question.getDate());
 			qlist.add(questionList);
 		}
 		
