@@ -86,6 +86,10 @@ public class QuestionActivity extends Activity {
         	}else{
         		SetAdapter(result);
         	}
+        	
+        	if (pd!=null) {
+				pd.dismiss();
+			} 
         }
     }
 	
