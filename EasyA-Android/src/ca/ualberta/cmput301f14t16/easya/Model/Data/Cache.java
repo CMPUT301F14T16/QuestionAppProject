@@ -21,7 +21,7 @@ import android.content.Context;
  * @author Cauani
  *
  */
-public class Cache {		
+public class Cache {
 	public static List<QuestionList> getUserQuestions(Context ctx, User u){
 		if (MainActivity.mQueueThread.haveInternetConnection()){
 			try{
@@ -34,9 +34,8 @@ public class Cache {
 				}
 				return lstUser;
 			}catch(IOException ex){
-				//TODO: deal with this exception
-			}			
-			return new ArrayList<QuestionList>();
+				return getUserQuestionsFromQuestionsCache(ctx, u);
+			}
 		}else{
 			return getUserQuestionsFromQuestionsCache(ctx, u);				
 		}
@@ -50,8 +49,7 @@ public class Cache {
 				 SaveSingleQuestion(ctx, aux);
 				 return aux;
 			 }catch(IOException ex){
-				 //TODO: deal with it later
-				 return null;
+				 return getQuestionFromCache(ctx, id);
 			 }
 		 }else{
 			 return getQuestionFromCache(ctx, id);				
@@ -184,8 +182,7 @@ public class Cache {
 			try{
 				return es.searchQuestionListsByQuery("*", 100);			
 			}catch(IOException ex){
-				//TODO: deal with this later
-				return new ArrayList<QuestionList>();
+				return getQuestionListFromQuestionsCache(ctx);
 			}	
 		 }else{
 			 return getQuestionListFromQuestionsCache(ctx);				

@@ -7,12 +7,15 @@ import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.QuestionList;
 import ca.ualberta.cmput301f14t16.easya.Model.Queue;
+import android.content.Context;
 import android.content.Intent;
 import ca.ualberta.cmput301f14t16.easya.Model.Sort;
+import ca.ualberta.cmput301f14t16.easya.Model.Data.PMClient;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
@@ -26,6 +29,7 @@ public class MainActivity extends Activity {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private LinearLayout mDrawerList;
+    private ProgressDialog pd;
     
     public final static String QUESTION_KEY = "ca.ualberta.cmput301f14t16.easya.QUESTIONKEY"; 
     
@@ -75,7 +79,7 @@ public class MainActivity extends Activity {
         mQueueThread.start();
         
         /////
-        (new GetQuestionListTask()).execute();
+        (new GetQuestionListTask(this)).execute();
         //TODO: Organize this mess
     }
     
@@ -131,6 +135,12 @@ public class MainActivity extends Activity {
     public void onDestroy() {
         //Free up the thread
         mQueueThread.Stop();
+        PMClient pm = new PMClient();
+        pm.clearA(this);
+        pm.clearQ(this);
+    	if (pd!=null) {
+			pd.dismiss();
+		}
         super.onDestroy();
     }
 
@@ -155,7 +165,24 @@ public class MainActivity extends Activity {
     }
     
     private class GetQuestionListTask extends AsyncTask<Void, Void, List<QuestionList>> {
-        protected List<QuestionList> doInBackground(Void...voids) {
+    	private Context ctx;
+    	
+    	public GetQuestionListTask(Context ctx){
+    		this.ctx = ctx;
+    	}
+    	
+    	@Override
+		protected void onPreExecute() {
+    		pd = new ProgressDialog(ctx);
+			pd.setTitle("Loading questions...");
+			pd.setMessage("Please wait.");
+			pd.setCancelable(false);
+			pd.setIndeterminate(true);
+			pd.show();
+		}
+    	
+    	@Override
+    	protected List<QuestionList> doInBackground(Void...voids) {
             try{
             	return mm.getAllQuestions();
             }catch(NoContentAvailableException ex){
@@ -163,19 +190,24 @@ public class MainActivity extends Activity {
             }
         }
 
+        @Override
         protected void onPostExecute(List<QuestionList> result) {
         	if (result == null){
         		//TODO: display the no content available screen
-        	}else{
-        		
-        	SetAdapter(result);
-        	displayedQuestions = result;
+        	}else{        		
+	        	SetAdapter(result);
+	        	displayedQuestions = result;
+	        	
+	        	if (pd!=null) {
+					pd.dismiss();
+				}
         	}
         }
     }
     
     public void AddNewQuestion(View v){
     	Intent i = new Intent(this, SubmitQuestionActivity.class);
+    	i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         this.startActivity(i);
     }
 

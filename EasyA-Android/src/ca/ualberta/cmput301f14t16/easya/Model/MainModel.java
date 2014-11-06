@@ -20,6 +20,7 @@ import ca.ualberta.cmput301f14t16.easya.View.MainView;
  * However, this user and ID may also be associated with a non-unique and
  * mutable screen name.
  * 
+ * @author Cauani
  * @author Brett Commandeur (commande)
  */
 public class MainModel<V extends MainView> {

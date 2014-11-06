@@ -11,6 +11,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
+import ca.ualberta.cmput301f14t16.easya.Model.GeneralHelper;
 import ca.ualberta.cmput301f14t16.easya.Model.Pending;
 import ca.ualberta.cmput301f14t16.easya.Model.User;
 
@@ -23,6 +24,39 @@ import ca.ualberta.cmput301f14t16.easya.Model.User;
  */
 public class PMClient {
 	public PMClient(){}
+	
+	public void saveQTitle(Context ctx, String text){
+		PMDataParser.saveUserPreference(ctx, GeneralHelper.QTITLE, text);
+	}
+	
+	public String getQTitle(Context ctx){
+		return PMDataParser.recoverUserPreference(ctx, GeneralHelper.QTITLE);
+	}
+	
+	public void saveQBody(Context ctx, String text){
+		PMDataParser.saveUserPreference(ctx, GeneralHelper.QBODY, text);
+	}
+	
+	public String getQBody(Context ctx){
+		return PMDataParser.recoverUserPreference(ctx, GeneralHelper.QBODY);
+	}
+	
+	public void saveABody(Context ctx, String text){
+		PMDataParser.saveUserPreference(ctx, GeneralHelper.ABODY, text);
+	}
+	
+	public String getABody(Context ctx){
+		return PMDataParser.recoverUserPreference(ctx, GeneralHelper.ABODY);
+	}
+	
+	public void clearQ(Context ctx){
+		saveQTitle(ctx,"");
+		saveQBody(ctx,"");
+	}
+	
+	public void clearA(Context ctx){
+		saveABody(ctx,"");
+	}
 	
 	public void saveUser(Context ctx, User user){
 		Gson gson = new Gson();

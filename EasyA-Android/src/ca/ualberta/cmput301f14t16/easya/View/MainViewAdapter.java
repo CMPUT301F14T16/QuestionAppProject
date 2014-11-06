@@ -52,6 +52,7 @@ public class MainViewAdapter extends ArrayAdapter<QuestionList> {
                          // Get the object in the title tag
                          String qId = ((QuestionList)((MainViewAdapterHolder)v.getTag()).getTitle().getTag()).getId();
                          i.putExtra(MainActivity.QUESTION_KEY, qId);
+                         //TODO: save this code :: i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                          getContext().startActivity(i);
                      }
                  }

@@ -17,6 +17,10 @@ import ca.ualberta.cmput301f14t16.easya.Exceptions.UnableToGetUserEmailException
  */
 public class GeneralHelper {
 
+	public final static String QTITLE = "ca.ualberta.cmput301f14t16.easya.QTITLE";
+	public final static String QBODY = "ca.ualberta.cmput301f14t16.easya.QBODY";
+	public final static String ABODY = "ca.ualberta.cmput301f14t16.easya.ABODY";
+	
 	/**
 	 * @param c
 	 * @return
