@@ -3,6 +3,7 @@ package ca.ualberta.cmput301f14t16.easya.Model;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 /**
  * 
@@ -20,13 +21,13 @@ public class Sort {
 	 * 
 	 * @param sortOrder 
 	 * 			checks if the sort is from greatest to smallest or vice versa.
-	 * @param topicList
+	 * @param questionList
 	 *           list of topics to be sorted.
 	 *           
 	 */
 	public static void sortUpVote(boolean sortOrder,
-			ArrayList<Topic> topicList) {
-		Collections.sort(topicList, new Comparator<Topic>(){
+			List<Topic> questionList) {
+		Collections.sort(questionList, new Comparator<Topic>(){
 			public int compare(Topic topic1, Topic topic2){
 				// int cmp = a > b ? +1 : a < b ? -1 : 0;
 				// compares the 2 ints.
@@ -41,13 +42,13 @@ public class Sort {
 	 * 
 	 * @param sortOrder 
 	 * 			checks if the sort is from greatest to smallest or vice versa.
-	 * @param topicList
+	 * @param questionList
 	 *           list of topics to be sorted.
 	 *           
 	 */
 	public static void pictureSort(boolean sortOrder,
-			ArrayList<Topic> topicList) {
-		Collections.sort(topicList, new Comparator<Topic>(){
+			List<Topic> questionList) {
+		Collections.sort(questionList, new Comparator<Topic>(){
 			public int compare(Topic topic1, Topic topic2){
 				return topic1.hasPicture() && !topic2.hasPicture()? 1 :
 						!topic1.hasPicture() && topic2.hasPicture()? -1 : 0;
@@ -60,17 +61,18 @@ public class Sort {
 	 * 
 	 * @param sortOrder 
 	 * 			checks if the sort is from greatest to smallest or vice versa.
-	 * @param topicList
+	 * @param questionList
 	 *           list of topics to be sorted.
 	 *           
 	 */
-	public static void dateSort(boolean sortOrder,
-			ArrayList<Topic> topicList) {
-		Collections.sort(topicList, new Comparator<Topic>(){
-			public int compare(Topic topic1, Topic topic2){
-				return topic1.getDate().compareTo(topic2.getDate());
+	public static List<QuestionList> dateSort(boolean sortOrder,
+			List<QuestionList> questionList) {
+		Collections.sort(questionList, new Comparator<QuestionList>(){
+			public int compare(QuestionList questionList1, QuestionList questionList2){
+				return questionList1.getDate().compareTo(questionList2.getDate());
 			}
 		});
+		return questionList;
 	}
 	
 }

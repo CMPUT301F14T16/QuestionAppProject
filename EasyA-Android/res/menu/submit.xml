@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" >
+    <item
+        android:id="@+id/menu_submit"
+        android:orderInCategory="100"
+        android:showAsAction="always|withText|collapseActionView"
+        android:icon="@drawable/ic_action_send_now"
+        android:title="Submit"/>
+</menu>

@@ -94,9 +94,13 @@ public class QuestionViewAdapter {
     	((EditText)v.findViewById(R.id.question_fragment_submitReplyEdt)).setTag(0);
     	((ImageButton)v.findViewById(R.id.question_fragment_upvoteBtn)).setTag(q);
     	((ImageButton)v.findViewById(R.id.question_fragment_upvoteBtn)).setOnClickListener(upVote);
-    	if (q.checkUpVote(MainActivity.mm.getCurrentUser())){
-    		//TODO: set a different image for when the user have already upvoted the topic
-    		//((ImageButton)v.findViewById(R.id.question_fragment_upvoteBtn)).setImageDrawable(R.drawable.)
+    	try{
+	    	if (q.checkUpVote(MainActivity.mm.getCurrentUser())){
+	    		//TODO: set a different image for when the user have already upvoted the topic
+	    		//((ImageButton)v.findViewById(R.id.question_fragment_upvoteBtn)).setImageDrawable(R.drawable.)
+	    	}
+    	}catch(NoContentAvailableException ex){
+    		//TODO: remove the try..catch block once the user account creation have been addressed
     	}
     	
     	container.addView(v);
@@ -125,9 +129,13 @@ public class QuestionViewAdapter {
     	((ImageButton)v.findViewById(R.id.answer_fragment_upvoteBtn)).setTag(a);
     	((ImageButton)v.findViewById(R.id.answer_fragment_upvoteBtn)).setOnClickListener(upVote);
     	
-    	if (q.checkUpVote(MainActivity.mm.getCurrentUser())){
-    		//TODO: set a different image for when the user have already upvoted the topic
-    		//((ImageButton)v.findViewById(R.id.question_fragment_upvoteBtn)).setImageDrawable(R.drawable.)
+    	try{
+	    	if (q.checkUpVote(MainActivity.mm.getCurrentUser())){
+	    		//TODO: set a different image for when the user have already upvoted the topic
+	    		//((ImageButton)v.findViewById(R.id.question_fragment_upvoteBtn)).setImageDrawable(R.drawable.)
+	    	}
+    	}catch(NoContentAvailableException ex){
+    		//TODO: remove the try..catch block once the user account creation have been addressed
     	}
     	
     	container.addView(v);

@@ -71,12 +71,14 @@ public class MainModel<V extends MainView> {
 			try{
 				return getUserById(GeneralHelper.retrieveEmail(ctx));
 			}catch(UnableToGetUserEmailException ex2){
-				return null;
+				throw new NoContentAvailableException();
+			}catch(Exception ex2){
+				throw new NoContentAvailableException();
 			}
 		}
 	}
 
-	public List<QuestionList> getAllQuestions() {
+	public List<QuestionList> getAllQuestions() throws NoContentAvailableException{
 		return Cache.getAllQuestions(ctx);
 	}
 }

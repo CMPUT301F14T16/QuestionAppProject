@@ -32,7 +32,8 @@
             android:layout_height="wrap_content"
             android:layout_alignParentTop="true"
             android:layout_toRightOf="@id/answer_fragment_upvoteBtn"
-            android:paddingLeft="10dp"/>
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"/>
         <TextView
             android:id="@+id/answer_fragment_authorDate"
             android:layout_width="wrap_content"
