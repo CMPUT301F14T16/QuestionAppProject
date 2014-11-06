@@ -54,7 +54,7 @@ public class QuestionViewAdapter {
     	@Override
         public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
             if (actionId == EditorInfo.IME_ACTION_SEND &&
-                    (event!= null && event.getAction() == KeyEvent.ACTION_DOWN)) {
+                    ((event == null) || (event!= null && event.getAction() != KeyEvent.ACTION_DOWN))) {
             	Context ctx = v.getContext();
             	BasicNameValuePair vp = (BasicNameValuePair)v.getTag();
             	String body = v.getText().toString();
@@ -186,6 +186,9 @@ public class QuestionViewAdapter {
     	
     	public submitReplyTask(Context ctx, BasicNameValuePair vp, String body){
     		this.ctx = ctx;
+    		this.qId = vp.getName();
+    		this.aId = vp.getValue();
+    		this.body = body;
     	}
     	
     	@Override
