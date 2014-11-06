@@ -1,9 +1,9 @@
 package ca.ualberta.cmput301f14t16.easya.test;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.SocketTimeoutException;
 import java.util.List;
+import java.util.Random;
 
 import android.test.ActivityInstrumentationTestCase2;
 import android.util.Log;
@@ -84,7 +84,7 @@ public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<Ma
 	}
 	
 	public void testSubmitAndGetAnswer () {
-		String qid = "82f6d4fd-d8a6-4537-a703-11d16bb81306";
+		String qid = Q_ID;
 		
 		// Get question before answer submission.
 		Question q = null;
@@ -235,7 +235,11 @@ public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<Ma
 	}
 	
 	public void testSubmitAndGetUser() {
-		User u = new User("test@test.com", "testUser");
+		
+		// Generate a random user.
+		Random ran = new Random();
+		int number = ran.nextInt(8999) + 1000;
+		User u = new User("test" + number + "@test.com", "testUser" + number);
 		
 		try {
 			esclient.submitUser(u);
@@ -292,6 +296,40 @@ public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<Ma
 		
 		assertNotNull(userId);
 		assertEquals(u.getId(), userId);
+		
+	}
+	
+	public void testUpvoteQuestion() {
+		User u = new User("test@test.com", "testuser");
+		
+		Question q = null;
+		try {
+			q = esclient.getQuestionById(Q_ID);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		assertNotNull(q);
+		
+		try {
+			esclient.setQuestionUpvote(u.getId(), q.getId());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		q.setUpvote(u.getId());
+		
+		Question rq = null;
+		try {
+			rq = esclient.getQuestionById(q.getId());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		assertNotNull(rq);
+		
+		assertEquals(q.getUpvotes().get(0), rq.getUpvotes().get(0));
 		
 	}
 	

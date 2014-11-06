@@ -53,7 +53,10 @@ public class QuestionViewAdapter {
             try{
             	//TODO: pass all this to the controller
 	        	Topic t = (Topic)v.getTag();
-	            t.setUpvote(MainActivity.mm.getCurrentUser());
+	        	// TODO: don't set upvote here, upvote is set in ESClient
+	        	// TODO: dont' allow upvotes without internet connection? Or we have to create new pending type...
+	            t.setUpvote(MainActivity.mm.getCurrentUser().getId());
+	           
             }catch(Exception ex){
             	//TODO: do something with the exception
             }

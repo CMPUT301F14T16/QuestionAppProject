@@ -11,18 +11,18 @@ import junit.framework.TestCase;
 
 public class TopicTest extends TestCase {
 	
-	User u =  new User();
+	User u =  new User("test@test.com", "testUsername");
 	
 	//test for UpVoteTopicsTest
 	public void testUpVoteTopics() {
 		Answer answer = new Answer();
 		Question question = new Question();
-		answer.setUpvote(u);
-		question.setUpvote(u);
+		answer.setUpvote(u.getId());
+		question.setUpvote(u.getId());
 		assertTrue(answer.getUpVoteCount() == 1);
 		assertTrue(question.getUpVoteCount() == 1);
-		answer.setUpvote(u);
-		question.setUpvote(u);
+		answer.setUpvote(u.getId());
+		question.setUpvote(u.getId());
 		assertTrue(answer.getUpVoteCount() == 0);
 		assertTrue(question.getUpVoteCount() == 0);
 	}

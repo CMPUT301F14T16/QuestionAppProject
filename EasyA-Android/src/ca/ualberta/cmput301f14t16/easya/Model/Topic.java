@@ -131,18 +131,16 @@ public abstract class Topic extends Content {
 	 * @param user
 	 *            The {@link User} to be added.
 	 */
-	public void setUpvote(User user) {
-		try {
-			if (this.upVotes.contains(user.getId())) {
-				this.upVotes.remove(user.getId());
-			} else {
-				this.upVotes.add(user.getId());
-			}
-		} catch (Exception ex) {
-			// TODO: deal with exception
+	public void setUpvote(String userId) {
+		if (this.upVotes.contains(userId)) {
+			this.upVotes.remove(userId);
+		} else {
+			this.upVotes.add(userId);
 		}
-		// TODO: Try to call directly if have internet, if have no internet,
-		// throw exception
+	}
+	
+	public List<String> getUpvotes() {
+		return this.upVotes;
 	}
 
 	/**

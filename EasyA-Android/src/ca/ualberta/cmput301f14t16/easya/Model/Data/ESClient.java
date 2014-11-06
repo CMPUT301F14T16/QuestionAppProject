@@ -25,7 +25,7 @@ import com.google.gson.reflect.TypeToken;
 public class ESClient {
 	
 	//Debug
-	private static final String LOG_TAG = "ESClient";
+	//private static final String LOG_TAG = "ESClient";
 	
 	//ElasticSeach Urls
 	private static final String HOST_URL = "http://cmput301.softwareprocess.es:8080/testing/";
@@ -171,7 +171,10 @@ public class ESClient {
 		ESSearchResponse<Question> esResponse = gson.fromJson(response, esSearchResponseType);
 		for (ESGetResponse<Question> q : esResponse.getHits()) {
 			Question question = q.getSource();
-			QuestionList questionList = new QuestionList(question.getId(), question.getTitle(), question.getAuthorName(), question.getAnswerCountString(), question.getUpVoteCountString(), question.hasPicture(), question.getDate());
+			QuestionList questionList = new QuestionList(question.getId(), question.getTitle(), 
+					question.getAuthorName(), question.getAnswerCountString(), 
+					question.getUpVoteCountString(), question.hasPicture(), 
+					question.getDate());
 			qlist.add(questionList);
 		}
 		
@@ -181,12 +184,8 @@ public class ESClient {
 	public boolean submitUser(User user) throws IOException {
 		String json = gson.toJson(user);
 		
-		// TODO throw exception if email is already in use.
-		
 		// Post the object to the webservice
 		HttpHelper.putToUrl(HOST_URL + USER_PATH + user.getId(), json);
-		
-		//TODO: if have no internet, throw a NoInternetException
 		
 		//TODO: change that based on ESS response
 		return true;
@@ -249,5 +248,31 @@ public class ESClient {
 		}
 		
 		return ulist;
+	}
+	
+	public boolean setQuestionUpvote(String userId, String qid) throws IOException {
+		Question q = this.getQuestionById(qid);
+		q.setUpvote(userId);
+		
+		String json = gson.toJson(q.getUpvotes());
+		String updateStr = "{ \"doc\":{ \"upVotes\":" + json + "} }";
+		
+		HttpHelper.putToUrl(HOST_URL + QUESTION_PATH + qid + "/_update", updateStr);
+		
+		//TODO: change that based on ESS response
+		return true;
+	} 
+	
+	public boolean setAnswerUpvote(String userId, String qid, String aid) throws IOException {
+		Question q = this.getQuestionById(qid);
+		q.getAnswerById(aid).setUpvote(userId);
+		
+		String json = gson.toJson(q.getAnswers());
+		String updateStr = "{ \"doc\":{ \"answers\":" + json + "} }";
+		
+		HttpHelper.putToUrl(HOST_URL + QUESTION_PATH + qid +"/_update", updateStr);
+		
+		//TODO: change that based on ESS response
+		return true;
 	}
 }
