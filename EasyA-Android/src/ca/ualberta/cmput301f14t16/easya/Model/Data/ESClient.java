@@ -6,6 +6,7 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.util.Log;
 import ca.ualberta.cmput301f14t16.easya.Model.Answer;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Model.QuestionList;
@@ -22,6 +23,9 @@ import com.google.gson.reflect.TypeToken;
  * @author Brett Commandeur
  */
 public class ESClient {
+	
+	//Debug
+	private static final String LOG_TAG = "ESClient";
 	
 	//ElasticSeach Urls
 	private static final String HOST_URL = "http://cmput301.softwareprocess.es:8080/testing/";
@@ -215,10 +219,35 @@ public class ESClient {
 	
 	
 	// TODO finish below method.
-	public String getUserIdByEmail(String email) {
+	public String getUserIdByEmail(String email) throws IOException {
 		
-		List<User> returnedUsers = new ArrayList<User>();
+		List<User> returnedUsers = searchUsersByQuery("email:"+email, 100);
 		
-		return returnedUsers.get(0).getId();
+		if (returnedUsers.size() > 0) {
+			for (User user : returnedUsers) {
+				String email1 = user.getEmail().toLowerCase();
+				String email2 = email.toLowerCase();
+				if (email1.equals(email2)) {
+					return user.getId();
+				}
+			}
+		}
+		
+		return null;
+	}
+	
+	public List<User> searchUsersByQuery(String query, int numResults) throws IOException {
+		List<User> ulist = new ArrayList<User>();
+		
+		String response = HttpHelper.getFromUrl(HOST_URL + USER_PATH + "_search/?size="+ numResults + "&q=" + URLEncoder.encode(query, "UTF-8"));
+		
+		Type esSearchResponseType = new TypeToken<ESSearchResponse<User>>(){}.getType();
+		ESSearchResponse<User> esResponse = gson.fromJson(response, esSearchResponseType);
+		for (ESGetResponse<User> u : esResponse.getHits()) {
+			User user = u.getSource();
+			ulist.add(user);
+		}
+		
+		return ulist;
 	}
 }

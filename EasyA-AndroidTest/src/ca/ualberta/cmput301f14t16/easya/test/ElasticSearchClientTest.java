@@ -235,7 +235,7 @@ public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<Ma
 	}
 	
 	public void testSubmitAndGetUser() {
-		User u = new User();
+		User u = new User("test@test.com", "testUser");
 		
 		try {
 			esclient.submitUser(u);
@@ -278,10 +278,21 @@ public class ElasticSearchClientTest extends ActivityInstrumentationTestCase2<Ma
 		
 		assertEquals(u.getUsername(), ru.getUsername());
 		
-		// test get user id by providing ES an email address
+		// test get user id by providing ES a username
 		
 		// TODO finish below test...
-		String userId = esclient.getUserIdByEmail("commande@ualberta.ca");
+		String userId = null;
+		try {
+			userId = esclient.getUserIdByEmail(u.getEmail());
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			fail("Could not get userId");
+			e.printStackTrace();
+		}
+		
+		assertNotNull(userId);
+		assertEquals(u.getId(), userId);
+		
 	}
 	
 }
