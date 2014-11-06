@@ -5,6 +5,8 @@ import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
 import ca.ualberta.cmput301f14t16.easya.Model.GeneralHelper;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import android.app.Activity;
+import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -16,6 +18,7 @@ import android.widget.Toast;
 
 public class QuestionActivity extends Activity {
 	private static Question question;
+	private ProgressDialog pd;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -23,7 +26,7 @@ public class QuestionActivity extends Activity {
 		setContentView(R.layout.question_view);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);        
-        (new GetQuestionListTask()).execute();
+        (new GetQuestionListTask(this)).execute();
 	}	
 	
 	@Override
@@ -48,6 +51,23 @@ public class QuestionActivity extends Activity {
 	}
 	
 	private class GetQuestionListTask extends AsyncTask<Void, Void, Question> {
+		private Context ctx;
+		
+		public GetQuestionListTask(Context ctx){
+			this.ctx = ctx;
+		}
+		
+		@Override
+		protected void onPreExecute() {
+    		pd = new ProgressDialog(ctx);
+			pd.setTitle("Loading question...");
+			pd.setMessage("Please wait.");
+			pd.setCancelable(false);
+			pd.setIndeterminate(true);
+			pd.show();
+		}
+		
+		@Override
         protected Question doInBackground(Void...voids) {
         	try{
         		String aux = (getIntent()).getStringExtra(MainActivity.QUESTION_KEY);
@@ -59,6 +79,7 @@ public class QuestionActivity extends Activity {
         	}
         }
 
+		@Override
         protected void onPostExecute(Question result){
         	if (result == null){
         		ShowNoContentView();
