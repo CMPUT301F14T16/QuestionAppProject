@@ -12,14 +12,7 @@ public class NewQuestionController extends MainController {
 		this.ctx = ctx;
 	}
 	
-	public static NewQuestionController create(Context ctx, String title, String body, String authorID) throws MissingContentException{
-		if (title.equals(""))
-			throw new MissingContentException("title");
-		if (body.equals(""))
-			throw new MissingContentException("body");
-		if (authorID.equals(""))
-			throw new MissingContentException("authorId");
-		
+	public static NewQuestionController create(Context ctx, String title, String body, String authorID){
 		Question newQuestion = new Question(title, body, authorID);
 		Pending newPending = new Pending(newQuestion);
 		return new NewQuestionController(newPending, ctx);

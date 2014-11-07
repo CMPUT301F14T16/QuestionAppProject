@@ -105,10 +105,10 @@ public class SubmitQuestionActivity extends Activity {
 	        	}catch(Exception ex){
 	        		System.out.println(ex.getMessage());
 	        		return false;
-	        		//Deal with things as: user didn't fill out everything
+	        		//TODO: Deal with things as: user didn't fill out everything
 	        	}
             }catch(Exception ex){
-            	//Deal with this
+            	//TODO: Deal with this
             	return false;
             }
         }

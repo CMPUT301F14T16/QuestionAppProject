@@ -12,16 +12,7 @@ public class NewReplyController extends MainController {
 		this.ctx = ctx;
 	}
 	
-	public static NewReplyController create(Context ctx, String qId, String aId, String body, String authorID) throws MissingContentException{
-		if (qId.equals(""))
-			throw new MissingContentException("qId");
-		if (aId.equals(""))
-			throw new MissingContentException("aId");
-		if (body.equals(""))
-			throw new MissingContentException("body");
-		if (authorID.equals(""))
-			throw new MissingContentException("authorId");
-		
+	public static NewReplyController create(Context ctx, String qId, String aId, String body, String authorID){		
 		Reply newReply = new Reply(body, authorID);
 		Pending newPending = new Pending(newReply, qId, aId);
 		return new NewReplyController(newPending, ctx);

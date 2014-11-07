@@ -13,12 +13,7 @@ public class NewAnswerController extends MainController {
 		this.ctx = ctx;
 	}
 	
-	public static NewAnswerController create(Context ctx, String qId, String body, String authorID) throws MissingContentException{
-		if (body.equals(""))
-			throw new MissingContentException("body");
-		if (authorID.equals(""))
-			throw new MissingContentException("authorId");
-		
+	public static NewAnswerController create(Context ctx, String qId, String body, String authorID){
 		Answer newAnswer = new Answer(body, authorID);
 		Pending newPending = new Pending(qId, newAnswer);
 		return new NewAnswerController(newPending, ctx);
