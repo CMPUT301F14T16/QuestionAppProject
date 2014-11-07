@@ -7,6 +7,7 @@ import org.apache.http.message.BasicNameValuePair;
 import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Controller.NewQuestionController;
 import ca.ualberta.cmput301f14t16.easya.Controller.NewReplyController;
+import ca.ualberta.cmput301f14t16.easya.Controller.UpvoteController;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
 import ca.ualberta.cmput301f14t16.easya.Model.Answer;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
@@ -69,16 +70,7 @@ public class QuestionViewAdapter {
     private OnClickListener upVote = new OnClickListener() {
         @Override
         public void onClick(View v) {
-            try{
-            	//TODO: pass all this to the controller
-	        	Topic t = (Topic)v.getTag();
-	        	// TODO: don't set upvote here, upvote is set in ESClient
-	        	// TODO: dont' allow upvotes without internet connection? Or we have to create new pending type...
-	            t.setUpvote(MainModel.getInstance().getCurrentUser().getId());
-	           
-            }catch(Exception ex){
-            	//TODO: do something with the exception
-            }
+            (new upvoteTask(v.getContext(), (BasicNameValuePair)v.getTag())).execute();
         }
     };    
 
@@ -108,7 +100,7 @@ public class QuestionViewAdapter {
     	
     	replies = (LinearLayout)v.findViewById(R.id.question_fragment_replies_list);    	
     	replies = inflateReplies(replies, q.getReplies());
-    	addReply.setTag(new BasicNameValuePair(q.getId(), null) );
+    	addReply.setTag(new BasicNameValuePair(q.getId(), null));
     	addReply.setOnEditorActionListener(keyAction);
     	addReply.setImeActionLabel("Submit", KeyEvent.KEYCODE_ENTER);
     	
@@ -117,17 +109,12 @@ public class QuestionViewAdapter {
     	authordate.setText(q.getAuthorDate());
     	upvotescount.setText(q.getUpVoteCountString());
     	
-    	((ImageButton)v.findViewById(R.id.question_fragment_upvoteBtn)).setTag(q);
+    	((ImageButton)v.findViewById(R.id.question_fragment_upvoteBtn)).setTag(new BasicNameValuePair(q.getId(), null));
     	((ImageButton)v.findViewById(R.id.question_fragment_upvoteBtn)).setOnClickListener(upVote);
-    	try{
-	    	if (q.checkUpVote(MainModel.getInstance().getCurrentUser())){
-	    		//TODO: set a different image for when the user have already upvoted the topic
-	    		//((ImageButton)v.findViewById(R.id.question_fragment_upvoteBtn)).setImageDrawable(R.drawable.)
-	    	}
-    	}catch(NoContentAvailableException ex){
-    		//TODO: remove the try..catch block once the user account creation have been addressed
-    	}
     	
+    	if (q.checkUpVote(MainModel.getInstance().getCurrentUser())){
+    		((ImageButton)v.findViewById(R.id.question_fragment_upvoteBtn)).setImageResource(R.drawable.ic_action_good_selected);
+    	}    	
     	container.addView(v);
     }
     
@@ -145,7 +132,7 @@ public class QuestionViewAdapter {
     	    	
     	replies = (LinearLayout)v.findViewById(R.id.answer_fragment_replies_list);
     	replies = inflateReplies(replies, a.getReplies());
-    	addReply.setTag(new BasicNameValuePair(q.getId(), a.getId()) );
+    	addReply.setTag(new BasicNameValuePair(q.getId(), a.getId()));
     	addReply.setOnEditorActionListener(keyAction);
     	addReply.setImeActionLabel("Submit", KeyEvent.KEYCODE_ENTER);
     	
@@ -153,17 +140,12 @@ public class QuestionViewAdapter {
     	authordate.setText(a.getAuthorDate());
     	upvotescount.setText(a.getUpVoteCountString());
     	
-    	((ImageButton)v.findViewById(R.id.answer_fragment_upvoteBtn)).setTag(a);
+    	((ImageButton)v.findViewById(R.id.answer_fragment_upvoteBtn)).setTag(new BasicNameValuePair(q.getId(), a.getId()));
     	((ImageButton)v.findViewById(R.id.answer_fragment_upvoteBtn)).setOnClickListener(upVote);
     	
-    	try{
-	    	if (q.checkUpVote(MainModel.getInstance().getCurrentUser())){
-	    		//TODO: set a different image for when the user have already upvoted the topic
-	    		//((ImageButton)v.findViewById(R.id.question_fragment_upvoteBtn)).setImageDrawable(R.drawable.)
-	    	}
-    	}catch(NoContentAvailableException ex){
-    		//TODO: remove the try..catch block once the user account creation have been addressed
-    	}    	
+    	if (q.checkUpVote(MainModel.getInstance().getCurrentUser())){
+    		((ImageButton)v.findViewById(R.id.question_fragment_upvoteBtn)).setImageResource(R.drawable.ic_action_good_selected);
+    	}	
     	container.addView(v);
     }
     
@@ -245,6 +227,46 @@ public class QuestionViewAdapter {
         	if (pd!=null) {
 				pd.dismiss();
 			}        	
+        }
+    }
+    
+    private class upvoteTask extends AsyncTask<Void, Void, Boolean> {
+    	private BasicNameValuePair vp;
+    	private Context ctx;
+    	
+    	public upvoteTask(Context ctx, BasicNameValuePair vp){
+    		this.ctx = ctx;
+    		this.vp = vp;
+    	}
+    	    	
+    	@Override
+    	protected Boolean doInBackground(Void...voids) {
+            try{
+            	try{
+	        		UpvoteController controller = 
+	        				UpvoteController.create(
+	        						vp,
+	        						MainModel.getInstance().getCurrentUser().getId());	        		
+	        		return controller.submit();	        		
+	        	}catch(Exception ex){
+	        		System.out.println(ex.getMessage());
+	        		return false;
+	        	}
+            }catch(Exception ex){
+            	return false;
+            }
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+        	if (result){ 
+    			Intent i = new Intent(ctx,QuestionActivity.class);
+    			i.putExtra(MainActivity.QUESTION_KEY, vp.getName());
+    			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+    			ctx.startActivity(i);
+    		}else{
+    			Toast.makeText(ctx, "We were unable to save your upvote, check your internet connection and try again!", Toast.LENGTH_LONG).show();
+    		}     	
         }
     }
 }
