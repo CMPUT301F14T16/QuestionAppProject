@@ -9,6 +9,7 @@ import ca.ualberta.cmput301f14t16.easya.Model.Answer;
 import ca.ualberta.cmput301f14t16.easya.Model.Content;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Model.Pending;
+import ca.ualberta.cmput301f14t16.easya.Model.Queue;
 import ca.ualberta.cmput301f14t16.easya.Model.Reply;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.ESClient;
 import ca.ualberta.cmput301f14t16.easya.View.MainActivity;
@@ -24,7 +25,7 @@ public abstract class MainController {
 	
 	protected boolean submit() throws NoInternetException{
 		ESClient es = new ESClient();
-		if (MainActivity.mQueueThread.haveInternetConnection()){
+		if (Queue.getInstance().haveInternetConnection()){
 	        try {
 	        	Content c = pending.getContent();
 	            if(c instanceof Question){
@@ -41,7 +42,7 @@ public abstract class MainController {
 	            	throw new NoClassTypeSpecifiedException();
 	            }
 	        }catch(IOException ex){
-	        	if (MainActivity.mQueueThread.haveInternetConnection())
+	        	if (Queue.getInstance().haveInternetConnection())
 	        		return false;
 	        	throw new NoInternetException();
 	        }catch(NoClassTypeSpecifiedException ex){
@@ -55,7 +56,7 @@ public abstract class MainController {
 	}
 	
 	protected void submitOffline(){
-		MainActivity.mQueueThread.AddPendingToQueue(this.pending);
+		Queue.getInstance().AddPendingToQueue(this.pending);
 		submitedOffline = true;
 	}
 	

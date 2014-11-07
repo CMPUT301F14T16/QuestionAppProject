@@ -6,6 +6,7 @@ import java.util.List;
 import android.content.Context;
 
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
+import ca.ualberta.cmput301f14t16.easya.Exceptions.NoInternetException;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.UnableToGetUserEmailException;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.Cache;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.PMClient;
@@ -24,8 +25,8 @@ import ca.ualberta.cmput301f14t16.easya.View.MainView;
  * @author Brett Commandeur (commande)
  */
 public class MainModel<V extends MainView> {
+	private static MainModel m;
 	private ArrayList<V> views;
-	private Context ctx;
 
 	/**
 	 * Design rationale: MVC format
@@ -35,9 +36,14 @@ public class MainModel<V extends MainView> {
 	 *            /src/es/softwareprocess/fillercreep/FModel.java
 	 * @author Abram Hindle
 	 */
-	public MainModel(Context ctx) {
-		this.ctx = ctx;
+	protected MainModel() {
 		this.views = new ArrayList<V>();
+	}
+	
+	public static MainModel getInstance(){
+		if (m == null)
+			m = new MainModel();
+		return m;
 	}
 	
 	public void addView(V view) {
@@ -57,29 +63,28 @@ public class MainModel<V extends MainView> {
     	}
 	
 	public Question getQuestionById(String id) throws NoContentAvailableException{
-		return Cache.getQuestionById(ctx, id);
+		return Cache.getInstance().getQuestionById(id);
 	}
 	
 	public User getUserById(String id) throws NoContentAvailableException{
-		return Cache.getUserById(ctx, id);
+		return Cache.getInstance().getUserById(id);
+	}
+	
+	public User getUserByEmail(String email) throws NoContentAvailableException, NoInternetException{
+		return Cache.getInstance().getUserByEmail(email);
 	}
 	
 	public User getCurrentUser() throws NoContentAvailableException{
-		try{
-			PMClient pmclient = new PMClient();
-			return pmclient.getUser(ctx);
-		}catch(NoContentAvailableException ex){
-			try{
-				return getUserById(GeneralHelper.retrieveEmail(ctx));
-			}catch(UnableToGetUserEmailException ex2){
-				throw new NoContentAvailableException();
-			}catch(Exception ex2){
-				throw new NoContentAvailableException();
-			}
-		}
+		PMClient pmclient = new PMClient();
+		return pmclient.getUser();
+	}
+	
+	public void saveMainUser(User u){
+		PMClient pm = new PMClient();
+		pm.saveUser(u);
 	}
 
 	public List<QuestionList> getAllQuestions() throws NoContentAvailableException{
-		return Cache.getAllQuestions(ctx);
+		return Cache.getInstance().getAllQuestions();
 	}
 }

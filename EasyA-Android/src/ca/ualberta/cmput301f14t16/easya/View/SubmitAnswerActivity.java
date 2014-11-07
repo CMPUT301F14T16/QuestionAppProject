@@ -4,6 +4,7 @@ import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Controller.NewAnswerController;
 import ca.ualberta.cmput301f14t16.easya.Controller.NewQuestionController;
 import ca.ualberta.cmput301f14t16.easya.Model.GeneralHelper;
+import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.User;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.PMClient;
 import android.app.Activity;
@@ -54,14 +55,15 @@ public class SubmitAnswerActivity extends Activity {
 	@Override
     public void onPause(){
         PMClient pm = new PMClient();
-        pm.saveABody(this, ((EditText)findViewById(R.id.submit_answer_body)).getText().toString());
+        //TODO: pass this to the controller
+        pm.saveABody(((EditText)findViewById(R.id.submit_answer_body)).getText().toString());
         super.onPause();
     }
 
     @Override
     public void onResume(){
     	PMClient pm = new PMClient();
-    	((EditText)findViewById(R.id.submit_answer_body)).setText(pm.getABody(this));
+    	((EditText)findViewById(R.id.submit_answer_body)).setText(pm.getABody());
         super.onResume();
     }
     
@@ -92,10 +94,7 @@ public class SubmitAnswerActivity extends Activity {
 	        						ctx, 
 	        						(getIntent()).getStringExtra(GeneralHelper.AQUESTION_KEY), 
 	        						((EditText)findViewById(R.id.submit_answer_body)).getText().toString(), 
-	        						//MainActivity.mm.getCurrentUser().getId());
-	        						(new User("creide", "juvenaldo")).getId());
-	        						//TODO: remove this bogus user
-	        		
+        							MainModel.getInstance().getCurrentUser().getId());
 	        		return controller.submit();	        		
 	        	}catch(Exception ex){
 	        		System.out.println(ex.getMessage());

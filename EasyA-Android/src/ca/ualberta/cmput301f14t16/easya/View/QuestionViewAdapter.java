@@ -9,6 +9,7 @@ import ca.ualberta.cmput301f14t16.easya.Controller.NewQuestionController;
 import ca.ualberta.cmput301f14t16.easya.Controller.NewReplyController;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
 import ca.ualberta.cmput301f14t16.easya.Model.Answer;
+import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Model.Reply;
 import ca.ualberta.cmput301f14t16.easya.Model.Topic;
@@ -73,7 +74,7 @@ public class QuestionViewAdapter {
 	        	Topic t = (Topic)v.getTag();
 	        	// TODO: don't set upvote here, upvote is set in ESClient
 	        	// TODO: dont' allow upvotes without internet connection? Or we have to create new pending type...
-	            t.setUpvote(MainActivity.mm.getCurrentUser().getId());
+	            t.setUpvote(MainModel.getInstance().getCurrentUser().getId());
 	           
             }catch(Exception ex){
             	//TODO: do something with the exception
@@ -119,7 +120,7 @@ public class QuestionViewAdapter {
     	((ImageButton)v.findViewById(R.id.question_fragment_upvoteBtn)).setTag(q);
     	((ImageButton)v.findViewById(R.id.question_fragment_upvoteBtn)).setOnClickListener(upVote);
     	try{
-	    	if (q.checkUpVote(MainActivity.mm.getCurrentUser())){
+	    	if (q.checkUpVote(MainModel.getInstance().getCurrentUser())){
 	    		//TODO: set a different image for when the user have already upvoted the topic
 	    		//((ImageButton)v.findViewById(R.id.question_fragment_upvoteBtn)).setImageDrawable(R.drawable.)
 	    	}
@@ -156,7 +157,7 @@ public class QuestionViewAdapter {
     	((ImageButton)v.findViewById(R.id.answer_fragment_upvoteBtn)).setOnClickListener(upVote);
     	
     	try{
-	    	if (q.checkUpVote(MainActivity.mm.getCurrentUser())){
+	    	if (q.checkUpVote(MainModel.getInstance().getCurrentUser())){
 	    		//TODO: set a different image for when the user have already upvoted the topic
 	    		//((ImageButton)v.findViewById(R.id.question_fragment_upvoteBtn)).setImageDrawable(R.drawable.)
 	    	}
@@ -211,9 +212,7 @@ public class QuestionViewAdapter {
 	        						qId, 
 	        						aId,
 	        						body,
-	        						//MainActivity.mm.getCurrentUser().getId());
-	        						(new User("creide", "juvenaldo")).getId());
-	        						//TODO: remove this bogus user
+	        						MainModel.getInstance().getCurrentUser().getId());
 	        		
 	        		return controller.submit();	        		
 	        	}catch(Exception ex){

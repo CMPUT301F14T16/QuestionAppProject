@@ -3,6 +3,8 @@ package ca.ualberta.cmput301f14t16.easya.Model;
 import java.util.Date;
 import java.util.UUID;
 
+import android.content.Context;
+
 import ca.ualberta.cmput301f14t16.easya.View.MainActivity;
 
 /**
@@ -77,7 +79,7 @@ public abstract class Content {
 	
 	public String getAuthorName(){
 		try{
-			return (MainActivity.mm.getUserById(this.userId)).getUsername();
+			return (MainModel.getInstance().getUserById(this.userId)).getUsername();
 		}catch(Exception ex){
 			return "";
 		}

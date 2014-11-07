@@ -25,71 +25,71 @@ import ca.ualberta.cmput301f14t16.easya.Model.User;
 public class PMClient {
 	public PMClient(){}
 	
-	public void saveQTitle(Context ctx, String text){
-		PMDataParser.saveUserPreference(ctx, GeneralHelper.QTITLE, text);
+	public void saveQTitle(String text){
+		PMDataParser.saveUserPreference(GeneralHelper.QTITLE, text);
 	}
 	
-	public String getQTitle(Context ctx){
-		return PMDataParser.recoverUserPreference(ctx, GeneralHelper.QTITLE);
+	public String getQTitle(){
+		return PMDataParser.recoverUserPreference(GeneralHelper.QTITLE);
 	}
 	
-	public void saveQBody(Context ctx, String text){
-		PMDataParser.saveUserPreference(ctx, GeneralHelper.QBODY, text);
+	public void saveQBody(String text){
+		PMDataParser.saveUserPreference(GeneralHelper.QBODY, text);
 	}
 	
-	public String getQBody(Context ctx){
-		return PMDataParser.recoverUserPreference(ctx, GeneralHelper.QBODY);
+	public String getQBody(){
+		return PMDataParser.recoverUserPreference(GeneralHelper.QBODY);
 	}
 	
-	public void saveABody(Context ctx, String text){
-		PMDataParser.saveUserPreference(ctx, GeneralHelper.ABODY, text);
+	public void saveABody(String text){
+		PMDataParser.saveUserPreference(GeneralHelper.ABODY, text);
 	}
 	
-	public String getABody(Context ctx){
-		return PMDataParser.recoverUserPreference(ctx, GeneralHelper.ABODY);
+	public String getABody(){
+		return PMDataParser.recoverUserPreference(GeneralHelper.ABODY);
 	}
 	
 	public void clearQ(Context ctx){
-		saveQTitle(ctx,"");
-		saveQBody(ctx,"");
+		saveQTitle("");
+		saveQBody("");
 	}
 	
 	public void clearA(Context ctx){
-		saveABody(ctx,"");
+		saveABody("");
 	}
 	
-	public void saveUser(Context ctx, User user){
+	public void saveUser(User user){
 		Gson gson = new Gson();
-		PMDataParser.saveUserPreference(ctx, User.USERKEY, gson.toJson(user, User.class));
+		PMDataParser.saveUserPreference(User.USERKEY, gson.toJson(user, User.class));
 	}
 	
-	public User getUser(Context ctx) throws NoContentAvailableException{
+	public User getUser() throws NoContentAvailableException{
 		Gson gson = new Gson();
-		String aux = PMDataParser.recoverUserPreference(ctx, User.USERKEY);
+		String aux = PMDataParser.recoverUserPreference(User.USERKEY);
 		if (aux == null|| aux.equals("")){
 			throw new NoContentAvailableException();
 		}
 		return gson.fromJson(aux, User.class);
 	}
 
-	public void savePending(Context ctx, Pending p) {
+	public void savePending(Pending p) {
 		Gson gson = new Gson();
-		List<Pending> aux = getPendings(ctx);
+		List<Pending> aux = getPendings();
 		aux.add(p);
-		PMDataParser.saveJson(ctx, PMFilesEnum.QUEUE, gson.toJson(aux));	
+		PMDataParser.saveJson(PMFilesEnum.QUEUE, gson.toJson(aux));	
 	}
 	
-	public void deletePending(Context ctx, Pending p) {
+	public void deletePending(Pending p) {
 		Gson gson = new Gson();
-		List<Pending> aux = getPendings(ctx);
+		List<Pending> aux = getPendings();
 		if (aux.remove(p))
-			PMDataParser.saveJson(ctx, PMFilesEnum.QUEUE, gson.toJson(aux));	
+			PMDataParser.saveJson(PMFilesEnum.QUEUE, gson.toJson(aux));	
 	}
 	
-	public List<Pending> getPendings(Context ctx){
+	public List<Pending> getPendings(){
 		Gson gson = new Gson();
 		Type listType = new TypeToken<List<Pending>>(){}.getType();
-		return gson.fromJson(PMDataParser.loadJson(ctx, PMFilesEnum.QUEUE), listType);
+		return gson.fromJson(PMDataParser.loadJson(PMFilesEnum.QUEUE), listType);
 	}
 	
 	protected final static List<Pending> Sorter(List<Pending> lst)

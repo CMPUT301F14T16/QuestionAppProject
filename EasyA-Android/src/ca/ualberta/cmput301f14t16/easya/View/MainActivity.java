@@ -37,9 +37,6 @@ public class MainActivity extends Activity {
     private ProgressDialog pd;
     
     public final static String QUESTION_KEY = "ca.ualberta.cmput301f14t16.easya.QUESTIONKEY"; 
-    
-    public static Queue mQueueThread; 
-    public static MainModel mm;
     public static List<QuestionList> displayedQuestions;
 
     @Override
@@ -50,8 +47,6 @@ public class MainActivity extends Activity {
 		////
 		//TODO: if no user is found, try to create/load one from internet
 		// If still not able, block ui with the create user screen.
-		
-		mm = new MainModel(getApplicationContext());
 		
         //Creation of the drawer menu
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -78,10 +73,6 @@ public class MainActivity extends Activity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
-
-        /////
-        mQueueThread = new Queue(getApplicationContext());
-        mQueueThread.start();
         
         /////
         (new GetQuestionListTask(this)).execute();
@@ -139,7 +130,7 @@ public class MainActivity extends Activity {
     @Override
     public void onDestroy() {
         //Free up the thread
-        mQueueThread.Stop();
+        Queue.getInstance().Stop();
         PMClient pm = new PMClient();
         pm.clearA(this);
         pm.clearQ(this);
@@ -151,16 +142,13 @@ public class MainActivity extends Activity {
 
     @Override
     public void onPause(){
-        mQueueThread.Stop();
+    	Queue.getInstance().Stop();
         super.onPause();
     }
 
     @Override
     public void onResume(){
-        if (mQueueThread != null && !mQueueThread.isAlive()) {
-            mQueueThread = new Queue(getApplicationContext());
-            mQueueThread.start();
-        }
+        Queue.getInstance();
         super.onResume();
     }
     
@@ -189,7 +177,7 @@ public class MainActivity extends Activity {
     	@Override
     	protected List<QuestionList> doInBackground(Void...voids) {
             try{
-            	return mm.getAllQuestions();
+            	return MainModel.getInstance().getAllQuestions();
             }catch(NoContentAvailableException ex){
             	return null;
             }

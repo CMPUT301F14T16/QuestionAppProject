@@ -3,6 +3,7 @@ package ca.ualberta.cmput301f14t16.easya.View;
 import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
 import ca.ualberta.cmput301f14t16.easya.Model.GeneralHelper;
+import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import android.app.Activity;
 import android.app.ProgressDialog;
@@ -78,7 +79,7 @@ public class QuestionActivity extends Activity {
         		String aux = (getIntent()).getStringExtra(MainActivity.QUESTION_KEY);
         		if (aux == null || aux.equals(""))
         			return null;
-        		return MainActivity.mm.getQuestionById(aux);
+        		return MainModel.getInstance().getQuestionById(aux);
         	}catch(NoContentAvailableException ex){
         		return null;
         	}

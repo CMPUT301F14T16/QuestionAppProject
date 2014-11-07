@@ -5,6 +5,7 @@ import java.util.List;
 import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Controller.NewQuestionController;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
+import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.QuestionList;
 import ca.ualberta.cmput301f14t16.easya.Model.Queue;
 import ca.ualberta.cmput301f14t16.easya.Model.User;
@@ -57,16 +58,17 @@ public class SubmitQuestionActivity extends Activity {
 	@Override
     public void onPause(){
         PMClient pm = new PMClient();
-        pm.saveQTitle(this, ((EditText)findViewById(R.id.submit_question_title)).getText().toString());
-        pm.saveQBody(this, ((EditText)findViewById(R.id.submit_question_body)).getText().toString());
+        //TODO: pass this to the controller
+        pm.saveQTitle(((EditText)findViewById(R.id.submit_question_title)).getText().toString());
+        pm.saveQBody(((EditText)findViewById(R.id.submit_question_body)).getText().toString());
         super.onPause();
     }
 
     @Override
     public void onResume(){
     	PMClient pm = new PMClient();
-    	((EditText)findViewById(R.id.submit_question_title)).setText(pm.getQTitle(this));
-    	((EditText)findViewById(R.id.submit_question_body)).setText(pm.getQBody(this));
+    	((EditText)findViewById(R.id.submit_question_title)).setText(pm.getQTitle());
+    	((EditText)findViewById(R.id.submit_question_body)).setText(pm.getQBody());
         super.onResume();
     }
     
@@ -97,10 +99,7 @@ public class SubmitQuestionActivity extends Activity {
 	        						ctx, 
 	        						((EditText)findViewById(R.id.submit_question_title)).getText().toString(), 
 	        						((EditText)findViewById(R.id.submit_question_body)).getText().toString(), 
-	        						//MainActivity.mm.getCurrentUser().getId());
-	        						(new User("creide", "juvenaldo")).getId());
-	        						//TODO: remove this bogus user
-	        		
+	        						MainModel.getInstance().getCurrentUser().getId());
 	        		return controller.submit();	        		
 	        	}catch(Exception ex){
 	        		System.out.println(ex.getMessage());
