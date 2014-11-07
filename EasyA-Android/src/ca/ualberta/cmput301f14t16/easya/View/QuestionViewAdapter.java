@@ -143,7 +143,7 @@ public class QuestionViewAdapter {
     	((ImageButton)v.findViewById(R.id.answer_fragment_upvoteBtn)).setTag(new BasicNameValuePair(q.getId(), a.getId()));
     	((ImageButton)v.findViewById(R.id.answer_fragment_upvoteBtn)).setOnClickListener(upVote);
     	
-    	if (q.checkUpVote(MainModel.getInstance().getCurrentUser())){
+    	if (a.checkUpVote(MainModel.getInstance().getCurrentUser())){
     		((ImageButton)v.findViewById(R.id.answer_fragment_upvoteBtn)).setImageResource(R.drawable.ic_action_good_selected);
     	}	
     	container.addView(v);
