@@ -113,6 +113,7 @@ public class SubmitAnswerActivity extends Activity {
         	if (result){
         		PMClient pm = new PMClient();	        			
     			pm.clearA(ctx);
+    			((EditText)findViewById(R.id.submit_answer_body)).setText("");
     			if (controller.submitedOffline){
     				finish();
     				Toast.makeText(getApplicationContext(), "Your answer will be posted online when you connect to the internet!", Toast.LENGTH_LONG).show();

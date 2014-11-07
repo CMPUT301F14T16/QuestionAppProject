@@ -116,12 +116,14 @@ public class SubmitQuestionActivity extends Activity {
         @Override
         protected void onPostExecute(Boolean result) {
         	if (result){
+    			PMClient pm = new PMClient();	        			
+    			pm.clearQ(ctx);
+        		((EditText)findViewById(R.id.submit_question_title)).setText("");
+            	((EditText)findViewById(R.id.submit_question_body)).setText("");
     			if (controller.submitedOffline){
     				finish();
     				Toast.makeText(getApplicationContext(), "Your Question will be posted online when you connect to the internet!", Toast.LENGTH_LONG).show();
     			}else{
-        			PMClient pm = new PMClient();	        			
-        			pm.clearQ(ctx);
         			String aux = controller.getQuestionId();
         			Intent i = new Intent(ctx,QuestionActivity.class);
         			i.putExtra(MainActivity.QUESTION_KEY, aux);

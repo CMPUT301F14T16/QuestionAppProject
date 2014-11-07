@@ -143,7 +143,7 @@ public class QuestionViewAdapter {
     	addReply = ((EditText)v.findViewById(R.id.answer_fragment_submitReplyEdt)); 
     	    	
     	replies = (LinearLayout)v.findViewById(R.id.answer_fragment_replies_list);
-    	replies = inflateReplies(replies, q.getReplies());
+    	replies = inflateReplies(replies, a.getReplies());
     	addReply.setTag(new BasicNameValuePair(q.getId(), a.getId()) );
     	addReply.setOnEditorActionListener(keyAction);
     	addReply.setImeActionLabel("Submit", KeyEvent.KEYCODE_ENTER);
