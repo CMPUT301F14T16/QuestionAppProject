@@ -15,6 +15,7 @@ import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.LauncherActivity;
 import android.app.ProgressDialog;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -24,6 +25,7 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 /**
  * 
@@ -44,9 +46,13 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_master);
 
-		////
-		//TODO: if no user is found, try to create/load one from internet
-		// If still not able, block ui with the create user screen.
+		try{
+			((TextView)findViewById(R.id.drawer_username)).setText(MainModel.getInstance().getCurrentUser().getUsername());
+		}catch(Exception ex){
+			finish();
+			Intent i = new Intent(this, WelcomeActivity.class);
+			startActivity(i);
+		}
 		
         //Creation of the drawer menu
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);

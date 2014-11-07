@@ -70,6 +70,7 @@ public class WelcomeActivity extends Activity {
             			User auxUser = MainModel.getInstance().getUserByEmail(email);
             			MainModel.getInstance().saveMainUser(auxUser);
             			this.userFound = true;
+    	        		MainModel.getInstance().updateUsername(auxUser);
             			return true;
             		}catch(NoContentAvailableException ex){
             			controller = 
@@ -102,7 +103,7 @@ public class WelcomeActivity extends Activity {
         		    .setMessage("Yay! We found your user in our server, we'll now load all your saved preferences and created content!")
         		    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
         		        public void onClick(DialogInterface dialog, int which) {
-        	        		Intent i = new Intent(ctx, MainActivity.class);
+        		        	Intent i = new Intent(ctx, MainActivity.class);
         	    			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         	    			startActivity(i);
         		        }

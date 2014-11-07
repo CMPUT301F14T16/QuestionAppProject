@@ -6,9 +6,9 @@
         </shape>
     </item>
     <!-- This is the main color -->
-    <item android:top="1dp">
+    <item android:bottom="1dp">
         <shape>
-            <solid android:color="#f9f9f9" />
+            <solid android:color="#f8f8f8" />
         </shape>
     </item>
 </layer-list>

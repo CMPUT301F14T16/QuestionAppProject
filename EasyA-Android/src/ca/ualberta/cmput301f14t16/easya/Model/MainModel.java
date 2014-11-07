@@ -1,5 +1,6 @@
 package ca.ualberta.cmput301f14t16.easya.Model;
 
+import java.io.IOException;
 import java.util.ArrayList; // Used in list creation.
 import java.util.List;
 
@@ -9,6 +10,7 @@ import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoInternetException;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.UnableToGetUserEmailException;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.Cache;
+import ca.ualberta.cmput301f14t16.easya.Model.Data.ESClient;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.PMClient;
 import ca.ualberta.cmput301f14t16.easya.View.MainView;
 
@@ -82,6 +84,15 @@ public class MainModel<V extends MainView> {
 	public void saveMainUser(User u){
 		PMClient pm = new PMClient();
 		pm.saveUser(u);
+	}
+	
+	public boolean updateUsername(User u){
+		ESClient es = new ESClient();
+		try{
+			return es.setUsernameById(u.getId(), u.getUsername());
+		}catch(IOException ex){
+			return false;
+		}		
 	}
 
 	public List<QuestionList> getAllQuestions() throws NoContentAvailableException{
