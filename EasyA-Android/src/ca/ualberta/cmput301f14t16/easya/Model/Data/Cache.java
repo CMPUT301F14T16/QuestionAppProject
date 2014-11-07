@@ -209,6 +209,7 @@ public class Cache{
 		if (Queue.getInstance().haveInternetConnection()){
 			ESClient es = new ESClient();
 			try{
+				updateAllUsers();
 				return es.searchQuestionListsByQuery("*", 100);			
 			}catch(IOException ex){
 				return getQuestionListFromQuestionsCache();
