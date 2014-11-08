@@ -102,8 +102,8 @@ public class MainActivity extends Activity {
         // If the nav drawer is open, hide action items related to the content view
         boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
         menu.findItem(R.id.menu_search).setVisible(!drawerOpen);
-        menu.findItem(R.id.menu_sort).setVisible(!drawerOpen);
-        menu.findItem(R.id.menu_sortByDate).setVisible(!drawerOpen);
+        menu.findItem(R.id.menu_sortByOldest).setVisible(!drawerOpen);
+        menu.findItem(R.id.menu_sortByNewest).setVisible(!drawerOpen);
         //menu.findItem(R.id.menu_sortByPicture).setVisible(!drawerOpen);
         return super.onPrepareOptionsMenu(menu);
     }
@@ -129,12 +129,16 @@ public class MainActivity extends Activity {
         	return true;
 
         switch (item.getItemId()) {
-        case R.id.menu_sortByDate: 
+        case R.id.menu_sortByNewest: 
         	displayedQuestions = Sort.dateSort(true, displayedQuestions);
         	SetAdapter(displayedQuestions);
         	return true;
         case R.id.menu_sync:
         	MainModel.getInstance().wipeCache();
+        case R.id.menu_sortByOldest: 
+        	displayedQuestions = Sort.dateSort(false, displayedQuestions);
+        	SetAdapter(displayedQuestions);
+        	return true;
         }
         
         return super.onOptionsItemSelected(item);
