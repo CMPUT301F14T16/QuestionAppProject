@@ -10,6 +10,7 @@ import java.util.List;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.widget.Toast;
 
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoClassTypeSpecifiedException;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoInternetException;
@@ -63,7 +64,6 @@ public class Queue extends Thread{
             	//TODO: deal with IOException or pass it forward
             }catch(Exception ex){
                 //TODO: deal with all other exceptions
-            	//Currently dealing with them by shutting the Queue System off, may not be the best thing to do
                 isActive = false;
                 return;
             }
@@ -96,7 +96,6 @@ public class Queue extends Thread{
         return pm.getPendings();
     }
 
-
     /*
         Method that deals with processing the pending objects list and passing them forward to the class that will
         manipulate the elastic search
@@ -104,6 +103,7 @@ public class Queue extends Thread{
     public void ProcessPendings() throws NoClassTypeSpecifiedException, NoInternetException, IOException{
         ESClient esClient = new ESClient();
         int tries = 0;
+        int qtP = pendings.size();
     	for(Pending p : pendings){
         	Content c = p.getContent();
             try {
@@ -133,6 +133,8 @@ public class Queue extends Thread{
                 RemovePending(p);
             }
         }
+    	String aux = qtP + " items were uploaded to the internet.";
+    	Toast.makeText(ContextProvider.get(), aux, Toast.LENGTH_LONG).show();    	
     }
 
     /*

@@ -122,6 +122,7 @@ public class SubmitAnswerActivity extends Activity {
         			i.putExtra(MainActivity.QUESTION_KEY, aux);
         			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         			startActivity(i);
+        			finish();
     			}
     		}else{    			
     			finish();

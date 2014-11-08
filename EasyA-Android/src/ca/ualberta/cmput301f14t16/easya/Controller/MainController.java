@@ -56,7 +56,7 @@ public abstract class MainController {
 	}
 	
 	protected void submitOffline(){
-		Queue.getInstance().AddPendingToQueue(this.pending);
+		Queue.getInstance().AddPendingToQueue(pending);
 		submitedOffline = true;
 	}
 	

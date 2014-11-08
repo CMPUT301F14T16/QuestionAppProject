@@ -39,8 +39,6 @@ public class SubmitQuestionActivity extends Activity {
 	private ProgressDialog pd;
     private ImageView imageview, addimage;
     private PixelBitmap pixelbitmap;
-    
-    
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -50,8 +48,7 @@ public class SubmitQuestionActivity extends Activity {
         imageview = (ImageView)findViewById(R.id.imageView_pic);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
-        addimage.setOnClickListener(new OnClickListener() {  
-        	  
+        addimage.setOnClickListener(new OnClickListener() {          	  
             @Override  
             public void onClick(View v) {  
    			 Intent intent = new Intent(Intent.ACTION_PICK, null);
@@ -175,6 +172,7 @@ public class SubmitQuestionActivity extends Activity {
         			i.putExtra(MainActivity.QUESTION_KEY, aux);
         			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         			startActivity(i);
+        			finish();
     			}
     		}else{    			
     			finish();
