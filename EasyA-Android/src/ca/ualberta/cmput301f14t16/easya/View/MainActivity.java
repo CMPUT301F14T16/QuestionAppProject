@@ -305,7 +305,7 @@ public class MainActivity extends Activity {
 			} 
         	if (result){
         		try{
-        			((EditText)findViewById(R.id.drawer_username)).setText(MainModel.getInstance().getCurrentUser().getUsername());
+        			((TextView)findViewById(R.id.drawer_username)).setText(MainModel.getInstance().getCurrentUser().getUsername());
         		}catch(NoContentAvailableException ex){
         			//TODO: deal with this exception
         		}
