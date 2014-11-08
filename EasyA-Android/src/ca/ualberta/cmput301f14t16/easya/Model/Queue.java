@@ -1,8 +1,6 @@
 package ca.ualberta.cmput301f14t16.easya.Model;
 
 import java.io.IOException;
-import java.net.InetAddress;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
