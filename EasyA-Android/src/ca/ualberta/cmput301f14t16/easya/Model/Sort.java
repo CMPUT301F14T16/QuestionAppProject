@@ -7,11 +7,13 @@ import java.util.List;
 
 /**
  * 
+ * Sort is a helper class that provides several methods that can sort lists of
+ * {@link QuestionList} object. This class provides methods to sort by number of
+ * upvotes, whether or not the question object has a picture, or by date. All
+ * sorts may be performed from smalles to greates, or greatest to smalles.
+ * 
  * @author Klinton
- *
- * Sorts by the method specified.
- * These methods sort by up vote, picture, and date. 
- *  
+ * 
  */
 
 public class Sort {
