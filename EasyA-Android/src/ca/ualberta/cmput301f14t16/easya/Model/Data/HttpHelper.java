@@ -36,12 +36,14 @@ public class HttpHelper {
 	        // Starts the query
 	        conn.connect();
 	        int response = conn.getResponseCode();
-	        Log.d(DEBUG_TAG, "The response is: " + response);
+	        
+	        // Log.d(DEBUG_TAG, "The response is: " + response);
+	        
 	        is = conn.getInputStream();
 
 	        // Convert the InputStream into a string
 	        String contentAsString = readResponse(is);
-	        Log.d(DEBUG_TAG, contentAsString);
+	        // Log.d(DEBUG_TAG, contentAsString);
 	        return contentAsString;
 	        
 	    // Makes sure that the InputStream is closed after the app is
@@ -78,12 +80,12 @@ public class HttpHelper {
 	     
 	        // Get Response
 	        int response = conn.getResponseCode();
-	        Log.d(DEBUG_TAG, "The response is for post is: " + response);
+	        // Log.d(DEBUG_TAG, "The response is for post is: " + response);
 	        is = conn.getInputStream();
 
 	        // Convert the InputStream into a string
 	        String contentAsString = readResponse(is);
-	        Log.d(DEBUG_TAG, contentAsString);
+	        // Log.d(DEBUG_TAG, contentAsString);
 	        return contentAsString;
 	        
 	    // Makes sure that the InputStream is closed after the app is
@@ -125,12 +127,12 @@ public class HttpHelper {
 	     
 	        // Get Response
 	        int response = conn.getResponseCode();
-	        Log.d(DEBUG_TAG, "The response is for post is: " + response);
+	        // Log.d(DEBUG_TAG, "The response is for post is: " + response);
 	        is = conn.getInputStream();
 
 	        // Convert the InputStream into a string
 	        String contentAsString = readResponse(is);
-	        Log.d(DEBUG_TAG, contentAsString);
+	        // Log.d(DEBUG_TAG, contentAsString);
 	        return contentAsString;
 	        
 	    // Makes sure that the InputStream is closed after the app is

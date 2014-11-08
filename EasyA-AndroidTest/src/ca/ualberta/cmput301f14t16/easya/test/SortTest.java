@@ -25,7 +25,7 @@ public class SortTest extends TestCase {
 		sortOrder = true;
 			Sort.sortUpVote(sortOrder, listTopicTest);
 			for(int i = 0; i < listTopicTest.size(); i++){
-				assertTrue(listTopicTest.get(i).getUpvotes().length() >= listTopicTest.get(i++).getUpvotes().length());
+				assertTrue(Integer.parseInt(listTopicTest.get(i).getUpvotes()) >= Integer.parseInt(listTopicTest.get(i++).getUpvotes()));
 			}
 		//lowest to highest sort.
 		sortOrder = false;

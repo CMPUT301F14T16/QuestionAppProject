@@ -10,14 +10,24 @@
         android:orderInCategory="200"
         android:showAsAction="never"
         android:title="@string/sync"/>
-    <item
-        android:id="@+id/menu_sort"
-        android:orderInCategory="300"
-        android:showAsAction="never"
-        android:title="@string/sort"/>
      <item
-        android:id="@+id/menu_sortByDate"
+        android:id="@+id/menu_sortByNewest"
         android:orderInCategory="300"
         android:showAsAction="never"
-        android:title="@string/sortByDate"/>
+        android:title="@string/sortByNewest"/>
+     <item
+        android:id="@+id/menu_sortByOldest"
+        android:orderInCategory="400"
+        android:showAsAction="never"
+        android:title="@string/sortByOldest"/>
+     <item
+        android:id="@+id/menu_sortByMostVotes"
+        android:orderInCategory="500"
+        android:showAsAction="never"
+        android:title="@string/sortByMostVotes"/>
+     <item
+        android:id="@+id/menu_sortByLeastVotes"
+        android:orderInCategory="600"
+        android:showAsAction="never"
+        android:title="@string/sortByLeastVotes"/>
 </menu>
