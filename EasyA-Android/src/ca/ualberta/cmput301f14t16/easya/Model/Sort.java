@@ -27,16 +27,29 @@ public class Sort {
 	 *           list of topics to be sorted.
 	 *           
 	 */
-	public static void sortUpVote(boolean sortOrder,
+	public static List<QuestionList> sortUpVote(boolean sortOrder,
 			List<QuestionList> questionList) {
-		Collections.sort(questionList, new Comparator<QuestionList>(){
-			public int compare(QuestionList questionList1, QuestionList questionList2){
-				// int cmp = a > b ? +1 : a < b ? -1 : 0;
-				// compares the 2 upVotes.
-				return questionList1.getUpvotes().length() > questionList2.getUpvotes().length() ? 1 :
-					Integer.parseInt(questionList1.getUpvotes()) < Integer.parseInt(questionList2.getUpvotes()) ? -1 : 0;
-			}
-		});
+		if (sortOrder) {
+			Collections.sort(questionList, new Comparator<QuestionList>(){
+				public int compare(QuestionList questionList1, QuestionList questionList2){
+					// int cmp = a > b ? +1 : a < b ? -1 : 0;
+					// compares the 2 upVotes.
+					return questionList1.getUpvotes().length() > questionList2.getUpvotes().length() ? 1 :
+						Integer.parseInt(questionList2.getUpvotes()) < Integer.parseInt(questionList1.getUpvotes()) ? -1 : 0;
+				}
+			});
+		} else {
+			Collections.sort(questionList, new Comparator<QuestionList>(){
+				public int compare(QuestionList questionList1, QuestionList questionList2){
+					// int cmp = a > b ? +1 : a < b ? -1 : 0;
+					// compares the 2 upVotes.
+					return questionList1.getUpvotes().length() > questionList2.getUpvotes().length() ? 1 :
+						Integer.parseInt(questionList1.getUpvotes()) < Integer.parseInt(questionList2.getUpvotes()) ? -1 : 0;
+				}
+			});
+		}
+		
+		return questionList;
 	}
 	
 	/**
@@ -69,7 +82,7 @@ public class Sort {
 	 */
 	public static List<QuestionList> dateSort(boolean sortOrder,
 			List<QuestionList> questionList) {
-		if (sortOrder == true) {
+		if (sortOrder) {
 		Collections.sort(questionList, new Comparator<QuestionList>(){
 			public int compare(QuestionList questionList1, QuestionList questionList2){
 				return questionList2.getDate().compareTo(questionList1.getDate());

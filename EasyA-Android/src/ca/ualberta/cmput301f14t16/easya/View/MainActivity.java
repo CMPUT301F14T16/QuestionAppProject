@@ -104,6 +104,8 @@ public class MainActivity extends Activity {
         menu.findItem(R.id.menu_search).setVisible(!drawerOpen);
         menu.findItem(R.id.menu_sortByOldest).setVisible(!drawerOpen);
         menu.findItem(R.id.menu_sortByNewest).setVisible(!drawerOpen);
+        menu.findItem(R.id.menu_sortByMostVotes).setVisible(!drawerOpen);
+        menu.findItem(R.id.menu_sortByLeastVotes).setVisible(!drawerOpen);
         //menu.findItem(R.id.menu_sortByPicture).setVisible(!drawerOpen);
         return super.onPrepareOptionsMenu(menu);
     }
@@ -137,6 +139,14 @@ public class MainActivity extends Activity {
         	MainModel.getInstance().wipeCache();
         case R.id.menu_sortByOldest: 
         	displayedQuestions = Sort.dateSort(false, displayedQuestions);
+        	SetAdapter(displayedQuestions);
+        	return true;
+        case R.id.menu_sortByMostVotes: 
+        	displayedQuestions = Sort.sortUpVote(true, displayedQuestions);
+        	SetAdapter(displayedQuestions);
+        	return true;
+        case R.id.menu_sortByLeastVotes: 
+        	displayedQuestions = Sort.sortUpVote(false, displayedQuestions);
         	SetAdapter(displayedQuestions);
         	return true;
         }
@@ -204,9 +214,9 @@ public class MainActivity extends Activity {
         protected void onPostExecute(List<QuestionList> result) {
         	if (result == null){
         		//TODO: display the no content available screen
-        	}else{        		
-	        	SetAdapter(result);
-	        	displayedQuestions = result;
+        	}else{  
+        		displayedQuestions = Sort.dateSort(true, result);
+	        	SetAdapter(displayedQuestions);
 	        	
 	        	if (pd!=null) {
 					pd.dismiss();
@@ -295,7 +305,7 @@ public class MainActivity extends Activity {
 			} 
         	if (result){
         		try{
-        			((EditText)findViewById(R.id.drawer_username)).setText(MainModel.getInstance().getCurrentUser().getUsername());
+        			((TextView)findViewById(R.id.drawer_username)).setText(MainModel.getInstance().getCurrentUser().getUsername());
         		}catch(NoContentAvailableException ex){
         			//TODO: deal with this exception
         		}
