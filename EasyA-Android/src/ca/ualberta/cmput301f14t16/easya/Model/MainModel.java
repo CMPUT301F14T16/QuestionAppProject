@@ -98,4 +98,8 @@ public class MainModel<V extends MainView> {
 	public List<QuestionList> getAllQuestions() throws NoContentAvailableException{
 		return Cache.getInstance().getAllQuestions();
 	}
+	
+	public void wipeCache(){
+		Cache.getInstance().wipeCache();
+	}
 }
