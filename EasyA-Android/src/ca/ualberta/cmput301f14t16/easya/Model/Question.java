@@ -3,6 +3,8 @@ package ca.ualberta.cmput301f14t16.easya.Model;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.graphics.Bitmap;
+
 /**
  * The Question class is an extension of the {@link Content} class, that
  * provides functions for associating and retrieving relevant {@link Answer} and
@@ -44,6 +46,12 @@ public class Question extends Topic {
 	 */
 	public Question(String title, String body, String userId) {
 		super(body, userId);
+		this.title = title;
+		this.answers = new ArrayList<Answer>();
+	}
+	
+	public Question(String title, String body, PixelBitmap pixelBitmap, String userId) {
+		super(body, pixelBitmap, userId);
 		this.title = title;
 		this.answers = new ArrayList<Answer>();
 	}

@@ -3,6 +3,8 @@ package ca.ualberta.cmput301f14t16.easya.Model;
 import java.util.ArrayList;
 import java.util.List;
 
+import android.graphics.Bitmap;
+
 /**
  * Topic extends {@link Content}, providing added functionality to suit more
  * specific purposes.
@@ -19,7 +21,7 @@ public abstract class Topic extends Content {
 	/**
 	 * A picture attached to the Topic object.
 	 */
-	private String picture;
+	private PixelBitmap picture;
 	/**
 	 * A list of replies created by users in response to the Topic.
 	 */
@@ -61,7 +63,12 @@ public abstract class Topic extends Content {
 		this.replies = new ArrayList<Reply>();
 		this.upVotes = new ArrayList<String>();
 	}
-
+	public Topic(String body, PixelBitmap pixelBitmap, String userId) {
+		super(body, userId);
+		this.picture = pixelBitmap;
+		this.replies = new ArrayList<Reply>();
+		this.upVotes = new ArrayList<String>();
+	}
 	/**
 	 * Attaches an image to the Topic object.
 	 * 
@@ -100,7 +107,7 @@ public abstract class Topic extends Content {
 	/**
 	 * @return {@link Topic#picture}
 	 */
-	public String getImage() {
+	public PixelBitmap getImage() {
 		return this.picture;
 	}
 
@@ -147,7 +154,8 @@ public abstract class Topic extends Content {
 	 * @return True if {@link Topic#picture} is not null.
 	 */
 	public boolean hasPicture() {
-		return (this.picture != null && !this.picture.isEmpty());
+		return false;
+				//(this.picture != null && !this.picture.isEmpty());
 	}
 
 	/**
