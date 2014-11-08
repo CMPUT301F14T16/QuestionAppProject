@@ -37,7 +37,7 @@ public class Question extends Topic {
 	 * the given author ID.
 	 * 
 	 * @param title
-	 *            The title of the question. Setter for {@link Question#Title}.
+	 *            The title of the question. Setter for {@link Question#title}.
 	 * @param body
 	 *            {@link String} stored by the new instance of Answer.
 	 * @param authorId
@@ -57,7 +57,7 @@ public class Question extends Topic {
 	}
 
 	/**
-	 * @return {@link Question#Title}
+	 * @return {@link Question#title}
 	 */
 	public String getTitle() {
 		return this.title;
@@ -86,7 +86,7 @@ public class Question extends Topic {
 
 	/**
 	 * @return The number of {@link Answer} objects stored by the instance of
-	 *         Question (as a {@link String}.
+	 *         Question (as a {@link String}).
 	 */
 	public String getAnswerCountString() {
 		try {

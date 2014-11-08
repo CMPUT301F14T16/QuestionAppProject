@@ -54,9 +54,9 @@ public abstract class Topic extends Content {
 	 * @param body
 	 *            {@link String} stored by the new instance of Topic. Setter for
 	 *            {@link Content#body}
-	 * @param authorId
+	 * @param userId
 	 *            Unique identifier for author of Topic. Setter for
-	 *            {@link Content#authorID}
+	 *            {@link Content#userId}
 	 */
 	public Topic(String body, String userId) {
 		super(body, userId);

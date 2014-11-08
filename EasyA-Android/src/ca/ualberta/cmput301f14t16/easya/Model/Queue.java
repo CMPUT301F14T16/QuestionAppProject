@@ -1,6 +1,7 @@
 package ca.ualberta.cmput301f14t16.easya.Model;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -133,7 +134,10 @@ public class Queue extends Thread {
 	 */
 	private List<Pending> GetAllPendings() {
 		PMClient pm = new PMClient();
-		return pm.getPendings();
+		List<Pending> lst = pm.getPendings();
+		if (lst == null)
+			lst = new ArrayList<Pending>();
+		return lst;
 	}
 
 	/*

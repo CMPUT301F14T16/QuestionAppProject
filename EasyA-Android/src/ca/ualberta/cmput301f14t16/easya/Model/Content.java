@@ -52,9 +52,9 @@ public abstract class Content {
 	 * @param body
 	 *            {@link String} stored by the new instance of Content. Setter
 	 *            for {@link Content#body}
-	 * @param authorId
+	 * @param userId
 	 *            Unique identifier for author of content. Setter for
-	 *            {@link Content#authorID}
+	 *            {@link Content#userId}
 	 */
 	public Content(String body, String userId) {
 		this.body = body;
@@ -72,7 +72,7 @@ public abstract class Content {
 	}
 	
 	/**
-	 * @return {@link Content#authorId}
+	 * @return {@link Content#userId}
 	 */
 	public String getAuthorId() {
 		return this.userId;
@@ -87,7 +87,7 @@ public abstract class Content {
 	}
 
 	/**
-	 * @return {@link Content#date}
+	 * @return {@link Content#createdOn}
 	 */
 	public Date getDate() {
 		return createdOn;
