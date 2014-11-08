@@ -36,12 +36,21 @@ public class Cache{
 		return cache;
 	}
 	
+	public void wipeCache(){
+		Gson g = new Gson();
+		PMDataParser pm = new PMDataParser();
+		pm.saveJson(PMFilesEnum.CACHEQUESTIONS, g.toJson(new ArrayList()));
+		pm.saveJson(PMFilesEnum.CACHEUSERS, g.toJson(new ArrayList()));		
+	}
+	
 	public List<QuestionList> getUserQuestions(User u){
 		if (Queue.getInstance().haveInternetConnection()){
 			try{
 				ESClient es = new ESClient();
 				List<QuestionList> lst = es.searchQuestionListsByQuery("*", 100);
 				List<QuestionList> lstUser = new ArrayList<QuestionList>();
+				if (lst == null)
+					lst = new ArrayList<QuestionList>();
 				for (QuestionList q : lst){
 					if (q.getUsername().equals(u.getUsername()))
 						lstUser.add(q);
@@ -118,6 +127,8 @@ public class Cache{
 		Gson gson = new Gson();
 		Type listType = new TypeToken<List<User>>(){}.getType();
 		List<User> aux = gson.fromJson(PMDataParser.loadJson(PMFilesEnum.CACHEUSERS), listType);
+		if (aux == null)
+			aux = new ArrayList<User>();
 		if (aux.contains(u)){
 			int i = aux.indexOf(u);
 			aux.remove(i);
@@ -141,6 +152,8 @@ public class Cache{
 		Gson gson = new Gson();
 		Type listType = new TypeToken<List<Question>>(){}.getType();
 		List<Question> aux = gson.fromJson(PMDataParser.loadJson(PMFilesEnum.CACHEQUESTIONS), listType);
+		if (aux == null)
+			aux = new ArrayList<Question>();
 		List<QuestionList> lst = new ArrayList<QuestionList>();
 		for (Question q : aux){
 			if (q.getAuthorId().equals(u.getId()))
@@ -153,6 +166,8 @@ public class Cache{
 		Gson gson = new Gson();
 		Type listType = new TypeToken<List<Question>>(){}.getType();
 		List<Question> aux = gson.fromJson(PMDataParser.loadJson(PMFilesEnum.CACHEQUESTIONS), listType);
+		if (aux == null)
+			aux = new ArrayList<Question>();
 		List<QuestionList> lst = new ArrayList<QuestionList>();
 		for (Question q : aux){
 			lst.add(new QuestionList(q.getId(), q.getTitle(), q.getAuthorName(), q.getAnswerCountString(), q.getUpVoteCountString(), q.hasPicture(), q.getDate()));
@@ -185,6 +200,8 @@ public class Cache{
 		Gson gson = new Gson();
 		Type listType = new TypeToken<List<User>>(){}.getType();
 		List<User> lst = gson.fromJson(PMDataParser.loadJson(PMFilesEnum.CACHEUSERS), listType);
+		if (lst == null)
+			lst = new ArrayList<User>();
 		for (User u : lst){
 			if (u.getId().equals(id))
 			return u;
@@ -232,7 +249,7 @@ public class Cache{
 				SaveSingleUser(u);
 				return u;
 			}catch(IOException ex){
-				throw new NoInternetException();
+				throw new NoContentAvailableException();
 			}
 		 }else{
 			 throw new NoInternetException();
