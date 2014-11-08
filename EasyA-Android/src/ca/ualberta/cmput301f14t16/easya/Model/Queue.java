@@ -18,7 +18,14 @@ import ca.ualberta.cmput301f14t16.easya.Model.Data.ESClient;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.PMClient;
 
 /**
- * Created by Cauani on 2014-10-25.
+ * Creates a new {@link Thread} that automatically processes new {@link Content}
+ * created by the user. The Thread will store the newly received {@link Content}
+ * in a pending queue, and regularly check for a new connection. Once one is
+ * found, all items in the pending queue will be pushed, and the queue will be
+ * cleared. In practice, this will more or less immediately push any new
+ * {@link Content} when the device has an active Internet connection, and store
+ * any new {@link Content} until one is found if not.
+ * 
  * @author Cauani
  */
 public class Queue extends Thread{
