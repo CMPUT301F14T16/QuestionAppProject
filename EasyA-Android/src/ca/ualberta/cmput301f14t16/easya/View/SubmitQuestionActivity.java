@@ -6,6 +6,7 @@ import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Controller.NewQuestionController;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
+import ca.ualberta.cmput301f14t16.easya.Model.PixelBitmap;
 import ca.ualberta.cmput301f14t16.easya.Model.QuestionList;
 import ca.ualberta.cmput301f14t16.easya.Model.Queue;
 import ca.ualberta.cmput301f14t16.easya.Model.User;
@@ -14,11 +15,19 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.view.View.OnClickListener;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 /**
@@ -28,13 +37,28 @@ import android.widget.Toast;
  */
 public class SubmitQuestionActivity extends Activity {
 	private ProgressDialog pd;
+    private ImageView imageview, addimage;
+    private PixelBitmap pixelbitmap;
+    
+    
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.submit_question);
+		addimage = (ImageView)findViewById(R.id.submit_question_picture_add);
+        imageview = (ImageView)findViewById(R.id.imageView_pic);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
+        addimage.setOnClickListener(new OnClickListener() {  
+        	  
+            @Override  
+            public void onClick(View v) {  
+   			 Intent intent = new Intent(Intent.ACTION_PICK, null);
+		     intent.setType("image/*");
+		     startActivityForResult(intent,1);
+            }  
+        });  
 	}	
 	
 	@Override
@@ -72,6 +96,27 @@ public class SubmitQuestionActivity extends Activity {
         super.onResume();
     }
     
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	     
+		if (requestCode == 1 && resultCode == RESULT_OK) {	          
+			Uri selectedImageUri = data.getData();
+			String imagepath = getPath(selectedImageUri);
+			Bitmap bitmap=BitmapFactory.decodeFile(imagepath);
+			pixelbitmap=new PixelBitmap(bitmap.getHeight(),bitmap.getHeight());
+			pixelbitmap.getColors(bitmap);
+			Bitmap bitmap2=pixelbitmap.createBitmap();
+			imageview.setImageBitmap(bitmap2);
+	      
+	    }
+	}
+	public String getPath(Uri uri) {
+		String[] projection = { MediaStore.Images.Media.DATA };
+		Cursor cursor = managedQuery(uri, projection, null, null, null);
+		int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+		cursor.moveToFirst();
+		return cursor.getString(column_index);
+	}
+	
     private class submitQuestionTask extends AsyncTask<Void, Void, Boolean> {
     	private NewQuestionController controller;
     	private Context ctx;
@@ -99,9 +144,11 @@ public class SubmitQuestionActivity extends Activity {
 	        						ctx, 
 	        						((EditText)findViewById(R.id.submit_question_title)).getText().toString(), 
 	        						((EditText)findViewById(R.id.submit_question_body)).getText().toString(), 
+	        						pixelbitmap,
 	        						MainModel.getInstance().getCurrentUser().getId());
-	        		return controller.submit();	        		
+	        		return controller.submit();
 	        	}catch(Exception ex){
+
 	        		System.out.println(ex.getMessage());
 	        		return false;
 	        		//TODO: Deal with things as: user didn't fill out everything

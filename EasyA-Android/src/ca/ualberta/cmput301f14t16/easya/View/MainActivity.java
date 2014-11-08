@@ -206,7 +206,7 @@ public class MainActivity extends Activity {
     
     public void AddNewQuestion(View v){
     	Intent i = new Intent(this, SubmitQuestionActivity.class);
-    	i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+    	//i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         this.startActivity(i);
     }
 
