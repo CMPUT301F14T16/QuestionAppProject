@@ -1,5 +1,6 @@
 package ca.ualberta.cmput301f14t16.easya.View;
 
+import java.io.File;
 import java.util.List;
 
 import ca.ualberta.cmput301f14t16.easya.R;
@@ -99,11 +100,14 @@ public class SubmitQuestionActivity extends Activity {
 			Uri selectedImageUri = data.getData();
 			String imagepath = getPath(selectedImageUri);
 			Bitmap bitmap=BitmapFactory.decodeFile(imagepath);
+			File file = new File(imagepath);
+			long length = file.length();
+			int lengthint=(int)length;
+			int imageSizeInKb=lengthint/1024;
 			pixelbitmap=new PixelBitmap(bitmap.getHeight(),bitmap.getHeight());
 			pixelbitmap.getColors(bitmap);
-			Bitmap bitmap2=pixelbitmap.createBitmap();
-			imageview.setImageBitmap(bitmap2);
-	      
+			//Bitmap bitmap2=pixelbitmap.createBitmap();
+			imageview.setImageBitmap(bitmap);
 	    }
 	}
 	public String getPath(Uri uri) {
