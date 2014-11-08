@@ -75,11 +75,11 @@ public class MainViewAdapter extends ArrayAdapter<QuestionList> {
         qTitle.setTag(qItem);
         
         //Formatting display date
-        SimpleDateFormat sdf = new SimpleDateFormat("MM dd yyyy hh:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd yyyy hh:mm");
         String dateAsString = sdf.format(qItem.getDate());
         		
         qTitle.setText(qItem.getTitle());
-        qAuthor.setText(qItem.getUsername() + " " + dateAsString);
+        qAuthor.setText(dateAsString + " - " + qItem.getUsername());
         qAnswers.setText(qItem.getAnswers());
         qUpVotes.setText(qItem.getUpvotes());
 
