@@ -17,87 +17,111 @@ import java.util.List;
  */
 
 public class Sort {
-	
+
 	/**
-	 * Creates a comparable to sort by up votes. 
+	 * Sorts the passed list by total number of upvotes received.
 	 * 
-	 * @param sortOrder 
-	 * 			checks if the sort is from greatest to smallest or vice versa.
+	 * @param sortOrder
+	 *            If True, the list will be sorted by greatest to smallest, if
+	 *            False, the list will be sorted by smallest to greatest.
 	 * @param questionList
-	 *           list of topics to be sorted.
-	 *           
+	 *            The list of {@link Topic} objects to be sorted.
+	 * @return The sorted list.
 	 */
 	public static List<QuestionList> sortUpVote(boolean sortOrder,
 			List<QuestionList> questionList) {
 		if (sortOrder) {
-			Collections.sort(questionList, new Comparator<QuestionList>(){
-				public int compare(QuestionList questionList1, QuestionList questionList2){
+			Collections.sort(questionList, new Comparator<QuestionList>() {
+				public int compare(QuestionList questionList1,
+						QuestionList questionList2) {
 					// int cmp = a > b ? +1 : a < b ? -1 : 0;
 					// compares the 2 upVotes.
-					return questionList1.getUpvotes().length() > questionList2.getUpvotes().length() ? 1 :
-						Integer.parseInt(questionList2.getUpvotes()) < Integer.parseInt(questionList1.getUpvotes()) ? -1 : 0;
+					return questionList1.getUpvotes().length() > questionList2
+							.getUpvotes().length() ? 1 : Integer
+							.parseInt(questionList2.getUpvotes()) < Integer
+							.parseInt(questionList1.getUpvotes()) ? -1 : 0;
 				}
 			});
 		} else {
-			Collections.sort(questionList, new Comparator<QuestionList>(){
-				public int compare(QuestionList questionList1, QuestionList questionList2){
+			Collections.sort(questionList, new Comparator<QuestionList>() {
+				public int compare(QuestionList questionList1,
+						QuestionList questionList2) {
 					// int cmp = a > b ? +1 : a < b ? -1 : 0;
 					// compares the 2 upVotes.
-					return questionList1.getUpvotes().length() > questionList2.getUpvotes().length() ? 1 :
-						Integer.parseInt(questionList1.getUpvotes()) < Integer.parseInt(questionList2.getUpvotes()) ? -1 : 0;
+					return questionList1.getUpvotes().length() > questionList2
+							.getUpvotes().length() ? 1 : Integer
+							.parseInt(questionList1.getUpvotes()) < Integer
+							.parseInt(questionList2.getUpvotes()) ? -1 : 0;
 				}
 			});
 		}
-		
+
 		return questionList;
 	}
-	
+
 	/**
-	 * Sorts by if it has or doesn't have a picture. 
+	 * Sorts by if it has or doesn't have a picture.
 	 * 
-	 * @param sortOrder 
-	 * 			checks if the sort is from greatest to smallest or vice versa.
+	 * @param sortOrder
+	 *            checks if the sort is from greatest to smallest or vice versa.
 	 * @param questionList
-	 *           list of topics to be sorted.
-	 *           
+	 *            list of topics to be sorted.
+	 * 
+	 */
+	/**
+	 * Sorts the passed list by the presence of a picture.
+	 * 
+	 * @param sortOrder
+	 *            If True, the list will be sorted with the {@link Topic}
+	 *            objects containing pictures first. If False, the list will be
+	 *            sorted with the {@link Topic} objects not containing pictures
+	 *            first.
+	 * @param questionList
+	 *            The list of {@link Topic} objects to be sorted.
+	 * @return The sorted list.
 	 */
 	public static void pictureSort(boolean sortOrder,
 			List<QuestionList> questionList) {
-		Collections.sort(questionList, new Comparator<QuestionList>(){
-			public int compare(QuestionList questionList1, QuestionList questionList2){
-				return questionList1.getImage() && !questionList2.getImage()? 1 :
-						!questionList1.getImage() && questionList2.getImage()? -1 : 0;
+		Collections.sort(questionList, new Comparator<QuestionList>() {
+			public int compare(QuestionList questionList1,
+					QuestionList questionList2) {
+				return questionList1.getImage() && !questionList2.getImage() ? 1
+						: !questionList1.getImage() && questionList2.getImage() ? -1
+								: 0;
 			}
 		});
 	}
-	
+
 	/**
-	 * Sorts topics by date. 
+	 * Sorts the passed list by date.
 	 * 
-	 * @param sortOrder 
-	 * 			checks if the sort is from greatest to smallest or vice versa.
+	 * @param sortOrder
+	 *            If True, the list will be sorted by most newest to oldest, if
+	 *            False, the list will be sorted by oldest to newest.
 	 * @param questionList
-	 *           list of topics to be sorted.
-	 *           
+	 *            The list of {@link Topic} objects to be sorted.
+	 * @return The sorted list.
 	 */
 	public static List<QuestionList> dateSort(boolean sortOrder,
 			List<QuestionList> questionList) {
 		if (sortOrder) {
-		Collections.sort(questionList, new Comparator<QuestionList>(){
-			public int compare(QuestionList questionList1, QuestionList questionList2){
-				return questionList2.getDate().compareTo(questionList1.getDate());
-			}
-		});
-		}
-		else {
-			Collections.sort(questionList, new Comparator<QuestionList>(){
-				public int compare(QuestionList questionList1, QuestionList questionList2){
-					return questionList1.getDate().compareTo(questionList2.getDate());
+			Collections.sort(questionList, new Comparator<QuestionList>() {
+				public int compare(QuestionList questionList1,
+						QuestionList questionList2) {
+					return questionList2.getDate().compareTo(
+							questionList1.getDate());
+				}
+			});
+		} else {
+			Collections.sort(questionList, new Comparator<QuestionList>() {
+				public int compare(QuestionList questionList1,
+						QuestionList questionList2) {
+					return questionList1.getDate().compareTo(
+							questionList2.getDate());
 				}
 			});
 		}
 		return questionList;
 	}
-	
-}
 
+}
