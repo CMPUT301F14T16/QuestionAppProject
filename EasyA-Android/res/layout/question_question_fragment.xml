@@ -73,8 +73,6 @@
             android:id="@+id/question_fragment_submitReplyEdt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
-            android:imeOptions="actionSend"
         	android:hint="@string/create_reply_hint" />
     </LinearLayout>
 </RelativeLayout>
