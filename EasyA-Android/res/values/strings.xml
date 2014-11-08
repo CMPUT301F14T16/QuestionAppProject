@@ -6,14 +6,14 @@
     <string name="create_question_hint">Ask a question!</string>
     <string name="create_answer_hint">Answer this!</string>
     <string name="create_reply_hint">Reply this!</string>
-    <string name="sort">Sort</string>
     <string name="title_hint">Title</string>
     <string name="hint_submit_question">Enter your question</string>
     <string name="hint_submit_answer">Enter your answer</string>
     <string name="sync">Sync</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
-    <string name="sortByDate">Sort By Date</string>
+    <string name="sortByNewest">Sort By Newest</string>
+    <string name="sortByOldest">Sort By Oldest</string>
     <string name="welcome_username">Username</string>
     <string name="welcome_email">Email</string>
     <string name="welcome_sigin">Sign up</string>
