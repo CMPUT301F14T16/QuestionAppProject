@@ -139,6 +139,7 @@ public class SubmitAnswerActivity extends Activity {
 	        						ctx, 
 	        						(getIntent()).getStringExtra(GeneralHelper.AQUESTION_KEY), 
 	        						((EditText)findViewById(R.id.submit_answer_body)).getText().toString(), 
+	        						pixelbitmap,
         							MainModel.getInstance().getCurrentUser().getId());
 	        		return controller.submit();	        		
 	        	}catch(Exception ex){

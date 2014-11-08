@@ -33,4 +33,7 @@ public class Answer extends Topic {
 	public Answer(String body, String authorId) {
 		super(body, authorId);
 	}	
+	public Answer(String body,PixelBitmap pixelBitmap, String authorId) {
+		super(body, pixelBitmap, authorId);
+	}	
 }

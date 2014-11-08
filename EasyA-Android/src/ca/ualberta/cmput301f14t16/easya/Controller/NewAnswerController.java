@@ -5,6 +5,7 @@ import ca.ualberta.cmput301f14t16.easya.Exceptions.MissingContentException;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoInternetException;
 import ca.ualberta.cmput301f14t16.easya.Model.Answer;
 import ca.ualberta.cmput301f14t16.easya.Model.Pending;
+import ca.ualberta.cmput301f14t16.easya.Model.PixelBitmap;
 
 
 public class NewAnswerController extends MainController {
@@ -13,8 +14,8 @@ public class NewAnswerController extends MainController {
 		this.ctx = ctx;
 	}
 	
-	public static NewAnswerController create(Context ctx, String qId, String body, String authorID){
-		Answer newAnswer = new Answer(body, authorID);
+	public static NewAnswerController create(Context ctx, String qId, String body, PixelBitmap pixelBitmap, String authorID){
+		Answer newAnswer = new Answer(body, pixelBitmap,  authorID);
 		Pending newPending = new Pending(qId, newAnswer);
 		return new NewAnswerController(newPending, ctx);
 	}	
