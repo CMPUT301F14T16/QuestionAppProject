@@ -35,7 +35,6 @@
             android:layout_gravity="center"
             android:contentDescription="Add picture"/>
     </LinearLayout>
-
     <ImageView
         android:id="@+id/imageView_pic"
         android:layout_width="240dp"

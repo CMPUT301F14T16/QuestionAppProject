@@ -1,6 +1,7 @@
 package ca.ualberta.cmput301f14t16.easya.Model.Data;
 
 import java.lang.reflect.Type;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -75,6 +76,8 @@ public class PMClient {
 	public void savePending(Pending p) {
 		Gson gson = new Gson();
 		List<Pending> aux = getPendings();
+		if (aux == null)
+			aux = new ArrayList<Pending>();
 		aux.add(p);
 		PMDataParser.saveJson(PMFilesEnum.QUEUE, gson.toJson(aux));	
 	}
@@ -82,6 +85,8 @@ public class PMClient {
 	public void deletePending(Pending p) {
 		Gson gson = new Gson();
 		List<Pending> aux = getPendings();
+		if(aux == null)
+			aux = new ArrayList<Pending>();
 		if (aux.remove(p))
 			PMDataParser.saveJson(PMFilesEnum.QUEUE, gson.toJson(aux));	
 	}

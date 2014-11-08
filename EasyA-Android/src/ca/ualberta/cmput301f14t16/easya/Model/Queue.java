@@ -9,6 +9,7 @@ import java.util.List;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.widget.Toast;
 
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoClassTypeSpecifiedException;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoInternetException;
@@ -149,41 +150,42 @@ public class Queue extends Thread {
 	 * @throws NoInternetException
 	 * @throws IOException
 	 */
-	public void ProcessPendings() throws NoClassTypeSpecifiedException,
-			NoInternetException, IOException {
-		ESClient esClient = new ESClient();
-		int tries = 0;
-		for (Pending p : pendings) {
-			Content c = p.getContent();
-			try {
-				if (c instanceof Question) {
-					esClient.submitQuestion((Question) c);
-				} else if (c instanceof Answer) {
-					esClient.submitAnswer((Answer) c, p.getAnswerId());
-				} else if (c instanceof Reply) {
-					if (p.getAnswerId() != null && !p.getAnswerId().isEmpty()) {
-						esClient.submitAnswerReply((Reply) c,
-								p.getQuestionId(), p.getAnswerId());
-					} else {
-						esClient.submitQuestionReply((Reply) c,
-								p.getQuestionId());
-					}
-				} else {
-					throw new NoClassTypeSpecifiedException();
-				}
-			} catch (NoClassTypeSpecifiedException ex) {
-				throw ex;
-			} catch (IOException ex) {
-				if (!haveInternetConnection())
-					return;
-				if (tries > 3)
-					return;
-				tries++;
-			} finally {
-				RemovePending(p);
-			}
-		}
-	}
+	public void ProcessPendings() throws NoClassTypeSpecifiedException, NoInternetException, IOException{
+        ESClient esClient = new ESClient();
+        int tries = 0;
+        int qtP = pendings.size();
+    	for(Pending p : pendings){
+        	Content c = p.getContent();
+            try {
+                if(c instanceof Question){
+                	esClient.submitQuestion((Question)c);
+                }else if (c instanceof Answer){
+                	esClient.submitAnswer((Answer)c, p.getAnswerId());
+                }else if (c instanceof Reply){
+                	if (p.getAnswerId() != null && !p.getAnswerId().isEmpty()){
+                		esClient.submitAnswerReply((Reply)c, p.getQuestionId(), p.getAnswerId());
+                	}else{
+                		esClient.submitQuestionReply((Reply)c, p.getQuestionId());
+                	}
+                }else{
+                	throw new NoClassTypeSpecifiedException();
+                }
+            }
+            catch(NoClassTypeSpecifiedException ex){
+            	throw ex;
+            }catch(IOException ex){
+            	if (!haveInternetConnection())
+            		return;
+        		if (tries >3)
+        			return;
+        		tries++;
+            }finally {            
+                RemovePending(p);
+            }
+        }
+    	String aux = qtP + " items were uploaded to the internet.";
+    	Toast.makeText(ContextProvider.get(), aux, Toast.LENGTH_LONG).show();    	
+    }
 
 	/**
 	 * @return True if an active Internet connection is found.
