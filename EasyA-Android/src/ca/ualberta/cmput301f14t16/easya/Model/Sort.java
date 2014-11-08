@@ -71,7 +71,7 @@ public class Sort {
 			List<QuestionList> questionList) {
 		Collections.sort(questionList, new Comparator<QuestionList>(){
 			public int compare(QuestionList questionList1, QuestionList questionList2){
-				return questionList1.getDate().compareTo(questionList2.getDate());
+				return questionList2.getDate().compareTo(questionList1.getDate());
 			}
 		});
 		return questionList;

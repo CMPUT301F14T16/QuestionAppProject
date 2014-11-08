@@ -3,11 +3,16 @@ package ca.ualberta.cmput301f14t16.easya.View;
 import java.util.List;
 
 import ca.ualberta.cmput301f14t16.easya.R;
+import ca.ualberta.cmput301f14t16.easya.Controller.ChangeUsernameController;
+import ca.ualberta.cmput301f14t16.easya.Controller.NewUserController;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
+import ca.ualberta.cmput301f14t16.easya.Exceptions.NoInternetException;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.QuestionList;
 import ca.ualberta.cmput301f14t16.easya.Model.Queue;
+import ca.ualberta.cmput301f14t16.easya.Model.User;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import ca.ualberta.cmput301f14t16.easya.Model.Sort;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.PMClient;
@@ -15,14 +20,18 @@ import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.app.LauncherActivity;
 import android.app.ProgressDialog;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -209,5 +218,98 @@ public class MainActivity extends Activity {
     	i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         this.startActivity(i);
     }
+    
+    public void changeUsername(View v){
+    	changeUsernameDialog(v.getContext());
+    }
+    
+    public void changeUsernameDialog(Context ctx) {
+        AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
+        LayoutInflater inflater = this.getLayoutInflater();
+        View v = inflater.inflate(R.layout.change_username_fragment, null);
+        try{
+        	((EditText)v.findViewById(R.id.change_username_username)).setText(MainModel.getInstance().getCurrentUser().getUsername());
+        }catch(NoContentAvailableException ex){
+        	//TODO: deal with this exception
+        }
+        builder.setView(v)
+               .setPositiveButton("Change", new DialogInterface.OnClickListener() {
+                   @Override
+                   public void onClick(DialogInterface dialog, int id) {
+                	   (new changeUsernameTask(((Dialog)dialog).getContext(), dialog)).execute();
+                   }
+               })
+               .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                   public void onClick(DialogInterface dialog, int id) {
+                       dialog.cancel();
+                   }
+               });      
+        builder.create().show();
+    }
+    
+    private class changeUsernameTask extends AsyncTask<Void, Void, Boolean> {
+    	private ChangeUsernameController controller;
+    	private Context ctx;
+    	private DialogInterface d;
+    	
+    	public changeUsernameTask(Context ctx, DialogInterface d){
+    		this.ctx = ctx;
+    		this.d = d;
+    	}
+    	
+    	@Override
+		protected void onPreExecute() {
+    		pd = new ProgressDialog(ctx);
+			pd.setTitle("Changing your username...");
+			pd.setMessage("Please wait.");
+			pd.setCancelable(false);
+			pd.setIndeterminate(true);
+			pd.show();
+		}
+    	
+    	@Override
+    	protected Boolean doInBackground(Void...voids) {
+            try{
+            	try{
+            		String username = ((EditText)((Dialog)d).findViewById(R.id.change_username_username)).getText().toString();
+            		controller = 
+	        				ChangeUsernameController.create(
+	        						username,
+	        						MainModel.getInstance().getCurrentUser());    	        		
+	        		return controller.submit();	
+	        	}catch(Exception ex){
+	        		System.out.println(ex.getMessage());
+	        		return false;
+	        	}
+            }catch(Exception ex){
+            	return false;
+            }
+        }
 
+        @Override
+        protected void onPostExecute(Boolean result) {
+        	if (pd!=null) {
+				pd.dismiss();
+			} 
+        	if (result){
+        		try{
+        			((EditText)MainActivity.this.findViewById(R.id.drawer_alter_username)).setText(MainModel.getInstance().getCurrentUser().getUsername());
+        		}catch(NoContentAvailableException ex){
+        			//TODO: deal with this exception
+        		}
+        		d.cancel();
+    		}else{    			
+    			new AlertDialog.Builder(ctx)
+    		    .setTitle("No connection found")
+    		    .setMessage("We were unable to connect to our servers to change your username. Try checking your internet connection and change it again.")
+    		    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+    		        public void onClick(DialogInterface dialog, int which) {
+    		        	
+    		        }
+    		     })
+    		    .setIcon(android.R.drawable.ic_dialog_alert)
+    		    .show();  
+			}      	
+        }
+    }
 }

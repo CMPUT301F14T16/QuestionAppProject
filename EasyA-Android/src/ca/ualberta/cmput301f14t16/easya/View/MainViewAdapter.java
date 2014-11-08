@@ -1,5 +1,6 @@
 package ca.ualberta.cmput301f14t16.easya.View;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 import ca.ualberta.cmput301f14t16.easya.R;
@@ -7,7 +8,6 @@ import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Model.QuestionList;
 import ca.ualberta.cmput301f14t16.easya.R.id;
 import ca.ualberta.cmput301f14t16.easya.R.layout;
-
 import android.content.Context;
 import android.content.Intent;
 import android.view.LayoutInflater;
@@ -73,9 +73,13 @@ public class MainViewAdapter extends ArrayAdapter<QuestionList> {
         }
     	//The title will hold the Question object for when we need it
         qTitle.setTag(qItem);
-
+        
+        //Formatting display date
+        SimpleDateFormat sdf = new SimpleDateFormat("MM dd yyyy hh:mm");
+        String dateAsString = sdf.format(qItem.getDate());
+        		
         qTitle.setText(qItem.getTitle());
-        qAuthor.setText(qItem.getUsername()); // TODO You can get user id, not username from question.
+        qAuthor.setText(qItem.getUsername() + " " + dateAsString);
         qAnswers.setText(qItem.getAnswers());
         qUpVotes.setText(qItem.getUpvotes());
 
