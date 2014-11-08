@@ -206,9 +206,9 @@ public class MainActivity extends Activity {
         protected void onPostExecute(List<QuestionList> result) {
         	if (result == null){
         		//TODO: display the no content available screen
-        	}else{        		
-	        	SetAdapter(result);
-	        	displayedQuestions = result;
+        	}else{  
+        		displayedQuestions = Sort.dateSort(true, result);
+	        	SetAdapter(displayedQuestions);
 	        	
 	        	if (pd!=null) {
 					pd.dismiss();
