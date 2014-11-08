@@ -1,5 +1,6 @@
 package ca.ualberta.cmput301f14t16.easya.View;
 
+import java.io.File;
 import java.util.List;
 
 import ca.ualberta.cmput301f14t16.easya.R;
@@ -39,8 +40,6 @@ public class SubmitQuestionActivity extends Activity {
 	private ProgressDialog pd;
     private ImageView imageview, addimage;
     private PixelBitmap pixelbitmap;
-    
-    
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -50,8 +49,7 @@ public class SubmitQuestionActivity extends Activity {
         imageview = (ImageView)findViewById(R.id.imageView_pic);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
-        addimage.setOnClickListener(new OnClickListener() {  
-        	  
+        addimage.setOnClickListener(new OnClickListener() {          	  
             @Override  
             public void onClick(View v) {  
    			 Intent intent = new Intent(Intent.ACTION_PICK, null);
@@ -102,11 +100,14 @@ public class SubmitQuestionActivity extends Activity {
 			Uri selectedImageUri = data.getData();
 			String imagepath = getPath(selectedImageUri);
 			Bitmap bitmap=BitmapFactory.decodeFile(imagepath);
+			File file = new File(imagepath);
+			long length = file.length();
+			int lengthint=(int)length;
+			int imageSizeInKb=lengthint/1024;
 			pixelbitmap=new PixelBitmap(bitmap.getHeight(),bitmap.getHeight());
 			pixelbitmap.getColors(bitmap);
-			Bitmap bitmap2=pixelbitmap.createBitmap();
-			imageview.setImageBitmap(bitmap2);
-	      
+			//Bitmap bitmap2=pixelbitmap.createBitmap();
+			imageview.setImageBitmap(bitmap);
 	    }
 	}
 	public String getPath(Uri uri) {
@@ -175,6 +176,7 @@ public class SubmitQuestionActivity extends Activity {
         			i.putExtra(MainActivity.QUESTION_KEY, aux);
         			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         			startActivity(i);
+        			finish();
     			}
     		}else{    			
     			finish();
