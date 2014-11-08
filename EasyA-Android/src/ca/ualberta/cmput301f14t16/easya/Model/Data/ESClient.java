@@ -29,8 +29,8 @@ public class ESClient {
 	
 	//ElasticSeach Urls
 	private static final String HOST_URL = "http://cmput301.softwareprocess.es:8080/testing/";
-	private static final String QUESTION_PATH = "t16newquestion/";
-	private static final String USER_PATH = "t16newuser/";
+	private static final String QUESTION_PATH = "t16newquestion2/";
+	private static final String USER_PATH = "t16newuser2/";
 	
 	// JSON Utilities
 	private Gson gson = new Gson();
