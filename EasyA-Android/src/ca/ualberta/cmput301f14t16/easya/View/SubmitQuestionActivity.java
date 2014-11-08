@@ -46,7 +46,7 @@ public class SubmitQuestionActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.submit_question);
 		addimage = (ImageView)findViewById(R.id.submit_question_picture_add);
-        imageview = (ImageView)findViewById(R.id.imageView_pic);
+        imageview = (ImageView)findViewById(R.id.submit_question_imageView_pic);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
         addimage.setOnClickListener(new OnClickListener() {          	  
@@ -103,11 +103,11 @@ public class SubmitQuestionActivity extends Activity {
 			File file = new File(imagepath);
 			long length = file.length();
 			int lengthint=(int)length;
-			int imageSizeInKb=lengthint/1024;
 			pixelbitmap=new PixelBitmap(bitmap.getHeight(),bitmap.getHeight());
 			pixelbitmap.getColors(bitmap);
 			//Bitmap bitmap2=pixelbitmap.createBitmap();
 			imageview.setImageBitmap(bitmap);
+	      
 	    }
 	}
 	public String getPath(Uri uri) {

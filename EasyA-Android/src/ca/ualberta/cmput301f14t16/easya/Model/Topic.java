@@ -154,8 +154,7 @@ public abstract class Topic extends Content {
 	 * @return True if {@link Topic#picture} is not null.
 	 */
 	public boolean hasPicture() {
-		return false;
-				//(this.picture != null && !this.picture.isEmpty());
+		return (this.picture != null);
 	}
 
 	/**

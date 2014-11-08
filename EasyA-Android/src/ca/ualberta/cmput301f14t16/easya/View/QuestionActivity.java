@@ -114,7 +114,7 @@ public class QuestionActivity extends Activity {
 	public void AddNewAnswer(View v){
 		if (question != null){
 			Intent i = new Intent(v.getContext(), SubmitAnswerActivity.class);
-	    	i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
+	    	//i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 	    	i.putExtra(GeneralHelper.AQUESTION_KEY, question.getId());
 	        this.startActivity(i);
 		}

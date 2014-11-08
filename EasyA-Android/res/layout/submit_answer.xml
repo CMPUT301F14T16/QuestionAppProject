@@ -28,5 +28,12 @@
             android:layout_gravity="center"
             android:contentDescription="Add picture"/>
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/submit_answer_imageView_pic"
+        android:layout_width="240dp"
+        android:layout_height="240dp"
+        android:layout_below="@+id/submit_answer_body"
+        android:layout_centerHorizontal="true" />
     	
 </RelativeLayout>
