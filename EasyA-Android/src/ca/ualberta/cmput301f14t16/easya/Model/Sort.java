@@ -69,11 +69,20 @@ public class Sort {
 	 */
 	public static List<QuestionList> dateSort(boolean sortOrder,
 			List<QuestionList> questionList) {
+		if (sortOrder == true) {
 		Collections.sort(questionList, new Comparator<QuestionList>(){
 			public int compare(QuestionList questionList1, QuestionList questionList2){
 				return questionList2.getDate().compareTo(questionList1.getDate());
 			}
 		});
+		}
+		else {
+			Collections.sort(questionList, new Comparator<QuestionList>(){
+				public int compare(QuestionList questionList1, QuestionList questionList2){
+					return questionList1.getDate().compareTo(questionList2.getDate());
+				}
+			});
+		}
 		return questionList;
 	}
 	
