@@ -15,11 +15,11 @@ import android.content.SharedPreferences;
  *
  */
 public class PMDataParser {
-	public final static void saveJson(Context c, PMFilesEnum filename, String json){
+	public final static void saveJson(PMFilesEnum filename, String json){
         FileOutputStream outputStream;
         try
         {
-            outputStream = c.openFileOutput(filename.getArchiveName(), Context.MODE_PRIVATE);
+            outputStream = ContextProvider.get().openFileOutput(filename.getArchiveName(), Context.MODE_PRIVATE);
             outputStream.write(json.getBytes());
             outputStream.flush();
             outputStream.close();
@@ -30,23 +30,23 @@ public class PMDataParser {
         }
     }
 
-    public final static String loadJson(Context c, PMFilesEnum filename){
+    public final static String loadJson(PMFilesEnum filename){
         StringBuffer sBuffer = new StringBuffer("");
         try
         {
             FileInputStream inputStream = null;
             try
             {
-                inputStream = c.openFileInput(filename.getArchiveName());
+                inputStream = ContextProvider.get().openFileInput(filename.getArchiveName());
             }
             catch (IOException e)
             {
                 FileOutputStream outputStream;
-                outputStream = c.openFileOutput(filename.getArchiveName(), Context.MODE_PRIVATE);
+                outputStream = ContextProvider.get().openFileOutput(filename.getArchiveName(), Context.MODE_PRIVATE);
                 outputStream.flush();
                 outputStream.close();
 
-                inputStream = c.openFileInput(filename.getArchiveName());
+                inputStream = ContextProvider.get().openFileInput(filename.getArchiveName());
             }
             InputStreamReader inputReader = new InputStreamReader(inputStream);
             BufferedReader bufferReader = new BufferedReader(inputReader);
@@ -66,16 +66,16 @@ public class PMDataParser {
         return sBuffer.toString();
     }
     
-    public final static void saveUserPreference(Context c, String key, String content){
-        SharedPreferences sharedPref = c.getSharedPreferences(
+    public final static void saveUserPreference(String key, String content){
+        SharedPreferences sharedPref = ContextProvider.get().getSharedPreferences(
                 key, Context.MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
         editor.putString(key, content);
         editor.commit();
     }
 
-    public final static String recoverUserPreference(Context c, String key){
-        SharedPreferences sharedPref = c.getSharedPreferences(
+    public final static String recoverUserPreference(String key){
+        SharedPreferences sharedPref = ContextProvider.get().getSharedPreferences(
                 key, Context.MODE_PRIVATE);
         return sharedPref.getString(key, "");
     }

@@ -34,18 +34,36 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:orientation="vertical"
-        android:background="@drawable/add_question_bar_background">
-        <!-- Replace this linearlayout with the username option -->
-        <LinearLayout
+        android:background="@drawable/add_question_bar_background"
+        android:clickable="true">
+        <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="40dp"
-            android:background="#f00">
-        </LinearLayout>
+            android:layout_marginTop="5dp"
+            android:background="@drawable/drawer_username_background">	        
+		    <ImageView
+		        android:id="@+id/drawer_alter_username"
+		        android:layout_width="32dp"
+		        android:layout_height="32dp"
+		        android:layout_alignParentRight="true"
+		        android:layout_marginRight="5dp"
+		        android:src="@drawable/ic_action_edit"
+		        android:background="@android:color/holo_blue_light"
+		        android:gravity="center_vertical"
+		        android:contentDescription="Edit"/>
+		    <TextView
+		        android:id="@+id/drawer_username"
+		        android:layout_width="0dp"
+		        android:layout_height="match_parent"
+		        android:gravity="center_vertical"
+		        android:layout_toLeftOf="@id/drawer_alter_username"
+		        android:layout_alignParentLeft="true"
+		        android:layout_marginLeft="5dp"/>
+        </RelativeLayout>
         <ListView
             android:id="@+id/drawer_menu_options"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1"
+            android:layout_height="wrap_content"
             android:scrollbars="vertical" />
     </LinearLayout>
 </android.support.v4.widget.DrawerLayout>

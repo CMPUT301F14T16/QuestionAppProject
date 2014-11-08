@@ -7,12 +7,16 @@ import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.QuestionList;
 import ca.ualberta.cmput301f14t16.easya.Model.Queue;
+import android.content.Context;
 import android.content.Intent;
 import ca.ualberta.cmput301f14t16.easya.Model.Sort;
+import ca.ualberta.cmput301f14t16.easya.Model.Data.PMClient;
 import android.content.res.Configuration;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
+import android.app.LauncherActivity;
+import android.app.ProgressDialog;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.view.Menu;
@@ -21,16 +25,20 @@ import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
+/**
+ * 
+ * @author Cauani
+ *
+ */
 public class MainActivity extends Activity {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private LinearLayout mDrawerList;
+    private ProgressDialog pd;
     
     public final static String QUESTION_KEY = "ca.ualberta.cmput301f14t16.easya.QUESTIONKEY"; 
-    
-    public static Queue mQueueThread; 
-    public static MainModel mm;
     public static List<QuestionList> displayedQuestions;
 
     @Override
@@ -38,11 +46,13 @@ public class MainActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_master);
 
-		////
-		//TODO: if no user is found, try to create/load one from internet
-		// If still not able, block ui with the create user screen.
-		
-		mm = new MainModel(getApplicationContext());
+		try{
+			((TextView)findViewById(R.id.drawer_username)).setText(MainModel.getInstance().getCurrentUser().getUsername());
+		}catch(Exception ex){
+			finish();
+			Intent i = new Intent(this, WelcomeActivity.class);
+			startActivity(i);
+		}
 		
         //Creation of the drawer menu
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -69,13 +79,9 @@ public class MainActivity extends Activity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
-
-        /////
-        mQueueThread = new Queue(getApplicationContext());
-        mQueueThread.start();
         
         /////
-        (new GetQuestionListTask()).execute();
+        (new GetQuestionListTask(this)).execute();
         //TODO: Organize this mess
     }
     
@@ -130,22 +136,25 @@ public class MainActivity extends Activity {
     @Override
     public void onDestroy() {
         //Free up the thread
-        mQueueThread.Stop();
+        Queue.getInstance().Stop();
+        PMClient pm = new PMClient();
+        pm.clearA(this);
+        pm.clearQ(this);
+    	if (pd!=null) {
+			pd.dismiss();
+		}
         super.onDestroy();
     }
 
     @Override
     public void onPause(){
-        mQueueThread.Stop();
+    	Queue.getInstance().Stop();
         super.onPause();
     }
 
     @Override
     public void onResume(){
-        if (mQueueThread != null && !mQueueThread.isAlive()) {
-            mQueueThread = new Queue(getApplicationContext());
-            mQueueThread.start();
-        }
+        Queue.getInstance();
         super.onResume();
     }
     
@@ -155,27 +164,49 @@ public class MainActivity extends Activity {
     }
     
     private class GetQuestionListTask extends AsyncTask<Void, Void, List<QuestionList>> {
-        protected List<QuestionList> doInBackground(Void...voids) {
+    	private Context ctx;
+    	
+    	public GetQuestionListTask(Context ctx){
+    		this.ctx = ctx;
+    	}
+    	
+    	@Override
+		protected void onPreExecute() {
+    		pd = new ProgressDialog(ctx);
+			pd.setTitle("Loading questions...");
+			pd.setMessage("Please wait.");
+			pd.setCancelable(false);
+			pd.setIndeterminate(true);
+			pd.show();
+		}
+    	
+    	@Override
+    	protected List<QuestionList> doInBackground(Void...voids) {
             try{
-            	return mm.getAllQuestions();
+            	return MainModel.getInstance().getAllQuestions();
             }catch(NoContentAvailableException ex){
             	return null;
             }
         }
 
+        @Override
         protected void onPostExecute(List<QuestionList> result) {
         	if (result == null){
         		//TODO: display the no content available screen
-        	}else{
-        		
-        	SetAdapter(result);
-        	displayedQuestions = result;
+        	}else{        		
+	        	SetAdapter(result);
+	        	displayedQuestions = result;
+	        	
+	        	if (pd!=null) {
+					pd.dismiss();
+				}
         	}
         }
     }
     
     public void AddNewQuestion(View v){
     	Intent i = new Intent(this, SubmitQuestionActivity.class);
+    	i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         this.startActivity(i);
     }
 

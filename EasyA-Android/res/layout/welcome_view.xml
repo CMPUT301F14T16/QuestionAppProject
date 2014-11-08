@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="10dp"
+    android:background="#e9e9e9" >
+	<ImageView 
+	    android:id="@+id/welcome_image"
+	    android:layout_height="wrap_content"
+	    android:layout_width="wrap_content"
+	    android:layout_alignParentTop="true"
+	    android:layout_centerHorizontal="true"
+	    android:layout_marginTop="200dp" />
+	<EditText 
+	    android:id="@+id/welcome_username"
+	    android:layout_height="wrap_content"
+	    android:layout_width="match_parent"
+	    android:layout_above="@+id/welcome_email"
+	    android:layout_alignParentLeft="true"
+	    android:hint="@string/welcome_username"/>
+	<EditText 
+	    android:id="@+id/welcome_email"
+	    android:layout_height="wrap_content"
+	    android:layout_width="match_parent"
+	    android:layout_above="@+id/welcome_sigin"
+	    android:layout_alignParentLeft="true"
+	    android:inputType="textEmailAddress"
+	    android:hint="@string/welcome_email"/>  
+	<Button 
+	    android:id="@+id/welcome_sigin"
+	    android:layout_height="wrap_content"
+	    android:layout_width="match_parent"
+	    android:layout_alignParentBottom="true"
+	    android:layout_alignParentLeft="true"
+	    android:text="@string/welcome_sigin"
+	    android:onClick="SignIn"/>  
+
+</RelativeLayout>

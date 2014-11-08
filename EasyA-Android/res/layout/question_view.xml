@@ -5,8 +5,9 @@
     android:orientation="vertical" >    
 	<ScrollView 
 	    android:id="@+id/question_scrollview"
-	    android:layout_height="match_parent"
-	    android:layout_width="match_parent">
+	    android:layout_height="0dp"
+	    android:layout_width="match_parent"
+	    android:layout_weight="1">
 	    <LinearLayout
 	        android:id="@+id/question_scrollview_container"
 	        android:layout_height="wrap_content"
@@ -20,9 +21,12 @@
         android:orientation="horizontal"
            android:background="@drawable/add_question_bar_background">
         <EditText
-               android:id="@+id/add_reply"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/create_answer_hint"/>
+                android:id="@+id/question_add_answer"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:hint="@string/create_answer_hint"
+	            android:focusableInTouchMode="false"
+	            android:focusable="false"	            
+	            android:onClick="AddNewAnswer"/>
     </LinearLayout>
 </LinearLayout>

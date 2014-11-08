@@ -1,13 +1,16 @@
 package ca.ualberta.cmput301f14t16.easya.Model;
 
+import java.io.IOException;
 import java.util.ArrayList; // Used in list creation.
 import java.util.List;
 
 import android.content.Context;
 
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
+import ca.ualberta.cmput301f14t16.easya.Exceptions.NoInternetException;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.UnableToGetUserEmailException;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.Cache;
+import ca.ualberta.cmput301f14t16.easya.Model.Data.ESClient;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.PMClient;
 import ca.ualberta.cmput301f14t16.easya.View.MainView;
 
@@ -20,11 +23,12 @@ import ca.ualberta.cmput301f14t16.easya.View.MainView;
  * However, this user and ID may also be associated with a non-unique and
  * mutable screen name.
  * 
+ * @author Cauani
  * @author Brett Commandeur (commande)
  */
 public class MainModel<V extends MainView> {
+	private static MainModel m;
 	private ArrayList<V> views;
-	private Context ctx;
 
 	/**
 	 * Design rationale: MVC format
@@ -34,9 +38,14 @@ public class MainModel<V extends MainView> {
 	 *            /src/es/softwareprocess/fillercreep/FModel.java
 	 * @author Abram Hindle
 	 */
-	public MainModel(Context ctx) {
-		this.ctx = ctx;
+	protected MainModel() {
 		this.views = new ArrayList<V>();
+	}
+	
+	public static MainModel getInstance(){
+		if (m == null)
+			m = new MainModel();
+		return m;
 	}
 	
 	public void addView(V view) {
@@ -56,29 +65,37 @@ public class MainModel<V extends MainView> {
     	}
 	
 	public Question getQuestionById(String id) throws NoContentAvailableException{
-		return Cache.getQuestionById(ctx, id);
+		return Cache.getInstance().getQuestionById(id);
 	}
 	
 	public User getUserById(String id) throws NoContentAvailableException{
-		return Cache.getUserById(ctx, id);
+		return Cache.getInstance().getUserById(id);
+	}
+	
+	public User getUserByEmail(String email) throws NoContentAvailableException, NoInternetException{
+		return Cache.getInstance().getUserByEmail(email);
 	}
 	
 	public User getCurrentUser() throws NoContentAvailableException{
+		PMClient pmclient = new PMClient();
+		return pmclient.getUser();
+	}
+	
+	public void saveMainUser(User u){
+		PMClient pm = new PMClient();
+		pm.saveUser(u);
+	}
+	
+	public boolean updateUsername(User u){
+		ESClient es = new ESClient();
 		try{
-			PMClient pmclient = new PMClient();
-			return pmclient.getUser(ctx);
-		}catch(NoContentAvailableException ex){
-			try{
-				return getUserById(GeneralHelper.retrieveEmail(ctx));
-			}catch(UnableToGetUserEmailException ex2){
-				throw new NoContentAvailableException();
-			}catch(Exception ex2){
-				throw new NoContentAvailableException();
-			}
-		}
+			return es.setUsernameById(u.getId(), u.getUsername());
+		}catch(IOException ex){
+			return false;
+		}		
 	}
 
 	public List<QuestionList> getAllQuestions() throws NoContentAvailableException{
-		return Cache.getAllQuestions(ctx);
+		return Cache.getInstance().getAllQuestions();
 	}
 }

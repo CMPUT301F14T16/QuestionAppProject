@@ -14,7 +14,8 @@
             android:layout_height="40dp"
             android:layout_alignParentLeft="true"
             android:src="@drawable/ic_action_good"
-            android:layout_centerHorizontal="true"/>
+            android:layout_centerHorizontal="true"
+            android:background="@android:color/transparent"/>
         <TextView
             android:id="@+id/answer_fragment_upvoteText"
             android:layout_width="40dp"
@@ -60,6 +61,9 @@
         <EditText
             android:id="@+id/answer_fragment_submitReplyEdt"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:inputType="text"
+            android:imeOptions="actionSend"
+        	android:hint="@string/create_reply_hint" />
     </LinearLayout>
 </RelativeLayout>

@@ -16,6 +16,11 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+/**
+ * 
+ * @author Cauani
+ *
+ */
 public class MainViewAdapter extends ArrayAdapter<QuestionList> {
     private LayoutInflater inflater;
 
@@ -52,6 +57,7 @@ public class MainViewAdapter extends ArrayAdapter<QuestionList> {
                          // Get the object in the title tag
                          String qId = ((QuestionList)((MainViewAdapterHolder)v.getTag()).getTitle().getTag()).getId();
                          i.putExtra(MainActivity.QUESTION_KEY, qId);
+                         //TODO: save this code :: i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                          getContext().startActivity(i);
                      }
                  }

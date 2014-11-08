@@ -19,9 +19,7 @@ public class UserTest extends TestCase{
 	private String newname;
 	
 	
-	//public void UserTestSetup() {
-		
-	//}
+	//Fixed path building problems
 	
 	public void testSetUsername() {
 		username = "Lingbo";

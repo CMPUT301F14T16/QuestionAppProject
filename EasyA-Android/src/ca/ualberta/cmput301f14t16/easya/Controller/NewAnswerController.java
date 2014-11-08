@@ -1,28 +1,32 @@
 package ca.ualberta.cmput301f14t16.easya.Controller;
 
+import android.content.Context;
+import ca.ualberta.cmput301f14t16.easya.Exceptions.MissingContentException;
+import ca.ualberta.cmput301f14t16.easya.Exceptions.NoInternetException;
 import ca.ualberta.cmput301f14t16.easya.Model.Answer;
 import ca.ualberta.cmput301f14t16.easya.Model.Pending;
-import ca.ualberta.cmput301f14t16.easya.View.MainActivity;
 
 
-public class NewAnswerController {
-	private String questionID;
-	private String body;
-	private String authorID;
-	
-	
-	public NewAnswerController(String questionID, String body, String authorID){
-		this.authorID = authorID;
-		this.body = body ;
-		this.questionID=questionID;
+public class NewAnswerController extends MainController {
+	protected NewAnswerController(Pending p, Context ctx){
+		super(p);
+		this.ctx = ctx;
 	}
 	
-	public Pending creatAndPushPending(){
-		Answer newAnswer = new Answer(body,authorID);
-		Pending newPending = new Pending(questionID,newAnswer);	
-		MainActivity.mQueueThread.AddPendingToQueue(newPending);
-		return newPending;
-		
+	public static NewAnswerController create(Context ctx, String qId, String body, String authorID){
+		Answer newAnswer = new Answer(body, authorID);
+		Pending newPending = new Pending(qId, newAnswer);
+		return new NewAnswerController(newPending, ctx);
+	}	
+	
+	public boolean submit(){
+		try{
+			return super.submit();
+		}catch(NoInternetException ex){
+			super.submitOffline();			
+			return true;
+		}catch(Exception ex){
+			return false;
+		}
 	}
-
 }

@@ -13,6 +13,7 @@ import android.net.NetworkInfo;
 
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoClassTypeSpecifiedException;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoInternetException;
+import ca.ualberta.cmput301f14t16.easya.Model.Data.ContextProvider;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.ESClient;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.PMClient;
 
@@ -23,18 +24,26 @@ import ca.ualberta.cmput301f14t16.easya.Model.Data.PMClient;
 public class Queue extends Thread{
     final long loop_interval = 5000; //in milliseconds
     final int check_for_internet = 300000; //in milliseconds 5 minutes
-
+    
+    private static Queue queue;
+    
     public Date lastCheck; // TODO made public because test case uses it.
     private boolean haveInternet;
     private boolean isActive = true;
-    private Context ctx;
 
     private List<Pending> pendings;
 
-    public Queue(Context ctx)
+    protected Queue()
     {
-    	this.ctx = ctx;
         this.pendings = GetAllPendings();
+    }
+    
+    public static Queue getInstance(){
+    	if (queue == null || (queue != null && !queue.isAlive())) {
+            queue = new Queue();
+            queue.start();
+        }
+    	return queue;
     }
 
     @Override
@@ -66,7 +75,7 @@ public class Queue extends Thread{
      */
     public void AddPendingToQueue(Pending p){
     	PMClient pm = new PMClient();
-    	pm.savePending(this.ctx, p);
+    	pm.savePending(p);
         this.pendings.add(p);
     }
 
@@ -75,7 +84,7 @@ public class Queue extends Thread{
      */
     private void RemovePending(Pending p){
     	PMClient pm = new PMClient();
-    	pm.deletePending(this.ctx, p);
+    	pm.deletePending(p);
         this.pendings.remove(p);
     }
 
@@ -84,7 +93,7 @@ public class Queue extends Thread{
      */
     private List<Pending> GetAllPendings(){
     	PMClient pm = new PMClient();
-        return pm.getPendings(this.ctx);
+        return pm.getPendings();
     }
 
 
@@ -134,7 +143,7 @@ public class Queue extends Thread{
     {
         try {
         	ConnectivityManager cm =
-        	        (ConnectivityManager)ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
+        	        (ConnectivityManager)ContextProvider.get().getSystemService(Context.CONNECTIVITY_SERVICE);
         	 
         	NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         	return activeNetwork != null &&
