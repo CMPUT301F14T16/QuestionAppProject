@@ -1,5 +1,6 @@
 package ca.ualberta.cmput301f14t16.easya.Model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
 
@@ -105,7 +106,6 @@ public abstract class Content {
 	 * @param newId
 	 *            ID to set
 	 */
-	// TODO Have server use provided id when creating a submission.
 	public void setId(String newId) {
 		this.id = newId;
 	}
@@ -113,6 +113,7 @@ public abstract class Content {
 	public String getAuthorDate(){
 		//TODO: return the author and date in the format: 
 		//yyyy-MM-dd, hh:mm by @[author]
+		// TODO: can't return username, this must happen somwhere else.
 		return "";
 	}
 }
