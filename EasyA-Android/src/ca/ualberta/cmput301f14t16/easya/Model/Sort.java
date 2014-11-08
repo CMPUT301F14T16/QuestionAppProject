@@ -34,7 +34,7 @@ public class Sort {
 				// int cmp = a > b ? +1 : a < b ? -1 : 0;
 				// compares the 2 upVotes.
 				return questionList1.getUpvotes().length() > questionList2.getUpvotes().length() ? 1 :
-					questionList1.getUpvotes().length() < questionList2.getUpvotes().length() ? -1 : 0;
+					Integer.parseInt(questionList1.getUpvotes()) < Integer.parseInt(questionList2.getUpvotes()) ? -1 : 0;
 			}
 		});
 	}
