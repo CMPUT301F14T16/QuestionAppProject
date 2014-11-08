@@ -121,6 +121,10 @@ public class QuestionList {
 	public boolean getImage() {
 		return this.image;
 	}
+	
+	/**
+	 * @return {@link QuestionList#date}
+	 */
 	public Date getDate() {
 		return this.date;
 	}
