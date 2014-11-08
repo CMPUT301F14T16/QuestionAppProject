@@ -133,11 +133,12 @@ public class Queue extends Thread {
 	 * @return All {@link Pending} objects saved in memory.
 	 */
 	private List<Pending> GetAllPendings() {
-		PMClient pm = new PMClient();
-		List<Pending> lst = pm.getPendings();
-		if (lst == null)
-			lst = new ArrayList<Pending>();
-		return lst;
+		//PMClient pm = new PMClient();
+		//List<Pending> lst = pm.getPendings();
+		//if (lst == null)
+			//lst = new ArrayList<Pending>();
+		//return lst;
+		return new ArrayList<Pending>();
 	}
 
 	/*
@@ -157,8 +158,8 @@ public class Queue extends Thread {
         int tries = 0;
         int qtP = pendings.size();
     	for(Pending p : pendings){
-        	Content c = p.getContent();
-            try {
+    		try {
+    			Content c = p.getContent();            
                 if(c instanceof Question){
                 	esClient.submitQuestion((Question)c);
                 }else if (c instanceof Answer){

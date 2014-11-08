@@ -55,15 +55,21 @@ public class QuestionViewAdapter {
     private OnEditorActionListener keyAction = new OnEditorActionListener() {
     	@Override
         public boolean onEditorAction(TextView v, int actionId, KeyEvent event) {
-            if (actionId == EditorInfo.IME_ACTION_SEND &&
-                    ((event == null) || (event!= null && event.getAction() != KeyEvent.ACTION_DOWN))) {
-            	Context ctx = v.getContext();
-            	BasicNameValuePair vp = (BasicNameValuePair)v.getTag();
-            	String body = v.getText().toString();
-            	(new submitReplyTask(ctx, vp, body)).execute();
-                return false;
-            }
-            return false;
+    		if (event==null) {
+    		      if (actionId==EditorInfo.IME_ACTION_DONE);    		      
+    		      else if (actionId==EditorInfo.IME_ACTION_NEXT);    		      
+    		      else return false;
+    		    }
+    		    else if (actionId==EditorInfo.IME_NULL) { 
+    		      if (event.getAction()==KeyEvent.ACTION_DOWN); 
+    		      else  return true;  
+    		    }
+    		    else  return false; 
+    		Context ctx = v.getContext();
+        	BasicNameValuePair vp = (BasicNameValuePair)v.getTag();
+        	String body = v.getText().toString();
+        	(new submitReplyTask(ctx, vp, body)).execute();
+        	return true;    		
         }
     };    
     
