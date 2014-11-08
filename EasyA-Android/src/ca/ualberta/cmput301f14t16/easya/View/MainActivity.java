@@ -108,6 +108,8 @@ public class MainActivity extends Activity {
         menu.findItem(R.id.menu_search).setVisible(!drawerOpen);
         menu.findItem(R.id.menu_sortByOldest).setVisible(!drawerOpen);
         menu.findItem(R.id.menu_sortByNewest).setVisible(!drawerOpen);
+        menu.findItem(R.id.menu_sortByMostVotes).setVisible(!drawerOpen);
+        menu.findItem(R.id.menu_sortByLeastVotes).setVisible(!drawerOpen);
         //menu.findItem(R.id.menu_sortByPicture).setVisible(!drawerOpen);
         return super.onPrepareOptionsMenu(menu);
     }
@@ -139,6 +141,14 @@ public class MainActivity extends Activity {
         	return true;
         case R.id.menu_sortByOldest: 
         	displayedQuestions = Sort.dateSort(false, displayedQuestions);
+        	SetAdapter(displayedQuestions);
+        	return true;
+        case R.id.menu_sortByMostVotes: 
+        	displayedQuestions = Sort.sortUpVote(true, displayedQuestions);
+        	SetAdapter(displayedQuestions);
+        	return true;
+        case R.id.menu_sortByLeastVotes: 
+        	displayedQuestions = Sort.sortUpVote(false, displayedQuestions);
         	SetAdapter(displayedQuestions);
         	return true;
         }

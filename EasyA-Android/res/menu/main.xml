@@ -20,4 +20,14 @@
         android:orderInCategory="400"
         android:showAsAction="never"
         android:title="@string/sortByOldest"/>
+     <item
+        android:id="@+id/menu_sortByMostVotes"
+        android:orderInCategory="500"
+        android:showAsAction="never"
+        android:title="@string/sortByMostVotes"/>
+     <item
+        android:id="@+id/menu_sortByLeastVotes"
+        android:orderInCategory="600"
+        android:showAsAction="never"
+        android:title="@string/sortByLeastVotes"/>
 </menu>
