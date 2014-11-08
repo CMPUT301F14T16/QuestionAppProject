@@ -50,7 +50,8 @@
 		        android:src="@drawable/ic_action_edit"
 		        android:background="@android:color/holo_blue_light"
 		        android:gravity="center_vertical"
-		        android:contentDescription="Edit"/>
+		        android:contentDescription="Edit"
+		        android:onClick="changeUsername"/>
 		    <TextView
 		        android:id="@+id/drawer_username"
 		        android:layout_width="0dp"
