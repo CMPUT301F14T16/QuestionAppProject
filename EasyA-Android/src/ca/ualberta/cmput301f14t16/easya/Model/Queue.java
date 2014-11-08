@@ -133,12 +133,11 @@ public class Queue extends Thread {
 	 * @return All {@link Pending} objects saved in memory.
 	 */
 	private List<Pending> GetAllPendings() {
-		//PMClient pm = new PMClient();
-		//List<Pending> lst = pm.getPendings();
-		//if (lst == null)
-			//lst = new ArrayList<Pending>();
-		//return lst;
-		return new ArrayList<Pending>();
+		PMClient pm = new PMClient();
+		List<Pending> lst = pm.getPendings();
+		if (lst == null)
+			lst = new ArrayList<Pending>();
+		return lst;
 	}
 
 	/*

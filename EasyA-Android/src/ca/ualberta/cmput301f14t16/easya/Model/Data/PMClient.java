@@ -9,9 +9,12 @@ import java.util.List;
 import android.content.Context;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
 import com.google.gson.reflect.TypeToken;
 
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
+import ca.ualberta.cmput301f14t16.easya.Model.Content;
+import ca.ualberta.cmput301f14t16.easya.Model.ContentDeserializer;
 import ca.ualberta.cmput301f14t16.easya.Model.GeneralHelper;
 import ca.ualberta.cmput301f14t16.easya.Model.Pending;
 import ca.ualberta.cmput301f14t16.easya.Model.User;
@@ -74,7 +77,9 @@ public class PMClient {
 	}
 
 	public void savePending(Pending p) {
-		Gson gson = new Gson();
+		Gson gson = new GsonBuilder()
+		.registerTypeAdapter(Content.class,
+                new ContentDeserializer()).create();
 		List<Pending> aux = getPendings();
 		if (aux == null)
 			aux = new ArrayList<Pending>();
@@ -92,7 +97,9 @@ public class PMClient {
 	}
 	
 	public List<Pending> getPendings(){
-		Gson gson = new Gson();
+		Gson gson = new GsonBuilder()
+		.registerTypeAdapter(Content.class,
+                new ContentDeserializer()).create();		
 		Type listType = new TypeToken<List<Pending>>(){}.getType();
 		return gson.fromJson(PMDataParser.loadJson(PMFilesEnum.QUEUE), listType);
 	}
