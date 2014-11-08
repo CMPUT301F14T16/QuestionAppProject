@@ -4,13 +4,10 @@ import java.util.List;
 
 import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Controller.ChangeUsernameController;
-import ca.ualberta.cmput301f14t16.easya.Controller.NewUserController;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
-import ca.ualberta.cmput301f14t16.easya.Exceptions.NoInternetException;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.QuestionList;
 import ca.ualberta.cmput301f14t16.easya.Model.Queue;
-import ca.ualberta.cmput301f14t16.easya.Model.User;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -22,7 +19,6 @@ import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
-import android.app.LauncherActivity;
 import android.app.ProgressDialog;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
@@ -108,6 +104,8 @@ public class MainActivity extends Activity {
         menu.findItem(R.id.menu_search).setVisible(!drawerOpen);
         menu.findItem(R.id.menu_sortByOldest).setVisible(!drawerOpen);
         menu.findItem(R.id.menu_sortByNewest).setVisible(!drawerOpen);
+        menu.findItem(R.id.menu_sortByMostVotes).setVisible(!drawerOpen);
+        menu.findItem(R.id.menu_sortByLeastVotes).setVisible(!drawerOpen);
         //menu.findItem(R.id.menu_sortByPicture).setVisible(!drawerOpen);
         return super.onPrepareOptionsMenu(menu);
     }
@@ -137,8 +135,18 @@ public class MainActivity extends Activity {
         	displayedQuestions = Sort.dateSort(true, displayedQuestions);
         	SetAdapter(displayedQuestions);
         	return true;
+        case R.id.menu_sync:
+        	MainModel.getInstance().wipeCache();
         case R.id.menu_sortByOldest: 
         	displayedQuestions = Sort.dateSort(false, displayedQuestions);
+        	SetAdapter(displayedQuestions);
+        	return true;
+        case R.id.menu_sortByMostVotes: 
+        	displayedQuestions = Sort.sortUpVote(true, displayedQuestions);
+        	SetAdapter(displayedQuestions);
+        	return true;
+        case R.id.menu_sortByLeastVotes: 
+        	displayedQuestions = Sort.sortUpVote(false, displayedQuestions);
         	SetAdapter(displayedQuestions);
         	return true;
         }
@@ -297,7 +305,7 @@ public class MainActivity extends Activity {
 			} 
         	if (result){
         		try{
-        			((EditText)MainActivity.this.findViewById(R.id.drawer_alter_username)).setText(MainModel.getInstance().getCurrentUser().getUsername());
+        			((EditText)findViewById(R.id.drawer_username)).setText(MainModel.getInstance().getCurrentUser().getUsername());
         		}catch(NoContentAvailableException ex){
         			//TODO: deal with this exception
         		}
