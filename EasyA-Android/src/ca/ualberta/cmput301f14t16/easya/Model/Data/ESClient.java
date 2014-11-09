@@ -154,6 +154,8 @@ public class ESClient {
 		ESSearchResponse<Question> esResponse = gson.fromJson(response, esSearchResponseType);
 		for (ESGetResponse<Question> q : esResponse.getHits()) {
 			Question question = q.getSource();
+			if (question == null)
+				continue;
 			qlist.add(question);
 		}
 		
@@ -171,6 +173,8 @@ public class ESClient {
 		ESSearchResponse<Question> esResponse = gson.fromJson(response, esSearchResponseType);
 		for (ESGetResponse<Question> q : esResponse.getHits()) {
 			Question question = q.getSource();
+			if (question == null)
+				continue;
 			QuestionList questionList = new QuestionList(question.getId(), question.getTitle(), 
 					question.getAuthorName(), question.getAnswerCountString(), 
 					question.getUpVoteCountString(), question.hasPicture(), 
@@ -244,6 +248,8 @@ public class ESClient {
 		ESSearchResponse<User> esResponse = gson.fromJson(response, esSearchResponseType);
 		for (ESGetResponse<User> u : esResponse.getHits()) {
 			User user = u.getSource();
+			if (user == null)
+				continue;
 			ulist.add(user);
 		}
 		
