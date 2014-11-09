@@ -67,7 +67,7 @@ public class QuestionViewAdapter {
     		Context ctx = v.getContext();
         	BasicNameValuePair vp = (BasicNameValuePair)v.getTag();
         	String body = v.getText().toString();
-        	(new submitReplyTask(ctx, vp, body)).execute();
+        	(new submitReplyTask(ctx, vp, body, v)).execute();
         	return true;    		
         }
     };    
@@ -171,12 +171,14 @@ public class QuestionViewAdapter {
     	private String qId;
     	private String aId;
     	private String body;
+    	private TextView tv;
     	
-    	public submitReplyTask(Context ctx, BasicNameValuePair vp, String body){
+    	public submitReplyTask(Context ctx, BasicNameValuePair vp, String body, TextView tv){
     		this.ctx = ctx;
     		this.qId = vp.getName();
     		this.aId = vp.getValue();
     		this.body = body;
+    		this.tv = tv;
     	}
     	
     	@Override
@@ -217,7 +219,8 @@ public class QuestionViewAdapter {
         protected void onPostExecute(Boolean result) {
         	if (result){
     			if (controller.submitedOffline){
-    				Toast.makeText(ctx, "Your Question will be posted online when you connect to the internet!", Toast.LENGTH_LONG).show();
+    				Toast.makeText(ctx, "Your reply will be posted online when you connect to the internet!", Toast.LENGTH_LONG).show();
+    				tv.setText("");
     			}else{
         			String aux = controller.getQuestionId();
         			Intent i = new Intent(ctx,QuestionActivity.class);
