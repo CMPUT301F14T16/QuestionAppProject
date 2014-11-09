@@ -6,6 +6,7 @@ import java.util.List;
 import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Controller.NewQuestionController;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
+import ca.ualberta.cmput301f14t16.easya.Model.GeneralHelper;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.PixelBitmap;
 import ca.ualberta.cmput301f14t16.easya.Model.QuestionList;
@@ -173,7 +174,7 @@ public class SubmitQuestionActivity extends Activity {
     			}else{
         			String aux = controller.getQuestionId();
         			Intent i = new Intent(ctx,QuestionActivity.class);
-        			i.putExtra(MainActivity.QUESTION_KEY, aux);
+        			i.putExtra(GeneralHelper.QUESTION_KEY, aux);
         			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         			startActivity(i);
         			finish();

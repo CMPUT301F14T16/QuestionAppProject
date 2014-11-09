@@ -40,8 +40,6 @@ public class User {
 	 */
 	private List<String> favorites;
 
-	public final static String USERKEY = "ca.ualberta.cmput301f14t16.easya.USERKEY";
-
 	/**
 	 * Creates an empty User object.
 	 */

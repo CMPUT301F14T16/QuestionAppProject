@@ -10,6 +10,7 @@ import ca.ualberta.cmput301f14t16.easya.Controller.NewReplyController;
 import ca.ualberta.cmput301f14t16.easya.Controller.UpvoteController;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
 import ca.ualberta.cmput301f14t16.easya.Model.Answer;
+import ca.ualberta.cmput301f14t16.easya.Model.GeneralHelper;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Model.Reply;
@@ -222,7 +223,7 @@ public class QuestionViewAdapter {
     			}else{
         			String aux = controller.getQuestionId();
         			Intent i = new Intent(ctx,QuestionActivity.class);
-        			i.putExtra(MainActivity.QUESTION_KEY, aux);
+        			i.putExtra(GeneralHelper.QUESTION_KEY, aux);
         			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         			ctx.startActivity(i);
     			}
@@ -267,7 +268,7 @@ public class QuestionViewAdapter {
         protected void onPostExecute(Boolean result) {
         	if (result){ 
     			Intent i = new Intent(ctx,QuestionActivity.class);
-    			i.putExtra(MainActivity.QUESTION_KEY, vp.getName());
+    			i.putExtra(GeneralHelper.QUESTION_KEY, vp.getName());
     			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
     			ctx.startActivity(i);
     		}else{

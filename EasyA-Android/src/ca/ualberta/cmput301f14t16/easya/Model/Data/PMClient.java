@@ -64,12 +64,12 @@ public class PMClient {
 	
 	public void saveUser(User user){
 		Gson gson = new Gson();
-		PMDataParser.saveUserPreference(User.USERKEY, gson.toJson(user, User.class));
+		PMDataParser.saveUserPreference(GeneralHelper.USERKEY, gson.toJson(user, User.class));
 	}
 	
 	public User getUser() throws NoContentAvailableException{
 		Gson gson = new Gson();
-		String aux = PMDataParser.recoverUserPreference(User.USERKEY);
+		String aux = PMDataParser.recoverUserPreference(GeneralHelper.USERKEY);
 		if (aux == null|| aux.equals("")){
 			throw new NoContentAvailableException();
 		}

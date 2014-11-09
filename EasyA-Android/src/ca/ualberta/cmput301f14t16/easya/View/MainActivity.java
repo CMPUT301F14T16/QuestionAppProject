@@ -43,7 +43,7 @@ public class MainActivity extends Activity {
     private LinearLayout mDrawerList;
     private ProgressDialog pd;
     
-    public final static String QUESTION_KEY = "ca.ualberta.cmput301f14t16.easya.QUESTIONKEY"; 
+     
     public static List<QuestionList> displayedQuestions;
 
     @Override
@@ -212,15 +212,14 @@ public class MainActivity extends Activity {
 
         @Override
         protected void onPostExecute(List<QuestionList> result) {
+        	if (pd!=null) {
+				pd.dismiss();
+			}
         	if (result == null){
         		//TODO: display the no content available screen
         	}else{  
         		displayedQuestions = Sort.dateSort(true, result);
 	        	SetAdapter(displayedQuestions);
-	        	
-	        	if (pd!=null) {
-					pd.dismiss();
-				}
         	}
         }
     }

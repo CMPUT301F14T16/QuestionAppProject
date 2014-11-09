@@ -76,7 +76,7 @@ public class QuestionActivity extends Activity {
 		@Override
         protected Question doInBackground(Void...voids) {
         	try{
-        		String aux = (getIntent()).getStringExtra(MainActivity.QUESTION_KEY);
+        		String aux = (getIntent()).getStringExtra(GeneralHelper.QUESTION_KEY);
         		if (aux == null || aux.equals(""))
         			return null;
         		return MainModel.getInstance().getQuestionById(aux);

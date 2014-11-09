@@ -4,6 +4,7 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import ca.ualberta.cmput301f14t16.easya.R;
+import ca.ualberta.cmput301f14t16.easya.Model.GeneralHelper;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Model.QuestionList;
 import ca.ualberta.cmput301f14t16.easya.R.id;
@@ -56,7 +57,7 @@ public class MainViewAdapter extends ArrayAdapter<QuestionList> {
                          Intent i = new Intent(getContext(), QuestionActivity.class);
                          // Get the object in the title tag
                          String qId = ((QuestionList)((MainViewAdapterHolder)v.getTag()).getTitle().getTag()).getId();
-                         i.putExtra(MainActivity.QUESTION_KEY, qId);
+                         i.putExtra(GeneralHelper.QUESTION_KEY, qId);
                          //TODO: save this code :: i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                          getContext().startActivity(i);
                      }

@@ -165,7 +165,7 @@ public class SubmitAnswerActivity extends Activity {
     			}else{        			
         			String aux = controller.getQuestionId();
         			Intent i = new Intent(ctx,QuestionActivity.class);
-        			i.putExtra(MainActivity.QUESTION_KEY, aux);
+        			i.putExtra(GeneralHelper.QUESTION_KEY, aux);
         			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
         			startActivity(i);
         			finish();
