@@ -8,6 +8,8 @@ import java.util.List;
 import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
+import android.os.Handler;
+import android.os.Looper;
 import android.widget.Toast;
 
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoClassTypeSpecifiedException;
@@ -185,8 +187,14 @@ public class Queue extends Thread {
                 RemovePending(p);
             }
         }
-    	String aux = qtP + " items were uploaded to the internet.";
-    	Toast.makeText(ContextProvider.get(), aux, Toast.LENGTH_LONG).show();    	
+    	final String aux = qtP + " item(s) were uploaded from your pendings.";
+    	
+    	Handler handler = new Handler(Looper.getMainLooper());
+    	handler.post(new Runnable() {
+    	     public void run() {
+    	    	 Toast.makeText(ContextProvider.get(), aux, Toast.LENGTH_LONG).show();
+    	     }
+    	});    	    	
     }
 
 	/**
