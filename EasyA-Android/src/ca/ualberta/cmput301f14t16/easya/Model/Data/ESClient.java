@@ -153,9 +153,10 @@ public class ESClient {
 		Type esSearchResponseType = new TypeToken<ESSearchResponse<Question>>(){}.getType();
 		ESSearchResponse<Question> esResponse = gson.fromJson(response, esSearchResponseType);
 		for (ESGetResponse<Question> q : esResponse.getHits()) {
-			Question question = q.getSource();
-			if (question == null)
+			if (q == null)
 				continue;
+			
+			Question question = q.getSource();			
 			qlist.add(question);
 		}
 		
@@ -172,9 +173,10 @@ public class ESClient {
 		Type esSearchResponseType = new TypeToken<ESSearchResponse<Question>>(){}.getType();
 		ESSearchResponse<Question> esResponse = gson.fromJson(response, esSearchResponseType);
 		for (ESGetResponse<Question> q : esResponse.getHits()) {
-			Question question = q.getSource();
-			if (question == null)
+			if (q == null)
 				continue;
+			
+			Question question = q.getSource();			
 			QuestionList questionList = new QuestionList(question.getId(), question.getTitle(), 
 					question.getAuthorName(), question.getAnswerCountString(), 
 					question.getUpVoteCountString(), question.hasPicture(), 
@@ -247,9 +249,10 @@ public class ESClient {
 		Type esSearchResponseType = new TypeToken<ESSearchResponse<User>>(){}.getType();
 		ESSearchResponse<User> esResponse = gson.fromJson(response, esSearchResponseType);
 		for (ESGetResponse<User> u : esResponse.getHits()) {
-			User user = u.getSource();
-			if (user == null)
+			if (u == null)
 				continue;
+			
+			User user = u.getSource();			
 			ulist.add(user);
 		}
 		
