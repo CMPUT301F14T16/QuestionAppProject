@@ -14,9 +14,13 @@ public class saveToDeviceTask extends AsyncTask<Void, Void, Boolean> {
 	}
 	
 	@Override
+	protected void onPreExecute() {
+		Toast.makeText(ContextProvider.get(), "Your question is being saved to the device.", Toast.LENGTH_SHORT).show();
+	}
+	
+	@Override
 	protected Boolean doInBackground(Void...voids) {
         try{
-        	Toast.makeText(ContextProvider.get(), "Your question is being saved to the device.", Toast.LENGTH_LONG).show();
         	return(MainModel.getInstance().getQuestionById(qId) != null);
         }catch(NoContentAvailableException ex){
         	return false;
