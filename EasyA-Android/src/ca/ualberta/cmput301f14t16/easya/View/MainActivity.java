@@ -41,8 +41,7 @@ public class MainActivity extends Activity {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private LinearLayout mDrawerList;
-    private ProgressDialog pd;
-    
+    private ProgressDialog pd;    
      
     public static List<QuestionList> displayedQuestions;
 

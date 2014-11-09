@@ -37,10 +37,8 @@ public class Cache{
 	}
 	
 	public void wipeCache(){
-		Gson g = new Gson();
-		PMDataParser pm = new PMDataParser();
-		pm.saveJson(PMFilesEnum.CACHEQUESTIONS, g.toJson(new ArrayList()));
-		pm.saveJson(PMFilesEnum.CACHEUSERS, g.toJson(new ArrayList()));		
+		PMDataParser.saveJson(PMFilesEnum.CACHEQUESTIONS, "");
+		PMDataParser.saveJson(PMFilesEnum.CACHEUSERS, "");		
 	}
 	
 	public List<QuestionList> getUserQuestions(User u){
