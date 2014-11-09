@@ -1,8 +1,12 @@
 package ca.ualberta.cmput301f14t16.easya.Model;
 
 import java.io.IOException;
+import java.lang.reflect.Type;
 import java.util.ArrayList; // Used in list creation.
 import java.util.List;
+
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
 import android.content.Context;
 
@@ -101,5 +105,39 @@ public class MainModel<V extends MainView> {
 	
 	public void wipeCache(){
 		Cache.getInstance().wipeCache();
+	}
+	
+	public void Test(){
+		Gson gson = new Gson();
+		Question q = new Question("title", "body", "userid");
+		String aux = gson.toJson(q);
+		Question q2 = gson.fromJson(aux, Question.class);
+		//
+		List<Question> ql = new ArrayList<Question>();
+		ql.add(q);
+		String aux2 = gson.toJson(ql);
+		Type listType = new TypeToken<List<Question>>(){}.getType();
+		List<Question> ql2 = gson.fromJson(aux2, listType);
+		q.addAnswer(new Answer("bodyanswer", "userid2"));
+		ql2.add(q);
+		ql2.add(q);
+		ql2.add(q);
+		ql2.add(q);
+		ql2.add(q);
+		ql2.add(q);
+		ql2.add(q);
+		ql2.add(q);
+		ql2.add(q);
+		ql2.add(q);
+		ql2.add(q);
+		ql2.add(q);
+		ql2.add(q);
+		ql2.add(q);
+		ql2.add(q);
+		ql2.add(q);
+		String aux3 = gson.toJson(ql2);		
+		List<Question> ql3 = gson.fromJson(aux3, listType);
+		String i = "1";
+		//
 	}
 }

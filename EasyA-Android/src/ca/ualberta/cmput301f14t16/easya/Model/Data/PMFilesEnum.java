@@ -7,8 +7,8 @@ package ca.ualberta.cmput301f14t16.easya.Model.Data;
  */
 public enum PMFilesEnum {
     CACHEQUESTIONS("ca.ualberta.cmput301f14t16.easya.CACHEQUESTIONS"),
-    CACHEUSERS("ca.ualberta.cmput301f14t16.easya.CACHEQUESTIONS"),
-    QUEUE("ca.ualberta.cmput301f14t16.easya.PENDINGKEY");
+    CACHEUSERS("ca.ualberta.cmput301f14t16.easya.CACHEUSERS"),
+    QUEUE("ca.ualberta.cmput301f14t16.easya.QUEUE");
     private String fileName;
     
     PMFilesEnum(String value)

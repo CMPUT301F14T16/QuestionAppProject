@@ -135,7 +135,8 @@ public class MainActivity extends Activity {
         	SetAdapter(displayedQuestions);
         	return true;
         case R.id.menu_sync:
-        	MainModel.getInstance().wipeCache();
+        	MainModel.getInstance().Test();
+        	return true;
         case R.id.menu_sortByOldest: 
         	displayedQuestions = Sort.dateSort(false, displayedQuestions);
         	SetAdapter(displayedQuestions);

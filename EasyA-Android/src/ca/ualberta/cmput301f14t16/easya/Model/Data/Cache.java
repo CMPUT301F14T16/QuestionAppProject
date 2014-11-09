@@ -99,6 +99,8 @@ public class Cache{
 	}
 		
 	public void SaveSingleQuestion(Question q){
+		if (q==null)
+			return;
 		Gson gson = new Gson();
 		Type listType = new TypeToken<List<Question>>(){}.getType();
 		List<Question> aux = gson.fromJson(PMDataParser.loadJson(PMFilesEnum.CACHEQUESTIONS), listType);

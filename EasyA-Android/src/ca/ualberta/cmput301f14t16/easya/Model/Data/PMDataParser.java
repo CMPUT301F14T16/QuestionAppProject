@@ -19,9 +19,9 @@ public class PMDataParser {
         FileOutputStream outputStream;
         try
         {
+        	ContextProvider.get().deleteFile(filename.getArchiveName());
             outputStream = ContextProvider.get().openFileOutput(filename.getArchiveName(), Context.MODE_PRIVATE);
             outputStream.write(json.getBytes());
-            outputStream.flush();
             outputStream.close();
         }
         catch (Exception e)
@@ -42,8 +42,7 @@ public class PMDataParser {
             catch (IOException e)
             {
                 FileOutputStream outputStream;
-                outputStream = ContextProvider.get().openFileOutput(filename.getArchiveName(), Context.MODE_PRIVATE);
-                outputStream.flush();
+                outputStream = ContextProvider.get().openFileOutput(filename.getArchiveName(), Context.MODE_PRIVATE);                
                 outputStream.close();
 
                 inputStream = ContextProvider.get().openFileInput(filename.getArchiveName());
