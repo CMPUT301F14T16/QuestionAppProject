@@ -4,6 +4,8 @@ import java.util.List;
 
 import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Controller.ChangeUsernameController;
+import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.changeUsernameTask;
+import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.getQuestionListTask;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.QuestionList;
@@ -37,12 +39,11 @@ import android.widget.TextView;
  * @author Cauani
  *
  */
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements MainView<List<QuestionList>> {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private LinearLayout mDrawerList;
-    private ProgressDialog pd;    
-     
+    private ProgressDialog pd;
     public static List<QuestionList> displayedQuestions;
 
     @Override
@@ -83,10 +84,6 @@ public class MainActivity extends Activity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
-        
-        /////
-        (new GetQuestionListTask(this)).execute();
-        //TODO: Organize this mess
     }
     
 	@Override
@@ -135,7 +132,6 @@ public class MainActivity extends Activity {
         	SetAdapter(displayedQuestions);
         	return true;
         case R.id.menu_sync:
-        	MainModel.getInstance().Test();
         	return true;
         case R.id.menu_sortByOldest: 
         	displayedQuestions = Sort.dateSort(false, displayedQuestions);
@@ -176,52 +172,13 @@ public class MainActivity extends Activity {
     @Override
     public void onResume(){
         Queue.getInstance();
+        update();
         super.onResume();
     }
     
     private void SetAdapter(List<QuestionList> lst){
     	ArrayAdapter<QuestionList> adapter = new MainViewAdapter(this, lst);
         ((ListView)findViewById(R.id.question_list)).setAdapter(adapter);
-    }
-    
-    private class GetQuestionListTask extends AsyncTask<Void, Void, List<QuestionList>> {
-    	private Context ctx;
-    	
-    	public GetQuestionListTask(Context ctx){
-    		this.ctx = ctx;
-    	}
-    	
-    	@Override
-		protected void onPreExecute() {
-    		pd = new ProgressDialog(ctx);
-			pd.setTitle("Loading questions...");
-			pd.setMessage("Please wait.");
-			pd.setCancelable(false);
-			pd.setIndeterminate(true);
-			pd.show();
-		}
-    	
-    	@Override
-    	protected List<QuestionList> doInBackground(Void...voids) {
-            try{
-            	return MainModel.getInstance().getAllQuestions();
-            }catch(NoContentAvailableException ex){
-            	return null;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(List<QuestionList> result) {
-        	if (pd!=null) {
-				pd.dismiss();
-			}
-        	if (result == null){
-        		//TODO: display the no content available screen
-        	}else{  
-        		displayedQuestions = Sort.dateSort(true, result);
-	        	SetAdapter(displayedQuestions);
-        	}
-        }
     }
     
     public void AddNewQuestion(View v){
@@ -257,70 +214,16 @@ public class MainActivity extends Activity {
                });      
         builder.create().show();
     }
-    
-    private class changeUsernameTask extends AsyncTask<Void, Void, Boolean> {
-    	private ChangeUsernameController controller;
-    	private Context ctx;
-    	private DialogInterface d;
-    	
-    	public changeUsernameTask(Context ctx, DialogInterface d){
-    		this.ctx = ctx;
-    		this.d = d;
-    	}
-    	
-    	@Override
-		protected void onPreExecute() {
-    		pd = new ProgressDialog(ctx);
-			pd.setTitle("Changing your username...");
-			pd.setMessage("Please wait.");
-			pd.setCancelable(false);
-			pd.setIndeterminate(true);
-			pd.show();
-		}
-    	
-    	@Override
-    	protected Boolean doInBackground(Void...voids) {
-            try{
-            	try{
-            		String username = ((EditText)((Dialog)d).findViewById(R.id.change_username_username)).getText().toString();
-            		controller = 
-	        				ChangeUsernameController.create(
-	        						username,
-	        						MainModel.getInstance().getCurrentUser());    	        		
-	        		return controller.submit();	
-	        	}catch(Exception ex){
-	        		System.out.println(ex.getMessage());
-	        		return false;
-	        	}
-            }catch(Exception ex){
-            	return false;
-            }
-        }
 
-        @Override
-        protected void onPostExecute(Boolean result) {
-        	if (pd!=null) {
-				pd.dismiss();
-			} 
-        	if (result){
-        		try{
-        			((TextView)findViewById(R.id.drawer_username)).setText(MainModel.getInstance().getCurrentUser().getUsername());
-        		}catch(NoContentAvailableException ex){
-        			//TODO: deal with this exception
-        		}
-        		d.cancel();
-    		}else{    			
-    			new AlertDialog.Builder(ctx)
-    		    .setTitle("No connection found")
-    		    .setMessage("We were unable to connect to our servers to change your username. Try checking your internet connection and change it again.")
-    		    .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-    		        public void onClick(DialogInterface dialog, int which) {
-    		        	
-    		        }
-    		     })
-    		    .setIcon(android.R.drawable.ic_dialog_alert)
-    		    .show();  
-			}      	
-        }
-    }
+	@Override
+	public void update() {
+		(new getQuestionListTask(this, this)).execute();	
+	}
+
+	@Override
+	public void update(List<QuestionList> lst) {
+		displayedQuestions = Sort.dateSort(true, lst);
+    	SetAdapter(displayedQuestions);
+	}
+    
 }

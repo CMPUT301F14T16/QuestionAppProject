@@ -1,10 +1,16 @@
 package ca.ualberta.cmput301f14t16.easya.View;
 
+import java.util.List;
+
 import ca.ualberta.cmput301f14t16.easya.R;
+import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.getQuestionListTask;
+import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.getQuestionTask;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
 import ca.ualberta.cmput301f14t16.easya.Model.GeneralHelper;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
+import ca.ualberta.cmput301f14t16.easya.Model.QuestionList;
+import ca.ualberta.cmput301f14t16.easya.Model.Sort;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -22,18 +28,17 @@ import android.widget.Toast;
  * @author Cauani
  *
  */
-public class QuestionActivity extends Activity {
+public class QuestionActivity extends Activity implements MainView<Question> {
 	private static Question question;
-	private ProgressDialog pd;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.question_view);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);        
-        (new GetQuestionListTask(this)).execute();
-	}	
+        getActionBar().setHomeButtonEnabled(true);  
+        update();
+	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -41,64 +46,13 @@ public class QuestionActivity extends Activity {
 		getMenuInflater().inflate(R.menu.question, menu);
 		return true;
 	}
-	
-	private void ShowNoContentView(){
-		//TODO: display the NoContentView
-		//setContentView(R.layout.no_content_view);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);        
-		return;
-	}
-	
+		
 	private void SetAdapter(Question q){
 		question = q;
     	QuestionViewAdapter adapter = new QuestionViewAdapter(this, question, (LinearLayout)findViewById(R.id.question_scrollview_container));
         adapter.build();
 	}
-	
-	private class GetQuestionListTask extends AsyncTask<Void, Void, Question> {
-		private Context ctx;
 		
-		public GetQuestionListTask(Context ctx){
-			this.ctx = ctx;
-		}
-		
-		@Override
-		protected void onPreExecute() {
-    		pd = new ProgressDialog(ctx);
-			pd.setTitle("Loading question...");
-			pd.setMessage("Please wait.");
-			pd.setCancelable(false);
-			pd.setIndeterminate(true);
-			pd.show();
-		}
-		
-		@Override
-        protected Question doInBackground(Void...voids) {
-        	try{
-        		String aux = (getIntent()).getStringExtra(GeneralHelper.QUESTION_KEY);
-        		if (aux == null || aux.equals(""))
-        			return null;
-        		return MainModel.getInstance().getQuestionById(aux);
-        	}catch(NoContentAvailableException ex){
-        		return null;
-        	}
-        }
-
-		@Override
-        protected void onPostExecute(Question result){
-        	if (result == null){
-        		ShowNoContentView();
-        	}else{
-        		SetAdapter(result);
-        	}
-        	
-        	if (pd!=null) {
-				pd.dismiss();
-			} 
-        }
-    }
-	
 	@Override
     public boolean onOptionsItemSelected(MenuItem item) {
         // Pass the event to ActionBarDrawerToggle, if it returns
@@ -118,5 +72,15 @@ public class QuestionActivity extends Activity {
 	    	i.putExtra(GeneralHelper.AQUESTION_KEY, question.getId());
 	        this.startActivity(i);
 		}
+	}
+
+	@Override
+	public void update() {
+		(new getQuestionTask(this, this,(getIntent()).getStringExtra(GeneralHelper.QUESTION_KEY))).execute();	
+	}
+
+	@Override
+	public void update(Question q) {
+    	SetAdapter(q);
 	}
 }

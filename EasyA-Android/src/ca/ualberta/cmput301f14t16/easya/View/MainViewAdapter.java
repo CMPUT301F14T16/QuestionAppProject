@@ -4,12 +4,16 @@ import java.text.SimpleDateFormat;
 import java.util.List;
 
 import ca.ualberta.cmput301f14t16.easya.R;
+import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.saveToDeviceTask;
 import ca.ualberta.cmput301f14t16.easya.Model.GeneralHelper;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Model.QuestionList;
 import ca.ualberta.cmput301f14t16.easya.R.id;
 import ca.ualberta.cmput301f14t16.easya.R.layout;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -63,6 +67,25 @@ public class MainViewAdapter extends ArrayAdapter<QuestionList> {
                      }
                  }
             );
+            view.setOnLongClickListener(
+        		new View.OnLongClickListener() {					
+					@Override
+					public boolean onLongClick(final View v) {
+						new AlertDialog.Builder(v.getContext())
+				           .setItems(new String[]{"Save to device"}, new DialogInterface.OnClickListener() {
+			               public void onClick(DialogInterface dialog, int which) {
+			            	   String qId = ((QuestionList)((MainViewAdapterHolder)v.getTag()).getTitle().getTag()).getId();
+			            	   try{
+			            		   (new saveToDeviceTask(qId)).execute();
+			            	   }catch(Exception ex){
+			            		   //TODO deal with more than one activity open
+			            	   }
+				           }
+					    }).create().show();
+						return true;
+					}
+				}
+    		);
         }
         else
         {

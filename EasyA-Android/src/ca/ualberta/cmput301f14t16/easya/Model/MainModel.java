@@ -9,6 +9,7 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 import android.content.Context;
+import android.view.View;
 
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoInternetException;
@@ -30,9 +31,11 @@ import ca.ualberta.cmput301f14t16.easya.View.MainView;
  * @author Cauani
  * @author Brett Commandeur (commande)
  */
-public class MainModel<V extends MainView> {
+public class MainModel {
 	private static MainModel m;
-	private ArrayList<V> views;
+	private static MainView<?> currentView;
+	
+	private ArrayList<MainView<?>> views;
 
 	/**
 	 * Design rationale: MVC format
@@ -43,7 +46,7 @@ public class MainModel<V extends MainView> {
 	 * @author Abram Hindle
 	 */
 	protected MainModel() {
-		this.views = new ArrayList<V>();
+		this.views = new ArrayList<MainView<?>>();
 	}
 	
 	public static MainModel getInstance(){
@@ -52,19 +55,19 @@ public class MainModel<V extends MainView> {
 		return m;
 	}
 	
-	public void addView(V view) {
+	public void addView(MainView<?> view) {
         	if (!views.contains(view)) {
             	views.add(view);
         	}
     	}
 	
-	public void deleteView(V view) {
+	public void deleteView(MainView<?> view) {
         	views.remove(view);
     	}
 	
 	public void notifyViews() {
-        	for (V view : views) {
-            	view.update(this);
+        	for (MainView<?> view : views) {
+            	view.update();
         	}
     	}
 	
@@ -105,39 +108,5 @@ public class MainModel<V extends MainView> {
 	
 	public void wipeCache(){
 		Cache.getInstance().wipeCache();
-	}
-	
-	public void Test(){
-		Gson gson = new Gson();
-		Question q = new Question("title", "body", "userid");
-		String aux = gson.toJson(q);
-		Question q2 = gson.fromJson(aux, Question.class);
-		//
-		List<Question> ql = new ArrayList<Question>();
-		ql.add(q);
-		String aux2 = gson.toJson(ql);
-		Type listType = new TypeToken<List<Question>>(){}.getType();
-		List<Question> ql2 = gson.fromJson(aux2, listType);
-		q.addAnswer(new Answer("bodyanswer", "userid2"));
-		ql2.add(q);
-		ql2.add(q);
-		ql2.add(q);
-		ql2.add(q);
-		ql2.add(q);
-		ql2.add(q);
-		ql2.add(q);
-		ql2.add(q);
-		ql2.add(q);
-		ql2.add(q);
-		ql2.add(q);
-		ql2.add(q);
-		ql2.add(q);
-		ql2.add(q);
-		ql2.add(q);
-		ql2.add(q);
-		String aux3 = gson.toJson(ql2);		
-		List<Question> ql3 = gson.fromJson(aux3, listType);
-		String i = "1";
-		//
 	}
 }
