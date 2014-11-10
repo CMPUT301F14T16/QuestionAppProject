@@ -14,7 +14,6 @@ import java.io.OutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
-import android.util.Log;
 
 public class HttpHelper {
 	
@@ -35,7 +34,7 @@ public class HttpHelper {
 	        conn.setDoInput(true);
 	        // Starts the query
 	        conn.connect();
-	        int response = conn.getResponseCode();
+	        //int response = conn.getResponseCode();
 	        
 	        // Log.d(DEBUG_TAG, "The response is: " + response);
 	        
@@ -79,7 +78,7 @@ public class HttpHelper {
 	        os.close();
 	     
 	        // Get Response
-	        int response = conn.getResponseCode();
+	        //int response = conn.getResponseCode();
 	        // Log.d(DEBUG_TAG, "The response is for post is: " + response);
 	        is = conn.getInputStream();
 
@@ -126,7 +125,7 @@ public class HttpHelper {
 	        os.close();
 	     
 	        // Get Response
-	        int response = conn.getResponseCode();
+	        //int response = conn.getResponseCode();
 	        // Log.d(DEBUG_TAG, "The response is for post is: " + response);
 	        is = conn.getInputStream();
 

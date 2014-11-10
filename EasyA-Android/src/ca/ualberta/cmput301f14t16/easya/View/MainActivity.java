@@ -3,7 +3,6 @@ package ca.ualberta.cmput301f14t16.easya.View;
 import java.util.List;
 
 import ca.ualberta.cmput301f14t16.easya.R;
-import ca.ualberta.cmput301f14t16.easya.Controller.ChangeUsernameController;
 import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.changeUsernameTask;
 import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.getQuestionListTask;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
@@ -16,7 +15,6 @@ import android.content.Intent;
 import ca.ualberta.cmput301f14t16.easya.Model.Sort;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.PMClient;
 import android.content.res.Configuration;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;

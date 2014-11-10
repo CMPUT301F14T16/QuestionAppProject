@@ -14,9 +14,6 @@ import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Model.QuestionList;
 import ca.ualberta.cmput301f14t16.easya.Model.Queue;
 import ca.ualberta.cmput301f14t16.easya.Model.User;
-import ca.ualberta.cmput301f14t16.easya.View.MainActivity;
-import android.app.Application;
-import android.content.Context;
 
 /**
  * Responsible for determining where to retrieve a content from,
@@ -176,13 +173,7 @@ public class Cache{
 			throw new NoContentAvailableException();
 		return lst;
 	}
-	
-	private List<User> getUserListFromCache(){
-		Gson gson = new Gson();
-		Type listType = new TypeToken<List<User>>(){}.getType();
-		return gson.fromJson(PMDataParser.loadJson(PMFilesEnum.CACHEUSERS), listType);		
-	}	
-	
+		
 	private Question getQuestionFromCache(String id) throws NoContentAvailableException{
 		Gson gson = new Gson();
 		Type listType = new TypeToken<List<Question>>(){}.getType();

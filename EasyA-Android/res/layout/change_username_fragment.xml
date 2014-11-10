@@ -51,5 +51,6 @@
 	    android:gravity="center_vertical"
 	    android:layout_alignParentLeft="true"
 	    android:layout_toLeftOf="@id/change_username_flipper"
-	    android:layout_below="@id/change_username_label"/>	
+	    android:layout_below="@id/change_username_label"
+	    android:inputType="text"/>	
 </RelativeLayout>

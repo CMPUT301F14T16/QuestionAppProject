@@ -1,12 +1,7 @@
 package ca.ualberta.cmput301f14t16.easya.Model;
 
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.UUID;
-
-import android.content.Context;
-
-import ca.ualberta.cmput301f14t16.easya.View.MainActivity;
 
 /**
  * The Content class is an abstract class that provides several utility methods

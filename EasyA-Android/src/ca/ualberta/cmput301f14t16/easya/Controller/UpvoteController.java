@@ -3,11 +3,7 @@ package ca.ualberta.cmput301f14t16.easya.Controller;
 import java.io.IOException;
 
 import org.apache.http.message.BasicNameValuePair;
-
-import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
-import ca.ualberta.cmput301f14t16.easya.Model.User;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.ESClient;
-import android.content.Context;
 
 public class UpvoteController {
 	private String qId;

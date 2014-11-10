@@ -1,19 +1,10 @@
 package ca.ualberta.cmput301f14t16.easya.Model;
 
 import java.io.IOException;
-import java.lang.reflect.Type;
-import java.util.ArrayList; // Used in list creation.
+import java.util.ArrayList;
 import java.util.List;
-
-import com.google.gson.Gson;
-import com.google.gson.reflect.TypeToken;
-
-import android.content.Context;
-import android.view.View;
-
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoInternetException;
-import ca.ualberta.cmput301f14t16.easya.Exceptions.UnableToGetUserEmailException;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.Cache;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.ESClient;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.PMClient;

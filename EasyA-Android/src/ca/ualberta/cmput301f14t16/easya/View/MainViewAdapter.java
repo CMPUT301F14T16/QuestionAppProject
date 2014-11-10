@@ -2,16 +2,13 @@ package ca.ualberta.cmput301f14t16.easya.View;
 
 import java.text.SimpleDateFormat;
 import java.util.List;
+import java.util.Locale;
 
 import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.saveToDeviceTask;
 import ca.ualberta.cmput301f14t16.easya.Model.GeneralHelper;
-import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Model.QuestionList;
-import ca.ualberta.cmput301f14t16.easya.R.id;
-import ca.ualberta.cmput301f14t16.easya.R.layout;
 import android.app.AlertDialog;
-import android.app.Dialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -99,7 +96,7 @@ public class MainViewAdapter extends ArrayAdapter<QuestionList> {
         qTitle.setTag(qItem);
         
         //Formatting display date
-        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd yyyy hh:mm");
+        SimpleDateFormat sdf = new SimpleDateFormat("MMM dd yyyy hh:mm", Locale.CANADA);
         String dateAsString = sdf.format(qItem.getDate());
         		
         qTitle.setText(qItem.getTitle());

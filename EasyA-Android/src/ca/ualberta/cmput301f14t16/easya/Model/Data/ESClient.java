@@ -5,8 +5,7 @@ import java.lang.reflect.Type;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.List;
-
-import android.util.Log;
+import java.util.Locale;
 import ca.ualberta.cmput301f14t16.easya.Model.Answer;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Model.QuestionList;
@@ -230,8 +229,8 @@ public class ESClient {
 		
 		if (returnedUsers.size() > 0) {
 			for (User user : returnedUsers) {
-				String email1 = user.getEmail().toLowerCase();
-				String email2 = email.toLowerCase();
+				String email1 = user.getEmail().toLowerCase(Locale.CANADA);
+				String email2 = email.toLowerCase(Locale.CANADA);
 				if (email1.equals(email2)) {
 					return user.getId();
 				}

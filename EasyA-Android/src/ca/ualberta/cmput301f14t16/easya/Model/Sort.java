@@ -1,6 +1,5 @@
 package ca.ualberta.cmput301f14t16.easya.Model;
 
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;

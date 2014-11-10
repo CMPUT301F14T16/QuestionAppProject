@@ -5,20 +5,17 @@ import java.io.IOException;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.User;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.ESClient;
-import android.content.Context;
 
 public class NewUserController {
-	private Context ctx;
 	private User u;
 	
-	protected NewUserController(Context ctx, User u){
-		this.ctx = ctx;
+	protected NewUserController(User u){
 		this.u = u;
 	}
 	
-	public static NewUserController create(Context ctx, String email, String username){
+	public static NewUserController create(String email, String username){
 		User u = new User(email, username);
-		return new NewUserController(ctx, u);
+		return new NewUserController(u);
 	}
 	
 	public boolean submit(){

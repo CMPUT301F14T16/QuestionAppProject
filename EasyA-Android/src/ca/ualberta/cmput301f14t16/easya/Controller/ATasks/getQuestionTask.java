@@ -1,7 +1,5 @@
 package ca.ualberta.cmput301f14t16.easya.Controller.ATasks;
 
-import java.util.List;
-
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;

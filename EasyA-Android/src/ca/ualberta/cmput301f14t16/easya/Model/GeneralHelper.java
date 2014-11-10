@@ -5,7 +5,6 @@ import java.util.regex.Pattern;
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
-import android.content.Context;
 import android.util.Patterns;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.UnableToGetUserEmailException;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.ContextProvider;

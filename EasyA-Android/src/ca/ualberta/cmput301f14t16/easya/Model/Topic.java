@@ -3,8 +3,6 @@ package ca.ualberta.cmput301f14t16.easya.Model;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.graphics.Bitmap;
-
 /**
  * Topic extends {@link Content}, providing added functionality to suit more
  * specific purposes.

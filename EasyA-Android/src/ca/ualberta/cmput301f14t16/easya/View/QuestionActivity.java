@@ -1,21 +1,11 @@
 package ca.ualberta.cmput301f14t16.easya.View;
 
-import java.util.List;
-
 import ca.ualberta.cmput301f14t16.easya.R;
-import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.getQuestionListTask;
 import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.getQuestionTask;
-import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
 import ca.ualberta.cmput301f14t16.easya.Model.GeneralHelper;
-import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
-import ca.ualberta.cmput301f14t16.easya.Model.QuestionList;
-import ca.ualberta.cmput301f14t16.easya.Model.Sort;
 import android.app.Activity;
-import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.Intent;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;

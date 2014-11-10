@@ -27,7 +27,8 @@
             android:layout_alignParentLeft="true"
             android:src="@drawable/ic_action_good"
             android:layout_centerHorizontal="true"
-            android:background="@android:color/transparent"/>
+            android:background="@android:color/transparent"
+            android:contentDescription=""/>
         <TextView
             android:id="@+id/question_fragment_upvoteText"
             android:layout_width="40dp"
@@ -37,8 +38,7 @@
             android:gravity="center"
             android:layout_marginBottom="5dp"
             android:textSize="18sp"
-            android:fadingEdge="horizontal"
-            android:text="99+"/>
+            android:fadingEdge="horizontal"/>
         <TextView
             android:id="@+id/question_fragment_body"
             android:layout_width="wrap_content"

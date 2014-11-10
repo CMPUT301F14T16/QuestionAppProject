@@ -55,7 +55,6 @@ public class signinTask extends AsyncTask<Void, Void, Boolean> {
         		}catch(NoContentAvailableException ex){
         			controller = 
 	        				NewUserController.create(
-	        						ctx, 
 	        						email, 
 	        						username);    	        		
 	        		return controller.submit();	    

@@ -5,24 +5,14 @@ import java.util.List;
 import org.apache.http.message.BasicNameValuePair;
 
 import ca.ualberta.cmput301f14t16.easya.R;
-import ca.ualberta.cmput301f14t16.easya.Controller.NewQuestionController;
-import ca.ualberta.cmput301f14t16.easya.Controller.NewReplyController;
-import ca.ualberta.cmput301f14t16.easya.Controller.UpvoteController;
+import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.submitReplyTask;
+import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.upvoteTask;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
 import ca.ualberta.cmput301f14t16.easya.Model.Answer;
-import ca.ualberta.cmput301f14t16.easya.Model.GeneralHelper;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Model.Reply;
-import ca.ualberta.cmput301f14t16.easya.Model.Topic;
-import ca.ualberta.cmput301f14t16.easya.Model.User;
-import ca.ualberta.cmput301f14t16.easya.Model.Data.PMClient;
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.DialogInterface;
-import android.view.View.OnKeyListener;
-import android.content.Intent;
-import android.os.AsyncTask;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -33,7 +23,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 import android.widget.TextView.OnEditorActionListener;
 
 /**
@@ -45,7 +34,6 @@ public class QuestionViewAdapter {
 	private LayoutInflater inflater;
 	private LinearLayout container;
 	private Question q;
-	private ProgressDialog pd;
 
     public QuestionViewAdapter( Context context, Question q, LinearLayout v) {        
         this.inflater = LayoutInflater.from(context);
@@ -162,119 +150,5 @@ public class QuestionViewAdapter {
     		ll.addView(v);
     	}
     	return ll;
-    }    
-    
-
-    private class submitReplyTask extends AsyncTask<Void, Void, Boolean> {
-    	private NewReplyController controller;
-    	private Context ctx;
-    	private String qId;
-    	private String aId;
-    	private String body;
-    	private TextView tv;
-    	
-    	public submitReplyTask(Context ctx, BasicNameValuePair vp, String body, TextView tv){
-    		this.ctx = ctx;
-    		this.qId = vp.getName();
-    		this.aId = vp.getValue();
-    		this.body = body;
-    		this.tv = tv;
-    	}
-    	
-    	@Override
-		protected void onPreExecute() {
-    		pd = new ProgressDialog(ctx);
-			pd.setTitle("Submitting reply...");
-			pd.setMessage("Please wait.");
-			pd.setCancelable(false);
-			pd.setIndeterminate(true);
-			pd.show();
-		}
-    	
-    	@Override
-    	protected Boolean doInBackground(Void...voids) {
-            try{
-            	try{
-	        		controller = 
-	        				NewReplyController.create(
-	        						ctx, 
-	        						qId, 
-	        						aId,
-	        						body,
-	        						MainModel.getInstance().getCurrentUser().getId());
-	        		
-	        		return controller.submit();	        		
-	        	}catch(Exception ex){
-	        		System.out.println(ex.getMessage());
-	        		return false;
-	        		//Deal with things as: user didn't fill out everything
-	        	}
-            }catch(Exception ex){
-            	//Deal with this
-            	return false;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result) {
-        	if (result){
-    			if (controller.submitedOffline){
-    				Toast.makeText(ctx, "Your reply will be posted online when you connect to the internet!", Toast.LENGTH_LONG).show();
-    				tv.setText("");
-    			}else{
-        			String aux = controller.getQuestionId();
-        			Intent i = new Intent(ctx,QuestionActivity.class);
-        			i.putExtra(GeneralHelper.QUESTION_KEY, aux);
-        			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-        			ctx.startActivity(i);
-    			}
-    		}else{
-    			Toast.makeText(ctx, "Something bad happened, try posting your question again!", Toast.LENGTH_LONG).show();
-    		}
-        	
-        	if (pd!=null) {
-				pd.dismiss();
-			}        	
-        }
-    }
-    
-    private class upvoteTask extends AsyncTask<Void, Void, Boolean> {
-    	private BasicNameValuePair vp;
-    	private Context ctx;
-    	
-    	public upvoteTask(Context ctx, BasicNameValuePair vp){
-    		this.ctx = ctx;
-    		this.vp = vp;
-    	}
-    	    	
-    	@Override
-    	protected Boolean doInBackground(Void...voids) {
-            try{
-            	try{
-	        		UpvoteController controller = 
-	        				UpvoteController.create(
-	        						vp,
-	        						MainModel.getInstance().getCurrentUser().getId());	        		
-	        		return controller.submit();	        		
-	        	}catch(Exception ex){
-	        		System.out.println(ex.getMessage());
-	        		return false;
-	        	}
-            }catch(Exception ex){
-            	return false;
-            }
-        }
-
-        @Override
-        protected void onPostExecute(Boolean result) {
-        	if (result){ 
-    			Intent i = new Intent(ctx,QuestionActivity.class);
-    			i.putExtra(GeneralHelper.QUESTION_KEY, vp.getName());
-    			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-    			ctx.startActivity(i);
-    		}else{
-    			Toast.makeText(ctx, "We were unable to save your upvote, check your internet connection and try again!", Toast.LENGTH_LONG).show();
-    		}     	
-        }
     }
 }

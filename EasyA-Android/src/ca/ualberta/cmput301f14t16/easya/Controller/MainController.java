@@ -12,7 +12,6 @@ import ca.ualberta.cmput301f14t16.easya.Model.Pending;
 import ca.ualberta.cmput301f14t16.easya.Model.Queue;
 import ca.ualberta.cmput301f14t16.easya.Model.Reply;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.ESClient;
-import ca.ualberta.cmput301f14t16.easya.View.MainActivity;
 
 public abstract class MainController {
 	protected Pending pending;

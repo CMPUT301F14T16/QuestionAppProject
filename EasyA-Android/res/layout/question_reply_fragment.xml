@@ -13,5 +13,5 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="2dp"
         android:gravity="right"
-        android:textStyle="italic"/>"
+        android:textStyle="italic"/>
 </LinearLayout>
