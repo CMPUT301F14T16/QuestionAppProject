@@ -72,7 +72,6 @@ public class SubmitQuestionActivity extends Activity {
 	@Override
     public void onPause(){
         PMClient pm = new PMClient();
-        //TODO: pass this to the controller
         pm.saveQTitle(((EditText)findViewById(R.id.submit_question_title)).getText().toString());
         pm.saveQBody(((EditText)findViewById(R.id.submit_question_body)).getText().toString());
         super.onPause();

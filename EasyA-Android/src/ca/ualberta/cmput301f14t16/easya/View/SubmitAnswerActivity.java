@@ -75,7 +75,6 @@ public class SubmitAnswerActivity extends Activity {
 	@Override
     public void onPause(){
         PMClient pm = new PMClient();
-        //TODO: pass this to the controller
         pm.saveABody(((EditText)findViewById(R.id.submit_answer_body)).getText().toString());
         super.onPause();
     }

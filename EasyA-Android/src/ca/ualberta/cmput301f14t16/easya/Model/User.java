@@ -29,15 +29,10 @@ public class User {
 	 */
 	private Date createdOn;
 	/**
-	 * A list of all IDs associated to {@link Content} objects created by the
-	 * user.
-	 */
-	private List<String> createdContent;
-	/**
 	 * A list of all IDs associated to {@link Content} objects marked as
 	 * "favourite" by the user.
 	 */
-	private List<String> favorites;
+	private List<String> favourites;
 
 	/**
 	 * Creates an empty User object.
@@ -63,7 +58,7 @@ public class User {
 		this.username = username.equals("") ? GeneralHelper.GenerateUserName() : username;
 		this.id = UUID.randomUUID().toString();
 		this.createdOn = new Date();
-		this.favorites = new ArrayList<String>();
+		this.favourites = new ArrayList<String>();
 	}
 
 	/**
@@ -72,8 +67,27 @@ public class User {
 	 * @return A list of IDs {@link Content} objects marked as favourite by the
 	 *         user.
 	 */
-	public List<String> getFavorites() {
-		return favorites;
+	public List<String> getFavourites() {
+		return favourites;
+	}
+	
+	/**
+	 * Checks if the {@link User} submitted is already in
+	 * {@link Topic#favourites}. If they are, it removes them from the list.
+	 * Otherwise, it adds them to it.
+	 * 
+	 * @param user
+	 *            The {@link User} to be added.
+	 */
+	// returns true if favourited, false if unfavourited
+	public boolean setFavourite(String qId) {		
+		if (this.favourites.contains(qId)) {
+			this.favourites.remove(qId);
+			return false;
+		} else {
+			this.favourites.add(qId);
+			return true;
+		}
 	}
 
 	/**

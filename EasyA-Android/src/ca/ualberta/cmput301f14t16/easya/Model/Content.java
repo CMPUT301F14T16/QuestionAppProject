@@ -1,7 +1,11 @@
 package ca.ualberta.cmput301f14t16.easya.Model;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.UUID;
+
+import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
 
 /**
  * The Content class is an abstract class that provides several utility methods
@@ -106,9 +110,13 @@ public abstract class Content {
 	}
 	
 	public String getAuthorDate(){
-		//TODO: return the author and date in the format: 
-		//yyyy-MM-dd, hh:mm by @[author]
-		// TODO: can't return username, this must happen somwhere else.
-		return "";
+		try{
+			String auxU = MainModel.getInstance().getUserById(this.getAuthorId()).getUsername();
+			SimpleDateFormat sdf = new SimpleDateFormat("MMM dd yyyy hh:mm", Locale.CANADA);
+	        String dateAsString = sdf.format(this.getDate());
+			return dateAsString + " - " + auxU;
+		}catch(NoContentAvailableException ex){
+			return "";
+		}
 	}
 }

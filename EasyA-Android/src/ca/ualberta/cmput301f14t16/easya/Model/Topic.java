@@ -25,10 +25,6 @@ public abstract class Topic extends Content {
 	 */
 	private List<Reply> replies;
 	/**
-	 * A list of {@link User} IDs who have marked this Topic as a favorite.
-	 */
-	private List<String> favourites; // Topic can be favourite of >1 user.
-	/**
 	 * A list of {@link User} IDs who have upvoted this topic. One {@link User}
 	 * may add at most one upvote to any given Topic, so a single {@link User}
 	 * will appear at most once in this list. Therefore, the length of this list
@@ -66,15 +62,6 @@ public abstract class Topic extends Content {
 		this.picture = pixelBitmap;
 		this.replies = new ArrayList<Reply>();
 		this.upVotes = new ArrayList<String>();
-	}
-	/**
-	 * Attaches an image to the Topic object.
-	 * 
-	 * @param filename
-	 *            The location of the image file.
-	 */
-	public void addImage(String filename) {
-		// TODO: create the AddImage method
 	}
 
 	/**
@@ -156,34 +143,12 @@ public abstract class Topic extends Content {
 	}
 
 	/**
-	 * Checks if the {@link User} submitted is already in
-	 * {@link Topic#favourites}. If they are, it removes them from the list.
-	 * Otherwise, it adds them to it.
-	 * 
-	 * @param user
-	 *            The {@link User} to be added.
-	 */
-	public void setFavourite(User user) {
-		try {
-			if (this.favourites.contains(user.getId())) {
-				this.favourites.remove(user.getId());
-			} else {
-				this.favourites.add(user.getId());
-			}
-		} catch (Exception ex) {
-
-		}
-		// TODO: Try to call directly if have internet, if have no internet,
-		// throw exception
-	}
-
-	/**
 	 * @param user
 	 * @return True if the provided {@link User} has marked the Topic as a
 	 *         favourite (the {@link User} is found in {@link Topic#favourites}.
 	 */
 	public boolean checkFavourite(User user) {
-		return this.favourites.contains(user.getId());
+		return user.getFavourites().contains(this.getId());
 	}
 
 	/**
