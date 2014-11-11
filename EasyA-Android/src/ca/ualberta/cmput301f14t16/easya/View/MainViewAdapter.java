@@ -82,6 +82,7 @@ public class MainViewAdapter extends ArrayAdapter<QuestionList> {
 					}
 				}
     		);
+            //TODO: implement favourite question in long click
         }
         else
         {
