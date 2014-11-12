@@ -18,7 +18,8 @@
 	    android:layout_width="match_parent"
 	    android:layout_above="@+id/welcome_email"
 	    android:layout_alignParentLeft="true"
-	    android:hint="@string/welcome_username"/>
+	    android:hint="@string/welcome_username"
+	    android:maxLength="20"/>
 	<EditText 
 	    android:id="@+id/welcome_email"
 	    android:layout_height="wrap_content"
@@ -26,7 +27,8 @@
 	    android:layout_above="@+id/welcome_sigin"
 	    android:layout_alignParentLeft="true"
 	    android:inputType="textEmailAddress"
-	    android:hint="@string/welcome_email"/>  
+	    android:hint="@string/welcome_email"
+	    android:maxLength="60"/>  
 	<Button 
 	    android:id="@+id/welcome_sigin"
 	    android:layout_height="wrap_content"
