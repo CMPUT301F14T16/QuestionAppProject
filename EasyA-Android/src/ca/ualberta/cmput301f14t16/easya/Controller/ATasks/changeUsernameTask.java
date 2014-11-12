@@ -10,7 +10,6 @@ import android.widget.EditText;
 import android.widget.TextView;
 import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Controller.ChangeUsernameController;
-import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 
 public class changeUsernameTask extends AsyncTask<Void, Void, Boolean> {
