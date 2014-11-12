@@ -26,7 +26,7 @@ public class MainModel {
 	private static MainModel m;
 	private static MainView<?> currentView;
 	
-	private ArrayList<MainView<?>> views;
+	private List<MainView<?>> views;
 
 	/**
 	 * Design rationale: MVC format
@@ -47,20 +47,24 @@ public class MainModel {
 	}
 	
 	public void addView(MainView<?> view) {
-        	if (!views.contains(view)) {
-            	views.add(view);
-        	}
+    	if (!views.contains(view)) {
+        	views.add(view);
     	}
+	}
 	
 	public void deleteView(MainView<?> view) {
-        	views.remove(view);
-    	}
+    	views.remove(view);
+	}
 	
 	public void notifyViews() {
-        	for (MainView<?> view : views) {
-            	view.update();
-        	}
+    	for (MainView<?> view : views) {
+        	view.update();
     	}
+	}
+	
+	public List<MainView<?>> getAllViews(){
+		return this.views;
+	}
 	
 	public Question getQuestionById(String id) throws NoContentAvailableException{
 		return Cache.getInstance().getQuestionById(id);
@@ -74,9 +78,14 @@ public class MainModel {
 		return Cache.getInstance().getUserByEmail(email);
 	}
 	
-	public User getCurrentUser() throws NoContentAvailableException{
-		PMClient pmclient = new PMClient();
-		return pmclient.getUser();
+	public User getCurrentUser(){
+		try{
+			PMClient pmclient = new PMClient();
+			return pmclient.getUser();
+		}catch(NoContentAvailableException ex){
+			return null;
+		}
+		
 	}
 	
 	public void saveMainUser(User u){

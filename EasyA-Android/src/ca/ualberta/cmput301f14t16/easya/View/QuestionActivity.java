@@ -18,7 +18,7 @@ import android.widget.Toast;
  * @author Cauani
  *
  */
-public class QuestionActivity extends Activity implements MainView<Question> {
+public class QuestionActivity extends SecureActivity implements MainView<Question> {
 	private static Question question;
 	
 	@Override

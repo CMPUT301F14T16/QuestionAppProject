@@ -59,11 +59,7 @@ public class changeUsernameTask extends AsyncTask<Void, Void, Boolean> {
 			pd.dismiss();
 		} 
     	if (result){
-    		try{
-    			((TextView)((Dialog)d).getOwnerActivity().findViewById(R.id.drawer_username)).setText(MainModel.getInstance().getCurrentUser().getUsername());
-    		}catch(NoContentAvailableException ex){
-    			//TODO: deal with this exception
-    		}
+			((TextView)((Dialog)d).getOwnerActivity().findViewById(R.id.drawer_username)).setText(MainModel.getInstance().getCurrentUser().getUsername());
     		d.cancel();
 		}else{    			
 			new AlertDialog.Builder(ctx)

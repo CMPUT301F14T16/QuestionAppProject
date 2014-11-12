@@ -13,7 +13,7 @@ import android.provider.MediaStore;
  * @author Cauani
  *
  */
-public class SubmitActivity extends Activity{
+public class SubmitActivity extends SecureActivity{
 	private static final int Phone = 1; 
 	private static final int TakeAPictuer = 2; 
     private String picturePath=null;

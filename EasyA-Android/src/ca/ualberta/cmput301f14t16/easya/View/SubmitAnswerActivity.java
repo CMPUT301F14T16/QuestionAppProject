@@ -27,7 +27,7 @@ import android.widget.ImageView;
  * @author Cauani
  *
  */
-public class SubmitAnswerActivity extends Activity {
+public class SubmitAnswerActivity extends SecureActivity {
     private ImageView imageview, addimage;
     private PixelBitmap pixelbitmap;
 	

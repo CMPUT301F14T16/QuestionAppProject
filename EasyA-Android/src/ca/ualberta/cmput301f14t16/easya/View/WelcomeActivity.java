@@ -17,7 +17,8 @@ public class WelcomeActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.welcome_view);
 		try{
-			MainModel.getInstance().getCurrentUser();
+			if (MainModel.getInstance().getCurrentUser() == null)
+				throw new NoContentAvailableException();			
 			Intent i = new Intent(this, MainActivity.class);
 			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(i);

@@ -37,7 +37,7 @@ import android.widget.TextView;
  * @author Cauani
  *
  */
-public class MainActivity extends Activity implements MainView<List<QuestionList>> {
+public class MainActivity extends SecureActivity implements MainView<List<QuestionList>> {
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private LinearLayout mDrawerList;
@@ -193,11 +193,7 @@ public class MainActivity extends Activity implements MainView<List<QuestionList
         AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
         LayoutInflater inflater = this.getLayoutInflater();
         View v = inflater.inflate(R.layout.change_username_fragment, null);
-        try{
-        	((EditText)v.findViewById(R.id.change_username_username)).setText(MainModel.getInstance().getCurrentUser().getUsername());
-        }catch(NoContentAvailableException ex){
-        	//TODO: deal with this exception
-        }
+    	((EditText)v.findViewById(R.id.change_username_username)).setText(MainModel.getInstance().getCurrentUser().getUsername());
         builder.setView(v)
                .setPositiveButton("Change", new DialogInterface.OnClickListener() {
                    @Override
