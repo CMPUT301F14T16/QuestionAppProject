@@ -206,7 +206,9 @@ public class MainActivity extends SecureActivity implements MainView<List<Questi
                        dialog.cancel();
                    }
                });      
-        builder.create().show();
+        Dialog d = builder.create();
+        d.setOwnerActivity(this);
+        d.show();
     }
 
 	@Override
