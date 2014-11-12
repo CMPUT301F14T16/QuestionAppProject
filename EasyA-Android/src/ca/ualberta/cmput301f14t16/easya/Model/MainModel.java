@@ -71,7 +71,11 @@ public class MainModel {
 	}
 	
 	public User getUserById(String id) throws NoContentAvailableException{
-		return Cache.getInstance().getUserById(id);
+		try{
+			return Cache.getInstance().getUserById(id);
+		}catch (Exception ex){
+			throw new NoContentAvailableException();
+		}
 	}
 	
 	public User getUserByEmail(String email) throws NoContentAvailableException, NoInternetException{

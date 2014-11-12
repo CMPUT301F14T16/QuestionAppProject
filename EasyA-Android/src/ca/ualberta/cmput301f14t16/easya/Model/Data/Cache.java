@@ -92,6 +92,8 @@ public class Cache{
 			 }else{
 				 throw new NoContentAvailableException();
 			 }
+		}catch(Exception ex){
+			throw new NoContentAvailableException();
 		}
 	}
 		
