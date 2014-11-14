@@ -5,7 +5,7 @@ import java.util.Collection;
 /**
  * Used in elastic search processing.
  * 
- * @reference https://github.com/rayzhangcl/ESDemo/blob/master/ESDemo/src/ca/ualberta/cs/CMPUT301/chenlei/Hits.java, on Oct 26, 2014.
+ * see https://github.com/rayzhangcl/ESDemo/blob/master/ESDemo/src/ca/ualberta/cs/CMPUT301/chenlei/Hits.java, on Oct 26, 2014.
  *
  */
 public class ESHits<T> {

@@ -10,7 +10,7 @@ public class MissingContentException extends Exception {
 	public MissingContentException(){}
 	
 	/**
-	 * @param args
+	 * @param message
 	 */
 	public MissingContentException(String message) {
 		super(message);

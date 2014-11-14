@@ -25,12 +25,10 @@ public class GeneralHelper {
 	public final static String QUESTION_KEY = "ca.ualberta.cmput301f14t16.easya.QUESTIONKEY";
 	public final static String USERKEY = "ca.ualberta.cmput301f14t16.easya.USERKEY";
 	
-	/**
-	 * @param c
-	 * @return
-	 * @throws UnableToGetUserEmailException
-	 */
 	//TODO Docstring method description
+	/**
+	 * @return
+	 */
 	public final static String retrieveEmail(){
 		try{
 			Pattern emailPattern = Patterns.EMAIL_ADDRESS;

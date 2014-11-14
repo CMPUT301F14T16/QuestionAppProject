@@ -45,7 +45,7 @@ public abstract class Content {
 	
 	/**
 	 * Creates a new instance of Content containing the body text provided, and
-	 * associated with the given author ID. {@link Content#date} and
+	 * associated with the given author ID. {@link Content#createdOn} and
 	 * {@link Content#id} will be automatically generated.
 	 * 
 	 * @param body

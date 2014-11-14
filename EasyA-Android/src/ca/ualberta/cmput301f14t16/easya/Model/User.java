@@ -51,7 +51,7 @@ public class User {
 	 * @param username
 	 *            Setter for {@link User#username}. If an empty string is
 	 *            passed, a random username will be generated using
-	 *            {@link User#generateNewUserName}.
+	 *            {@link GeneralHelper#GenerateUserName()}.
 	 */
 	public User(String email, String username) {
 		this.email = email;
@@ -72,12 +72,12 @@ public class User {
 	}
 	
 	/**
-	 * Checks if the {@link User} submitted is already in
-	 * {@link Topic#favourites}. If they are, it removes them from the list.
-	 * Otherwise, it adds them to it.
+	 * Checks if the {@link Question} ID submitted is already in
+	 * {@link User#favourites}. If it is, it removes it from the list.
+	 * Otherwise, it adds itt.
 	 * 
-	 * @param user
-	 *            The {@link User} to be added.
+	 * @param qId
+	 *            The {@link Question} ID to be added.
 	 */
 	// returns true if favourited, false if unfavourited
 	public boolean setFavourite(String qId) {		

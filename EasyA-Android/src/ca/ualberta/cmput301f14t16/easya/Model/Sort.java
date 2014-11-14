@@ -59,15 +59,6 @@ public class Sort {
 	}
 
 	/**
-	 * Sorts by if it has or doesn't have a picture.
-	 * 
-	 * @param sortOrder
-	 *            checks if the sort is from greatest to smallest or vice versa.
-	 * @param questionList
-	 *            list of topics to be sorted.
-	 * 
-	 */
-	/**
 	 * Sorts the passed list by the presence of a picture.
 	 * 
 	 * @param sortOrder
@@ -77,7 +68,6 @@ public class Sort {
 	 *            first.
 	 * @param questionList
 	 *            The list of {@link Topic} objects to be sorted.
-	 * @return The sorted list.
 	 */
 	public static void pictureSort(boolean sortOrder,
 			List<QuestionList> questionList) {

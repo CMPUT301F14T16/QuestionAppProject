@@ -43,7 +43,7 @@ public class Queue extends Thread {
 	private static Queue queue;
 
 	/**
-	 * The time at which the last check for an active internet connection was
+	 * The time at which the last check for an active Internet connection was
 	 * made.
 	 */
 	public Date lastCheck; // TODO made public because test case uses it.

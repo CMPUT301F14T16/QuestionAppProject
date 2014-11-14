@@ -42,7 +42,7 @@ public abstract class Topic extends Content {
 
 	/**
 	 * Creates a new instance of Topic containing the body text provided, and
-	 * associated with the given author ID. {@link Content#date} and
+	 * associated with the given author ID. {@link Content#createdOn} and
 	 * {@link Content#id} will be automatically generated.
 	 * 
 	 * @param body
@@ -67,7 +67,7 @@ public abstract class Topic extends Content {
 	/**
 	 * Adds a {@link Reply} to {@link Topic#replies}.
 	 * 
-	 * @param comment
+	 * @param reply
 	 *            The {@link Reply} to be added.
 	 */
 	public void addReply(Reply reply) {
@@ -120,7 +120,7 @@ public abstract class Topic extends Content {
 	 * If they are, it removes them from the list. Otherwise, it adds them to
 	 * it.
 	 * 
-	 * @param user
+	 * @param userId
 	 *            The {@link User} to be added.
 	 */
 	public void setUpvote(String userId) {
@@ -145,7 +145,7 @@ public abstract class Topic extends Content {
 	/**
 	 * @param user
 	 * @return True if the provided {@link User} has marked the Topic as a
-	 *         favourite (the {@link User} is found in {@link Topic#favourites}.
+	 *         favourite (the {@link User} is found in {@link User#favourites}).
 	 */
 	public boolean checkFavourite(User user) {
 		return user.getFavourites().contains(this.getId());

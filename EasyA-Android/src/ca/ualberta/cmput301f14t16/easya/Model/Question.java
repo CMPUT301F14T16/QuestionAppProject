@@ -38,7 +38,7 @@ public class Question extends Topic {
 	 *            The title of the question. Setter for {@link Question#title}.
 	 * @param body
 	 *            {@link String} stored by the new instance of Answer.
-	 * @param authorId
+	 * @param userId
 	 *            Identifier used to keep track of the unique user that provided
 	 *            the text of this Answer.
 	 */

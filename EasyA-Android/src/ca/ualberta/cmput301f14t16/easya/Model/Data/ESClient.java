@@ -18,7 +18,7 @@ import com.google.gson.reflect.TypeToken;
 /**
  * Design rationale: caller/user of ESClient should handle exceptions.
  * 
- * @reference https://github.com/rayzhangcl/ESDemo/blob/master/ESDemo/src/ca/ualberta/cs/CMPUT301/chenlei/ESClient.java on Oct 23, 2014
+ * see https://github.com/rayzhangcl/ESDemo/blob/master/ESDemo/src/ca/ualberta/cs/CMPUT301/chenlei/ESClient.java on Oct 23, 2014
  * @author Brett Commandeur
  */
 public class ESClient {

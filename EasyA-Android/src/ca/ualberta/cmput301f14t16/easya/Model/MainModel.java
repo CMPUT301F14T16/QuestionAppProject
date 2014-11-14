@@ -25,92 +25,95 @@ import ca.ualberta.cmput301f14t16.easya.View.MainView;
 public class MainModel {
 	private static MainModel m;
 	private static MainView<?> currentView;
-	
+
 	private List<MainView<?>> views;
 
 	/**
 	 * Design rationale: MVC format
 	 * 
-	 * @reference 
-	 *            https://github.com/LingboTang/FillerCreepForAndroid/blob/master
-	 *            /src/es/softwareprocess/fillercreep/FModel.java
+	 * see https://github.com/LingboTang/FillerCreepForAndroid/blob/master
+	 * /src/es/softwareprocess/fillercreep/FModel.java
+	 * 
 	 * @author Abram Hindle
 	 */
 	protected MainModel() {
 		this.views = new ArrayList<MainView<?>>();
 	}
-	
-	public static MainModel getInstance(){
+
+	public static MainModel getInstance() {
 		if (m == null)
 			m = new MainModel();
 		return m;
 	}
-	
+
 	public void addView(MainView<?> view) {
-    	if (!views.contains(view)) {
-        	views.add(view);
-    	}
+		if (!views.contains(view)) {
+			views.add(view);
+		}
 	}
-	
+
 	public void deleteView(MainView<?> view) {
-    	views.remove(view);
+		views.remove(view);
 	}
-	
+
 	public void notifyViews() {
-    	for (MainView<?> view : views) {
-        	view.update();
-    	}
+		for (MainView<?> view : views) {
+			view.update();
+		}
 	}
-	
-	public List<MainView<?>> getAllViews(){
+
+	public List<MainView<?>> getAllViews() {
 		return this.views;
 	}
-	
-	public Question getQuestionById(String id) throws NoContentAvailableException{
+
+	public Question getQuestionById(String id)
+			throws NoContentAvailableException {
 		return Cache.getInstance().getQuestionById(id);
 	}
-	
-	public User getUserById(String id) throws NoContentAvailableException{
-		try{
+
+	public User getUserById(String id) throws NoContentAvailableException {
+		try {
 			return Cache.getInstance().getUserById(id);
-		}catch (Exception ex){
+		} catch (Exception ex) {
 			throw new NoContentAvailableException();
 		}
 	}
-	
-	public User getUserByEmail(String email) throws NoContentAvailableException, NoInternetException{
+
+	public User getUserByEmail(String email)
+			throws NoContentAvailableException, NoInternetException {
 		return Cache.getInstance().getUserByEmail(email);
 	}
-	
-	public User getCurrentUser(){
-		try{
+
+	public User getCurrentUser() {
+		try {
 			PMClient pmclient = new PMClient();
 			return pmclient.getUser();
-		}catch(NoContentAvailableException ex){
+		} catch (NoContentAvailableException ex) {
 			return null;
 		}
-		
+
 	}
-	
-	public void saveMainUser(User u){
+
+	public void saveMainUser(User u) {
 		PMClient pm = new PMClient();
 		pm.saveUser(u);
 	}
-	
-	public boolean updateUsername(User u){
+
+	public boolean updateUsername(User u) {
 		ESClient es = new ESClient();
-		try{
+		try {
 			return es.setUsernameById(u.getId(), u.getUsername());
-		}catch(IOException ex){
+		} catch (IOException ex) {
 			return false;
-		}		
+		}
 	}
 
-	public List<QuestionList> getAllQuestions() throws NoContentAvailableException{
+	public List<QuestionList> getAllQuestions()
+			throws NoContentAvailableException {
 		return Cache.getInstance().getAllQuestions();
 	}
-	
-	public void wipeCache(){
+
+	public void wipeCache() {
 		Cache.getInstance().wipeCache();
 	}
 }

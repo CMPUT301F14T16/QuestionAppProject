@@ -92,7 +92,7 @@ public class Pending {
 	 * @param qID
 	 *            Setter for {@link Pending#questionId}
 	 * @param aID
-	 *            Setter for {@link Pending#answerID}
+	 *            Setter for {@link Pending#answerId}
 	 * @param c
 	 *            Content stored by the Pending object. Setter for
 	 *            {@link Pending#content}
