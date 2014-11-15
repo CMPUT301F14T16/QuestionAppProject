@@ -1,9 +1,12 @@
 package ca.ualberta.cmput301f14t16.easya.View;
 
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.InputStream;
+
 import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.submitQuestionTask;
-import ca.ualberta.cmput301f14t16.easya.Model.PixelBitmap;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.PMClient;
 import android.app.Activity;
 import android.content.Intent;
@@ -13,6 +16,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,7 +31,7 @@ import android.widget.ImageView;
  */
 public class SubmitQuestionActivity extends SecureActivity {
     private ImageView imageview, addimage;
-    private PixelBitmap pixelbitmap;
+    private Byte[] bytebitmap;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -62,7 +66,7 @@ public class SubmitQuestionActivity extends SecureActivity {
 	        			this, 
 	        			((EditText)findViewById(R.id.submit_question_title)).getText().toString(),
 	        			((EditText)findViewById(R.id.submit_question_body)).getText().toString(),
-	        			pixelbitmap)).execute();
+	        			bytebitmap)).execute();
 	        	return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
@@ -91,13 +95,21 @@ public class SubmitQuestionActivity extends SecureActivity {
 			Uri selectedImageUri = data.getData();
 			String imagepath = getPath(selectedImageUri);
 			Bitmap bitmap=BitmapFactory.decodeFile(imagepath);
+			ByteArrayOutputStream stream = new ByteArrayOutputStream();
+			bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+			byte[] byteArray = stream.toByteArray();
+			byte[] bytebitmap = Base64.encode(byteArray, 1);
+			
+			byte[] decodedBytes = Base64.decode(bytebitmap, 1);
+			InputStream is = new ByteArrayInputStream(decodedBytes);
+			Bitmap bmp = BitmapFactory.decodeStream(is);
 			File file = new File(imagepath);
 			long length = file.length();
 			int lengthint=(int)length;
-			pixelbitmap=new PixelBitmap(bitmap.getHeight(),bitmap.getHeight());
-			pixelbitmap.getColors(bitmap);
+
+			
 			//Bitmap bitmap2=pixelbitmap.createBitmap();
-			imageview.setImageBitmap(bitmap);
+			imageview.setImageBitmap(bmp);
 	      
 	    }
 	}

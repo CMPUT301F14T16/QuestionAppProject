@@ -1,11 +1,11 @@
 package ca.ualberta.cmput301f14t16.easya.View;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.submitAnswerTask;
 import ca.ualberta.cmput301f14t16.easya.Model.GeneralHelper;
-import ca.ualberta.cmput301f14t16.easya.Model.PixelBitmap;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.PMClient;
 import android.app.Activity;
 import android.content.Intent;
@@ -15,6 +15,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,7 +30,7 @@ import android.widget.ImageView;
  */
 public class SubmitAnswerActivity extends SecureActivity {
     private ImageView imageview, addimage;
-    private PixelBitmap pixelbitmap;
+    private Byte[] bytebitmap;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -65,7 +66,7 @@ public class SubmitAnswerActivity extends SecureActivity {
 	        			this,
 	        			(getIntent()).getStringExtra(GeneralHelper.AQUESTION_KEY),
 	        			((EditText)findViewById(R.id.submit_answer_body)).getText().toString(),
-	        			pixelbitmap)).execute();
+	        			bytebitmap)).execute();
 	        	return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
@@ -92,11 +93,16 @@ public class SubmitAnswerActivity extends SecureActivity {
 			Uri selectedImageUri = data.getData();
 			String imagepath = getPath(selectedImageUri);
 			Bitmap bitmap=BitmapFactory.decodeFile(imagepath);
+			ByteArrayOutputStream stream = new ByteArrayOutputStream();
+			bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+			byte[] byteArray = stream.toByteArray();
+			byte[] bytebitmap = Base64.encode(byteArray, 1);
+			
 			File file = new File(imagepath);
 			long length = file.length();
 			int lengthint=(int)length;
-			pixelbitmap=new PixelBitmap(bitmap.getHeight(),bitmap.getHeight());
-			pixelbitmap.getColors(bitmap);
+
+			
 			imageview.setImageBitmap(bitmap);	      
 	    }
 	}

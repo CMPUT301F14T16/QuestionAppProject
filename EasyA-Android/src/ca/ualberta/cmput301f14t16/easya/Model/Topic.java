@@ -19,7 +19,7 @@ public abstract class Topic extends Content {
 	/**
 	 * A picture attached to the Topic object.
 	 */
-	private PixelBitmap picture;
+	private Byte[] picture;
 	/**
 	 * A list of replies created by users in response to the Topic.
 	 */
@@ -57,9 +57,9 @@ public abstract class Topic extends Content {
 		this.replies = new ArrayList<Reply>();
 		this.upVotes = new ArrayList<String>();
 	}
-	public Topic(String body, PixelBitmap pixelBitmap, String userId) {
+	public Topic(String body, Byte[] bitmap, String userId) {
 		super(body, userId);
-		this.picture = pixelBitmap;
+		this.picture = bitmap;
 		this.replies = new ArrayList<Reply>();
 		this.upVotes = new ArrayList<String>();
 	}
@@ -92,7 +92,7 @@ public abstract class Topic extends Content {
 	/**
 	 * @return {@link Topic#picture}
 	 */
-	public PixelBitmap getImage() {
+	public Byte[] getImage() {
 		return this.picture;
 	}
 

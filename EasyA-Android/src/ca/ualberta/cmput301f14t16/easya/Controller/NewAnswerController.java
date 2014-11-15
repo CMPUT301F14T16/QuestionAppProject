@@ -5,7 +5,6 @@ import ca.ualberta.cmput301f14t16.easya.Exceptions.NoInternetException;
 import ca.ualberta.cmput301f14t16.easya.Model.Answer;
 import ca.ualberta.cmput301f14t16.easya.Model.Content;
 import ca.ualberta.cmput301f14t16.easya.Model.Pending;
-import ca.ualberta.cmput301f14t16.easya.Model.PixelBitmap;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
 
 /**
@@ -45,8 +44,8 @@ public class NewAnswerController extends MainController {
 	 * @return The newly created instance of NewAnswerController.
 	 */
 	public static NewAnswerController create(Context ctx, String qId,
-			String body, PixelBitmap pixelBitmap, String authorID) {
-		Answer newAnswer = new Answer(body, pixelBitmap, authorID);
+			String body, Byte[] bitmap, String authorID) {
+		Answer newAnswer = new Answer(body, bitmap, authorID);
 		Pending newPending = new Pending(qId, newAnswer);
 		return new NewAnswerController(newPending, ctx);
 	}
