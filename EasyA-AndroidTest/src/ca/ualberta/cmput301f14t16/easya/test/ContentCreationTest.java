@@ -17,8 +17,8 @@ public class ContentCreationTest extends TestCase {
 		//adds the question of the topic to an array of saved questions
 		question.addAnswer(answer);
 		question.addReply(reply);
-		question.setFavourite(user);
-		answer.setFavourite(user);
+		//question.setFavourite(user);
+		//answer.setFavourite(user);
 		answer.addReply(reply);
 		//tests if answer added to question is correct
 		assertTrue(question.getAnswerCount() == 1);
