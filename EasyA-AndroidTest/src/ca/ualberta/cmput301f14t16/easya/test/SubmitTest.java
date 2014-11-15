@@ -43,7 +43,7 @@ public class SubmitTest extends TestCase {
 	
 	
 	
-	public void SubmitBasisTest() {
+	public void tesSubmitBasisTest() {
 		ESClient es = new ESClient();
 		Question q1 = new Question("Title Submission Test", "Body of Question", "test@ualberta.ca");
 		Answer a1 = new Answer("Body of answer", "someone@ualberta.ca");
