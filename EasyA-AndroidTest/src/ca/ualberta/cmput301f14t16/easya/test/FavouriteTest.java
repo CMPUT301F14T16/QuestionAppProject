@@ -48,14 +48,14 @@ public class FavouriteTest extends TestCase {
 		user = new User(email,username);
 		
 		try {
-			q1.setFavourite(user);
+			//q1.setFavourite(user);
 			assertTrue(favourites.contains(q1));
 		} catch (Exception ex) {
 			assertFalse(false);
 		}
 		
 		try {
-			a1.setFavourite(user);
+			//a1.setFavourite(user);
 			assertTrue(favourites.contains(a1));
 		} catch (Exception ex) {
 			assertFalse(false);
