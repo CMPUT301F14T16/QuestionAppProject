@@ -3,19 +3,17 @@
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-    <LinearLayout
+    <RelativeLayout
+        android:id="@+id/main_rl"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
-        <ListView
-            android:id="@+id/question_list"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_weight="1">
-        </ListView>
+        android:orientation="vertical">        
 	    <LinearLayout
+	        android:id="@+id/main_question_holder"
 	        android:layout_width="match_parent"
 	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_alignParentBottom="true"
 	        android:orientation="horizontal"
             android:background="@drawable/add_question_bar_background">
 	        <EditText
@@ -26,8 +24,16 @@
 	            android:focusableInTouchMode="false"
 	            android:focusable="false"	            
 	            android:onClick="AddNewQuestion"/>
-	    </LinearLayout>        
-    </LinearLayout>
+	    </LinearLayout>
+	    <ListView
+            android:id="@+id/question_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentLeft="true"
+            android:layout_above="@id/main_question_holder">
+        </ListView>
+    </RelativeLayout>
     <LinearLayout
         android:id="@+id/drawer_menu"
         android:layout_width="240dp"

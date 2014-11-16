@@ -89,6 +89,7 @@ public class MainModel {
 	public void saveMainUser(User u) {
 		PMClient pm = new PMClient();
 		pm.saveUser(u);
+		Cache.getInstance().updateAllUsers();
 	}
 
 	public boolean updateUsername(User u) {

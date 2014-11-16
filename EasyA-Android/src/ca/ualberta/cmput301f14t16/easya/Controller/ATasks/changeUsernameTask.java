@@ -59,8 +59,7 @@ public class changeUsernameTask extends AsyncTask<Void, Void, Boolean> {
 			pd.dismiss();
 		} 
     	if (result){
-			((TextView)((Dialog)d).getOwnerActivity().findViewById(R.id.drawer_username)).setText(MainModel.getInstance().getCurrentUser().getUsername());
-    		d.cancel();
+			MainModel.getInstance().notifyViews();
 		}else{    			
 			new AlertDialog.Builder(ctx)
 		    .setTitle("No connection found")

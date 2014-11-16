@@ -15,6 +15,7 @@ import android.content.Intent;
 import ca.ualberta.cmput301f14t16.easya.Model.Sort;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.PMClient;
 import android.content.res.Configuration;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -22,14 +23,21 @@ import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
+import android.util.TypedValue;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.View.OnClickListener;
+import android.view.ViewGroup;
+import android.widget.AbsoluteLayout.LayoutParams;
+import android.widget.AnalogClock;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 /**
@@ -43,6 +51,7 @@ public class MainActivity extends SecureActivity implements MainView<List<Questi
     private LinearLayout mDrawerList;
     private ProgressDialog pd;
     public static List<QuestionList> displayedQuestions;
+    private final static int UPDATEBANNER = 250000025; 
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -88,7 +97,6 @@ public class MainActivity extends SecureActivity implements MainView<List<Questi
     public boolean onOptionsItemSelected(MenuItem item) {
         if (mDrawerToggle.onOptionsItemSelected(item))
         	return true;
-
         switch (item.getItemId()) {
         case R.id.menu_sortByNewest: 
         	displayedQuestions = Sort.dateSort(true, displayedQuestions);
@@ -180,8 +188,41 @@ public class MainActivity extends SecureActivity implements MainView<List<Questi
 	}
 	
 	private void startUpdate(){
+		((TextView)findViewById(R.id.drawer_username)).setText(MainModel.getInstance().getCurrentUser().getUsername());
 		update(MainModel.getInstance().getAllCachedQuestions());
 		(new getQuestionListTask(this, this)).execute();
+	}
+	
+	private void DisplayBanner(){
+		RelativeLayout conteiner = (RelativeLayout)findViewById(R.id.main_rl);		
+		if (conteiner.findViewById(UPDATEBANNER) == null){
+			RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+			lp.addRule(RelativeLayout.ALIGN_PARENT_TOP);
+			lp.addRule(RelativeLayout.CENTER_HORIZONTAL);
+			lp.setMargins(0, (int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 5, getResources().getDisplayMetrics()), 0, 0);			
+			TextView banner = new TextView(this);
+			banner.setId(UPDATEBANNER);
+			banner.setHeight((int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 30, getResources().getDisplayMetrics()));
+			banner.setWidth((int)TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 200, getResources().getDisplayMetrics()));
+			banner.setText("New content found!");
+			banner.setTextColor(Color.WHITE);
+			banner.setOnClickListener(onclickUpdateListener);
+			banner.setBackgroundResource(R.drawable.banner_background);
+			banner.setGravity(Gravity.CENTER);
+			conteiner.addView(banner, lp);
+		}
+	}
+	
+	private OnClickListener onclickUpdateListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			bindAdapter();
+			((RelativeLayout)v.getParent()).removeView(v);
+		}
+	};
+	
+	private void bindAdapter(){
+		SetAdapter(displayedQuestions);
 	}
 
 	@Override
@@ -191,12 +232,9 @@ public class MainActivity extends SecureActivity implements MainView<List<Questi
 			//TODO: remember where the list is just before updating
 			//TODO: move the setAdapter to it's own method
 			displayedQuestions = Sort.dateSort(true, lst);
-			SetAdapter(displayedQuestions);
+			bindAdapter();
 		}else{
-			//TODO: show banner stating that new content is available
-			//(Similar to the New Stories of facebook)
-			//If there's new content that would alter the size of the view, show banner
-			//instead of just updating the view (but update the view's question set)
+			DisplayBanner();
 			displayedQuestions = Sort.dateSort(true, lst);
 		}
 	}

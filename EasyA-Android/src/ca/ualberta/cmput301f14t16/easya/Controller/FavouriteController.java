@@ -59,6 +59,8 @@ public class FavouriteController {
 			ESClient es = new ESClient();
 			// TODO: send the User to ESClient for it to update the favourites
 			// es.setUserFavourite();
+			//TODO: save the newly favourited question on cache via
+			// MainModel.getInstance().saveSingleQuestion();
 			return response;
 			// }catch(IOException ex){
 			// return false;
