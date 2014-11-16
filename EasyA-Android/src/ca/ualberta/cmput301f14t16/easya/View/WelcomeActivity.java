@@ -9,6 +9,7 @@ import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
+import android.text.TextUtils;
 import android.text.TextWatcher;
 import android.view.KeyEvent;
 import android.view.View;
@@ -36,8 +37,9 @@ public class WelcomeActivity extends Activity {
     }
 	
 	public void checkInputs(){
-		if(((EditText)findViewById(R.id.welcome_email)).getText().toString().trim().equals("")
-    			|| ((EditText)findViewById(R.id.welcome_username)).getText().toString().trim().equals("")){
+		if(TextUtils.isEmpty(((EditText)findViewById(R.id.welcome_email)).getText().toString().trim())
+    			|| TextUtils.isEmpty(((EditText)findViewById(R.id.welcome_username)).getText().toString().trim())
+    			|| !android.util.Patterns.EMAIL_ADDRESS.matcher(((EditText)findViewById(R.id.welcome_email)).getText().toString().trim()).matches()){
 			if (((Button)findViewById(R.id.welcome_sigin)).isEnabled())
 				((Button)findViewById(R.id.welcome_sigin)).setEnabled(false);
 		}else{
@@ -61,5 +63,5 @@ public class WelcomeActivity extends Activity {
         public void afterTextChanged(Editable s){
         	checkInputs();
         }
-};
+	};
 }
