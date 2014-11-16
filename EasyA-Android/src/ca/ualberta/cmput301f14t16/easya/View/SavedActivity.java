@@ -17,6 +17,7 @@ public class SavedActivity extends MasterActivity {
 		lp.setMargins(0,0,0,0);
 		((LinearLayout)findViewById(R.id.main_question_holder)).setLayoutParams(lp);
 		position = 3;
+		getActionBar().setTitle("Saved questions");
     }
     
     @Override

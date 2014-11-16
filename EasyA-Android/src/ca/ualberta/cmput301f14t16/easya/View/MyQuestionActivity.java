@@ -20,8 +20,8 @@ public class MyQuestionActivity extends MasterActivity {
 		lp.height = 0;
 		lp.setMargins(0,0,0,0);
 		((LinearLayout)findViewById(R.id.main_question_holder)).setLayoutParams(lp);
-
 		position = 2;
+		getActionBar().setTitle("My questions");
     }
     
     @Override

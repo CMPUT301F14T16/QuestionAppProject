@@ -17,6 +17,7 @@ public class FavouritesActivity extends MasterActivity {
 		lp.setMargins(0,0,0,0);
 		((LinearLayout)findViewById(R.id.main_question_holder)).setLayoutParams(lp);
 		position = 1;
+		getActionBar().setTitle("Favourites");
     }
     
 	@Override
