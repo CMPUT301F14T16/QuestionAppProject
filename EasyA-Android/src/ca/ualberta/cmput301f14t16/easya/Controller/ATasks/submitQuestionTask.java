@@ -91,6 +91,7 @@ public class submitQuestionTask extends AsyncTask<Void, Void, Boolean> {
     	
     	if (pd!=null) {
 			pd.dismiss();
-		}        	
+		}
+    	MainModel.getInstance().notifyViews();
     }
 }

@@ -6,11 +6,11 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
+import ca.ualberta.cmput301f14t16.easya.Controller.FavouriteController;
 import ca.ualberta.cmput301f14t16.easya.Controller.UpvoteController;
 import ca.ualberta.cmput301f14t16.easya.Model.GeneralHelper;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.View.QuestionActivity;
-
 
 public class favouriteTask extends AsyncTask<Void, Void, Boolean> {
 	private BasicNameValuePair vp;
@@ -25,9 +25,8 @@ public class favouriteTask extends AsyncTask<Void, Void, Boolean> {
 	protected Boolean doInBackground(Void...voids) {
         try{
         	try{
-        		UpvoteController controller = 
-        				UpvoteController.create(
-        						vp,
+        		FavouriteController controller = 
+        				FavouriteController.create(
         						MainModel.getInstance().getCurrentUser().getId());	        		
         		return controller.submit();	        		
         	}catch(Exception ex){
@@ -47,7 +46,7 @@ public class favouriteTask extends AsyncTask<Void, Void, Boolean> {
 			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			ctx.startActivity(i);
 		}else{
-			Toast.makeText(ctx, "We were unable to save your upvote, check your internet connection and try again!", Toast.LENGTH_LONG).show();
+			Toast.makeText(ctx, "We were unable to save your favourite, check your internet connection and try again!", Toast.LENGTH_LONG).show();
 		}     	
     }
 }

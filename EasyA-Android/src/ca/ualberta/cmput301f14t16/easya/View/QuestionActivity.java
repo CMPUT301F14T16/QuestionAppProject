@@ -3,6 +3,7 @@ package ca.ualberta.cmput301f14t16.easya.View;
 import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.getQuestionTask;
 import ca.ualberta.cmput301f14t16.easya.Model.GeneralHelper;
+import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import android.app.Activity;
 import android.content.Intent;
@@ -20,13 +21,16 @@ import android.widget.Toast;
  */
 public class QuestionActivity extends SecureActivity implements MainView<Question> {
 	private static Question question;
+	private String qId;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.question_view);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);  
+        getActionBar().setHomeButtonEnabled(true);
+        MainModel.getInstance().addView(this);
+        this.qId = (getIntent()).getStringExtra(GeneralHelper.QUESTION_KEY);	
         update();
 	}
 	
@@ -45,30 +49,45 @@ public class QuestionActivity extends SecureActivity implements MainView<Questio
 		
 	@Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Pass the event to ActionBarDrawerToggle, if it returns
-        // true, then it has handled the app icon touch event
-        if (item.getItemId() == R.id.menu_question_favourite){
-        	Toast.makeText(getApplicationContext(), "To be implemented", Toast.LENGTH_SHORT).show();
-        	//TODO: favourite a question
-        	return true;
-        }
-        return super.onOptionsItemSelected(item);
+		switch (item.getItemId()) {
+	    	case android.R.id.home:
+		        finish();
+		        break;
+	    	case R.id.menu_question_favourite:
+	    		Toast.makeText(getApplicationContext(), "To be implemented", Toast.LENGTH_SHORT).show();
+    			break;
+		 }
+		 return true;        
     }
 	
 	public void AddNewAnswer(View v){
 		if (question != null){
 			Intent i = new Intent(v.getContext(), SubmitAnswerActivity.class);
-	    	//i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
 	    	i.putExtra(GeneralHelper.AQUESTION_KEY, question.getId());
 	        this.startActivity(i);
 		}
 	}
-
+	
+	@Override
+	public void onDestroy(){
+		MainModel.getInstance().deleteView(this);
+		super.onDestroy();
+	}
+	
 	@Override
 	public void update() {
-		(new getQuestionTask(this, this,(getIntent()).getStringExtra(GeneralHelper.QUESTION_KEY))).execute();	
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				startUpdate();
+			}
+		});
 	}
 
+	private void startUpdate(){
+		(new getQuestionTask(this, this, this.qId)).execute();
+	}
+	
 	@Override
 	public void update(Question q) {
     	SetAdapter(q);

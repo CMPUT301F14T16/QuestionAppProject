@@ -3,6 +3,10 @@ package ca.ualberta.cmput301f14t16.easya.Model;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+
+import android.app.Activity;
+import android.content.Context;
+import android.content.Intent;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoInternetException;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.Cache;
@@ -13,11 +17,7 @@ import ca.ualberta.cmput301f14t16.easya.View.MainView;
 /**
  * Provides a method of interacting with the data created and stored by the
  * application. Includes several methods to save and retrieve data from a
- * webservice, or local memory..
- * 
- * Design rationale: a unique user is associated with a unique and immutable ID.
- * However, this user and ID may also be associated with a non-unique and
- * mutable screen name.
+ * webservice, or local memory.
  * 
  * @author Cauani
  * @author Brett Commandeur (commande)
@@ -28,14 +28,6 @@ public class MainModel {
 
 	private List<MainView<?>> views;
 
-	/**
-	 * Design rationale: MVC format
-	 * 
-	 * see https://github.com/LingboTang/FillerCreepForAndroid/blob/master
-	 * /src/es/softwareprocess/fillercreep/FModel.java
-	 * 
-	 * @author Abram Hindle
-	 */
 	protected MainModel() {
 		this.views = new ArrayList<MainView<?>>();
 	}
@@ -47,17 +39,17 @@ public class MainModel {
 	}
 
 	public void addView(MainView<?> view) {
-		if (!views.contains(view)) {
-			views.add(view);
+		if (!getAllViews().contains(view)) {
+			getAllViews().add(view);			
 		}
 	}
 
 	public void deleteView(MainView<?> view) {
-		views.remove(view);
+		getAllViews().remove(view);
 	}
 
 	public void notifyViews() {
-		for (MainView<?> view : views) {
+		for (MainView<?> view : getAllViews()) {
 			view.update();
 		}
 	}
@@ -112,8 +104,28 @@ public class MainModel {
 			throws NoContentAvailableException {
 		return Cache.getInstance().getAllQuestions();
 	}
+	
+	public List<QuestionList> getAllCachedQuestions() {
+		try{
+			return Cache.getInstance().getQuestionListFromQuestionsCache();
+		}catch(NoContentAvailableException ex){
+			return new ArrayList<QuestionList>();
+		}
+	}
+	
+	public List<QuestionList> getAllUserFavourites()
+			throws NoContentAvailableException{
+		return Cache.getInstance().getAllUserFavourites();
+	}
+	
+	public List<QuestionList> getAllUserQuestions()
+			throws NoContentAvailableException{
+		return Cache.getInstance().getAllUserQuestions();
+	}
 
-	public void wipeCache() {
+	public void wipeData() {
 		Cache.getInstance().wipeCache();
+		PMClient pm = new PMClient();
+		pm.wipeData();
 	}
 }

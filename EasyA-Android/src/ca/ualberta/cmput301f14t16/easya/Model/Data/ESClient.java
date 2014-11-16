@@ -177,7 +177,7 @@ public class ESClient {
 			
 			Question question = q.getSource();			
 			QuestionList questionList = new QuestionList(question.getId(), question.getTitle(), 
-					question.getAuthorName(), question.getAnswerCountString(), 
+					question.getAuthorName(), question.getAuthorId(), question.getAnswerCountString(), 
 					question.getUpVoteCountString(), question.hasPicture(), 
 					question.getDate());
 			qlist.add(questionList);
@@ -282,5 +282,16 @@ public class ESClient {
 		
 		//TODO: change that based on ESS response
 		return true;
+	}
+
+	public List<Question> getFavouriteQuestionsByUser(User u) throws IOException {
+		List<String> favsList = u.getFavourites();
+		if (favsList == null || favsList.size() <= 0)
+			return null;
+		StringBuilder sb = new StringBuilder().append("id:");
+		for (String s : favsList){
+			sb.append(" " + s);
+		}
+		return searchQuestionsByQuery(sb.toString(), 999);
 	}
 }

@@ -42,12 +42,9 @@ public class upvoteTask extends AsyncTask<Void, Void, Boolean> {
     @Override
     protected void onPostExecute(Boolean result) {
     	if (result){ 
-			Intent i = new Intent(ctx,QuestionActivity.class);
-			i.putExtra(GeneralHelper.QUESTION_KEY, vp.getName());
-			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-			ctx.startActivity(i);
+    		MainModel.getInstance().notifyViews();
 		}else{
 			Toast.makeText(ctx, "We were unable to save your upvote, check your internet connection and try again!", Toast.LENGTH_LONG).show();
-		}     	
+		}
     }
 }

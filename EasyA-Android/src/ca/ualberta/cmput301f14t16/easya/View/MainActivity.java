@@ -48,45 +48,13 @@ public class MainActivity extends SecureActivity implements MainView<List<Questi
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.main_master);
-
-		try{
-			((TextView)findViewById(R.id.drawer_username)).setText(MainModel.getInstance().getCurrentUser().getUsername());
-		}catch(Exception ex){
-			finish();
-			Intent i = new Intent(this, WelcomeActivity.class);
-			startActivity(i);
-		}
-		
-        //Creation of the drawer menu
-        mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
-        mDrawerList = (LinearLayout) findViewById(R.id.drawer_menu);
-        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
-               R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close) {
-
-            /** Called when a drawer has settled in a completely closed state. */
-            public void onDrawerClosed(View view) {
-                super.onDrawerClosed(view);
-                //getActionBar().setTitle(mTitle);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-
-            /** Called when a drawer has settled in a completely open state. */
-            public void onDrawerOpened(View drawerView) {
-                super.onDrawerOpened(drawerView);
-                //getActionBar().setTitle(mDrawerTitle);
-                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
-            }
-        };
-
-        // Set the drawer toggle as the DrawerListener
-        mDrawerLayout.setDrawerListener(mDrawerToggle);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
-        getActionBar().setHomeButtonEnabled(true);
+		MainModel.getInstance().addView(this);
+		createDrawerMenu();
+        update();
     }
     
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.main, menu);
 		return true;
 	}
@@ -107,7 +75,6 @@ public class MainActivity extends SecureActivity implements MainView<List<Questi
     @Override
     protected void onPostCreate(Bundle savedInstanceState) {
         super.onPostCreate(savedInstanceState);
-        // Sync the toggle state after onRestoreInstanceState has occurred.
         mDrawerToggle.syncState();
     }
 
@@ -119,8 +86,6 @@ public class MainActivity extends SecureActivity implements MainView<List<Questi
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Pass the event to ActionBarDrawerToggle, if it returns
-        // true, then it has handled the app icon touch event
         if (mDrawerToggle.onOptionsItemSelected(item))
         	return true;
 
@@ -130,6 +95,7 @@ public class MainActivity extends SecureActivity implements MainView<List<Questi
         	SetAdapter(displayedQuestions);
         	return true;
         case R.id.menu_sync:
+        	//TODO: finish sync action
         	return true;
         case R.id.menu_sortByOldest: 
         	displayedQuestions = Sort.dateSort(false, displayedQuestions);
@@ -158,20 +124,13 @@ public class MainActivity extends SecureActivity implements MainView<List<Questi
     	if (pd!=null) {
 			pd.dismiss();
 		}
+    	MainModel.getInstance().deleteView(this);
         super.onDestroy();
     }
 
     @Override
     public void onPause(){
-    	Queue.getInstance().Stop();
         super.onPause();
-    }
-
-    @Override
-    public void onResume(){
-        Queue.getInstance();
-        update();
-        super.onResume();
     }
     
     private void SetAdapter(List<QuestionList> lst){
@@ -181,7 +140,6 @@ public class MainActivity extends SecureActivity implements MainView<List<Questi
     
     public void AddNewQuestion(View v){
     	Intent i = new Intent(this, SubmitQuestionActivity.class);
-    	//i.addFlags(Intent.FLAG_ACTIVITY_NO_HISTORY);
         this.startActivity(i);
     }
     
@@ -212,14 +170,61 @@ public class MainActivity extends SecureActivity implements MainView<List<Questi
     }
 
 	@Override
-	public void update() {
-		(new getQuestionListTask(this, this)).execute();	
+	public void update() {		
+		runOnUiThread(new Runnable() {
+			@Override
+			public void run() {
+				startUpdate();
+			}
+		});			
+	}
+	
+	private void startUpdate(){
+		update(MainModel.getInstance().getAllCachedQuestions());
+		(new getQuestionListTask(this, this)).execute();
 	}
 
 	@Override
 	public void update(List<QuestionList> lst) {
-		displayedQuestions = Sort.dateSort(true, lst);
-    	SetAdapter(displayedQuestions);
+		if (displayedQuestions == null || displayedQuestions.size() <=0 || lst.size() <= displayedQuestions.size()){
+			//If the size of the list hasn't changed, update it.
+			//TODO: remember where the list is just before updating
+			//TODO: move the setAdapter to it's own method
+			displayedQuestions = Sort.dateSort(true, lst);
+			SetAdapter(displayedQuestions);
+		}else{
+			//TODO: show banner stating that new content is available
+			//(Similar to the New Stories of facebook)
+			//If there's new content that would alter the size of the view, show banner
+			//instead of just updating the view (but update the view's question set)
+			displayedQuestions = Sort.dateSort(true, lst);
+		}
 	}
-    
+	
+	public void createDrawerMenu(){
+    	mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
+        mDrawerList = (LinearLayout) findViewById(R.id.drawer_menu);
+        mDrawerToggle = new ActionBarDrawerToggle(this, mDrawerLayout,
+               R.drawable.ic_drawer, R.string.drawer_open, R.string.drawer_close) {
+
+            /** Called when a drawer has settled in a completely closed state. */
+            public void onDrawerClosed(View view) {
+                super.onDrawerClosed(view);
+                //getActionBar().setTitle(mTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+
+            /** Called when a drawer has settled in a completely open state. */
+            public void onDrawerOpened(View drawerView) {
+                super.onDrawerOpened(drawerView);
+                //getActionBar().setTitle(mDrawerTitle);
+                invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
+            }
+        };
+
+        // Set the drawer toggle as the DrawerListener
+        mDrawerLayout.setDrawerListener(mDrawerToggle);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setHomeButtonEnabled(true);
+    }    
 }

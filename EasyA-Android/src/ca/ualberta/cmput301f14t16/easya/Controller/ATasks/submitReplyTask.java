@@ -66,23 +66,19 @@ public class submitReplyTask extends AsyncTask<Void, Void, Boolean> {
 
     @Override
     protected void onPostExecute(Boolean result) {
+    	if (pd!=null) {
+			pd.dismiss();
+		}
+    	
     	if (result){
 			if (controller.submitedOffline){
 				Toast.makeText(ctx, "Your reply will be posted online when you connect to the internet!", Toast.LENGTH_LONG).show();
 				tv.setText("");
 			}else{
-    			String aux = controller.getQuestionId();
-    			Intent i = new Intent(ctx,QuestionActivity.class);
-    			i.putExtra(GeneralHelper.QUESTION_KEY, aux);
-    			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-    			ctx.startActivity(i);
+				MainModel.getInstance().notifyViews();
 			}
 		}else{
 			Toast.makeText(ctx, "Something bad happened, try posting your question again!", Toast.LENGTH_LONG).show();
 		}
-    	
-    	if (pd!=null) {
-			pd.dismiss();
-		}        	
     }
 }

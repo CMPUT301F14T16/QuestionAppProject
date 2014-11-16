@@ -29,6 +29,19 @@ import ca.ualberta.cmput301f14t16.easya.Model.User;
 public class PMClient {
 	public PMClient(){}
 	
+	/**
+	 * Used to determine that the app have been thru it's first load
+	 */
+	public void saveAppStatus(){
+		PMDataParser.saveUserPreference(GeneralHelper.ASTATUS, "done");
+	}
+	/**
+	 * Returns a flag indicating whether the app have been thru it's first load or not 
+	 */
+	public boolean getAppStatus(){
+		return PMDataParser.recoverUserPreference(GeneralHelper.ASTATUS) != "";
+	}
+	
 	public void saveQTitle(String text){
 		PMDataParser.saveUserPreference(GeneralHelper.QTITLE, text);
 	}
@@ -70,7 +83,7 @@ public class PMClient {
 	public User getUser() throws NoContentAvailableException{
 		Gson gson = new Gson();
 		String aux = PMDataParser.recoverUserPreference(GeneralHelper.USERKEY);
-		if (aux == null|| aux.equals("")){
+		if (aux == null || aux.equals("")){
 			throw new NoContentAvailableException();
 		}
 		return gson.fromJson(aux, User.class);
@@ -115,4 +128,9 @@ public class PMClient {
         });
         return lst;
     }
+
+	public void wipeData() {
+		PMDataParser.saveJson(PMFilesEnum.QUEUE, "");	
+		PMDataParser.saveUserPreference(GeneralHelper.USERKEY, "");
+	}
 }

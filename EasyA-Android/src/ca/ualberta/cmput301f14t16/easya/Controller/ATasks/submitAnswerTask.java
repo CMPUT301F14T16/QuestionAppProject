@@ -67,6 +67,9 @@ public class submitAnswerTask extends AsyncTask<Void, Void, Boolean> {
 
     @Override
     protected void onPostExecute(Boolean result) {
+    	if (pd!=null) {
+			pd.dismiss();
+		}  
     	if (result){
     		PMClient pm = new PMClient();	        			
 			pm.clearA(ctx);
@@ -86,9 +89,6 @@ public class submitAnswerTask extends AsyncTask<Void, Void, Boolean> {
 			act.finish();
 			Toast.makeText(ctx, "Something bad happened, try posting your answer again!", Toast.LENGTH_LONG).show();
 		}
-    	
-    	if (pd!=null) {
-			pd.dismiss();
-		}        	
+    	MainModel.getInstance().notifyViews();
     }
 }

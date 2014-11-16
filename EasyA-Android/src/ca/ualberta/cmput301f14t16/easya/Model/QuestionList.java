@@ -31,6 +31,11 @@ public class QuestionList {
 	 * An identifier used to refer to the unique creator of the data stored by
 	 * the object.
 	 */
+	private String userid;
+	/**
+	 * An identifier used to refer to the name of the creator of the data stored by
+	 * the object.
+	 */
 	private String username;
 	/**
 	 * The number of upvotes given to the original {@link Question} (as a
@@ -62,6 +67,8 @@ public class QuestionList {
 	 *            Setter for {@link QuestionList#title}
 	 * @param username
 	 *            Setter for {@link QuestionList#username}
+	 * @param userid
+	 *     		  Setter for {@link QuestionList#userid}
 	 * @param answers
 	 *            Setter for {@link QuestionList#answers}
 	 * @param upvotes
@@ -69,13 +76,14 @@ public class QuestionList {
 	 * @param image
 	 *            Setter for {@link QuestionList#image}
 	 */
-	public QuestionList(String id, String title, String username,
+	public QuestionList(String id, String title, String username, String userid,
 			String answers, String upvotes, boolean image, Date date) {
 		this.id = id;
 		this.title = title;
 		this.answers = answers;
 		this.upvotes = upvotes;
 		this.username = username;
+		this.userid = userid;
 		this.image = image;
 		this.date = date;
 	}
@@ -127,5 +135,13 @@ public class QuestionList {
 	 */
 	public Date getDate() {
 		return this.date;
+	}
+
+
+	/**
+	 * @return {@link QuestionList#userid}
+	 */
+	public String getUserId() {
+		return this.userid;
 	}
 }

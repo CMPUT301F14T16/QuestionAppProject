@@ -24,6 +24,7 @@ public class GeneralHelper {
 	public static final String AQUESTION_KEY = "ca.ualberta.cmput301f14t16.easya.AQUESTIONKEY";
 	public final static String QUESTION_KEY = "ca.ualberta.cmput301f14t16.easya.QUESTIONKEY";
 	public final static String USERKEY = "ca.ualberta.cmput301f14t16.easya.USERKEY";
+	public static final String ASTATUS = "ca.ualberta.cmput301f14t16.easya.ASTATUS";
 	
 	//TODO Docstring method description
 	/**
