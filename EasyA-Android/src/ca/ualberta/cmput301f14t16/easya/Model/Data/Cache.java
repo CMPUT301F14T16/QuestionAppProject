@@ -137,11 +137,12 @@ public class Cache{
 		List<QuestionList> aux = gson.fromJson(PMDataParser.loadJson(PMFilesEnum.CACHEQUESTIONSLIST), listType);
 		if (aux == null || aux.size() <= 0)
 			throw new NoContentAvailableException();
+		List<QuestionList> lst = new ArrayList<QuestionList>();
 		for (QuestionList q : aux){
-			if (!q.getUserId().equals(u.getId()))
-				aux.remove(aux.lastIndexOf(q));
+			if (q.getUserId().equals(u.getId()))
+				lst.add(q);
 		}
-		return aux;
+		return lst;
 	}
 	
 	public List<QuestionList> getQuestionListFromQuestionsCache() throws NoContentAvailableException{
@@ -151,6 +152,22 @@ public class Cache{
 		if (aux == null || aux.size() <= 0)
 			throw new NoContentAvailableException();
 		return aux;
+	}
+	
+	public List<QuestionList> getSavedQuestions() throws NoContentAvailableException{
+		Gson gson = new Gson();
+		Type listType = new TypeToken<List<Question>>(){}.getType();
+		List<Question> aux = gson.fromJson(PMDataParser.loadJson(PMFilesEnum.CACHEQUESTIONS), listType);
+		if (aux == null || aux.size() <= 0)
+			throw new NoContentAvailableException();
+		List<QuestionList> lst = new ArrayList<QuestionList>(); 
+		for (Question q : aux){
+			lst.add(new QuestionList(q.getId(), q.getTitle(), 
+					q.getAuthorName(), q.getAuthorId(), q.getAnswerCountString(), 
+					q.getUpVoteCountString(), q.hasPicture(), 
+					q.getDate()));
+		}
+		return lst;
 	}
 		
 	private Question getQuestionFromCache(String id) throws NoContentAvailableException{
@@ -248,16 +265,20 @@ public class Cache{
 				throw new NoContentAvailableException();
 			}
 		 }else{
-			 List<String> userFavs = MainModel.getInstance().getCurrentUser().getFavourites();
-			 List<QuestionList> aux = getQuestionListFromQuestionsCache();
-			 if (userFavs == null || userFavs.size()<=0 || aux == null || aux.size()<=0)
-				 throw new NoContentAvailableException();			 
-			 for (QuestionList ql : aux){
-				 if (!userFavs.contains(ql.getId())){
-					 aux.remove(aux.indexOf(ql));
-				 }
-			 }
-			 return aux;
+			 throw new NoContentAvailableException();
 		 }
+	}
+
+	public List<QuestionList> getAllUserFavouritesFromCache() throws NoContentAvailableException {
+		List<String> userFavs = MainModel.getInstance().getCurrentUser().getFavourites();
+		 List<QuestionList> aux = getQuestionListFromQuestionsCache();
+		 if (userFavs == null || userFavs.size()<=0 || aux == null || aux.size()<=0)
+			 throw new NoContentAvailableException();			 
+		 for (QuestionList ql : aux){
+			 if (!userFavs.contains(ql.getId())){
+				 aux.remove(aux.indexOf(ql));
+			 }
+		 }
+		 return aux;
 	}
 }

@@ -7,7 +7,6 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.Toast;
 import ca.ualberta.cmput301f14t16.easya.Controller.FavouriteController;
-import ca.ualberta.cmput301f14t16.easya.Controller.UpvoteController;
 import ca.ualberta.cmput301f14t16.easya.Model.GeneralHelper;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.View.QuestionActivity;

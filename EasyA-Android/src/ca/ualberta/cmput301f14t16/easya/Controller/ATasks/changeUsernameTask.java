@@ -1,6 +1,5 @@
 package ca.ualberta.cmput301f14t16.easya.Controller.ATasks;
 
-import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -8,7 +7,6 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.widget.EditText;
-import android.widget.TextView;
 import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Controller.ChangeUsernameController;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;

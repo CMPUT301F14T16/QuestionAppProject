@@ -11,39 +11,18 @@ import ca.ualberta.cmput301f14t16.easya.Model.QuestionList;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.PMClient;
 import ca.ualberta.cmput301f14t16.easya.View.MainView;
 
-public class getQuestionListTask extends AsyncTask<Void, Void, List<QuestionList>> {
-	private Context ctx;
+public class getFavouritesTask extends AsyncTask<Void, Void, List<QuestionList>> {
 	private ProgressDialog pd;
 	private MainView<List<QuestionList>> v;
-	private boolean fullLoaded;
 	
-	public getQuestionListTask(Context ctx, MainView<List<QuestionList>> v){
-		this.ctx = ctx;
+	public getFavouritesTask(MainView<List<QuestionList>> v){
 		this.v = v;
-		PMClient pm = new PMClient();
-		this.fullLoaded = pm.getAppStatus();
 	}
 	
-	@Override
-	protected void onPreExecute() {
-		if (!fullLoaded){
-			this.pd = new ProgressDialog(ctx);
-			pd.setTitle("Loading content...");
-			pd.setMessage("Please wait.");
-			pd.setCancelable(false);
-			pd.setIndeterminate(true);
-			pd.show();
-		}
-	}
-
 	@Override
 	protected List<QuestionList> doInBackground(Void...voids) {
-        try{
-        	try{
-	        	if (!fullLoaded){
-	        		MainModel.getInstance().getAllUserFavourites();
-        	}}catch(NoContentAvailableException ex){} //Do Nothing
-        	return MainModel.getInstance().getAllQuestions();
+        try{        	
+        	return MainModel.getInstance().getAllUserFavourites();
         }catch(NoContentAvailableException ex){
         	return null;
         }
@@ -59,7 +38,5 @@ public class getQuestionListTask extends AsyncTask<Void, Void, List<QuestionList
     	}else{  
     		v.update(result);    		
     	}
-    	PMClient pm = new PMClient();
-    	pm.saveAppStatus();
     }
 }

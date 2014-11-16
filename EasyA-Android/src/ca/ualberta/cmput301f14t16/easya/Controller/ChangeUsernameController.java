@@ -4,6 +4,7 @@ import java.io.IOException;
 
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.User;
+import ca.ualberta.cmput301f14t16.easya.Model.Data.Cache;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.ESClient;
 
 /**
@@ -63,6 +64,7 @@ public class ChangeUsernameController {
 			if (es.setUsernameById(this.user.getId(), username)) {
 				this.user.setUserName(username);
 				MainModel.getInstance().saveMainUser(this.user);
+				Cache.getInstance().updateAllUsers();
 				return true;
 			} else
 				return false;

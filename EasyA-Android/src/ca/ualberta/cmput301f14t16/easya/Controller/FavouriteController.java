@@ -1,7 +1,5 @@
 package ca.ualberta.cmput301f14t16.easya.Controller;
 
-import java.io.IOException;
-
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.User;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.ESClient;

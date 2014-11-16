@@ -4,14 +4,11 @@ import org.apache.http.message.BasicNameValuePair;
 
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.TextView;
 import android.widget.Toast;
 import ca.ualberta.cmput301f14t16.easya.Controller.NewReplyController;
-import ca.ualberta.cmput301f14t16.easya.Model.GeneralHelper;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
-import ca.ualberta.cmput301f14t16.easya.View.QuestionActivity;
 
 public class submitReplyTask extends AsyncTask<Void, Void, Boolean> {
 	private ProgressDialog pd;

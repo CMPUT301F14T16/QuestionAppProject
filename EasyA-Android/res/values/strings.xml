@@ -19,4 +19,10 @@
     <string name="welcome_username">Username</string>
     <string name="welcome_email">Email</string>
     <string name="welcome_sigin">Sign up</string>
+    <string-array name="app_folders">
+        <item>Home</item>
+        <item>Favourite questions</item>
+        <item>My questions</item>
+        <item>Saved questions</item>
+    </string-array>
 </resources>

@@ -2,7 +2,6 @@ package ca.ualberta.cmput301f14t16.easya.Controller;
 
 import android.content.Context;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoInternetException;
-import ca.ualberta.cmput301f14t16.easya.Model.Answer;
 import ca.ualberta.cmput301f14t16.easya.Model.Pending;
 import ca.ualberta.cmput301f14t16.easya.Model.PixelBitmap;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;

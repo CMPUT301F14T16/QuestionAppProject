@@ -14,6 +14,7 @@ import android.widget.Toast;
 
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoClassTypeSpecifiedException;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoInternetException;
+import ca.ualberta.cmput301f14t16.easya.Model.Data.Cache;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.ContextProvider;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.ESClient;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.PMClient;
@@ -162,7 +163,9 @@ public class Queue extends Thread {
     		try {
     			Content c = p.getContent();            
                 if(c instanceof Question){
-                	esClient.submitQuestion((Question)c);
+                	if (esClient.submitQuestion((Question) c)){
+						Cache.getInstance().SaveSingleQuestion((Question) c);
+					}
                 }else if (c instanceof Answer){
                 	esClient.submitAnswer((Answer)c, p.getAnswerId());
                 }else if (c instanceof Reply){

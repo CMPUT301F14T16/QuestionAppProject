@@ -3,10 +3,6 @@ package ca.ualberta.cmput301f14t16.easya.Model;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-
-import android.app.Activity;
-import android.content.Context;
-import android.content.Intent;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoInternetException;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.Cache;
@@ -89,7 +85,6 @@ public class MainModel {
 	public void saveMainUser(User u) {
 		PMClient pm = new PMClient();
 		pm.saveUser(u);
-		Cache.getInstance().updateAllUsers();
 	}
 
 	public boolean updateUsername(User u) {
@@ -104,6 +99,11 @@ public class MainModel {
 	public List<QuestionList> getAllQuestions()
 			throws NoContentAvailableException {
 		return Cache.getInstance().getAllQuestions();
+	}
+	
+	public List<QuestionList> getAllSavedQuestions()
+			throws NoContentAvailableException {
+		return Cache.getInstance().getSavedQuestions();
 	}
 	
 	public List<QuestionList> getAllCachedQuestions() {
@@ -122,6 +122,14 @@ public class MainModel {
 	public List<QuestionList> getAllUserQuestions()
 			throws NoContentAvailableException{
 		return Cache.getInstance().getAllUserQuestions();
+	}
+	
+	public List<QuestionList> getAllCachedFavourites() {
+		try {
+			return Cache.getInstance().getAllUserFavouritesFromCache();
+		} catch (NoContentAvailableException e) {
+			return new ArrayList<QuestionList>();
+		}
 	}
 
 	public void wipeData() {

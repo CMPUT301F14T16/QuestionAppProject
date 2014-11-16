@@ -164,6 +164,7 @@ public class ESClient {
 	
 	// Same as method above, but returns a preview of a question instead of the full question object.
 	// Above method will most likely not be used...
+	// I'm using it :D
 	public List<QuestionList> searchQuestionListsByQuery(String query, int numResults) throws IOException {
 		List<QuestionList> qlist = new ArrayList<QuestionList>();
 		
@@ -213,11 +214,8 @@ public class ESClient {
 	}
 	
 	public boolean setUsernameById(String uid, String newUsername) throws IOException {
-
 		String updateStr = "{ \"doc\":{ \"username\":\"" + newUsername + "\"} }";
-		
 		HttpHelper.putToUrl(HOST_URL + USER_PATH + uid + "/_update", updateStr);
-		
 		return true;
 	}
 	
