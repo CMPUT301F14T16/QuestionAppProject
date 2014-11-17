@@ -21,6 +21,7 @@ public class UserTest extends TestCase{
 	
 	//Fixed path building problems
 	
+	//Test if we can set user name again
 	public void testSetUsername() {
 		username = "Lingbo";
 		email = "lingbo19.tang@gmail.com";
@@ -30,6 +31,7 @@ public class UserTest extends TestCase{
 		assertEquals(user.getUsername(),newname);
 	}
 	
+	//Test if we can get the user's email
 	public void testGetEmail() {
 		username = "Lingbo";
 		email = "lingbo19.tang@gmail.com";
@@ -37,6 +39,8 @@ public class UserTest extends TestCase{
 		assertEquals(user.getEmail(),email);
 	}
 	
+	
+	//Test if we can set userid
 	public void testGetUserId() {
 		username = "Lingbo";
 		email = "lingbo19.tang@gmail.com";
