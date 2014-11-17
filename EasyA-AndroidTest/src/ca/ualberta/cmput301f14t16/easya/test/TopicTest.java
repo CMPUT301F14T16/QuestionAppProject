@@ -15,6 +15,9 @@ public class TopicTest extends TestCase {
 	
 	//test for UpVoteTopicsTest
 	public void testUpVoteTopics() {
+		//Test some basic use cases such as
+		// adding Question/Answer/Reply
+		// Upvote Question/Answer/Reply
 		Answer answer = new Answer();
 		Question question = new Question();
 		answer.setUpvote(u.getId());
