@@ -27,6 +27,8 @@ public class SavedActivity extends MasterActivity {
 			update(MainModel.getInstance().getAllSavedQuestions());
 		} catch (NoContentAvailableException e) {
 			//TODO: display the nocontentavailable screen
-		}
+		}finally{
+			stopAnimateSync();
+		}	
 	}
 }

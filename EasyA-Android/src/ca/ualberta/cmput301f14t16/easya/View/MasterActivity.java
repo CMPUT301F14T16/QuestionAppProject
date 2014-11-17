@@ -12,6 +12,7 @@ import ca.ualberta.cmput301f14t16.easya.Model.Sort;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.support.v4.app.ActionBarDrawerToggle;
@@ -24,14 +25,18 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * 
@@ -45,6 +50,8 @@ public abstract class MasterActivity extends SecureActivity implements MainView<
     public List<QuestionList> displayedQuestions;
     private final static int UPDATEBANNER = 250000025;
     protected int position;
+    public boolean syncInProgress = false;
+    public Menu menu;
 
     @Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -53,26 +60,33 @@ public abstract class MasterActivity extends SecureActivity implements MainView<
 		MainModel.getInstance().addView(this);
 		((ListView)findViewById(R.id.drawer_menu_options)).setOnItemClickListener(folderClickListener);
 		createDrawerMenu();
-        update();
+		getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM, ActionBar.DISPLAY_SHOW_HOME);
     }
     
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.main, menu);
+		this.menu = menu;
+		//Update function moved to make sure everything is loaded up beforehand 
+        update();
 		return true;
 	}
 
     @Override
     public boolean onPrepareOptionsMenu(Menu menu) {
-        // If the nav drawer is open, hide action items related to the content view
-        boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
+    	hideIconsFromACBar();        
+        return super.onPrepareOptionsMenu(menu);
+    }
+    
+    private void hideIconsFromACBar(){
+    	boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
         menu.findItem(R.id.menu_search).setVisible(!drawerOpen);
         menu.findItem(R.id.menu_sortByOldest).setVisible(!drawerOpen);
         menu.findItem(R.id.menu_sortByNewest).setVisible(!drawerOpen);
         menu.findItem(R.id.menu_sortByMostVotes).setVisible(!drawerOpen);
         menu.findItem(R.id.menu_sortByLeastVotes).setVisible(!drawerOpen);
+        menu.findItem(R.id.menu_sync).setVisible(!drawerOpen);
         //menu.findItem(R.id.menu_sortByPicture).setVisible(!drawerOpen);
-        return super.onPrepareOptionsMenu(menu);
     }
 
     @Override
@@ -89,15 +103,18 @@ public abstract class MasterActivity extends SecureActivity implements MainView<
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        if (mDrawerToggle.onOptionsItemSelected(item))
+        if (mDrawerToggle.onOptionsItemSelected(item)){
+        	hideIconsFromACBar();
         	return true;
+        }
         switch (item.getItemId()) {
         case R.id.menu_sortByNewest: 
         	displayedQuestions = Sort.dateSort(true, displayedQuestions);
         	SetAdapter(displayedQuestions);
         	return true;
         case R.id.menu_sync:
-        	//TODO: finish sync action
+        	if (!this.syncInProgress)
+        		update();
         	return true;
         case R.id.menu_sortByOldest: 
         	displayedQuestions = Sort.dateSort(false, displayedQuestions);
@@ -151,8 +168,6 @@ public abstract class MasterActivity extends SecureActivity implements MainView<
             
             if(closeViewOnSwitch())
             	finish();
-            //else
-            	//mDrawerLayout.closeDrawer(parent);
 		}
 	};
 
@@ -207,8 +222,9 @@ public abstract class MasterActivity extends SecureActivity implements MainView<
 	public void update() {		
 		runOnUiThread(new Runnable() {
 			@Override
-			public void run() {
-				startUpdate();
+			public void run() {				
+				animateSync();
+				startUpdate();				
 			}
 		});			
 	}
@@ -244,7 +260,7 @@ public abstract class MasterActivity extends SecureActivity implements MainView<
 	};
 	
 	protected void bindAdapter(){
-		SetAdapter(displayedQuestions);
+		SetAdapter(displayedQuestions);		
 	}
 
 	@Override
@@ -287,6 +303,31 @@ public abstract class MasterActivity extends SecureActivity implements MainView<
         getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
     }  
+	
+	public void animateSync(){	
+		this.syncInProgress = true;
+		try{
+			LayoutInflater inflater = (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			ImageView imgV = (ImageView)inflater.inflate(R.layout.refresh_asset, null);
+			Animation anim = AnimationUtils.loadAnimation(this, R.anim.refresh_asset);
+			anim.setRepeatCount(Animation.INFINITE);
+			imgV.startAnimation(anim);
+			MenuItem mi = ((MenuItem)menu.findItem(R.id.menu_sync));
+			mi.setActionView(imgV);
+		}catch(Exception ex){
+			Toast.makeText(getApplicationContext(), ex.getMessage(), Toast.LENGTH_SHORT).show();
+		} //Let it go...
+	}
+	
+	public void stopAnimateSync(){
+		this.syncInProgress = false;
+		MenuItem m = menu.findItem(R.id.menu_sync);
+        if(m.getActionView()!=null)
+        {
+            m.getActionView().clearAnimation();
+            m.setActionView(null);
+        }
+	}
 	
 	protected boolean closeViewOnSwitch(){
     	return true;

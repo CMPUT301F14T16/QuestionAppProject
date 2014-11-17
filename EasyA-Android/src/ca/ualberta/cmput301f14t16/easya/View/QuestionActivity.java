@@ -92,4 +92,7 @@ public class QuestionActivity extends SecureActivity implements MainView<Questio
 	public void update(Question q) {
     	SetAdapter(q);
 	}
+	
+	@Override
+	public void stopAnimateSync(){}
 }

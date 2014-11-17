@@ -1,15 +1,16 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <item
-        android:id="@+id/menu_search"
+        android:id="@+id/menu_sync"
         android:orderInCategory="100"
         android:showAsAction="always"
-        android:icon="@android:drawable/ic_menu_search"
-        android:title=""/>
-    <item
-        android:id="@+id/menu_sync"
-        android:orderInCategory="200"
-        android:showAsAction="never"
+        android:icon="@drawable/ic_action_refresh"
         android:title="@string/sync"/>
+    <item
+        android:id="@+id/menu_search"
+        android:orderInCategory="200"
+        android:showAsAction="always"
+        android:icon="@drawable/ic_action_search"
+        android:title=""/>
      <item
         android:id="@+id/menu_sortByNewest"
         android:orderInCategory="300"

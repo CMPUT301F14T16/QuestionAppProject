@@ -31,12 +31,13 @@ public class MyQuestionActivity extends MasterActivity {
 			update(MainModel.getInstance().getAllUserQuestions());
 		} catch (NoContentAvailableException e) {
 			//TODO: display the nocontentavailable screen
-		}
+		}	
 	}
     
 	@Override
 	public void update(List<QuestionList> lst) {
 		displayedQuestions = Sort.dateSort(true, lst);	
 		bindAdapter();
+		stopAnimateSync();
 	}
 }

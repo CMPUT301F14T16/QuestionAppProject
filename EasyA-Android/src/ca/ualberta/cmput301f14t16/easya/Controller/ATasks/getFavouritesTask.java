@@ -38,5 +38,6 @@ public class getFavouritesTask extends AsyncTask<Void, Void, List<QuestionList>>
     	}else{  
     		v.update(result);    		
     	}
+    	v.stopAnimateSync();
     }
 }

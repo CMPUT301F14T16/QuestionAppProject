@@ -59,7 +59,10 @@ public class getQuestionListTask extends AsyncTask<Void, Void, List<QuestionList
     	}else{  
     		v.update(result);    		
     	}
-    	PMClient pm = new PMClient();
-    	pm.saveAppStatus();
+    	if(!fullLoaded){
+	    	PMClient pm = new PMClient();
+	    	pm.saveAppStatus();
+    	}
+    	v.stopAnimateSync();
     }
 }
