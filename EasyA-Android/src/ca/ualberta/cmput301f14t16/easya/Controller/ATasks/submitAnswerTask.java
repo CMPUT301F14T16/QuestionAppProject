@@ -11,7 +11,6 @@ import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Controller.NewAnswerController;
 import ca.ualberta.cmput301f14t16.easya.Model.GeneralHelper;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
-import ca.ualberta.cmput301f14t16.easya.Model.PixelBitmap;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.PMClient;
 import ca.ualberta.cmput301f14t16.easya.View.QuestionActivity;
 
@@ -22,9 +21,9 @@ public class submitAnswerTask extends AsyncTask<Void, Void, Boolean> {
 	private Activity act;
 	private String qId;
 	private String body;
-	private PixelBitmap pb;
+	private byte[] pb;
 	
-	public submitAnswerTask(Activity act, String question, String body, PixelBitmap pb){
+	public submitAnswerTask(Activity act, String question, String body, byte[] pb){
 		this.act = act;
 		this.ctx = act;
 		this.qId = question;
