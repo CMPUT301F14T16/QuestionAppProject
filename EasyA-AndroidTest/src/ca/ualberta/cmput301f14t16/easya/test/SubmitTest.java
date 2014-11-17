@@ -1,11 +1,10 @@
 package ca.ualberta.cmput301f14t16.easya.test;
 
+
+//All Packages needed to do the test
 import junit.framework.TestCase;
-
 import java.io.IOException;
-
 import android.content.Context;
-
 import ca.ualberta.cmput301f14t16.easya.Controller.MainController;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoClassTypeSpecifiedException;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoInternetException;
@@ -22,6 +21,8 @@ import ca.ualberta.cmput301f14t16.easya.Model.Reply;
 
 
 public class SubmitTest extends TestCase {
+	
+	// Variable initialization can be done in another way
 	private Pending pending;
 	private Context ctx;
 	public boolean sumitedOffline = false;
@@ -44,6 +45,8 @@ public class SubmitTest extends TestCase {
 	
 	
 	public void tesSubmitBasisTest() {
+		
+		//Parse the value to the variabe for actural test 
 		ESClient es = new ESClient();
 		Question q1 = new Question("Title Submission Test", "Body of Question", "test@ualberta.ca");
 		Answer a1 = new Answer("Body of answer", "someone@ualberta.ca");
@@ -65,11 +68,14 @@ public class SubmitTest extends TestCase {
 		Question q3 = new Question("Title Submission Test3", "Body of Question3", "test3@ualberta.ca");
 		QId3 = q3.getId();
 		
-		// TODO content is empty here, you should pass the question.
+		// TODO content is empty here, you should pass the question
+		// answer and reply. To test all case, pass all case.
 		pending1 = new Pending(q1);
 		pending2 = new Pending(QId2,a2);
 		pending3 = new Pending(r1,QId,AId);
 		pending = new Pending(q3);
+		
+		//Test if they can be passed to pending (Online cache) at first
 		assertTrue(pending1.getContent() == q1);
 		assertTrue(pending2.getContent() == a2);
 		assertTrue(pending3.getContent() == r1);
@@ -79,6 +85,7 @@ public class SubmitTest extends TestCase {
 		
 		if (Queue.getInstance().haveInternetConnection()) {
 		try {
+			//Try test if content are correctly submitted
 				Content c = pending.getContent();
 			if(c instanceof Question){
 				assertTrue(es.submitQuestion((Question)c));
@@ -91,20 +98,23 @@ public class SubmitTest extends TestCase {
 					assertTrue(es.submitQuestionReply((Reply)c, pending.getQuestionId()));
 				}
 			}else{
+				//Test if our app can identify the No Class type error
 				throw new NoClassTypeSpecifiedException();
 			}
 		}catch(IOException ex){
+			//Test if our app can identify the No Internet special case
 			if (Queue.getInstance().haveInternetConnection()){
 				assertFalse(false);
 				//throw new NoInternetException();
 			}
 		}catch(NoClassTypeSpecifiedException ex){
 			assertFalse(false);
+		//Test if our app can identify the other special cases and do the right thing
 		}catch(Exception ex){
 			assertFalse(false);
 		}
 		}else{
-			//throw new NoInternetException();
+			assertFalse(false);
 		}
 	}
 }
