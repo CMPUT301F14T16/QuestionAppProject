@@ -38,6 +38,11 @@ public abstract class Content {
 	/**
 	 * Creates an empty {@link Content} object.
 	 */
+	
+	private double latitude;
+	
+	private double longitude;
+	
 	// No args constructor used by deserializers in recreation of content.
 	public Content() {
 
@@ -62,6 +67,14 @@ public abstract class Content {
 		this.id = UUID.randomUUID().toString(); //TODO: unify the creation of ID's method
 	}
 	
+	public Content(String body, String userId, double latitude, double longitude) {
+		this.body = body;
+		this.userId = userId;
+		this.latitude = latitude;
+		this.longitude =  longitude;
+		this.createdOn = new Date();
+		this.id = UUID.randomUUID().toString(); //TODO: unify the creation of ID's method
+	}
 	
 	/**
 	 * @return {@link Content#body}

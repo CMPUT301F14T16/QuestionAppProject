@@ -35,12 +35,22 @@
             android:layout_gravity="center"
             android:contentDescription="Add picture"/>
     </LinearLayout>
+
+    <Button
+        android:id="@+id/geolocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/submit_question_picture_holder"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:text="Set Location"
+        android:onClick="findlocation"/>
+
     <ImageView
         android:id="@+id/submit_question_imageView_pic"
-        android:layout_width="240dp"
-        android:layout_height="240dp"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
         android:layout_below="@+id/submit_question_body"
-        android:layout_centerHorizontal="true"
-        android:contentDescription="" />
+        android:layout_centerHorizontal="true" />
     	
 </RelativeLayout>

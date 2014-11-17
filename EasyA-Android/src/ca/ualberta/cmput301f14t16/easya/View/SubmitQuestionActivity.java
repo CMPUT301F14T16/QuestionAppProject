@@ -1,8 +1,11 @@
 package ca.ualberta.cmput301f14t16.easya.View;
 
 import java.io.File;
+
+
 import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.submitQuestionTask;
+import ca.ualberta.cmput301f14t16.easya.Model.GPSTracker;
 import ca.ualberta.cmput301f14t16.easya.Model.PixelBitmap;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.PMClient;
 import android.app.Activity;
@@ -19,6 +22,7 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 /**
  * 
@@ -28,7 +32,8 @@ import android.widget.ImageView;
 public class SubmitQuestionActivity extends SecureActivity {
     private ImageView imageview, addimage;
     private PixelBitmap pixelbitmap;
-	
+    private GPSTracker gps;
+
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
@@ -101,6 +106,18 @@ public class SubmitQuestionActivity extends SecureActivity {
 	      
 	    }
 	}
+	
+    public void findlocation(View view){
+    	gps = new GPSTracker(SubmitQuestionActivity.this);
+    	if (gps.canGetLocation()){
+    		double latitude = gps.getLatitude();
+    		double longitude = gps.getLongitude();
+    		Toast.makeText(getApplicationContext(), "Your Location is latitude: " + latitude + "\nLongitude: " + longitude, Toast.LENGTH_LONG).show();
+    	}
+    	else{
+    		gps.showSettingsAlert();
+    	}
+    }
 	public String getPath(Uri uri) {
 		String[] projection = { MediaStore.Images.Media.DATA };
 		Cursor cursor = managedQuery(uri, projection, null, null, null);
