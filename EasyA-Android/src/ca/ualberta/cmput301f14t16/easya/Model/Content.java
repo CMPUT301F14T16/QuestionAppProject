@@ -76,6 +76,16 @@ public abstract class Content {
 		this.id = UUID.randomUUID().toString(); //TODO: unify the creation of ID's method
 	}
 	
+	public double getLatitude(){
+		return this.latitude;
+		
+	}
+	
+	public double getLongitude(){
+		return this.longitude;
+		
+	}
+	
 	/**
 	 * @return {@link Content#body}
 	 */
@@ -97,6 +107,8 @@ public abstract class Content {
 			return "";
 		}
 	}
+	
+	
 
 	/**
 	 * @return {@link Content#createdOn}

@@ -8,6 +8,8 @@ import java.io.File;
 import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.submitQuestionTask;
 import ca.ualberta.cmput301f14t16.easya.Model.GPSTracker;
+import ca.ualberta.cmput301f14t16.easya.Model.geoCoder;
+
 import java.io.InputStream;
 
 import ca.ualberta.cmput301f14t16.easya.R;
@@ -18,6 +20,7 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -125,11 +128,17 @@ public class SubmitQuestionActivity extends SecureActivity {
     	if (gps.canGetLocation()){
     		double latitude = gps.getLatitude();
     		double longitude = gps.getLongitude();
-    		Toast.makeText(getApplicationContext(), "Your Location is latitude: " + latitude + "\nLongitude: " + longitude, Toast.LENGTH_LONG).show();
+    		geoCoder geocoder = new geoCoder(this, latitude,longitude);
+    		geocoder.toAdress();
+    		String address = geocoder.getMyAddress();
+    		boolean geo= Geocoder.isPresent();
+    		Toast.makeText(getApplicationContext(), "Your Location is latitude: " + latitude + "\nLongitude: " + longitude +"\nAble to use geocoder: "+ geo + "\n" + address, Toast.LENGTH_LONG).show();
     	}
     	else{
     		gps.showSettingsAlert();
     	}
+    	
+    	
     }
 	public String getPath(Uri uri) {
 		String[] projection = { MediaStore.Images.Media.DATA };
