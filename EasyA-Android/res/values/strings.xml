@@ -16,6 +16,8 @@
     <string name="sortByOldest">Sort By Oldest</string>
     <string name="sortByMostVotes">Sort By Most Votes</string>
     <string name="sortByLeastVotes">Sort By Least Votes</string>
+    <string name="sortByPicture">Sort By Has Picture</string>
+    <string name="sortByNoPicture">Sort By Has No Picture</string>
     <string name="welcome_username">Username</string>
     <string name="welcome_email">Email</string>
     <string name="welcome_sigin">Sign up</string>

@@ -31,4 +31,14 @@
         android:orderInCategory="600"
         android:showAsAction="never"
         android:title="@string/sortByLeastVotes"/>
+     <item
+        android:id="@+id/menu_sortByPicture"
+        android:orderInCategory="700"
+        android:showAsAction="never"
+        android:title="@string/sortByPicture"/>
+     <item
+        android:id="@+id/menu_sortByNoPicture"
+        android:orderInCategory="800"
+        android:showAsAction="never"
+        android:title="@string/sortByNoPicture"/>
 </menu>
