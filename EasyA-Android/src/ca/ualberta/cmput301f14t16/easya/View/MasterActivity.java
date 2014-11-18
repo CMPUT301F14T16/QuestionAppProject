@@ -129,7 +129,7 @@ public abstract class MasterActivity extends SecureActivity implements MainView<
         	SetAdapter(displayedQuestions);
         	return true;
         case R.id.menu_sortByPicture: 
-        	displayedQuestions = Sort.sortUpVote(false, displayedQuestions);
+        	displayedQuestions = Sort.sortUpVote(true, displayedQuestions);
         	SetAdapter(displayedQuestions);
         	return true;
         case R.id.menu_sortByNoPicture: 
