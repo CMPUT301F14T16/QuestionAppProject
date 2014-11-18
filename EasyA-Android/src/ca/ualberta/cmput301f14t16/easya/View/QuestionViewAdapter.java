@@ -69,6 +69,7 @@ public class QuestionViewAdapter {
 
     public void build() {
     	try{
+    		clear();
 	    	inflateQuestion();
 	    	for (Answer a : q.getAnswers()){
 	    		inflateAnswer(a);
@@ -76,6 +77,10 @@ public class QuestionViewAdapter {
     	}catch(NoContentAvailableException ex){
     		//TODO: display the NoContentAvailable screen
     	}
+    }
+    
+    public void clear(){
+    	container.removeAllViews();
     }
     
     private void inflateQuestion() throws NoContentAvailableException{

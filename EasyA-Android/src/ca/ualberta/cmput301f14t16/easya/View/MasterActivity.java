@@ -5,6 +5,7 @@ import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.changeUsernameTask;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.QuestionList;
+import ca.ualberta.cmput301f14t16.easya.Model.Queue;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -114,6 +115,7 @@ public abstract class MasterActivity extends SecureActivity implements MainView<
         	return true;
         case R.id.menu_sync:
         	if (!this.syncInProgress)
+        		Queue.getInstance().ForceCheckInternet();
         		update();
         	return true;
         case R.id.menu_sortByOldest: 
@@ -274,11 +276,14 @@ public abstract class MasterActivity extends SecureActivity implements MainView<
 	@Override
 	public void update(List<QuestionList> lst) {
 		if (displayedQuestions == null || displayedQuestions.size() <=0 || lst.size() <= displayedQuestions.size()){
-			//If the size of the list hasn't changed, update it.
-			//TODO: remember where the list is just before updating
-			//TODO: move the setAdapter to it's own method
+			ListView listView = ((ListView)findViewById(R.id.question_list));
+			int listPos = listView.getFirstVisiblePosition();
+	        View view = listView.getChildAt(0);
+	        int top = (view == null) ? 0 : view.getTop();
 			displayedQuestions = Sort.dateSort(true, lst);
-			bindAdapter();
+			bindAdapter(); 
+			listView.setSelectionFromTop(listPos, top);
+            listView.requestFocus();
 		}else{
 			DisplayBanner();
 			displayedQuestions = Sort.dateSort(true, lst);
