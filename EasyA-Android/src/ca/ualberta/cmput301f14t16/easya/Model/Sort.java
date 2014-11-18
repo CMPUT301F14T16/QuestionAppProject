@@ -75,7 +75,7 @@ public class Sort {
 		Collections.sort(questionList, new Comparator<QuestionList>() {
 			public int compare(QuestionList questionList1,
 					QuestionList questionList2) {
-				return questionList1.getImage() && !questionList2.getImage() ? 1
+				return questionList2.getImage() && !questionList1.getImage() ? 1
 						: !questionList2.getImage() && questionList1.getImage() ? -1
 								: 0;
 			}
