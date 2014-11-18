@@ -128,11 +128,13 @@ public class SubmitQuestionActivity extends SecureActivity {
     	if (gps.canGetLocation()){
     		double latitude = gps.getLatitude();
     		double longitude = gps.getLongitude();
-    		geoCoder geocoder = new geoCoder(this, latitude,longitude);
-    		geocoder.toAdress();
-    		String address = geocoder.getMyAddress();
+
+    		String address = geoCoder.toAdress(this, latitude,longitude);
     		boolean geo= Geocoder.isPresent();
-    		Toast.makeText(getApplicationContext(), "Your Location is latitude: " + latitude + "\nLongitude: " + longitude +"\nAble to use geocoder: "+ geo + "\n" + address, Toast.LENGTH_LONG).show();
+    		//String theaddress ="Calgary, AB";
+    		//double[] latlong = geoCoder.toLatLong(this, theaddress);
+    		Toast.makeText(getApplicationContext(), "\nAble to use geocoder: "+ geo + "\n" + address, Toast.LENGTH_LONG).show();
+    		
     	}
     	else{
     		gps.showSettingsAlert();

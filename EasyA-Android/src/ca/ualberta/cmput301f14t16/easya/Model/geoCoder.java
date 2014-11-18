@@ -7,18 +7,11 @@ import android.content.Context;
 import android.location.Geocoder;
 import android.location.Address;
 
+
 public class geoCoder {
-	private Context context;
-	private double latitude;
-	private double longitude;
-	private String myAddress;
-	
-	public geoCoder(Context context, double latitude, double longitude){
-		this.context=context;
-		this.latitude=latitude;
-		this.longitude=longitude;
-	}
-	public void toAdress(){
+
+	public static String toAdress(Context context, double latitude, double longitude){
+		String myAddress;
 		Geocoder geocoder = new Geocoder(context, Locale.getDefault());
 		List<Address> addresses;
 		StringBuilder strReturnedAddress = new StringBuilder("Address:\n");
@@ -38,10 +31,24 @@ public class geoCoder {
 		catch (Exception e){
 			myAddress="Exception found";
 		}
-	}
-	public String getMyAddress(){
 		return myAddress;
-		
 	}
+	public static double[] toLatLong(Context context, String strAddress){
+		Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+		List<Address> addresses;
+		double[] returnLatLong = new double[2];
+		try{
+			addresses = geocoder.getFromLocationName(strAddress, 1);
+			if (addresses != null && addresses.size()>0){
+				Address returnedAddress =addresses.get(0);
+				returnLatLong[0] = returnedAddress.getLatitude();
+				returnLatLong[1] = returnedAddress.getLongitude();
+			}
+		}
+		catch (Exception e){
+		}
+		return returnLatLong;
+	}
+
 	
 }
