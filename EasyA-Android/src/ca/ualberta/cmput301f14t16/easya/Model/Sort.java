@@ -69,7 +69,7 @@ public class Sort {
 	 * @param questionList
 	 *            The list of {@link Topic} objects to be sorted.
 	 */
-	public static void pictureSort(boolean sortOrder,
+	public static List<QuestionList> pictureSort(boolean sortOrder,
 			List<QuestionList> questionList) {
 		if (sortOrder) {
 		Collections.sort(questionList, new Comparator<QuestionList>() {
@@ -90,7 +90,7 @@ public class Sort {
 				}
 			});
 		}
-		
+		return questionList;
 	}
 
 	/**
