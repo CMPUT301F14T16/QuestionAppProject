@@ -53,7 +53,7 @@ public class Question extends Topic {
 		this.title = title;
 		this.answers = new ArrayList<Answer>();
 	}
-
+	
 	/**
 	 * @return {@link Question#title}
 	 */
