@@ -43,7 +43,7 @@ public class submitAnswerTask extends AsyncTask<Void, Void, Boolean> {
 	/**
 	 * A picture attached to the {@link Answer} to be created.
 	 */
-	private byte[] pb;
+	private Byte[] pb;
 
 	/**
 	 * Creates a new submitAnswerTask.
@@ -58,7 +58,7 @@ public class submitAnswerTask extends AsyncTask<Void, Void, Boolean> {
 	 *            setter for {@link submitAnswerTaks#pb}
 	 */
 	public submitAnswerTask(Activity act, String question, String body,
-			byte[] pb) {
+			Byte[] pb) {
 		this.act = act;
 		this.ctx = act;
 		this.qId = question;
