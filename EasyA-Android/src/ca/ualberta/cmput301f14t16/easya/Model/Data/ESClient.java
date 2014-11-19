@@ -28,8 +28,11 @@ public class ESClient {
 	
 	//ElasticSeach Urls
 	private static final String HOST_URL = "http://cmput301.softwareprocess.es:8080/testing/";
-	private static final String QUESTION_PATH = "team16question2/";
-	private static final String USER_PATH = "team16user/";
+	private static final String QUESTION_TYPE = "team16question2"; // Edit Me to Change Question DB.
+	private static final String USER_TYPE = "team16user";		   // Edit Me to Change User DB.
+	private static final String QUESTION_PATH = QUESTION_TYPE + "/";
+	private static final String USER_PATH = USER_TYPE + "/";
+	
 	
 	// JSON Utilities
 	private Gson gson = new Gson();
@@ -291,5 +294,32 @@ public class ESClient {
 			sb.append(" " + s);
 		}
 		return searchQuestionsByQuery(sb.toString(), 999);
+	}
+	
+	public List<QuestionList> getQuestionListsByIds(List<String> ids) throws IOException {
+		String json = gson.toJson(ids);
+		String queryString = "{\"query\": {\"ids\": {\"type\": \"" +  QUESTION_TYPE + "\", \"values\": " + json +"}}}";
+		String response = HttpHelper.getFromUrlWithData(HOST_URL + QUESTION_PATH + "_search", queryString);
+		
+		return getQuestionListsFromResponse(response);
+		
+	}
+	
+	private List<QuestionList> getQuestionListsFromResponse(String response) {
+		List<QuestionList> qlist = new ArrayList<QuestionList>();
+		Type esSearchResponseType = new TypeToken<ESSearchResponse<Question>>(){}.getType();
+		ESSearchResponse<Question> esResponse = gson.fromJson(response, esSearchResponseType);
+		for (ESGetResponse<Question> q : esResponse.getHits()) {
+			if (q == null)
+				continue;
+			
+			Question question = q.getSource();			
+			QuestionList questionList = new QuestionList(question.getId(), question.getTitle(), 
+					question.getAuthorName(), question.getAuthorId(), question.getAnswerCountString(), 
+					question.getUpVoteCountString(), question.hasPicture(), 
+					question.getDate());
+			qlist.add(questionList);
+		}
+		return qlist;
 	}
 }
