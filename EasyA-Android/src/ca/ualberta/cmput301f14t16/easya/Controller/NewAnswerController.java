@@ -3,24 +3,23 @@ package ca.ualberta.cmput301f14t16.easya.Controller;
 import android.content.Context;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoInternetException;
 import ca.ualberta.cmput301f14t16.easya.Model.Answer;
-import ca.ualberta.cmput301f14t16.easya.Model.Content;
 import ca.ualberta.cmput301f14t16.easya.Model.Pending;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
 
 /**
  * Extends {@link MainController} to provide functionality specifically tailored
- * to handling {@link Answer} objects.
+ * to handling {@link Question} objects.
  */
-public class NewAnswerController extends MainController {
+public class NewQuestionController extends MainController {
 	/**
-	 * Creates a new NewAnswerController.
+	 * Creates a new NewQuestionController.
 	 * 
 	 * @param p
 	 *            Setter for {@link MainController#pending}.
 	 * @param ctx
 	 *            Setter for {@link MainController#ctx}.
 	 */
-	protected NewAnswerController(Pending p, Context ctx) {
+	protected NewQuestionController(Pending p, Context ctx) {
 		super(p);
 		this.ctx = ctx;
 	}
@@ -31,23 +30,23 @@ public class NewAnswerController extends MainController {
 	 * 
 	 * @param ctx
 	 *            Setter for {@link MainController#ctx}.
-	 * @param qId
-	 *            The unique ID of the {@link Question} parent (if any) of the
-	 *            Content to be submitted.
+	 * @param title
+	 *            A title String for the newly created {@link Question} to be
+	 *            pushed.
 	 * @param body
-	 *            The data stored by the {@link Answer} to be created.
+	 *            The data stored by the {@link Question} to be created.
 	 * @param pixelBitmap
-	 *            A picture attached to the {@link Answer} to be created.
+	 *            A picture attached to the {@link Question} to be created.
 	 * @param authorID
 	 *            An identifier used to refer to the unique creator of the
-	 *            {@link Answer}.
-	 * @return The newly created instance of NewAnswerController.
+	 *            {@link Question}.
+	 * @return The newly created instance of NewQuestionController.
 	 */
-	public static NewAnswerController create(Context ctx, String qId,
+	public static NewQuestionController create(Context ctx, String title,
 			String body, byte[] bitmap, String authorID) {
-		Answer newAnswer = new Answer(body, bitmap, authorID);
-		Pending newPending = new Pending(qId, newAnswer);
-		return new NewAnswerController(newPending, ctx);
+		Question newQuestion = new Question(title, body, bitmap, authorID);
+		Pending newPending = new Pending(newQuestion);
+		return new NewQuestionController(newPending, ctx);
 	}
 
 	/**
