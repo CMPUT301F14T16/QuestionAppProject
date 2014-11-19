@@ -54,6 +54,14 @@
             android:layout_alignParentRight="true"
             android:layout_marginTop="10dp"
             android:textStyle="italic"/>
+            
+        <ImageView
+            android:id="@+id/question_fragment_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignRight="@+id/question_fragment_body"
+            android:layout_below="@+id/question_fragment_body"
+            android:src="@drawable/action_bar_background" />
     </RelativeLayout>
     <LinearLayout
         android:id="@+id/question_fragment_replies"
