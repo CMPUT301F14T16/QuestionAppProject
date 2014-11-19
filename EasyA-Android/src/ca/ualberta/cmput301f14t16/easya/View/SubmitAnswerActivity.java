@@ -96,7 +96,7 @@ public class SubmitAnswerActivity extends SecureActivity {
 			ByteArrayOutputStream stream = new ByteArrayOutputStream();
 			bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
 			byte[] byteArray = stream.toByteArray();
-			bytebitmap = Base64.encode(byteArray, 1);
+			byte[] bytebitmap = Base64.encode(byteArray, 1);
 			
 			File file = new File(imagepath);
 			long length = file.length();
