@@ -52,7 +52,7 @@ public class submitQuestionTask extends AsyncTask<Void, Void, Boolean> {
 	 * @param pb
 	 *            setter for {@link submitQuestionTask#pb}
 	 */
-	public submitQuestionTask(Activity act, String title, String body, byte[] pb) {
+	public submitQuestionTask(Activity act, String title, String body, Byte[] pb) {
 		this.act = act;
 		this.ctx = act;
 		this.title = title;
