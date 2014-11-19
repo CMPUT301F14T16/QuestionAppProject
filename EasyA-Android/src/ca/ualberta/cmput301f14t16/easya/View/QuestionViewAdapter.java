@@ -1,7 +1,5 @@
 package ca.ualberta.cmput301f14t16.easya.View;
 
-import java.io.ByteArrayInputStream;
-import java.io.InputStream;
 import java.util.List;
 
 import org.apache.http.message.BasicNameValuePair;
@@ -15,9 +13,6 @@ import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Model.Reply;
 import android.content.Context;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.util.Base64;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,7 +21,6 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
@@ -75,6 +69,7 @@ public class QuestionViewAdapter {
 
     public void build() {
     	try{
+    		clear();
 	    	inflateQuestion();
 	    	for (Answer a : q.getAnswers()){
 	    		inflateAnswer(a);
@@ -84,21 +79,22 @@ public class QuestionViewAdapter {
     	}
     }
     
+    public void clear(){
+    	container.removeAllViews();
+    }
+    
     private void inflateQuestion() throws NoContentAvailableException{
     	View v = inflater.inflate(R.layout.question_question_fragment, (ViewGroup)container, false);
     	    	
     	TextView title, body, upvotescount, authordate;
     	LinearLayout replies;
     	EditText addReply;
-    	ImageView image;
-    	byte[] imagefile;
     	
     	title = (TextView)v.findViewById(R.id.question_fragment_title);
     	body = (TextView)v.findViewById(R.id.question_fragment_body);
     	authordate = (TextView)v.findViewById(R.id.question_fragment_authorDate);
     	upvotescount = (TextView)v.findViewById(R.id.question_fragment_upvoteText);
     	addReply = ((EditText)v.findViewById(R.id.question_fragment_submitReplyEdt));
-    	image = (ImageView)v.findViewById(R.id.question_fragment_image);
     	
     	replies = (LinearLayout)v.findViewById(R.id.question_fragment_replies_list);    	
     	replies = inflateReplies(replies, q.getReplies());
@@ -110,11 +106,6 @@ public class QuestionViewAdapter {
     	body.setText(q.getBody());
     	authordate.setText(q.getAuthorDate());
     	upvotescount.setText(q.getUpVoteCountString());
-    	imagefile = q.getImage();
-    	byte[] imagetodisplay = Base64.decode(imagefile, 1);
-    	InputStream is = new ByteArrayInputStream(imagetodisplay);
-    	Bitmap bmp = BitmapFactory.decodeStream(is);
-    	image.setImageBitmap(bmp);
     	
     	((ImageButton)v.findViewById(R.id.question_fragment_upvoteBtn)).setTag(new BasicNameValuePair(q.getId(), null));
     	((ImageButton)v.findViewById(R.id.question_fragment_upvoteBtn)).setOnClickListener(upVote);
@@ -131,14 +122,11 @@ public class QuestionViewAdapter {
     	TextView body, upvotescount, authordate;
     	LinearLayout replies;
     	EditText addReply;
-    	ImageView image;
-    	byte[] imagefile;
     	    	
     	body = (TextView)v.findViewById(R.id.answer_fragment_body);
     	authordate = (TextView)v.findViewById(R.id.answer_fragment_authorDate);
     	upvotescount = (TextView)v.findViewById(R.id.answer_fragment_upvoteText);
-    	addReply = ((EditText)v.findViewById(R.id.answer_fragment_submitReplyEdt));
-    	image = (ImageView)v.findViewById(R.id.answer_fragment_image);
+    	addReply = ((EditText)v.findViewById(R.id.answer_fragment_submitReplyEdt)); 
     	    	
     	replies = (LinearLayout)v.findViewById(R.id.answer_fragment_replies_list);
     	replies = inflateReplies(replies, a.getReplies());
@@ -149,11 +137,6 @@ public class QuestionViewAdapter {
     	body.setText(a.getBody());
     	authordate.setText(a.getAuthorDate());
     	upvotescount.setText(a.getUpVoteCountString());
-    	imagefile = q.getImage();
-    	byte[] imagetodisplay = Base64.decode(imagefile, 1);
-    	InputStream is = new ByteArrayInputStream(imagetodisplay);
-    	Bitmap bmp = BitmapFactory.decodeStream(is);
-    	image.setImageBitmap(bmp);
     	
     	((ImageButton)v.findViewById(R.id.answer_fragment_upvoteBtn)).setTag(new BasicNameValuePair(q.getId(), a.getId()));
     	((ImageButton)v.findViewById(R.id.answer_fragment_upvoteBtn)).setOnClickListener(upVote);
