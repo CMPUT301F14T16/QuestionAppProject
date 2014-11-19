@@ -1,15 +1,8 @@
 package ca.ualberta.cmput301f14t16.easya.View;
 
-import java.io.ByteArrayInputStream;
+import java.io.ByteArrayInputStream; 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-
-
-import ca.ualberta.cmput301f14t16.easya.R;
-import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.submitQuestionTask;
-import ca.ualberta.cmput301f14t16.easya.Model.GPSTracker;
-import ca.ualberta.cmput301f14t16.easya.Model.geoCoder;
-
 import java.io.InputStream;
 
 import ca.ualberta.cmput301f14t16.easya.R;
@@ -20,7 +13,6 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -31,7 +23,6 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 /**
  * 
@@ -40,8 +31,8 @@ import android.widget.Toast;
  */
 public class SubmitQuestionActivity extends SecureActivity {
     private ImageView imageview, addimage;
-    private GPSTracker gps;
     private byte[] bytebitmap;
+	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
@@ -107,14 +98,14 @@ public class SubmitQuestionActivity extends SecureActivity {
 			ByteArrayOutputStream stream = new ByteArrayOutputStream();
 			bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
 			byte[] byteArray = stream.toByteArray();
-			bytebitmap = Base64.encode(byteArray, 1);
+			byte[] bytebitmap = Base64.encode(byteArray, 1);
 			
 			byte[] decodedBytes = Base64.decode(bytebitmap, 1);
 			InputStream is = new ByteArrayInputStream(decodedBytes);
 			Bitmap bmp = BitmapFactory.decodeStream(is);
-			//File file = new File(imagepath);
-			//long length = file.length();
-			//int lengthint=(int)length;
+			File file = new File(imagepath);
+			long length = file.length();
+			int lengthint=(int)length;
 
 			
 			//Bitmap bitmap2=pixelbitmap.createBitmap();
@@ -122,26 +113,6 @@ public class SubmitQuestionActivity extends SecureActivity {
 	      
 	    }
 	}
-	
-    public void findlocation(View view){
-    	gps = new GPSTracker(SubmitQuestionActivity.this);
-    	if (gps.canGetLocation()){
-    		double latitude = gps.getLatitude();
-    		double longitude = gps.getLongitude();
-
-    		String address = geoCoder.toAdress(this, latitude,longitude);
-    		boolean geo= Geocoder.isPresent();
-    		//String theaddress ="Calgary, AB";
-    		//double[] latlong = geoCoder.toLatLong(this, theaddress);
-    		Toast.makeText(getApplicationContext(), "\nAble to use geocoder: "+ geo + "\n" + address, Toast.LENGTH_LONG).show();
-    		
-    	}
-    	else{
-    		gps.showSettingsAlert();
-    	}
-    	
-    	
-    }
 	public String getPath(Uri uri) {
 		String[] projection = { MediaStore.Images.Media.DATA };
 		Cursor cursor = managedQuery(uri, projection, null, null, null);
