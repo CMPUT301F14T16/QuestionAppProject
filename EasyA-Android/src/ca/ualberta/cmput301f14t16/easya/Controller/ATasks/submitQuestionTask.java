@@ -37,7 +37,7 @@ public class submitQuestionTask extends AsyncTask<Void, Void, Boolean> {
 	/**
 	 * A picture attached to the {@link Question} to be created.
 	 */
-	private byte[] pb;
+	private Byte[] pb;
 	private Activity act;
 
 	/**
