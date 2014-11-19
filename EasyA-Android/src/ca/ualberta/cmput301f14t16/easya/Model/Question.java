@@ -48,7 +48,7 @@ public class Question extends Topic {
 		this.answers = new ArrayList<Answer>();
 	}
 	
-	public Question(String title, String body, byte[] bitmap, String userId) {
+	public Question(String title, String body, Byte[] bitmap, String userId) {
 		super(body, bitmap, userId);
 		this.title = title;
 		this.answers = new ArrayList<Answer>();
