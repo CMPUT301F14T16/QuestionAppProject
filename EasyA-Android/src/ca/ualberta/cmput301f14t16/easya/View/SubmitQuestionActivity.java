@@ -41,7 +41,7 @@ import android.widget.Toast;
 public class SubmitQuestionActivity extends SecureActivity {
     private ImageView imageview, addimage;
     private GPSTracker gps;
-    private byte[] bytebitmap;
+    private Byte[] bytebitmap;
 	@Override
 	public void onCreate(Bundle savedInstanceState){
 		super.onCreate(savedInstanceState);
