@@ -30,7 +30,7 @@ import android.widget.ImageView;
  */
 public class SubmitAnswerActivity extends SecureActivity {
     private ImageView imageview, addimage;
-    private byte[] bytebitmap;
+    private Byte[] bytebitmap;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
