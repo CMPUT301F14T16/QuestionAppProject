@@ -13,9 +13,13 @@ public class ESGetResponse<T> {
     int _version;
     boolean exists;
     T _source;
+    ESFields fields;
     double max_score;
     public T getSource() {
         return _source;
+    }
+    public ESFields getFields() {
+    	return fields;
     }
 }
 

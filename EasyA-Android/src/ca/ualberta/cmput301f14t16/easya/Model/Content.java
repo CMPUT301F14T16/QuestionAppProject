@@ -43,6 +43,8 @@ public abstract class Content {
 	
 	private double longitude;
 	
+	private long timestamp;
+	
 	// No args constructor used by deserializers in recreation of content.
 	public Content() {
 
@@ -114,7 +116,12 @@ public abstract class Content {
 	 * @return {@link Content#createdOn}
 	 */
 	public Date getDate() {
-		return createdOn;
+		
+		Date dateFromTimestamp = new Date(timestamp);
+		return dateFromTimestamp;
+		
+		
+		//return createdOn;
 	}
 
 	/**
@@ -143,5 +150,9 @@ public abstract class Content {
 		}catch(NoContentAvailableException ex){
 			return "";
 		}
+	}
+	
+	public void setTimestamp(long timestamp) {
+		this.timestamp = timestamp;	
 	}
 }

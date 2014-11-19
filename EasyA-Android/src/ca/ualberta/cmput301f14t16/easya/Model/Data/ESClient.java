@@ -28,7 +28,7 @@ public class ESClient {
 	
 	//ElasticSeach Urls
 	private static final String HOST_URL = "http://cmput301.softwareprocess.es:8080/testing/";
-	private static final String QUESTION_TYPE = "team16question2"; // Edit Me to Change Question DB.
+	private static final String QUESTION_TYPE = "team16question20141"; // Edit Me to Change Question DB.
 	private static final String USER_TYPE = "team16user";		   // Edit Me to Change User DB.
 	private static final String QUESTION_PATH = QUESTION_TYPE + "/";
 	private static final String USER_PATH = USER_TYPE + "/";
@@ -47,7 +47,7 @@ public class ESClient {
 	public Question getQuestionById(String id) throws IOException {
 
 		// Get a response after submitting the request for the question.
-		String content = HttpHelper.getFromUrl(HOST_URL + QUESTION_PATH + id);
+		String content = HttpHelper.getFromUrl(HOST_URL + QUESTION_PATH + id + "?fields=_source,_timestamp");
 			
 		// We have to tell GSON what type we expect
 		Type esGetResponseType = new TypeToken<ESGetResponse<Question>>(){}.getType();
@@ -57,6 +57,9 @@ public class ESClient {
 		
 		// Extract question from elastic search response;
 		Question question = esGetResponse.getSource();
+		ESFields fields = esGetResponse.getFields();
+		long timestamp = fields.getTimestamp();
+		question.setTimestamp(timestamp);
 		
 		return question;
 	}
@@ -150,7 +153,7 @@ public class ESClient {
 	public List<Question> searchQuestionsByQuery(String query, int numResults) throws IOException {
 		List<Question> qlist = new ArrayList<Question>();
 		
-		String response = HttpHelper.getFromUrl(HOST_URL + QUESTION_PATH + "_search/?size="+ numResults + "&q=" + URLEncoder.encode(query, "UTF-8"));
+		String response = HttpHelper.getFromUrl(HOST_URL + QUESTION_PATH + "_search/?size="+ numResults + "&q=" + URLEncoder.encode(query, "UTF-8") + "&fields=_source,_timestamp");
 		
 		Type esSearchResponseType = new TypeToken<ESSearchResponse<Question>>(){}.getType();
 		ESSearchResponse<Question> esResponse = gson.fromJson(response, esSearchResponseType);
@@ -158,7 +161,8 @@ public class ESClient {
 			if (q == null)
 				continue;
 			
-			Question question = q.getSource();			
+			Question question = q.getSource();
+			question.setTimestamp(q.getFields().getTimestamp());
 			qlist.add(question);
 		}
 		
@@ -171,7 +175,7 @@ public class ESClient {
 	public List<QuestionList> searchQuestionListsByQuery(String query, int numResults) throws IOException {
 		List<QuestionList> qlist = new ArrayList<QuestionList>();
 		
-		String response = HttpHelper.getFromUrl(HOST_URL + QUESTION_PATH + "_search/?size="+ numResults + "&q=" + URLEncoder.encode(query, "UTF-8"));
+		String response = HttpHelper.getFromUrl(HOST_URL + QUESTION_PATH + "_search/?size="+ numResults + "&q=" + URLEncoder.encode(query, "UTF-8") + "&fields=_source,_timestamp");
 		
 		Type esSearchResponseType = new TypeToken<ESSearchResponse<Question>>(){}.getType();
 		ESSearchResponse<Question> esResponse = gson.fromJson(response, esSearchResponseType);
@@ -179,7 +183,8 @@ public class ESClient {
 			if (q == null)
 				continue;
 			
-			Question question = q.getSource();			
+			Question question = q.getSource();
+			question.setTimestamp(q.getFields().getTimestamp());
 			QuestionList questionList = new QuestionList(question.getId(), question.getTitle(), 
 					question.getAuthorName(), question.getAuthorId(), question.getAnswerCountString(), 
 					question.getUpVoteCountString(), question.hasPicture(), 
