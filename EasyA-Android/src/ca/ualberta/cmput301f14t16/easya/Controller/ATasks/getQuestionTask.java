@@ -50,11 +50,14 @@ public class getQuestionTask extends AsyncTask<Void, Void, Question> {
 	 */
 	@Override
 	protected void onPreExecute() {
-		pd = new ProgressDialog(ctx);
-		pd.setTitle("Loading question...");
-		pd.setMessage("Please wait.");
-		pd.setCancelable(false);
-		pd.setIndeterminate(true);
+		// TODO Experimental if null block to try and fix crash upon submit question.
+		if (pd == null) {
+			pd = new ProgressDialog(ctx);
+			pd.setTitle("Loading question...");
+			pd.setMessage("Please wait.");
+			pd.setCancelable(false);
+			pd.setIndeterminate(true);
+		}
 		pd.show();
 	}
 
@@ -83,8 +86,13 @@ public class getQuestionTask extends AsyncTask<Void, Void, Question> {
 	 */
 	@Override
 	protected void onPostExecute(Question result) {
-		if (pd != null) {
-			pd.dismiss();
+		if (pd != null && pd.isShowing()) {
+			try {
+				pd.dismiss();
+			} catch (Exception e) {
+				// TODO Solve this exception.
+				e.printStackTrace();
+			}
 		}
 		if (result == null) {
 			// TODO: display the no content available screen

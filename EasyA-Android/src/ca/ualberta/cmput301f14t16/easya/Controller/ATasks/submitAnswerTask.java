@@ -73,11 +73,14 @@ public class submitAnswerTask extends AsyncTask<Void, Void, Boolean> {
 	 */
 	@Override
 	protected void onPreExecute() {
-		pd = new ProgressDialog(ctx);
-		pd.setTitle("Submitting answer...");
-		pd.setMessage("Please wait.");
-		pd.setCancelable(false);
-		pd.setIndeterminate(true);
+		// TODO experiemntal if null block to fix bug of crash on submit answer
+		if (pd == null) {
+			pd = new ProgressDialog(ctx);
+			pd.setTitle("Submitting answer...");
+			pd.setMessage("Please wait.");
+			pd.setCancelable(false);
+			pd.setIndeterminate(true);
+		}
 		pd.show();
 	}
 
