@@ -1,5 +1,7 @@
 package ca.ualberta.cmput301f14t16.easya.View;
 
+import java.io.ByteArrayInputStream;
+import java.io.InputStream;
 import java.util.List;
 
 import org.apache.http.message.BasicNameValuePair;
@@ -13,6 +15,9 @@ import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Model.Reply;
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.util.Base64;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,6 +26,7 @@ import android.view.ViewGroup;
 import android.view.inputmethod.EditorInfo;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.TextView.OnEditorActionListener;
@@ -84,17 +90,20 @@ public class QuestionViewAdapter {
     }
     
     private void inflateQuestion() throws NoContentAvailableException{
+    	byte[] imagefile;
     	View v = inflater.inflate(R.layout.question_question_fragment, (ViewGroup)container, false);
     	    	
     	TextView title, body, upvotescount, authordate;
     	LinearLayout replies;
     	EditText addReply;
+    	ImageView image;
     	
     	title = (TextView)v.findViewById(R.id.question_fragment_title);
     	body = (TextView)v.findViewById(R.id.question_fragment_body);
     	authordate = (TextView)v.findViewById(R.id.question_fragment_authorDate);
     	upvotescount = (TextView)v.findViewById(R.id.question_fragment_upvoteText);
     	addReply = ((EditText)v.findViewById(R.id.question_fragment_submitReplyEdt));
+    	image = ((ImageView)v.findViewById(R.id.question_fragment_image));
     	
     	replies = (LinearLayout)v.findViewById(R.id.question_fragment_replies_list);    	
     	replies = inflateReplies(replies, q.getReplies());
@@ -106,6 +115,15 @@ public class QuestionViewAdapter {
     	body.setText(q.getBody());
     	authordate.setText(q.getAuthorDate());
     	upvotescount.setText(q.getUpVoteCountString());
+    	try {
+    		imagefile = q.getImage();
+    		byte[] decodedBytes = Base64.decode(imagefile, 1);
+    		InputStream is = new ByteArrayInputStream(decodedBytes);
+    		Bitmap bmp = BitmapFactory.decodeStream(is);
+    		image.setImageBitmap(bmp);
+    	} catch (NullPointerException e) {
+    		e.printStackTrace();
+    	}
     	
     	((ImageButton)v.findViewById(R.id.question_fragment_upvoteBtn)).setTag(new BasicNameValuePair(q.getId(), null));
     	((ImageButton)v.findViewById(R.id.question_fragment_upvoteBtn)).setOnClickListener(upVote);
@@ -117,22 +135,34 @@ public class QuestionViewAdapter {
     }
     
     private void inflateAnswer(Answer a) throws NoContentAvailableException{
+    	byte[] imagefile2;
     	View v = inflater.inflate(R.layout.question_answer_fragment, (ViewGroup)container, false);
     	    	
     	TextView body, upvotescount, authordate;
     	LinearLayout replies;
     	EditText addReply;
+    	ImageView image2;
     	    	
     	body = (TextView)v.findViewById(R.id.answer_fragment_body);
     	authordate = (TextView)v.findViewById(R.id.answer_fragment_authorDate);
     	upvotescount = (TextView)v.findViewById(R.id.answer_fragment_upvoteText);
-    	addReply = ((EditText)v.findViewById(R.id.answer_fragment_submitReplyEdt)); 
+    	addReply = ((EditText)v.findViewById(R.id.answer_fragment_submitReplyEdt));
+    	image2 = ((ImageView)v.findViewById(R.id.answer_fragment_image));
     	    	
     	replies = (LinearLayout)v.findViewById(R.id.answer_fragment_replies_list);
     	replies = inflateReplies(replies, a.getReplies());
     	addReply.setTag(new BasicNameValuePair(q.getId(), a.getId()));
     	addReply.setOnEditorActionListener(keyAction);
     	addReply.setImeActionLabel("Submit", KeyEvent.KEYCODE_ENTER);
+    	try {
+    		imagefile2 = a.getImage();
+    		byte[] decodedBytes = Base64.decode(imagefile2, 1);
+    		InputStream is = new ByteArrayInputStream(decodedBytes);
+    		Bitmap bmp = BitmapFactory.decodeStream(is);
+    		image2.setImageBitmap(bmp);
+    	} catch (NullPointerException e) {
+    		e.printStackTrace();
+    	}
     	
     	body.setText(a.getBody());
     	authordate.setText(a.getAuthorDate());
