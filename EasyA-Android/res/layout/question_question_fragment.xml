@@ -69,12 +69,28 @@
         	android:layout_height="wrap_content"
         	android:orientation="vertical">            
         </LinearLayout>
+
         <EditText
             android:id="@+id/question_fragment_submitReplyEdt"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:inputType="text"
+            android:ems="10"
+            android:hint="@string/create_reply_hint"
             android:imeOptions="actionSend"
-        	android:hint="@string/create_reply_hint" />
+            android:inputType="text" >
+
+            <requestFocus />
+        </EditText>
+
     </LinearLayout>
+
+    <ImageView
+        android:id="@+id/question_fragment_image"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/question_fragment_rPanel"
+        android:layout_alignParentRight="true"
+        android:layout_marginRight="82dp"
+        android:src="@drawable/action_bar_background" />
+
 </RelativeLayout>
