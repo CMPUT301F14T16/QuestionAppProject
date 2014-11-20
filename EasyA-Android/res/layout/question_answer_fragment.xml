@@ -56,30 +56,14 @@
             android:id="@+id/answer_fragment_replies_list"
             android:layout_width="match_parent"
         	android:layout_height="wrap_content"
-        	android:orientation="vertical">
-
-            <ImageView
-                android:id="@+id/answer_fragment_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:src="@drawable/action_bar_background" />
-            
+        	android:orientation="vertical">            
         </LinearLayout>
+        <EditText
+            android:id="@+id/answer_fragment_submitReplyEdt"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+			android:inputType="text"
+            android:imeOptions="actionSend"
+        	android:hint="@string/create_reply_hint" />
     </LinearLayout>
-
-    <EditText
-        android:id="@+id/answer_fragment_submitReplyEdt"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_below="@+id/answer_fragment_replies"
-        android:layout_marginTop="56dp"
-        android:ems="10"
-        android:hint="@string/create_reply_hint"
-        android:imeOptions="actionSend"
-        android:inputType="text" >
-
-        <requestFocus />
-    </EditText>
-
 </RelativeLayout>
