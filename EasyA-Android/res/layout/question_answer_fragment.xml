@@ -35,11 +35,18 @@
             android:layout_toRightOf="@id/answer_fragment_upvoteBtn"
             android:paddingLeft="10dp"
             android:paddingRight="10dp"/>
+        <ImageView
+            android:id="@+id/answer_fragment_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="5dp"
+            android:layout_below="@id/answer_fragment_body" />
         <TextView
             android:id="@+id/answer_fragment_authorDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/answer_fragment_body"
+            android:layout_below="@id/answer_fragment_image"
             android:layout_alignParentRight="true"
             android:layout_marginTop="10dp"
             android:textStyle="italic"/>
