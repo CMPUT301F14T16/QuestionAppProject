@@ -206,16 +206,9 @@ public class ESClient {
 	}
 	
 	public User getUserById(String id) throws IOException {
-		// Get a response after submitting the request for the question.
 		String content = HttpHelper.getFromUrl(HOST_URL + USER_PATH + id);
-			
-		// We have to tell GSON what type we expect
 		Type esGetResponseType = new TypeToken<ESGetResponse<User>>(){}.getType();
-		
-		// Now we expect to get a Index-Creation response
 		ESGetResponse<User> esGetResponse = gson.fromJson(content, esGetResponseType);
-		
-		// Extract question from elastic search response;
 		User user = esGetResponse.getSource();
 		
 		return user;
@@ -227,8 +220,6 @@ public class ESClient {
 		return true;
 	}
 	
-	
-	// TODO finish below method.
 	public String getUserIdByEmail(String email) throws IOException {
 		
 		List<User> returnedUsers = searchUsersByQuery("email:"+email, 100);
@@ -326,5 +317,15 @@ public class ESClient {
 			qlist.add(questionList);
 		}
 		return qlist;
+	}
+	
+	public boolean updateUserFavourites(User user) throws IOException {
+		
+		String json = gson.toJson(user.getFavourites());
+		String updateStr = "{ \"doc\":{ \"favourites\":" + json + "} }";
+		
+		HttpHelper.putToUrl(HOST_URL + USER_PATH + user.getId() +"/_update", updateStr);
+		
+		return true;
 	}
 }
