@@ -8,40 +8,46 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true">
-        <ImageButton
-            android:id="@+id/answer_fragment_upvoteBtn"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentLeft="true"
-            android:src="@drawable/ic_action_good"
-            android:layout_centerHorizontal="true"
-            android:background="@android:color/transparent"
-            android:contentDescription=""/>
-        <TextView
-            android:id="@+id/answer_fragment_upvoteText"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/answer_fragment_upvoteBtn"
-            android:gravity="center"
-            android:layout_marginBottom="5dp"
-            android:textSize="18sp"
-            android:fadingEdge="horizontal"/>
-        <TextView
-            android:id="@+id/answer_fragment_body"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@id/answer_fragment_upvoteBtn"
-            android:paddingLeft="10dp"
-            android:paddingRight="10dp"/>
+        <RelativeLayout 
+		    android:id="@+id/answer_fragment_container"
+        	android:layout_width="match_parent"
+			android:layout_height="wrap_content">
+	        <ImageButton
+	            android:id="@+id/answer_fragment_upvoteBtn"
+	            android:layout_width="40dp"
+	            android:layout_height="40dp"
+	            android:layout_alignParentLeft="true"
+	            android:src="@drawable/ic_action_good"
+	            android:layout_centerHorizontal="true"
+	            android:background="@android:color/transparent"
+	            android:contentDescription=""/>
+	        <TextView
+	            android:id="@+id/answer_fragment_upvoteText"
+	            android:layout_width="40dp"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:layout_below="@id/answer_fragment_upvoteBtn"
+	            android:gravity="center"
+	            android:layout_marginBottom="5dp"
+	            android:textSize="18sp"
+	            android:fadingEdge="horizontal"/>
+	        <TextView
+	            android:id="@+id/answer_fragment_body"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentTop="true"
+	            android:layout_toRightOf="@id/answer_fragment_upvoteBtn"
+	            android:paddingLeft="10dp"
+	            android:paddingRight="10dp"/>
+        </RelativeLayout>
         <ImageView
             android:id="@+id/answer_fragment_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="5dp"
-            android:layout_below="@id/answer_fragment_body" />
+            android:layout_below="@id/answer_fragment_container"
+            android:adjustViewBounds="true"/>
         <TextView
             android:id="@+id/answer_fragment_authorDate"
             android:layout_width="wrap_content"
