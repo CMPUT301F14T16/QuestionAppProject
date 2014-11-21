@@ -107,6 +107,12 @@ public class SubmitQuestionActivity extends SecureActivity {
 			ByteArrayOutputStream stream = new ByteArrayOutputStream();
 			bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
 			byte[] byteArray = stream.toByteArray();
+			long lengthbmp = byteArray.length;
+			//As a user I don't want the picture over 64kb
+			if (lengthbmp > 64000) {
+				Toast.makeText(getApplicationContext(), "Picture Over Size", Toast.LENGTH_SHORT).show();
+    			return;
+			}
 			bytebitmap = Base64.encode(byteArray, 1);
 			
 			byte[] decodedBytes = Base64.decode(bytebitmap, 1);
