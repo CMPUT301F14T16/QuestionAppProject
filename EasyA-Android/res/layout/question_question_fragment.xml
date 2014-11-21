@@ -20,60 +20,58 @@
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
         android:layout_below="@id/question_fragment_title">
-        <ImageButton
-            android:id="@+id/question_fragment_upvoteBtn"
-            android:layout_width="40dp"
-            android:layout_height="40dp"
-            android:layout_alignParentLeft="true"
-            android:src="@drawable/ic_action_good"
-            android:layout_centerHorizontal="true"
-            android:background="@android:color/transparent"
-            android:contentDescription=""/>
-        <TextView
-            android:id="@+id/question_fragment_upvoteText"
-            android:layout_width="40dp"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_below="@id/question_fragment_upvoteBtn"
-            android:gravity="center"
-            android:layout_marginBottom="5dp"
-            android:textSize="18sp"
-            android:fadingEdge="horizontal"/>
-        <TextView
-            android:id="@+id/question_fragment_body"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentTop="true"
-            android:layout_toRightOf="@id/question_fragment_upvoteBtn"
-            android:paddingLeft="10dp"/>
+		<RelativeLayout 
+		    android:id="@+id/question_fragment_container"
+        	android:layout_width="match_parent"
+			android:layout_height="wrap_content">
+	        <ImageButton
+	            android:id="@+id/question_fragment_upvoteBtn"
+	            android:layout_width="40dp"
+	            android:layout_height="40dp"
+	            android:layout_alignParentLeft="true"
+	            android:src="@drawable/ic_action_good"
+	            android:layout_centerHorizontal="true"
+	            android:background="@android:color/transparent"
+	            android:contentDescription=""/>
+	        <TextView
+	            android:id="@+id/question_fragment_upvoteText"
+	            android:layout_width="40dp"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentLeft="true"
+	            android:layout_below="@id/question_fragment_upvoteBtn"
+	            android:gravity="center"
+	            android:layout_marginBottom="5dp"
+	            android:textSize="18sp"
+	            android:fadingEdge="horizontal"/>
+	        <TextView
+	            android:id="@+id/question_fragment_body"
+	            android:layout_width="wrap_content"
+	            android:layout_height="wrap_content"
+	            android:layout_alignParentTop="true"
+	            android:layout_toRightOf="@id/question_fragment_upvoteBtn"
+	            android:paddingLeft="10dp"/>
+        </RelativeLayout>
+        <ImageView
+	        android:id="@+id/question_fragment_image"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_centerHorizontal="true"
+	        android:layout_below="@+id/question_fragment_container" 
+	        android:adjustViewBounds="true"/>
         <TextView
             android:id="@+id/question_fragment_authorDate"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/question_fragment_body"
+            android:layout_below="@id/question_fragment_image"
             android:layout_alignParentRight="true"
             android:layout_marginTop="10dp"
             android:textStyle="italic"/>
     </RelativeLayout>
-    <LinearLayout 
-        android:id="@+id/question_picture_holder"
-        android:layout_height="wrap_content"
-        android:layout_width="match_parent"
-        android:orientation="vertical"
-        android:layout_below="@id/question_fragment_rPanel"
-        android:layout_margin="2dp"
-        android:background="#e6e6e6">
-        <ImageView 
-            android:id="@+id/question_picture"
-            android:layout_height="wrap_content"
-            android:layout_width="wrap_content"
-            android:contentDescription="Add picture"/>
-    </LinearLayout>
     <LinearLayout
         android:id="@+id/question_fragment_replies"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/question_picture_holder"
+        android:layout_below="@id/question_fragment_rPanel"
         android:layout_alignParentLeft="true"
         android:background="#c9c9c9"
         android:orientation="vertical">
