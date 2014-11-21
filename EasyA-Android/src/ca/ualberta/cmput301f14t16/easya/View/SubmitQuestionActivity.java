@@ -133,7 +133,7 @@ public class SubmitQuestionActivity extends SecureActivity {
     		boolean geo= Geocoder.isPresent();
     		//String theaddress ="Calgary, AB";
     		//double[] latlong = geoCoder.toLatLong(this, theaddress);
-    		Toast.makeText(getApplicationContext(), "\nAble to use geocoder: "+ geo + "\n" + address, Toast.LENGTH_LONG).show();
+    		Toast.makeText(getApplicationContext(), "Able to use geocoder: "+ geo + "\n" + address, Toast.LENGTH_LONG).show();
     		
     	}
     	else{
