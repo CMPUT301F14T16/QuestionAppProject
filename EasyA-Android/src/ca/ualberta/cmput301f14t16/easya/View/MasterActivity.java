@@ -3,6 +3,7 @@ package ca.ualberta.cmput301f14t16.easya.View;
 import java.util.List;
 import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.changeUsernameTask;
+import ca.ualberta.cmput301f14t16.easya.Model.InternetCheck;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.QuestionList;
 import ca.ualberta.cmput301f14t16.easya.Model.Queue;
@@ -149,7 +150,7 @@ public abstract class MasterActivity extends SecureActivity implements
 				return true;
 			case R.id.menu_sync:
 				if (!this.syncInProgress){
-					Queue.getInstance().ForceCheckInternet();
+					InternetCheck.forceCheckForInternet();
 					update();
 				}
 				return true;

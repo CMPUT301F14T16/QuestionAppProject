@@ -34,24 +34,10 @@ public class Queue extends Thread {
 	/**
 	 * The amount of time the thread will sleep between every cycle.
 	 */
-	final long loop_interval = 5000; // in milliseconds
-	/**
-	 * The thread will not attempt to check for an active Internet connection
-	 * unless at least this amount of time has passed since the last check.
-	 */
-	final int check_for_internet = 300000; // in milliseconds 5 minutes
+	final long loop_interval = 60000; // in milliseconds
 
 	private static Queue queue;
 
-	/**
-	 * The time at which the last check for an active Internet connection was
-	 * made.
-	 */
-	public Date lastCheck; // TODO made public because test case uses it.
-	/**
-	 * True if an active Internet has been found.
-	 */
-	private boolean haveInternet;
 	private boolean isActive = true;
 
 	/**
@@ -87,7 +73,7 @@ public class Queue extends Thread {
 		while (isActive) {
 			try {
 				if (!pendings.isEmpty()) {
-					if (haveInternetConnection())
+					if (InternetCheck.haveInternet())
 						ProcessPendings();
 				}
 				Thread.sleep(loop_interval);
@@ -182,7 +168,7 @@ public class Queue extends Thread {
             catch(NoClassTypeSpecifiedException ex){
             	throw ex;
             }catch(IOException ex){
-            	if (!haveInternetConnection())
+            	if (!InternetCheck.haveInternet())
             		return;
         		if (tries >3)
         			return;
@@ -200,40 +186,7 @@ public class Queue extends Thread {
     	     }
     	});    	    	
     }
-
-	/**
-	 * @return True if an active Internet connection is found.
-	 */
-	private boolean checkForInternet() {
-		try {
-			ConnectivityManager cm = (ConnectivityManager) ContextProvider
-					.get().getSystemService(Context.CONNECTIVITY_SERVICE);
-
-			NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
-			return activeNetwork != null
-					&& activeNetwork.isConnectedOrConnecting();
-		} catch (Exception ex) {
-			return false;
-		}
-	}
-
-	/**
-	 * Will call {@link Queue#checkForInternet()} if enough time has passed
-	 * since the last check. It will assign the results to
-	 * {@link Queue#haveInternet}.
-	 * 
-	 * @return {@link Queue#haveInternet} after the method has completed its
-	 *         function.
-	 */
-	public boolean haveInternetConnection() {
-		if (this.lastCheck == null
-				|| ((new Date()).getTime() - this.lastCheck.getTime()) >= check_for_internet) {
-			this.lastCheck = new Date();
-			this.haveInternet = checkForInternet();
-		}
-		return this.haveInternet;
-	}
-
+	
 	/**
 	 * Stops the current instance of Queue.
 	 */
@@ -243,17 +196,5 @@ public class Queue extends Thread {
 			this.join();
 		} catch (InterruptedException ex) {
 		}
-	}
-
-	/**
-	 * Will call {@link Queue#haveInternetConnection()} as though enough time
-	 * has passed for it to check the connection, regardless of whether or not
-	 * enough time has actually elapsed.
-	 * 
-	 * @return The result of {@link Queue#haveInternetConnection()}
-	 */
-	public boolean ForceCheckInternet() {
-		this.lastCheck = null;
-		return haveInternetConnection();
 	}
 }
