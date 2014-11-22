@@ -191,7 +191,10 @@ public class ESClient {
 				continue;
 			
 			Question question = q.getSource();
-			question.setTimestamp(q.getFields().getTimestamp());
+			
+			if (q.getFields() != null);
+				question.setTimestamp(q.getFields().getTimestamp());
+			
 			QuestionList questionList = new QuestionList(question.getId(), question.getTitle(), 
 					question.getAuthorName(), question.getAuthorId(), question.getAnswerCountString(), 
 					question.getUpVoteCountString(), question.hasPicture(), 
