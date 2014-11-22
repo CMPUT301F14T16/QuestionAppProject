@@ -96,14 +96,35 @@ public class SubmitAnswerActivity extends SecureActivity {
 			ByteArrayOutputStream stream = new ByteArrayOutputStream();
 			bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
 			byte[] byteArray = stream.toByteArray();
-			bytebitmap = Base64.encode(byteArray, 1);
-			
-			File file = new File(imagepath);
-			long length = file.length();
-			int lengthint=(int)length;
-
-			
-			imageview.setImageBitmap(bitmap);	      
+			long lengthbmp = byteArray.length;
+			int roundingLength = (int)lengthbmp;
+			//As a user I don't want the picture over 64kb
+			if (lengthbmp > 64000) {
+				bytebitmap = Base64.encode(byteArray, 1);
+				byte[] decodedBytes = Base64.decode(bytebitmap, 1);
+				InputStream is = new ByteArrayInputStream(decodedBytes);
+				Bitmap bmpTobeResized = BitmapFactory.decodeStream(is);
+	    			Bitmap resizedBmp = Bitmap.createScaledBitmap(bmpTobeResized, 100, 50, true);
+	    			imageview.setImageBitmap(resizedBmp);
+				//Bitmap bmp = BitmapFactory.decodeStream(is);
+				/*Bitmap resizedBitmap=Bitmap.createScaledBitmap(bitmap, (int)(bitmap.getWidth()*0.2), (int)(bitmap.getHeight()*0.3), true);
+				ByteArrayOutputStream resizedstream = new ByteArrayOutputStream();
+				resizedBitmap.compress(Bitmap.CompressFormat.PNG, 100, resizedstream);
+				byte[] resizedbyteArray = stream.toByteArray();
+				resizedbytebitmap = Base64.encode(resizedbyteArray, 1);
+				InputStream is = new ByteArrayInputStream(resizedbytebitmap);
+				Bitmap bmp = BitmapFactory.decodeStream(is);
+				//Bitmap resizedbitmap = BitmapFactory.decodeByteArray(resizedbytebitmap , 0, resizedbytebitmap.length);
+				imageview.setImageBitmap(bmp);*/
+				Toast.makeText(getApplicationContext(), "Picture Over Size", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), "Picture Size"+Integer.toString(roundingLength), Toast.LENGTH_SHORT).show();
+			} else {
+				bytebitmap = Base64.encode(byteArray, 1);
+				byte[] decodedBytes = Base64.decode(bytebitmap, 1);
+				InputStream is = new ByteArrayInputStream(decodedBytes);
+				Bitmap bmp = BitmapFactory.decodeStream(is);
+				imageview.setImageBitmap(bmp);
+			}	      
 	    }
 	}
 	public String getPath(Uri uri) {
