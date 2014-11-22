@@ -118,9 +118,16 @@ public class QuestionViewAdapter {
     	try {
     		imagefile = q.getImage();
     		byte[] decodedBytes = Base64.decode(imagefile, 1);
+    		//long imagesize = decodedBytes.length;
     		InputStream is = new ByteArrayInputStream(decodedBytes);
-    		Bitmap bmp = BitmapFactory.decodeStream(is);
-    		image.setImageBitmap(bmp);
+    		Bitmap bmpTobeResized = BitmapFactory.decodeStream(is);
+    		Bitmap resizedBmp = Bitmap.createScaledBitmap(bmpTobeResized, (int)(bmpTobeResized.getWidth()*0.7), (int)(bmpTobeResized.getHeight()*0.5), true);
+    		image.setImageBitmap(resizedBmp);
+    		/*else{
+    			InputStream is = new ByteArrayInputStream(decodedBytes);
+    			Bitmap bmp = BitmapFactory.decodeStream(is);
+    			image.setImageBitmap(bmp);
+    		}*/
     	} catch (NullPointerException e) {
     		e.printStackTrace();
     	}
@@ -158,8 +165,12 @@ public class QuestionViewAdapter {
     		imagefile2 = a.getImage();
     		byte[] decodedBytes = Base64.decode(imagefile2, 1);
     		InputStream is = new ByteArrayInputStream(decodedBytes);
-    		Bitmap bmp = BitmapFactory.decodeStream(is);
-    		image2.setImageBitmap(bmp);
+    		Bitmap bmpTobeResized = BitmapFactory.decodeStream(is);
+    		Bitmap resizedBmp = Bitmap.createScaledBitmap(bmpTobeResized, (int)(bmpTobeResized.getWidth()*0.7), (int)(bmpTobeResized.getHeight()*0.5), true);
+    		image2.setImageBitmap(resizedBmp);
+    		//InputStream is = new ByteArrayInputStream(decodedBytes);
+    		//Bitmap bmp = BitmapFactory.decodeStream(is);
+    		//image2.setImageBitmap(bmp);
     	} catch (NullPointerException e) {
     		e.printStackTrace();
     	}
