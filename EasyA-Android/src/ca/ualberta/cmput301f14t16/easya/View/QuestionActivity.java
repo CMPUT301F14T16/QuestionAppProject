@@ -57,7 +57,7 @@ public class QuestionActivity extends SecureActivity implements MainView<Questio
     public boolean onOptionsItemSelected(MenuItem item) {
 		switch (item.getItemId()) {
 	    	case android.R.id.home:
-		        finish();
+		        onBackPressed();
 		        break;
 	    	case R.id.menu_question_favourite:
 	    		setFavourite();
