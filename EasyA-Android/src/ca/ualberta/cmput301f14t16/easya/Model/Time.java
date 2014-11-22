@@ -11,7 +11,7 @@ import android.os.SystemClock;
 public final class Time {
 	public static final Calendar getDate(){
 		SntpClient client = new SntpClient();
-		 if (client.requestTime("pool.ntp.org", 3000)) {
+		 if (client.requestTime("pool.ntp.org", 5000)) {
 		     long now = client.getNtpTime() + SystemClock.elapsedRealtime() - client.getNtpTimeReference();
 		     Calendar cl = Calendar.getInstance(TimeZone.getTimeZone("GMT-0"));		     
 		     cl.setTimeInMillis(now);

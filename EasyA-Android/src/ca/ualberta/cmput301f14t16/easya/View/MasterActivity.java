@@ -72,8 +72,6 @@ public abstract class MasterActivity extends SecureActivity implements
 		((ListView) findViewById(R.id.drawer_menu_options))
 				.setOnItemClickListener(folderClickListener);
 		createDrawerMenu();
-		getActionBar().setDisplayOptions(ActionBar.DISPLAY_SHOW_CUSTOM,
-				ActionBar.DISPLAY_SHOW_HOME);
 	}
 
 	/**
@@ -145,37 +143,38 @@ public abstract class MasterActivity extends SecureActivity implements
 			return true;
 		}
 		switch (item.getItemId()) {
-		case R.id.menu_sortByNewest:
-			displayedQuestions = Sort.dateSort(true, displayedQuestions);
-			SetAdapter(displayedQuestions);
-			return true;
-		case R.id.menu_sync:
-			if (!this.syncInProgress)
-				Queue.getInstance().ForceCheckInternet();
-			update();
-			return true;
-		case R.id.menu_sortByOldest:
-			displayedQuestions = Sort.dateSort(false, displayedQuestions);
-			SetAdapter(displayedQuestions);
-			return true;
-		case R.id.menu_sortByMostVotes:
-			displayedQuestions = Sort.sortUpVote(true, displayedQuestions);
-			SetAdapter(displayedQuestions);
-			return true;
-		case R.id.menu_sortByLeastVotes:
-			displayedQuestions = Sort.sortUpVote(false, displayedQuestions);
-			SetAdapter(displayedQuestions);
-			return true;
-		case R.id.menu_sortByPicture:
-			displayedQuestions = Sort.pictureSort(true, displayedQuestions);
-			SetAdapter(displayedQuestions);
-			return true;
-		case R.id.menu_sortByNoPicture:
-			displayedQuestions = Sort.pictureSort(false, displayedQuestions);
-			SetAdapter(displayedQuestions);
-			return true;
+			case R.id.menu_sortByNewest:
+				displayedQuestions = Sort.dateSort(true, displayedQuestions);
+				SetAdapter(displayedQuestions);
+				return true;
+			case R.id.menu_sync:
+				if (!this.syncInProgress){
+					Queue.getInstance().ForceCheckInternet();
+					update();
+				}
+				return true;
+			case R.id.menu_sortByOldest:
+				displayedQuestions = Sort.dateSort(false, displayedQuestions);
+				SetAdapter(displayedQuestions);
+				return true;
+			case R.id.menu_sortByMostVotes:
+				displayedQuestions = Sort.sortUpVote(true, displayedQuestions);
+				SetAdapter(displayedQuestions);
+				return true;
+			case R.id.menu_sortByLeastVotes:
+				displayedQuestions = Sort.sortUpVote(false, displayedQuestions);
+				SetAdapter(displayedQuestions);
+				return true;
+			case R.id.menu_sortByPicture:
+				displayedQuestions = Sort.pictureSort(true, displayedQuestions);
+				SetAdapter(displayedQuestions);
+				return true;
+			case R.id.menu_sortByNoPicture:
+				displayedQuestions = Sort.pictureSort(false, displayedQuestions);
+				SetAdapter(displayedQuestions);
+				return true;
 		}
-
+		
 		return super.onOptionsItemSelected(item);
 	}
 
@@ -183,38 +182,41 @@ public abstract class MasterActivity extends SecureActivity implements
 		@Override
 		public void onItemClick(AdapterView<?> parent, View v, int pos, long id) {
 			switch (pos) {
-			case ListView.INVALID_POSITION:
-				break;
-			case 0: // Home
-				if (!(position == 0)) {
-					Intent i = new Intent(v.getContext(), MainActivity.class);
-					startActivity(i);
+				case ListView.INVALID_POSITION:
+					break;
+				case 0: // Home
+					if (!(position == 0)) {
+						Intent i = new Intent(v.getContext(), MainActivity.class);
+						startActivity(i);
+					}
+					break;
+				case 1: // Favourites
+					if (!(position == 1)) {
+						Intent i = new Intent(v.getContext(),
+								FavouritesActivity.class);
+						startActivity(i);
+					}
+					break;
+				case 2: // My questions
+					if (!(position == 2)) {
+						Intent i = new Intent(v.getContext(),
+								MyQuestionActivity.class);
+						startActivity(i);
+					}
+					break;
+				case 3: // Saved questions
+					if (!(position == 3)) {
+						Intent i = new Intent(v.getContext(), SavedActivity.class);
+						startActivity(i);
+					}
+					break;
 				}
-				break;
-			case 1: // Favourites
-				if (!(position == 1)) {
-					Intent i = new Intent(v.getContext(),
-							FavouritesActivity.class);
-					startActivity(i);
-				}
-				break;
-			case 2: // My questions
-				if (!(position == 2)) {
-					Intent i = new Intent(v.getContext(),
-							MyQuestionActivity.class);
-					startActivity(i);
-				}
-				break;
-			case 3: // Saved questions
-				if (!(position == 3)) {
-					Intent i = new Intent(v.getContext(), SavedActivity.class);
-					startActivity(i);
-				}
-				break;
-			}
-
 			if (closeViewOnSwitch())
 				finish();
+			else
+				if (mDrawerLayout.isDrawerOpen(mDrawerList)){
+					mDrawerLayout.closeDrawer(mDrawerList);
+				}
 		}
 	};
 
