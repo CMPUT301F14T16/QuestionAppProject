@@ -60,11 +60,11 @@ public final class InternetCheck {
 	 *         function.
 	 */
 	public static final boolean haveInternet(){
-		if (lastCheck == null
-				|| ((new Date()).getTime() - lastCheck.getTime()) >= check_for_internet) {
+		boolean auxTimer = (lastCheck != null && ((new Date()).getTime() - lastCheck.getTime()) >= check_for_internet);
+		if (lastCheck == null || auxTimer) {
 			lastCheck = new Date();
 			internetStatus = checkInternet();
-			if (internetStatus)
+			if (auxTimer && internetStatus)
 				MainModel.getInstance().notifyViews();
 		}
 		return internetStatus;

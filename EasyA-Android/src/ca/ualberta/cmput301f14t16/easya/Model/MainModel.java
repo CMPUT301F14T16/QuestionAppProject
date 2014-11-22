@@ -23,7 +23,9 @@ public class MainModel {
 	private MainView<?> currentView;
 	private List<User> usersList;
 	private User mainUser;
-
+	
+	private static boolean updating;
+	
 	private List<MainView<?>> views;
 
 	protected MainModel() {
@@ -47,10 +49,20 @@ public class MainModel {
 	}
 
 	public void notifyViews() {
-		for (MainView<?> view : getAllViews()) {
-			view.update();
+		synchronized(this){
+			if(!updating){
+				updating = true;
+				try{
+					for (MainView<?> view : getAllViews()) {
+						view.update();
+					}
+					this.usersList = null;
+				}catch(Exception ex){
+				}finally{
+					updating=false;
+				}
+			}
 		}
-		this.usersList = null;
 	}
 
 	public List<MainView<?>> getAllViews() {
