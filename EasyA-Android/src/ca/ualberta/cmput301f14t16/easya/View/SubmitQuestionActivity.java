@@ -129,7 +129,7 @@ public class SubmitQuestionActivity extends SecureActivity {
 				//Bitmap bitmap2=pixelbitmap.createBitmap();
 				imageview.setImageBitmap(bmp);
 			}
-		}
+		
 	    }
 	}
 	
