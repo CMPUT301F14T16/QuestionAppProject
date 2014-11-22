@@ -135,6 +135,7 @@ public class submitAnswerTask extends AsyncTask<Void, Void, Boolean> {
 			Toast.makeText(ctx,
 					"Something bad happened, try posting your answer again!",
 					Toast.LENGTH_LONG).show();
-		}		
+		}
+		act.finish();
 	}
 }

@@ -63,7 +63,6 @@ public abstract class Content {
 	public Content(String body, String userId) {
 		this.body = body;
 		this.userId = userId;
-		this.createdOn = new Date();
 		this.id = UUID.randomUUID().toString(); //TODO: unify the creation of ID's method
 	}
 	
@@ -71,7 +70,6 @@ public abstract class Content {
 		this.body = body;
 		this.userId = userId;
 		this.coordinate=coordinate;
-		this.createdOn = new Date();
 		this.id = UUID.randomUUID().toString(); //TODO: unify the creation of ID's method
 	}
 	
@@ -102,15 +100,21 @@ public abstract class Content {
 		}
 	}
 	
-	
+	/**
+	 * Sets {@link Content#createdOn date.}
+	 * 
+	 * @param newId
+	 *            ID to set
+	 */
+	public void setDate(Date date) {
+		this.createdOn = date;
+	}
 
 	/**
-	 * @return {@link Content#createdOn}
+	 * @return {@link Content#createdOn date.}
 	 */
 	public Date getDate() {
-		
-		Date dateFromTimestamp = new Date(timestamp);
-		return dateFromTimestamp;
+		return this.createdOn;
 		
 		
 		//return createdOn;
@@ -136,7 +140,7 @@ public abstract class Content {
 	public String getAuthorDate(){
 		try{
 			String auxU = MainModel.getInstance().getUserById(this.getAuthorId()).getUsername();
-			SimpleDateFormat sdf = new SimpleDateFormat("MMM dd yyyy hh:mm", Locale.CANADA);
+			SimpleDateFormat sdf = new SimpleDateFormat("MMM dd yyyy hh:mm", Locale.getDefault());
 	        String dateAsString = sdf.format(this.getDate());
 			return dateAsString + " - " + auxU;
 		}catch(NoContentAvailableException ex){

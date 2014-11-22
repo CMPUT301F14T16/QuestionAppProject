@@ -11,6 +11,7 @@ import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Model.Pending;
 import ca.ualberta.cmput301f14t16.easya.Model.Queue;
 import ca.ualberta.cmput301f14t16.easya.Model.Reply;
+import ca.ualberta.cmput301f14t16.easya.Model.Time;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.ESClient;
 
 /**
@@ -54,7 +55,10 @@ public abstract class MainController {
 		ESClient es = new ESClient();
 		if (Queue.getInstance().haveInternetConnection()) {
 			try {
-				Content c = pending.getContent();
+				Content c = pending.getContent();				
+				c.setDate(Time.getDate());
+				System.out.println(Time.getDate());
+				System.out.println(c.getDate());
 				if (c instanceof Question) {
 					return es.submitQuestion((Question) c);
 				} else if (c instanceof Answer) {
