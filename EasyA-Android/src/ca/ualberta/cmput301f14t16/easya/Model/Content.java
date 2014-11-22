@@ -1,8 +1,10 @@
 package ca.ualberta.cmput301f14t16.easya.Model;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 import java.util.UUID;
 
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
@@ -33,7 +35,7 @@ public abstract class Content {
 	/**
 	 * The date at which the instance of Content was created.
 	 */
-	private Date createdOn;
+	private Calendar createdOn;
 
 	/**
 	 * Creates an empty {@link Content} object.
@@ -106,18 +108,15 @@ public abstract class Content {
 	 * @param newId
 	 *            ID to set
 	 */
-	public void setDate(Date date) {
+	public void setDate(Calendar date) {
 		this.createdOn = date;
 	}
 
 	/**
 	 * @return {@link Content#createdOn date.}
 	 */
-	public Date getDate() {
+	public Calendar getDate() {
 		return this.createdOn;
-		
-		
-		//return createdOn;
 	}
 
 	/**
@@ -139,10 +138,11 @@ public abstract class Content {
 	
 	public String getAuthorDate(){
 		try{
+			getDate().add(Calendar.MILLISECOND, TimeZone.getTimeZone(Time.getTimezone()).getOffset(getDate().getTimeInMillis()));
 			String auxU = MainModel.getInstance().getUserById(this.getAuthorId()).getUsername();
 			SimpleDateFormat sdf = new SimpleDateFormat("MMM dd yyyy hh:mm", Locale.getDefault());
-	        String dateAsString = sdf.format(this.getDate());
-			return dateAsString + " - " + auxU;
+			sdf.setTimeZone(TimeZone.getTimeZone(Time.getTimezone()));
+			return sdf.format(getDate().getTime()) + " - @" + auxU;
 		}catch(NoContentAvailableException ex){
 			return "";
 		}

@@ -1,6 +1,12 @@
 package ca.ualberta.cmput301f14t16.easya.Model;
 
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.Locale;
+import java.util.TimeZone;
+
+import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
 
 /**
  * Provides a lightweight implementation of {@link Question}, to be used as a
@@ -45,7 +51,7 @@ public class QuestionList {
 	/**
 	 * The date at which the instance of Content was created.
 	 */
-	private Date date;
+	private Calendar date;
 	/**
 	 * True if the original {@link Question} contained an image, False if not.
 	 */
@@ -77,7 +83,7 @@ public class QuestionList {
 	 *            Setter for {@link QuestionList#image}
 	 */
 	public QuestionList(String id, String title, String username, String userid,
-			String answers, String upvotes, boolean image, Date date) {
+			String answers, String upvotes, boolean image, Calendar date) {
 		this.id = id;
 		this.title = title;
 		this.answers = answers;
@@ -133,7 +139,7 @@ public class QuestionList {
 	/**
 	 * @return {@link QuestionList#date}
 	 */
-	public Date getDate() {
+	public Calendar getDate() {
 		return this.date;
 	}
 
@@ -141,7 +147,19 @@ public class QuestionList {
 	/**
 	 * @return {@link QuestionList#userid}
 	 */
-	public String getUserId() {
+	public String getAuthorId() {
 		return this.userid;
+	}
+
+	public String getAuthorDate(){
+		try{
+			getDate().add(Calendar.MILLISECOND, TimeZone.getTimeZone(Time.getTimezone()).getOffset(getDate().getTimeInMillis()));
+			String auxU = MainModel.getInstance().getUserById(this.getAuthorId()).getUsername();
+			SimpleDateFormat sdf = new SimpleDateFormat("MMM dd yyyy hh:mm", Locale.getDefault());
+			sdf.setTimeZone(TimeZone.getTimeZone(Time.getTimezone()));
+			return sdf.format(getDate().getTime()) + " - @" + auxU;
+		}catch(NoContentAvailableException ex){
+			return "";
+		}
 	}
 }

@@ -153,7 +153,7 @@ public class Cache {
 			throw new NoContentAvailableException();
 		List<QuestionList> lst = new ArrayList<QuestionList>();
 		for (QuestionList q : aux) {
-			if (q.getUserId().equals(u.getId()))
+			if (q.getAuthorId().equals(u.getId()))
 				lst.add(q);
 		}
 		return lst;
