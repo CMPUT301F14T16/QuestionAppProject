@@ -107,19 +107,29 @@ public class SubmitQuestionActivity extends SecureActivity {
 			ByteArrayOutputStream stream = new ByteArrayOutputStream();
 			bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
 			byte[] byteArray = stream.toByteArray();
-			bytebitmap = Base64.encode(byteArray, 1);
-			
-			byte[] decodedBytes = Base64.decode(bytebitmap, 1);
-			InputStream is = new ByteArrayInputStream(decodedBytes);
-			Bitmap bmp = BitmapFactory.decodeStream(is);
-			//File file = new File(imagepath);
-			//long length = file.length();
-			//int lengthint=(int)length;
-
-			
-			//Bitmap bitmap2=pixelbitmap.createBitmap();
-			imageview.setImageBitmap(bmp);
-	      
+			long lengthbmp = byteArray.length;
+			if (lengthbmp > 64000) {
+				bytebitmap = Base64.encode(byteArray, 1);
+				byte[] decodedBytes = Base64.decode(bytebitmap, 1);
+				InputStream is = new ByteArrayInputStream(decodedBytes);
+				Bitmap bmpTobeResized = BitmapFactory.decodeStream(is);
+	    			Bitmap resizedBmp = Bitmap.createScaledBitmap(bmpTobeResized, 100, 50, true);
+	    			imageview.setImageBitmap(resizedBmp);
+				Toast.makeText(getApplicationContext(), "Picture Over Size", Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), "Picture Size"+Integer.toString(roundingLength), Toast.LENGTH_SHORT).show();
+    				return;
+			} else {
+				bytebitmap = Base64.encode(byteArray, 1);
+				byte[] decodedBytes = Base64.decode(bytebitmap, 1);
+				InputStream is = new ByteArrayInputStream(decodedBytes);
+				Bitmap bmp = BitmapFactory.decodeStream(is);
+				//File file = new File(imagepath);
+				//long length = file.length();
+				//int lengthint=(int)length;
+				//Bitmap bitmap2=pixelbitmap.createBitmap();
+				imageview.setImageBitmap(bmp);
+			}
+		}
 	    }
 	}
 	
