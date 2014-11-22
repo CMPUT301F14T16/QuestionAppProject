@@ -102,7 +102,7 @@ public class SubmitAnswerActivity extends SecureActivity {
 			if (lengthbmp > 64000) {
 				/*Bitmap resizedBitmap=Bitmap.createScaledBitmap(bitmap, (int)(bitmap.getWidth()*0.2), (int)(bitmap.getHeight()*0.3), true);
 				ByteArrayOutputStream resizedstream = new ByteArrayOutputStream();
-				resizedBitmap.compress(Bitmap.CompressFormat.PNG, 50, resizedstream);
+				resizedBitmap.compress(Bitmap.CompressFormat.PNG, 100, resizedstream);
 				byte[] resizedbyteArray = stream.toByteArray();
 				resizedbytebitmap = Base64.encode(resizedbyteArray, 1);
 				InputStream is = new ByteArrayInputStream(resizedbytebitmap);
