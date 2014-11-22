@@ -222,6 +222,17 @@ public class Cache {
 		}
 		throw new NoContentAvailableException();
 	}
+	
+	public List<User> getUsersListFromCache(){
+		Gson gson = new Gson();
+		Type listType = new TypeToken<List<User>>() {
+		}.getType();
+		List<User> lst = gson.fromJson(
+				PMDataParser.loadJson(PMFilesEnum.CACHEUSERS), listType);
+		if (lst == null)
+			lst = new ArrayList<User>();		
+		return lst;
+	}
 
 	public void updateAllUsers() {
 		if (Queue.getInstance().haveInternetConnection()) {
