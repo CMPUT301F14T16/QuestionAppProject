@@ -57,8 +57,6 @@ public abstract class MainController {
 			try {
 				Content c = pending.getContent();				
 				c.setDate(Time.getDate());
-				System.out.println(Time.getDate());
-				System.out.println(c.getDate());
 				if (c instanceof Question) {
 					return es.submitQuestion((Question) c);
 				} else if (c instanceof Answer) {

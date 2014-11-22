@@ -161,7 +161,8 @@ public class Queue extends Thread {
         int qtP = pendings.size();
     	for(Pending p : pendings){
     		try {
-    			Content c = p.getContent();            
+    			Content c = p.getContent();   
+    			c.setDate(Time.getDate());
                 if(c instanceof Question){
                 	if (esClient.submitQuestion((Question) c)){
 						Cache.getInstance().SaveSingleQuestion((Question) c);
