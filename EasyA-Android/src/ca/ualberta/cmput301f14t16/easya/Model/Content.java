@@ -39,9 +39,7 @@ public abstract class Content {
 	 * Creates an empty {@link Content} object.
 	 */
 	
-	private double latitude;
-	
-	private double longitude;
+	private double[] coordinate;
 	
 	private long timestamp;
 	
@@ -69,22 +67,16 @@ public abstract class Content {
 		this.id = UUID.randomUUID().toString(); //TODO: unify the creation of ID's method
 	}
 	
-	public Content(String body, String userId, double latitude, double longitude) {
+	public Content(String body, String userId, double[] coordinate) {
 		this.body = body;
 		this.userId = userId;
-		this.latitude = latitude;
-		this.longitude =  longitude;
+		this.coordinate=coordinate;
 		this.createdOn = new Date();
 		this.id = UUID.randomUUID().toString(); //TODO: unify the creation of ID's method
 	}
 	
-	public double getLatitude(){
-		return this.latitude;
-		
-	}
-	
-	public double getLongitude(){
-		return this.longitude;
+	public double[] getCoordinate(){
+		return this.coordinate;
 		
 	}
 	

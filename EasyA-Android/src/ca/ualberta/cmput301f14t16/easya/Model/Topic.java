@@ -63,8 +63,8 @@ public abstract class Topic extends Content {
 		this.replies = new ArrayList<Reply>();
 		this.upVotes = new ArrayList<String>();
 	}
-	public Topic(String body, byte[] bitmap, String userId, double latitude, double longitude) {
-		super(body, userId, latitude, longitude);
+	public Topic(String body, byte[] bitmap, String userId, double[] coordinate) {
+		super(body, userId, coordinate);
 		this.picture = bitmap;
 		this.replies = new ArrayList<Reply>();
 		this.upVotes = new ArrayList<String>();
