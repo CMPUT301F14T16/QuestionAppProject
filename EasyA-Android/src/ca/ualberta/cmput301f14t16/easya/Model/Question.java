@@ -53,6 +53,11 @@ public class Question extends Topic {
 		this.title = title;
 		this.answers = new ArrayList<Answer>();
 	}
+	public Question(String title, String body, byte[] bitmap, String userId, double[] coordinate) {
+		super(body, bitmap, userId, coordinate);
+		this.title = title;
+		this.answers = new ArrayList<Answer>();
+	}
 	
 	/**
 	 * @return {@link Question#title}
