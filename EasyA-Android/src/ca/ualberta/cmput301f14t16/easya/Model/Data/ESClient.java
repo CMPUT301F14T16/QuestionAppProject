@@ -58,8 +58,12 @@ public class ESClient {
 		// Extract question from elastic search response;
 		Question question = esGetResponse.getSource();
 		ESFields fields = esGetResponse.getFields();
-		long timestamp = fields.getTimestamp();
-		question.setTimestamp(timestamp);
+		if (fields != null) {
+			long timestamp = fields.getTimestamp();
+			question.setTimestamp(timestamp);
+		}
+		
+		
 		
 		return question;
 	}
@@ -162,7 +166,10 @@ public class ESClient {
 				continue;
 			
 			Question question = q.getSource();
-			question.setTimestamp(q.getFields().getTimestamp());
+			ESFields fields = q.getFields();
+			if (fields != null) {
+				question.setTimestamp(fields.getTimestamp());
+			}
 			qlist.add(question);
 		}
 		
@@ -184,7 +191,12 @@ public class ESClient {
 				continue;
 			
 			Question question = q.getSource();
-			question.setTimestamp(q.getFields().getTimestamp());
+			
+			ESFields fields = q.getFields();
+			if (q.getFields() != null) {
+				question.setTimestamp(fields.getTimestamp());
+			}
+			
 			QuestionList questionList = new QuestionList(question.getId(), question.getTitle(), 
 					question.getAuthorName(), question.getAuthorId(), question.getAnswerCountString(), 
 					question.getUpVoteCountString(), question.hasPicture(), 

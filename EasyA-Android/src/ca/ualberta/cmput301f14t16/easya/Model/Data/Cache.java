@@ -306,14 +306,15 @@ public class Cache {
 		List<String> userFavs = MainModel.getInstance().getCurrentUser()
 				.getFavourites();
 		List<QuestionList> aux = getQuestionListFromQuestionsCache();
+		List<QuestionList> lst = new ArrayList<QuestionList>();
 		if (userFavs == null || userFavs.size() <= 0 || aux == null
 				|| aux.size() <= 0)
 			throw new NoContentAvailableException();
 		for (QuestionList ql : aux) {
-			if (!userFavs.contains(ql.getId())) {
-				aux.remove(aux.indexOf(ql));
+			if (userFavs.contains(ql.getId())) {
+				lst.add(ql);
 			}
 		}
-		return aux;
+		return lst;
 	}
 }

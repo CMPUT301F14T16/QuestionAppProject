@@ -128,20 +128,13 @@ public class submitAnswerTask extends AsyncTask<Void, Void, Boolean> {
 						ctx,
 						"Your answer will be posted online when you connect to the internet!",
 						Toast.LENGTH_LONG).show();
-			} else {
-				String aux = controller.getQuestionId();
-				Intent i = new Intent(ctx, QuestionActivity.class);
-				i.putExtra(GeneralHelper.QUESTION_KEY, aux);
-				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				act.startActivity(i);
-				act.finish();
 			}
+			MainModel.getInstance().notifyViews();
 		} else {
 			act.finish();
 			Toast.makeText(ctx,
 					"Something bad happened, try posting your answer again!",
 					Toast.LENGTH_LONG).show();
-		}
-		MainModel.getInstance().notifyViews();
+		}		
 	}
 }
