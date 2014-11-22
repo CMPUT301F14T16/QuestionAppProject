@@ -100,17 +100,20 @@ public class SubmitAnswerActivity extends SecureActivity {
 			long lengthbmp = byteArray.length;
 			//As a user I don't want the picture over 64kb
 			if (lengthbmp > 64000) {
+				/*Bitmap resizedBitmap=Bitmap.createScaledBitmap(bitmap, (int)(bitmap.getWidth()*0.2), (int)(bitmap.getHeight()*0.3), true);
+				ByteArrayOutputStream resizedstream = new ByteArrayOutputStream();
+				resizedBitmap.compress(Bitmap.CompressFormat.PNG, 50, resizedstream);
+				byte[] resizedbyteArray = stream.toByteArray();
+				resizedbytebitmap = Base64.encode(resizedbyteArray, 1);
+				InputStream is = new ByteArrayInputStream(resizedbytebitmap);
+				Bitmap bmp = BitmapFactory.decodeStream(is);
+				//Bitmap resizedbitmap = BitmapFactory.decodeByteArray(resizedbytebitmap , 0, resizedbytebitmap.length);
+				imageview.setImageBitmap(bmp);*/
 				Toast.makeText(getApplicationContext(), "Picture Over Size", Toast.LENGTH_SHORT).show();
     			return;
 			}
 			bytebitmap = Base64.encode(byteArray, 1);
-			
-			File file = new File(imagepath);
-			long length = file.length();
-			int lengthint=(int)length;
-
-			
-			imageview.setImageBitmap(bitmap);	      
+			imageview.setImageBitmap(bitmap);	 	      
 	    }
 	}
 	public String getPath(Uri uri) {
