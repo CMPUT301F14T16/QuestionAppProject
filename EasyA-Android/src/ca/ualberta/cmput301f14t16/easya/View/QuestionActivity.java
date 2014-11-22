@@ -43,9 +43,11 @@ public class QuestionActivity extends SecureActivity implements MainView<Questio
 		
 	private void SetAdapter(Question q){
 		question = q;
+		MenuItem m = menu.findItem(R.id.menu_question_favourite);
 		if (q.checkFavourite(MainModel.getInstance().getCurrentUser())){
-			MenuItem m = menu.findItem(R.id.menu_question_favourite);
 			m.setIcon(R.drawable.ic_action_important);
+		}else{
+			m.setIcon(R.drawable.ic_action_not_important);
 		}
     	QuestionViewAdapter adapter = new QuestionViewAdapter(this, question, (LinearLayout)findViewById(R.id.question_scrollview_container));
         adapter.build();
