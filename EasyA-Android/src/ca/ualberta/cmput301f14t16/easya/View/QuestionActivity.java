@@ -1,27 +1,26 @@
 package ca.ualberta.cmput301f14t16.easya.View;
 
 import ca.ualberta.cmput301f14t16.easya.R;
+import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.favouriteTask;
 import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.getQuestionTask;
 import ca.ualberta.cmput301f14t16.easya.Model.GeneralHelper;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
-import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
-
 /**
  * 
  * @author Cauani
  *
  */
 public class QuestionActivity extends SecureActivity implements MainView<Question> {
-	private static Question question;
+	private Question question;
 	private String qId;
+	public Menu menu;
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -30,19 +29,24 @@ public class QuestionActivity extends SecureActivity implements MainView<Questio
 		getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
         MainModel.getInstance().addView(this);
-        this.qId = (getIntent()).getStringExtra(GeneralHelper.QUESTION_KEY);	
-        update();
+        this.qId = (getIntent()).getStringExtra(GeneralHelper.QUESTION_KEY);        
 	}
 	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.question, menu);
+		this.menu = menu;
+		update();
 		return true;
 	}
 		
 	private void SetAdapter(Question q){
 		question = q;
+		if (q.checkFavourite(MainModel.getInstance().getCurrentUser())){
+			MenuItem m = menu.findItem(R.id.menu_question_favourite);
+			m.setIcon(R.drawable.ic_action_important);
+		}
     	QuestionViewAdapter adapter = new QuestionViewAdapter(this, question, (LinearLayout)findViewById(R.id.question_scrollview_container));
         adapter.build();
 	}
@@ -54,11 +58,15 @@ public class QuestionActivity extends SecureActivity implements MainView<Questio
 		        finish();
 		        break;
 	    	case R.id.menu_question_favourite:
-	    		Toast.makeText(getApplicationContext(), "To be implemented", Toast.LENGTH_SHORT).show();
-    			break;
+	    		setFavourite();
+	    		break;
 		 }
 		 return true;        
     }
+		
+	public void setFavourite(){
+		(new favouriteTask(this, this.question)).execute();
+	}
 	
 	public void AddNewAnswer(View v){
 		if (question != null){
