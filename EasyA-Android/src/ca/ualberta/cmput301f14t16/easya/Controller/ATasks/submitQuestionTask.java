@@ -38,6 +38,9 @@ public class submitQuestionTask extends AsyncTask<Void, Void, Boolean> {
 	 * A picture attached to the {@link Question} to be created.
 	 */
 	private byte[] pb;
+	
+	private double[] coordinate;
+	
 	private Activity act;
 
 	/**
@@ -59,7 +62,14 @@ public class submitQuestionTask extends AsyncTask<Void, Void, Boolean> {
 		this.body = body;
 		this.pb = pb;
 	}
-
+	public submitQuestionTask(Activity act, String title, String body, byte[] pb, double[] coordinate) {
+		this.act = act;
+		this.ctx = act;
+		this.title = title;
+		this.body = body;
+		this.pb = pb;
+		this.coordinate= coordinate;
+	}
 	/**
 	 * Displays a progress dialogue as this AsyncTask completes.
 	 * 
@@ -86,7 +96,7 @@ public class submitQuestionTask extends AsyncTask<Void, Void, Boolean> {
 			try {
 				controller = NewQuestionController.create(ctx, this.title,
 						this.body, this.pb, MainModel.getInstance()
-								.getCurrentUser().getId());
+								.getCurrentUser().getId(), coordinate);
 				return controller.submit();
 			} catch (Exception ex) {
 				System.out.println(ex.getMessage());
