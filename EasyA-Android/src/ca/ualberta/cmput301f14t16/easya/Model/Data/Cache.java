@@ -10,6 +10,7 @@ import com.google.gson.reflect.TypeToken;
 
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoInternetException;
+import ca.ualberta.cmput301f14t16.easya.Model.InternetCheck;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Model.QuestionList;
@@ -49,7 +50,7 @@ public class Cache {
 
 	public Question getQuestionById(String id)
 			throws NoContentAvailableException {
-		if (Queue.getInstance().haveInternetConnection()) {
+		if (InternetCheck.haveInternet()) {
 			try {
 				ESClient es = new ESClient();
 				Question aux = es.getQuestionById(id);
@@ -67,7 +68,7 @@ public class Cache {
 		try {
 			return getUserFromCache(id);
 		} catch (NoContentAvailableException ex) {
-			if (Queue.getInstance().haveInternetConnection()) {
+			if (InternetCheck.haveInternet()) {
 				try {
 					ESClient es = new ESClient();
 					User u = es.getUserById(id);
@@ -153,7 +154,7 @@ public class Cache {
 			throw new NoContentAvailableException();
 		List<QuestionList> lst = new ArrayList<QuestionList>();
 		for (QuestionList q : aux) {
-			if (q.getUserId().equals(u.getId()))
+			if (q.getAuthorId().equals(u.getId()))
 				lst.add(q);
 		}
 		return lst;
@@ -222,9 +223,20 @@ public class Cache {
 		}
 		throw new NoContentAvailableException();
 	}
+	
+	public List<User> getUsersListFromCache(){
+		Gson gson = new Gson();
+		Type listType = new TypeToken<List<User>>() {
+		}.getType();
+		List<User> lst = gson.fromJson(
+				PMDataParser.loadJson(PMFilesEnum.CACHEUSERS), listType);
+		if (lst == null)
+			lst = new ArrayList<User>();		
+		return lst;
+	}
 
 	public void updateAllUsers() {
-		if (Queue.getInstance().haveInternetConnection()) {
+		if (InternetCheck.haveInternet()) {
 			ESClient es = new ESClient();
 			try {
 				UpdateUsers(es.searchUsersByQuery("*", 100));
@@ -238,7 +250,7 @@ public class Cache {
 
 	public List<QuestionList> getAllQuestions()
 			throws NoContentAvailableException {
-		if (Queue.getInstance().haveInternetConnection()) {
+		if (InternetCheck.haveInternet()) {
 			ESClient es = new ESClient();
 			try {
 				updateAllUsers();
@@ -256,7 +268,7 @@ public class Cache {
 
 	public User getUserByEmail(String email) throws NoInternetException,
 			NoContentAvailableException {
-		if (Queue.getInstance().haveInternetConnection()) {
+		if (InternetCheck.haveInternet()) {
 			try {
 				ESClient es = new ESClient();
 				String userId = es.getUserIdByEmail(email);
@@ -277,7 +289,7 @@ public class Cache {
 
 	public List<QuestionList> getAllUserFavourites()
 			throws NoContentAvailableException {
-		if (Queue.getInstance().haveInternetConnection()) {
+		if (InternetCheck.haveInternet()) {
 			try {
 				ESClient es = new ESClient();
 				List<Question> aux = es.getFavouriteQuestionsByUser(MainModel
@@ -306,14 +318,15 @@ public class Cache {
 		List<String> userFavs = MainModel.getInstance().getCurrentUser()
 				.getFavourites();
 		List<QuestionList> aux = getQuestionListFromQuestionsCache();
+		List<QuestionList> lst = new ArrayList<QuestionList>();
 		if (userFavs == null || userFavs.size() <= 0 || aux == null
 				|| aux.size() <= 0)
 			throw new NoContentAvailableException();
 		for (QuestionList ql : aux) {
-			if (!userFavs.contains(ql.getId())) {
-				aux.remove(aux.indexOf(ql));
+			if (userFavs.contains(ql.getId())) {
+				lst.add(ql);
 			}
 		}
-		return aux;
+		return lst;
 	}
 }

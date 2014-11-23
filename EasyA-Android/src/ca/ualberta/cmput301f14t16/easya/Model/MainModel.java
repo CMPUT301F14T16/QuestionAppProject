@@ -20,8 +20,12 @@ import ca.ualberta.cmput301f14t16.easya.View.MainView;
  */
 public class MainModel {
 	private static MainModel m;
-	private static MainView<?> currentView;
-
+	private MainView<?> currentView;
+	private List<User> usersList;
+	private User mainUser;
+	
+	private static boolean updating;
+	
 	private List<MainView<?>> views;
 
 	protected MainModel() {
@@ -45,8 +49,19 @@ public class MainModel {
 	}
 
 	public void notifyViews() {
-		for (MainView<?> view : getAllViews()) {
-			view.update();
+		synchronized(this){
+			if(!updating){
+				updating = true;
+				try{
+					for (MainView<?> view : getAllViews()) {
+						view.update();
+					}
+					this.usersList = null;
+				}catch(Exception ex){
+				}finally{
+					updating=false;
+				}
+			}
 		}
 	}
 
@@ -60,10 +75,22 @@ public class MainModel {
 	}
 
 	public User getUserById(String id) throws NoContentAvailableException {
-		try {
-			return Cache.getInstance().getUserById(id);
-		} catch (Exception ex) {
+		try{
+			if (this.usersList == null){
+				this.usersList = Cache.getInstance().getUsersListFromCache();
+			}
+			for (User u : this.usersList) {
+				if (u.getId().equals(id))
+					return u;
+			}
 			throw new NoContentAvailableException();
+			//Just for security reasons, this, most likely, won't be called
+		}catch(NoContentAvailableException ex){
+			try {
+				return Cache.getInstance().getUserById(id);
+			} catch (Exception ex2) {
+				throw new NoContentAvailableException();
+			}		
 		}
 	}
 
@@ -73,24 +100,31 @@ public class MainModel {
 	}
 
 	public User getCurrentUser() {
-		try {
-			PMClient pmclient = new PMClient();
-			return pmclient.getUser();
-		} catch (NoContentAvailableException ex) {
-			return null;
+		if (this.mainUser == null){
+			try {
+				PMClient pmclient = new PMClient();
+				this.mainUser = pmclient.getUser();
+			} catch (NoContentAvailableException ex) {
+				return null;
+			}			
 		}
-
+		return this.mainUser;		
 	}
 
 	public void saveMainUser(User u) {
 		PMClient pm = new PMClient();
 		pm.saveUser(u);
+		this.mainUser = null;
 	}
 
 	public boolean updateUsername(User u) {
 		ESClient es = new ESClient();
 		try {
-			return es.setUsernameById(u.getId(), u.getUsername());
+			if (es.setUsernameById(u.getId(), u.getUsername())){
+				this.mainUser = null;
+				return true;
+			}
+			return false;	
 		} catch (IOException ex) {
 			return false;
 		}

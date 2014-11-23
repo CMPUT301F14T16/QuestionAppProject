@@ -1,7 +1,11 @@
 package ca.ualberta.cmput301f14t16.easya.Controller;
 
+import java.io.IOException;
+
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
+import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Model.User;
+import ca.ualberta.cmput301f14t16.easya.Model.Data.Cache;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.ESClient;
 
 /**
@@ -14,30 +18,30 @@ import ca.ualberta.cmput301f14t16.easya.Model.Data.ESClient;
  */
 public class FavouriteController {
 	/**
-	 * The {@link ca.ualberta.cmput301f14t16.easya.Model.Question} ID to be
+	 * The {@link ca.ualberta.cmput301f14t16.easya.Model.Question} to be
 	 * added to {@link User#favourites}.
 	 */
-	private String qId;
+	private Question q;
 
 	/**
 	 * Protected constructor method.
 	 * 
-	 * @param qId
-	 *            Setter for {@link FavouriteController#qId}.
+	 * @param q
+	 *            Setter for {@link FavouriteController#q}.
 	 */
-	protected FavouriteController(String qId) {
-		this.qId = qId;
+	protected FavouriteController(Question q) {
+		this.q = q;
 	}
 
 	/**
 	 * Factory method.
 	 * 
 	 * @param qId
-	 *            Setter for {@link FavouriteController#qId}.
+	 *            Setter for {@link FavouriteController#q}.
 	 * @return A new FavouriteController object with the given parameter.
 	 */
-	public static FavouriteController create(String qId) {
-		return new FavouriteController(qId);
+	public static FavouriteController create(Question q) {
+		return new FavouriteController(q);
 	}
 
 	/**
@@ -45,7 +49,7 @@ public class FavouriteController {
 	 * the elastic search database. This method will find the {@link User} ID
 	 * associated with the device that the current instance of the application
 	 * is being run on. It will modify the associated entry by appending
-	 * {@link FavouriteController#qId} to its {@link User#favourites}.
+	 * {@link FavouriteController#q} to its {@link User#favourites}.
 	 * 
 	 * @return True if the changes to the elastic search database were
 	 *         successful, False if an exception was raised.
@@ -53,15 +57,16 @@ public class FavouriteController {
 	public boolean submit() {
 		try {
 			User u = MainModel.getInstance().getCurrentUser();
-			boolean response = u.setFavourite(qId);
+			u.setFavourite(q.getId());
 			ESClient es = new ESClient();
-			// TODO: send the User to ESClient for it to update the favourites
-			// es.setUserFavourite();
-			//TODO: save the newly favourited question on cache via
-			// MainModel.getInstance().saveSingleQuestion();
-			return response;
-			// }catch(IOException ex){
-			// return false;
+			if (es.updateUserFavourites(u)){
+				MainModel.getInstance().saveMainUser(u);
+				Cache.getInstance().SaveSingleQuestion(q);
+				return true;
+			}
+			return false;
+		}catch(IOException ex){
+			return false;
 		} catch (Exception ex) {
 			return false;
 		}

@@ -28,7 +28,7 @@ public class ESClient {
 	
 	//ElasticSeach Urls
 	private static final String HOST_URL = "http://cmput301.softwareprocess.es:8080/testing/";
-	private static final String QUESTION_TYPE = "team16question20141"; // Edit Me to Change Question DB.
+	private static final String QUESTION_TYPE = "team16question201411221"; // Edit Me to Change Question DB.
 	private static final String USER_TYPE = "team16user";		   // Edit Me to Change User DB.
 	private static final String QUESTION_PATH = QUESTION_TYPE + "/";
 	private static final String USER_PATH = USER_TYPE + "/";
@@ -59,8 +59,8 @@ public class ESClient {
 		Question question = esGetResponse.getSource();
 		ESFields fields = esGetResponse.getFields();
 		if (fields != null) {
-			long timestamp = fields.getTimestamp();
-			question.setTimestamp(timestamp);
+			//long timestamp = fields.getTimestamp();
+			//question.setTimestamp(timestamp);
 		}
 		
 		
@@ -168,7 +168,7 @@ public class ESClient {
 			Question question = q.getSource();
 			ESFields fields = q.getFields();
 			if (fields != null) {
-				question.setTimestamp(fields.getTimestamp());
+				//question.setTimestamp(fields.getTimestamp());
 			}
 			qlist.add(question);
 		}
@@ -194,7 +194,7 @@ public class ESClient {
 			
 			ESFields fields = q.getFields();
 			if (q.getFields() != null) {
-				question.setTimestamp(fields.getTimestamp());
+				//question.setTimestamp(fields.getTimestamp());
 			}
 			
 			QuestionList questionList = new QuestionList(question.getId(), question.getTitle(), 

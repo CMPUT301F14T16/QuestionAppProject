@@ -1,8 +1,13 @@
 package ca.ualberta.cmput301f14t16.easya.View;
 
+import java.util.List;
+
 import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.getFavouritesTask;
+import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
+import ca.ualberta.cmput301f14t16.easya.Model.QuestionList;
+import ca.ualberta.cmput301f14t16.easya.Model.Sort;
 import android.os.Bundle;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -24,6 +29,12 @@ public class FavouritesActivity extends MasterActivity {
 	protected void startUpdate(){
 		((TextView)findViewById(R.id.drawer_username)).setText(MainModel.getInstance().getCurrentUser().getUsername());
 		update(MainModel.getInstance().getAllCachedFavourites());
-		(new getFavouritesTask(this)).execute();
+	}
+	
+	@Override
+	public void update(List<QuestionList> lst) {
+		displayedQuestions = Sort.dateSort(true, lst);	
+		bindAdapter();
+		stopAnimateSync();
 	}
 }

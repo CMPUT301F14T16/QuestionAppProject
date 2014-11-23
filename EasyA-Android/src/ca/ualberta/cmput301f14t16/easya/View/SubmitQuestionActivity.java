@@ -43,6 +43,7 @@ public class SubmitQuestionActivity extends SecureActivity {
     private ImageView imageview, addimage;
     private GPSTracker gps;
     private byte[] bytebitmap;
+    private double[] coordinate=null;
     
     
 	@Override
@@ -78,7 +79,8 @@ public class SubmitQuestionActivity extends SecureActivity {
 	        			this, 
 	        			((EditText)findViewById(R.id.submit_question_title)).getText().toString(),
 	        			((EditText)findViewById(R.id.submit_question_body)).getText().toString(),
-	        			bytebitmap)).execute();
+	        			bytebitmap,
+	        			coordinate)).execute();
 	        	return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
@@ -148,15 +150,20 @@ public class SubmitQuestionActivity extends SecureActivity {
 	
     public void findlocation(View view){
     	gps = new GPSTracker(SubmitQuestionActivity.this);
+    	coordinate = new double[2];
     	if (gps.canGetLocation()){
     		double latitude = gps.getLatitude();
     		double longitude = gps.getLongitude();
-
+    		coordinate[0] = latitude;
+    		coordinate[1] = longitude;
     		String address = geoCoder.toAdress(this, latitude,longitude);
+    		double lat=-115.23;
+    		double lon=63.78;
+    		
     		boolean geo= Geocoder.isPresent();
     		//String theaddress ="Calgary, AB";
     		//double[] latlong = geoCoder.toLatLong(this, theaddress);
-    		Toast.makeText(getApplicationContext(), "Able to use geocoder: "+ geo + "\n" + address, Toast.LENGTH_LONG).show();
+    		Toast.makeText(getApplicationContext(), latitude+"\n"+longitude+"Able to use geocoder: "+ geo + "\n" + address, Toast.LENGTH_LONG).show();
     		
     	}
     	else{

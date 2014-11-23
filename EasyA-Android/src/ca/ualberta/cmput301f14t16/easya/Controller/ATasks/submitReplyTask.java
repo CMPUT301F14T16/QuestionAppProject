@@ -119,9 +119,8 @@ public class submitReplyTask extends AsyncTask<Void, Void, Boolean> {
 						"Your reply will be posted online when you connect to the internet!",
 						Toast.LENGTH_LONG).show();
 				tv.setText("");
-			} else {
-				MainModel.getInstance().notifyViews();
 			}
+			MainModel.getInstance().notifyViews();
 		} else {
 			Toast.makeText(ctx,
 					"Something bad happened, try posting your question again!",

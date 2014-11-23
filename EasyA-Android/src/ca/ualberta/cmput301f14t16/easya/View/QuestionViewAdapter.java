@@ -14,7 +14,9 @@ import ca.ualberta.cmput301f14t16.easya.Model.Answer;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Model.Reply;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
@@ -40,11 +42,13 @@ public class QuestionViewAdapter {
 	private LayoutInflater inflater;
 	private LinearLayout container;
 	private Question q;
+	private Context context;
 
     public QuestionViewAdapter( Context context, Question q, LinearLayout v) {        
         this.inflater = LayoutInflater.from(context);
         this.q = q;
         this.container = v;
+        this.context=context;
     }
     
     private OnEditorActionListener keyAction = new OnEditorActionListener() {
@@ -61,6 +65,22 @@ public class QuestionViewAdapter {
     		Context ctx = v.getContext();
         	BasicNameValuePair vp = (BasicNameValuePair)v.getTag();
         	String body = v.getText().toString();
+
+			new AlertDialog.Builder(context)
+			.setMessage("Set location?")
+			.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
+				@Override
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+
+				}
+			})
+			.setPositiveButton("No", new DialogInterface.OnClickListener(){
+				public void onClick(DialogInterface dialog, int which) {
+					// TODO Auto-generated method stub
+
+				}				
+			}).create().show();
         	(new submitReplyTask(ctx, vp, body, v)).execute();
         	return true;    		
         }

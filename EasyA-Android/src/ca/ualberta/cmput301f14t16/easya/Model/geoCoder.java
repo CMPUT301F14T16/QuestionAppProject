@@ -14,7 +14,7 @@ public class geoCoder {
 		String myAddress;
 		Geocoder geocoder = new Geocoder(context, Locale.getDefault());
 		List<Address> addresses;
-		StringBuilder strReturnedAddress = new StringBuilder("Address:\n");
+		StringBuilder strReturnedAddress = new StringBuilder("");
 		try{
 			addresses = geocoder.getFromLocation(latitude, longitude, 1);
 			if (addresses != null && addresses.size()>0){
@@ -50,5 +50,19 @@ public class geoCoder {
 		return returnLatLong;
 	}
 
-	
+
+	public double toFindDistance(double[] coordinate1, double[] coordinate2){
+        double R = 6371000; // m
+        double dLat = Math.toRadians(coordinate1[0] - coordinate2[0]);
+        double dLon = Math.toRadians(coordinate1[1] - coordinate2[1]);
+        double lat1 = Math.toRadians(coordinate1[0]);
+        double lat2 = Math.toRadians(coordinate2[0]);
+
+        double a = Math.sin(dLat / 2) * Math.sin(dLat / 2) + Math.sin(dLon / 2)
+                * Math.sin(dLon / 2) * Math.cos(lat1) * Math.cos(lat2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double d = R * c;
+
+        return d;
+	}
 }

@@ -7,10 +7,12 @@ import ca.ualberta.cmput301f14t16.easya.Exceptions.NoClassTypeSpecifiedException
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoInternetException;
 import ca.ualberta.cmput301f14t16.easya.Model.Answer;
 import ca.ualberta.cmput301f14t16.easya.Model.Content;
+import ca.ualberta.cmput301f14t16.easya.Model.InternetCheck;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Model.Pending;
 import ca.ualberta.cmput301f14t16.easya.Model.Queue;
 import ca.ualberta.cmput301f14t16.easya.Model.Reply;
+import ca.ualberta.cmput301f14t16.easya.Model.Time;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.ESClient;
 
 /**
@@ -52,9 +54,10 @@ public abstract class MainController {
 	 */
 	protected boolean submit() throws NoInternetException {
 		ESClient es = new ESClient();
-		if (Queue.getInstance().haveInternetConnection()) {
+		if (InternetCheck.forceCheckForInternet()) {
 			try {
-				Content c = pending.getContent();
+				Content c = pending.getContent();				
+				c.setDate(Time.getDate());
 				if (c instanceof Question) {
 					return es.submitQuestion((Question) c);
 				} else if (c instanceof Answer) {
@@ -72,7 +75,7 @@ public abstract class MainController {
 					throw new NoClassTypeSpecifiedException();
 				}
 			} catch (IOException ex) {
-				if (Queue.getInstance().haveInternetConnection())
+				if (InternetCheck.haveInternet())
 					return false;
 				throw new NoInternetException();
 			} catch (NoClassTypeSpecifiedException ex) {

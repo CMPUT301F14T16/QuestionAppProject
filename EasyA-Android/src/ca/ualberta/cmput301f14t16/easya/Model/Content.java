@@ -1,8 +1,10 @@
 package ca.ualberta.cmput301f14t16.easya.Model;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
+import java.util.TimeZone;
 import java.util.UUID;
 
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
@@ -33,7 +35,7 @@ public abstract class Content {
 	/**
 	 * The date at which the instance of Content was created.
 	 */
-	private Date createdOn;
+	private Calendar createdOn;
 
 	/**
 	 * Creates an empty {@link Content} object.
@@ -63,7 +65,6 @@ public abstract class Content {
 	public Content(String body, String userId) {
 		this.body = body;
 		this.userId = userId;
-		this.createdOn = new Date();
 		this.id = UUID.randomUUID().toString(); //TODO: unify the creation of ID's method
 	}
 	
@@ -71,7 +72,6 @@ public abstract class Content {
 		this.body = body;
 		this.userId = userId;
 		this.coordinate=coordinate;
-		this.createdOn = new Date();
 		this.id = UUID.randomUUID().toString(); //TODO: unify the creation of ID's method
 	}
 	
@@ -102,18 +102,21 @@ public abstract class Content {
 		}
 	}
 	
-	
+	/**
+	 * Sets {@link Content#createdOn date.}
+	 * 
+	 * @param newId
+	 *            ID to set
+	 */
+	public void setDate(Calendar date) {
+		this.createdOn = date;
+	}
 
 	/**
-	 * @return {@link Content#createdOn}
+	 * @return {@link Content#createdOn date.}
 	 */
-	public Date getDate() {
-		
-		Date dateFromTimestamp = new Date(timestamp);
-		return dateFromTimestamp;
-		
-		
-		//return createdOn;
+	public Calendar getDate() {
+		return this.createdOn;
 	}
 
 	/**
@@ -135,11 +138,14 @@ public abstract class Content {
 	
 	public String getAuthorDate(){
 		try{
+			getDate().add(Calendar.MILLISECOND, TimeZone.getDefault().getOffset(getDate().getTimeInMillis()));
 			String auxU = MainModel.getInstance().getUserById(this.getAuthorId()).getUsername();
-			SimpleDateFormat sdf = new SimpleDateFormat("MMM dd yyyy hh:mm", Locale.CANADA);
-	        String dateAsString = sdf.format(this.getDate());
-			return dateAsString + " - " + auxU;
+			SimpleDateFormat sdf = new SimpleDateFormat("MMM dd yyyy hh:mm", Locale.getDefault());
+			sdf.setTimeZone(TimeZone.getDefault());
+			return sdf.format(getDate().getTime()) + " - @" + auxU;
 		}catch(NoContentAvailableException ex){
+			return "";
+		}catch(Exception ex){
 			return "";
 		}
 	}
