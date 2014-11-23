@@ -73,6 +73,7 @@ public abstract class MasterActivity extends SecureActivity implements
 		((ListView) findViewById(R.id.drawer_menu_options))
 				.setOnItemClickListener(folderClickListener);
 		createDrawerMenu();
+		getActionBar().setDisplayShowCustomEnabled(true);
 	}
 
 	/**

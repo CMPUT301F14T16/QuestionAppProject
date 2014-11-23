@@ -73,8 +73,10 @@ public class Queue extends Thread {
 		while (isActive) {
 			try {
 				if (!pendings.isEmpty()) {
-					if (InternetCheck.haveInternet())
+					if (InternetCheck.haveInternet()){
 						ProcessPendings();
+						MainModel.getInstance().notifyViews();
+					}
 				}
 				Thread.sleep(loop_interval);
 			} catch (InterruptedException ex) {
