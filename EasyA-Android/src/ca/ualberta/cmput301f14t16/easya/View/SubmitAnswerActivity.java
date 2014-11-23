@@ -97,35 +97,32 @@ public class SubmitAnswerActivity extends SecureActivity {
 			bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
 			byte[] byteArray = stream.toByteArray();
 			long lengthbmp = byteArray.length;
-			int roundingLength = (int)lengthbmp;
 			//As a user I don't want the picture over 64kb
 			if (lengthbmp > 64000) {
-				bytebitmap = Base64.encode(byteArray, 1);
-				byte[] decodedBytes = Base64.decode(bytebitmap, 1);
-				InputStream is = new ByteArrayInputStream(decodedBytes);
-				Bitmap bmpTobeResized = BitmapFactory.decodeStream(is);
-	    			Bitmap resizedBmp = Bitmap.createScaledBitmap(bmpTobeResized, 100, 50, true);
-	    			imageview.setImageBitmap(resizedBmp);
-				//Bitmap bmp = BitmapFactory.decodeStream(is);
-				/*Bitmap resizedBitmap=Bitmap.createScaledBitmap(bitmap, (int)(bitmap.getWidth()*0.2), (int)(bitmap.getHeight()*0.3), true);
-				ByteArrayOutputStream resizedstream = new ByteArrayOutputStream();
-				resizedBitmap.compress(Bitmap.CompressFormat.PNG, 100, resizedstream);
-				byte[] resizedbyteArray = stream.toByteArray();
-				resizedbytebitmap = Base64.encode(resizedbyteArray, 1);
-				InputStream is = new ByteArrayInputStream(resizedbytebitmap);
-				Bitmap bmp = BitmapFactory.decodeStream(is);
-				//Bitmap resizedbitmap = BitmapFactory.decodeByteArray(resizedbytebitmap , 0, resizedbytebitmap.length);
-				imageview.setImageBitmap(bmp);*/
+				Bitmap bitmapTobeResized = BitmapFactory.decodeFile(imagepath);
+				Bitmap resizedBmp = Bitmap.createScaledBitmap(bitmapTobeResized, 100, 50, true);
+				ByteArrayOutputStream streamTobeResized = new ByteArrayOutputStream();
+	    			resizedBmp.compress(Bitmap.CompressFormat.PNG, 10, streamTobeResized);
+	    			byte[] byteArrayTobeResized = streamTobeResized.toByteArray();
+	    			byte[] resizedBytebitmap = Base64.encode(byteArrayTobeResized,1);
+				byte[] resizeddecodedBytes = Base64.decode(resizedBytebitmap, 1);
+				InputStream resizedis = new ByteArrayInputStream(resizeddecodedBytes);
+				Bitmap submitBmp = BitmapFactory.decodeStream(resizedis);
+				//imageview.setImageBitmap(bmp);
+	    			imageview.setImageBitmap(submitBmp);
+	    			long resizedLengthbmp = resizeddecodedBytes.length;
+	    	    		int newRoundingLength = (int)resizedLengthbmp;
+	    			//imageview.setImageBitmap(resizedBmp);
 				Toast.makeText(getApplicationContext(), "Picture Over Size", Toast.LENGTH_SHORT).show();
-				Toast.makeText(getApplicationContext(), "Picture Size"+Integer.toString(roundingLength), Toast.LENGTH_SHORT).show();
+				Toast.makeText(getApplicationContext(), "Picture Size"+Integer.toString(newRoundingLength), Toast.LENGTH_SHORT).show();
 			} else {
 				bytebitmap = Base64.encode(byteArray, 1);
 				byte[] decodedBytes = Base64.decode(bytebitmap, 1);
 				InputStream is = new ByteArrayInputStream(decodedBytes);
 				Bitmap bmp = BitmapFactory.decodeStream(is);
 				imageview.setImageBitmap(bmp);
-			}	      
-	    }
+			}
+	        }
 	}
 	public String getPath(Uri uri) {
 		String[] projection = { MediaStore.Images.Media.DATA };
