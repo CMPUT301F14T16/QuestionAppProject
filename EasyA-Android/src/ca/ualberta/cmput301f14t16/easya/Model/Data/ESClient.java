@@ -304,14 +304,14 @@ public class ESClient {
 		return searchQuestionsByQuery(sb.toString(), 999);
 	}
 	
-	public List<QuestionList> getQuestionListsByIds(List<String> ids) throws IOException {
-		String json = gson.toJson(ids);
-		String queryString = "{\"query\": {\"ids\": {\"type\": \"" +  QUESTION_TYPE + "\", \"values\": " + json +"}}}";
-		String response = HttpHelper.getFromUrlWithData(HOST_URL + QUESTION_PATH + "_search", queryString);
-		
-		return getQuestionListsFromResponse(response);
-		
-	}
+//	public List<QuestionList> getQuestionListsByIds(List<String> ids) throws IOException {
+//		String json = gson.toJson(ids);
+//		String queryString = "{\"query\": {\"ids\": {\"type\": \"" +  QUESTION_TYPE + "\", \"values\": " + json +"}}}";
+//		String response = HttpHelper.getFromUrlWithData(HOST_URL + QUESTION_PATH + "_search", queryString);
+//		
+//		return getQuestionListsFromResponse(response);
+//		
+//	}
 	
 	private List<QuestionList> getQuestionListsFromResponse(String response) {
 		List<QuestionList> qlist = new ArrayList<QuestionList>();
