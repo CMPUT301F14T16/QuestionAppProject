@@ -43,7 +43,7 @@ public class SubmitQuestionActivity extends SecureActivity {
     private ImageView imageview, addimage;
     private GPSTracker gps;
     private byte[] bytebitmap;
-    private double[] coordinate=null;
+    private double[] coordinate={0.0,0.0};
     
     
 	@Override

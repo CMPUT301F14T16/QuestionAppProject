@@ -39,7 +39,7 @@ public class SubmitAnswerActivity extends SecureActivity {
     private byte[] bytebitmap;
     private static final int SCALED_IMAGE_WIDTH = 600;
     private GPSTracker gps;
-    private double[] coordinate=null;
+    private double[] coordinate={0.0,0.0};
     
 	@Override
 	public void onCreate(Bundle savedInstanceState){
