@@ -13,8 +13,8 @@ import ca.ualberta.cmput301f14t16.easya.View.MainView;
 
 /**
  * Provides an {@link AsyncTask} subclass that processes a request to get the
- * data stored in a {@link User} object's favourites field from the elastic
- * search database.
+ * data stored in a {@link ca.ualberta.cmput301f14t16.easya.Model.User} object's
+ * favourites field from the elastic search database.
  */
 public class getFavouritesTask extends
 		AsyncTask<Void, Void, List<QuestionList>> {

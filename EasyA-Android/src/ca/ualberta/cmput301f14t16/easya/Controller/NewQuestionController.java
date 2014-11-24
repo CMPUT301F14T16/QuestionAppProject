@@ -34,7 +34,7 @@ public class NewQuestionController extends MainController {
 	 *            pushed.
 	 * @param body
 	 *            The data stored by the {@link Question} to be created.
-	 * @param pixelBitmap
+	 * @param bitmap
 	 *            A picture attached to the {@link Question} to be created.
 	 * @param authorID
 	 *            An identifier used to refer to the unique creator of the

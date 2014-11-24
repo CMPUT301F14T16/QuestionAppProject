@@ -24,7 +24,6 @@ import java.net.DatagramSocket;
 import java.net.InetAddress;
 
 /**
- * {@hide}
  *
  * Simple SNTP client class for retrieving network time.
  *

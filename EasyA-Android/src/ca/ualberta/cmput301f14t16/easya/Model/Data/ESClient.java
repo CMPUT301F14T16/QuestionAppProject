@@ -33,7 +33,6 @@ public class ESClient {
 	private static final String QUESTION_PATH = QUESTION_TYPE + "/";
 	private static final String USER_PATH = USER_TYPE + "/";
 	
-	
 	// JSON Utilities
 	private Gson gson = new Gson();
 

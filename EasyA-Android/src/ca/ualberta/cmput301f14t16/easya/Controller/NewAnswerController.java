@@ -35,7 +35,7 @@ public class NewAnswerController extends MainController {
 	 *            Content to be submitted.
 	 * @param body
 	 *            The data stored by the {@link Answer} to be created.
-	 * @param pixelBitmap
+	 * @param bitmap
 	 *            A picture attached to the {@link Answer} to be created.
 	 * @param authorID
 	 *            An identifier used to refer to the unique creator of the
