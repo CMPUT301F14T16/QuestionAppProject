@@ -17,7 +17,7 @@ public final class Time {
 		     cl.setTimeInMillis(now);
 		     return cl;
 		 }
-		 return null;
+		 return Calendar.getInstance();
 	}
 	
 	private static String timezone = "";

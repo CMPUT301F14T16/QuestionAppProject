@@ -40,10 +40,11 @@ import android.widget.Toast;
  *
  */
 public class SubmitQuestionActivity extends SecureActivity {
+	private static final int SCALED_IMAGE_WIDTH = 600;
 	private ImageView imageview, addimage;
 	private GPSTracker gps;
 	private byte[] bytebitmap;
-	private double[] coordinate = null;
+    private double[] coordinate={0.0,0.0};
 
 	/**
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
@@ -126,30 +127,43 @@ public class SubmitQuestionActivity extends SecureActivity {
 
 		if (requestCode == 1 && resultCode == RESULT_OK) {
 			Uri selectedImageUri = data.getData();
+			
 			String imagepath = getPath(selectedImageUri);
 			Bitmap bitmap = BitmapFactory.decodeFile(imagepath);
-			ByteArrayOutputStream stream = new ByteArrayOutputStream();
-			bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-			byte[] byteArray = stream.toByteArray();
-			long lengthbmp = byteArray.length;
-			// As a user I don't want the picture over 64kb
+			long lengthbmp = bitmap.getRowBytes() * bitmap.getHeight();
+			
+			ByteArrayOutputStream stream;
+			byte[] byteArray;
+			
 			if (lengthbmp > 64000) {
-				Toast.makeText(getApplicationContext(), "Picture Over Size",
-						Toast.LENGTH_SHORT).show();
+				int w = bitmap.getWidth();
+				int h = bitmap.getHeight();
+				int inH = h*SCALED_IMAGE_WIDTH/w;
+	    		Bitmap resizedBmp = Bitmap.createScaledBitmap(bitmap, SCALED_IMAGE_WIDTH, inH, true);
+	    		stream = new ByteArrayOutputStream();
+				resizedBmp.compress(Bitmap.CompressFormat.JPEG, 60, stream);
+				byteArray = stream.toByteArray();
+				lengthbmp = byteArray.length;
+					
+				if (lengthbmp > 64000) {
+					Toast.makeText(getApplicationContext(), "Picture Still Too Big After Resizing", Toast.LENGTH_SHORT).show();
 				return;
+				}
+				
+			} else {
+				stream = new ByteArrayOutputStream();
+				bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+				byteArray = stream.toByteArray();
 			}
+			
+			// Attach image to picture
 			bytebitmap = Base64.encode(byteArray, 1);
 
+			// Display attached image
 			byte[] decodedBytes = Base64.decode(bytebitmap, 1);
 			InputStream is = new ByteArrayInputStream(decodedBytes);
 			Bitmap bmp = BitmapFactory.decodeStream(is);
-			// File file = new File(imagepath);
-			// long length = file.length();
-			// int lengthint=(int)length;
-
-			// Bitmap bitmap2=pixelbitmap.createBitmap();
 			imageview.setImageBitmap(bmp);
-
 		}
 	}
 

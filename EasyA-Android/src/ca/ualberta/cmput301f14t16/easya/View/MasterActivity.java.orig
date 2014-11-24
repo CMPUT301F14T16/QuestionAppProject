@@ -145,6 +145,7 @@ public abstract class MasterActivity extends SecureActivity implements
 			return true;
 		}
 		switch (item.getItemId()) {
+<<<<<<< HEAD
 		case R.id.menu_sortByNewest:
 			displayedQuestions = Sort.dateSort(true, displayedQuestions);
 			SetAdapter(displayedQuestions);
@@ -152,7 +153,6 @@ public abstract class MasterActivity extends SecureActivity implements
 		case R.id.menu_sync:
 			if (!this.syncInProgress) {
 				InternetCheck.forceCheckForInternet();
-					Queue.getInstance();
 				update();
 			}
 			return true;
@@ -176,6 +176,39 @@ public abstract class MasterActivity extends SecureActivity implements
 			displayedQuestions = Sort.pictureSort(false, displayedQuestions);
 			SetAdapter(displayedQuestions);
 			return true;
+=======
+			case R.id.menu_sortByNewest:
+				displayedQuestions = Sort.dateSort(true, displayedQuestions);
+				SetAdapter(displayedQuestions);
+				return true;
+			case R.id.menu_sync:
+				if (!this.syncInProgress){
+					InternetCheck.forceCheckForInternet();
+					Queue.getInstance();
+					update();
+				}
+				return true;
+			case R.id.menu_sortByOldest:
+				displayedQuestions = Sort.dateSort(false, displayedQuestions);
+				SetAdapter(displayedQuestions);
+				return true;
+			case R.id.menu_sortByMostVotes:
+				displayedQuestions = Sort.sortUpVote(true, displayedQuestions);
+				SetAdapter(displayedQuestions);
+				return true;
+			case R.id.menu_sortByLeastVotes:
+				displayedQuestions = Sort.sortUpVote(false, displayedQuestions);
+				SetAdapter(displayedQuestions);
+				return true;
+			case R.id.menu_sortByPicture:
+				displayedQuestions = Sort.pictureSort(true, displayedQuestions);
+				SetAdapter(displayedQuestions);
+				return true;
+			case R.id.menu_sortByNoPicture:
+				displayedQuestions = Sort.pictureSort(false, displayedQuestions);
+				SetAdapter(displayedQuestions);
+				return true;
+>>>>>>> 8e6c6b7c7ce4fc44777cdba7cced94e900303174
 		}
 
 		return super.onOptionsItemSelected(item);

@@ -37,15 +37,21 @@ import android.widget.Toast;
  *
  */
 public class SubmitAnswerActivity extends SecureActivity {
+<<<<<<< HEAD
 	private ImageView imageview, addimage;
 	private byte[] bytebitmap;
+
+	/**
+	 * @see android.app.Activity#onCreate(android.os.Bundle)
+	 */
+=======
+    private ImageView imageview, addimage;
+    private byte[] bytebitmap;
     private static final int SCALED_IMAGE_WIDTH = 600;
     private GPSTracker gps;
     private double[] coordinate={0.0,0.0};
     
-	/**
-	 * @see android.app.Activity#onCreate(android.os.Bundle)
-	 */
+>>>>>>> 8e6c6b7c7ce4fc44777cdba7cced94e900303174
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -79,17 +85,31 @@ public class SubmitAnswerActivity extends SecureActivity {
 	 */
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
+<<<<<<< HEAD
 		switch (item.getItemId()) {
 		case R.id.menu_submit:
 			(new submitAnswerTask(this,
 					(getIntent()).getStringExtra(GeneralHelper.AQUESTION_KEY),
 					((EditText) findViewById(R.id.submit_answer_body))
-							.getText().toString(), bytebitmap, coordinate))
-					.execute();
+							.getText().toString(), bytebitmap)).execute();
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
+=======
+	    switch (item.getItemId()) {
+	        case R.id.menu_submit:
+	        	(new submitAnswerTask(
+	        			this,
+	        			(getIntent()).getStringExtra(GeneralHelper.AQUESTION_KEY),
+	        			((EditText)findViewById(R.id.submit_answer_body)).getText().toString(),
+	        			bytebitmap,
+	        			coordinate)).execute();
+	        	return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+>>>>>>> 8e6c6b7c7ce4fc44777cdba7cced94e900303174
 	}
 
 	/**
@@ -123,7 +143,33 @@ public class SubmitAnswerActivity extends SecureActivity {
 		if (requestCode == 1 && resultCode == RESULT_OK) {
 			Uri selectedImageUri = data.getData();
 			String imagepath = getPath(selectedImageUri);
+<<<<<<< HEAD
 			Bitmap bitmap = BitmapFactory.decodeFile(imagepath);
+			ByteArrayOutputStream stream = new ByteArrayOutputStream();
+			bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+			byte[] byteArray = stream.toByteArray();
+			long lengthbmp = byteArray.length;
+			// As a user I don't want the picture over 64kb
+			if (lengthbmp > 64000) {
+				/*
+				 * Bitmap resizedBitmap=Bitmap.createScaledBitmap(bitmap,
+				 * (int)(bitmap.getWidth()*0.2), (int)(bitmap.getHeight()*0.3),
+				 * true); ByteArrayOutputStream resizedstream = new
+				 * ByteArrayOutputStream();
+				 * resizedBitmap.compress(Bitmap.CompressFormat.PNG, 100,
+				 * resizedstream); byte[] resizedbyteArray =
+				 * stream.toByteArray(); resizedbytebitmap =
+				 * Base64.encode(resizedbyteArray, 1); InputStream is = new
+				 * ByteArrayInputStream(resizedbytebitmap); Bitmap bmp =
+				 * BitmapFactory.decodeStream(is); //Bitmap resizedbitmap =
+				 * BitmapFactory.decodeByteArray(resizedbytebitmap , 0,
+				 * resizedbytebitmap.length); imageview.setImageBitmap(bmp);
+				 */
+				Toast.makeText(getApplicationContext(), "Picture Over Size",
+						Toast.LENGTH_SHORT).show();
+				return;
+=======
+			Bitmap bitmap=BitmapFactory.decodeFile(imagepath);
 			long lengthbmp = bitmap.getRowBytes() * bitmap.getHeight();
 			
 			ByteArrayOutputStream stream;
@@ -141,17 +187,28 @@ public class SubmitAnswerActivity extends SecureActivity {
 					
 				if (lengthbmp > 64000) {
 					Toast.makeText(getApplicationContext(), "Picture Still Too Big After Resizing", Toast.LENGTH_SHORT).show();
-				return;
+					return;
 				}
 				
 			} else {
 				stream = new ByteArrayOutputStream();
 				bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
 				byteArray = stream.toByteArray();
+>>>>>>> 8e6c6b7c7ce4fc44777cdba7cced94e900303174
 			}
 			
 			// Attach image to picture
 			bytebitmap = Base64.encode(byteArray, 1);
+<<<<<<< HEAD
+			imageview.setImageBitmap(bitmap);
+		}
+	}
+
+	/**
+	 * @param uri
+	 * @return The path of the image being submitted.
+	 */
+=======
 			
 			// Display attached image
 			byte[] decodedBytes = Base64.decode(bytebitmap, 1);
@@ -174,13 +231,9 @@ public class SubmitAnswerActivity extends SecureActivity {
     	}
     	else{
     		gps.showSettingsAlert();
-		}
+    	}
     }
-
-	/**
-	 * @param uri
-	 * @return The path of the image being submitted.
-	 */
+>>>>>>> 8e6c6b7c7ce4fc44777cdba7cced94e900303174
 	public String getPath(Uri uri) {
 		String[] projection = { MediaStore.Images.Media.DATA };
 		Cursor cursor = managedQuery(uri, projection, null, null, null);

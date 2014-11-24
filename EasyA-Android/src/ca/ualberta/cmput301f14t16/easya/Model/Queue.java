@@ -3,7 +3,9 @@ package ca.ualberta.cmput301f14t16.easya.Model;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
 
 import android.content.Context;
 import android.net.ConnectivityManager;
@@ -31,6 +33,7 @@ import ca.ualberta.cmput301f14t16.easya.Model.Data.PMClient;
  * @author Cauani
  */
 public class Queue extends Thread {
+	private final ReentrantLock lock = new ReentrantLock();
 	/**
 	 * The amount of time the thread will sleep between every cycle.
 	 */
@@ -73,8 +76,11 @@ public class Queue extends Thread {
 		while (isActive) {
 			try {
 				if (!pendings.isEmpty()) {
-					if (InternetCheck.haveInternet())
+					if (InternetCheck.haveInternet()){
+						System.out.println("Processing pendings. Count:" + this.pendings.size());
 						ProcessPendings();
+						MainModel.getInstance().notifyViews();
+					}
 				}
 				Thread.sleep(loop_interval);
 			} catch (InterruptedException ex) {
@@ -98,9 +104,14 @@ public class Queue extends Thread {
 	 *            The new object to be added.
 	 */
 	public void AddPendingToQueue(Pending p) {
+		try{
 		PMClient pm = new PMClient();
 		pm.savePending(p);
 		this.pendings.add(p);
+		System.out.println("Pending saved. Count:" + this.pendings.size());
+		}catch(Exception ex){
+			System.out.println("Error: " + ex.getMessage());
+		}
 	}
 
 	/**
@@ -110,9 +121,12 @@ public class Queue extends Thread {
 	 *            The {@link Pending} object to be removed.
 	 */
 	private void RemovePending(Pending p) {
-		PMClient pm = new PMClient();
-		pm.deletePending(p);
-		this.pendings.remove(p);
+		try{
+			PMClient pm = new PMClient();
+			pm.deletePending(p);
+		}catch(Exception ex){
+			System.out.println("Error when trying to remove this thing: " + ex.getMessage());
+		}
 	}
 
 	/*
@@ -142,49 +156,67 @@ public class Queue extends Thread {
 	 * @throws IOException
 	 */
 	public void ProcessPendings() throws NoClassTypeSpecifiedException, NoInternetException, IOException{
-        ESClient esClient = new ESClient();
-        int tries = 0;
-        int qtP = pendings.size();
-    	for(Pending p : pendings){
-    		try {
-    			Content c = p.getContent();   
-    			c.setDate(Time.getDate());
-                if(c instanceof Question){
-                	if (esClient.submitQuestion((Question) c)){
-						Cache.getInstance().SaveSingleQuestion((Question) c);
-					}
-                }else if (c instanceof Answer){
-                	esClient.submitAnswer((Answer)c, p.getAnswerId());
-                }else if (c instanceof Reply){
-                	if (p.getAnswerId() != null && !p.getAnswerId().isEmpty()){
-                		esClient.submitAnswerReply((Reply)c, p.getQuestionId(), p.getAnswerId());
-                	}else{
-                		esClient.submitQuestionReply((Reply)c, p.getQuestionId());
-                	}
-                }else{
-                	throw new NoClassTypeSpecifiedException();
+        lock.lock();
+        try{
+        	ESClient esClient = new ESClient();
+            int tries = 0;
+            int qtP = pendings.size();
+            System.out.println("Processing pendings. Count:" + qtP);
+            
+            Iterator<Pending> iterator = pendings.iterator();
+            while (iterator.hasNext()) {
+            	Pending p = iterator.next();
+                try {    			
+        			Content c = p.getContent();   
+        			c.setDate(Time.getDate());
+                    if(c instanceof Question){
+                    	System.out.println("Type - Question");
+                    	if (esClient.submitQuestion((Question) c)){
+    						Cache.getInstance().SaveSingleQuestion((Question) c);						
+    					}
+                    }else if (c instanceof Answer){
+                    	System.out.println("Type - Answer");
+                    	esClient.submitAnswer((Answer)c, p.getQuestionId());
+                    }else if (c instanceof Reply){
+                    	System.out.println("Type - Reply");
+                    	if (p.getAnswerId() != null && !p.getAnswerId().isEmpty()){
+                    		System.out.println("Type - Reply to answer");
+                    		esClient.submitAnswerReply((Reply)c, p.getQuestionId(), p.getAnswerId());
+                    	}else{
+                    		System.out.println("Type - Reply to question");
+                    		esClient.submitQuestionReply((Reply)c, p.getQuestionId());
+                    	}
+                    }else{
+                    	throw new NoClassTypeSpecifiedException();
+                    }
                 }
-            }
-            catch(NoClassTypeSpecifiedException ex){
-            	throw ex;
-            }catch(IOException ex){
-            	if (!InternetCheck.haveInternet())
-            		return;
-        		if (tries >3)
-        			return;
-        		tries++;
-            }finally {            
+                catch(NoClassTypeSpecifiedException ex){
+                	System.out.println("Error:" + ex.getMessage());
+                	throw ex;
+                }catch(IOException ex){
+                	System.out.println("Error:" + ex.getMessage());
+                	if (!InternetCheck.haveInternet())
+                		return;
+            		if (tries >3)
+            			return;
+            		tries++;
+                }                            
                 RemovePending(p);
+    			iterator.remove();
+                System.out.println("Done!");                
             }
-        }
-    	final String aux = qtP + " item(s) were uploaded from your pendings.";
-    	
-    	Handler handler = new Handler(Looper.getMainLooper());
-    	handler.post(new Runnable() {
-    	     public void run() {
-    	    	 Toast.makeText(ContextProvider.get(), aux, Toast.LENGTH_LONG).show();
-    	     }
-    	});    	    	
+            
+        	final String aux = qtP + " item(s) were uploaded from your pendings.";
+        	
+        	Handler handler = new Handler(Looper.getMainLooper());
+        	handler.post(new Runnable() {
+        	     public void run() {
+        	    	 Toast.makeText(ContextProvider.get(), aux, Toast.LENGTH_LONG).show();
+        	     }
+        	});
+		}finally{
+			lock.unlock();
+		}	
     }
 	
 	/**
