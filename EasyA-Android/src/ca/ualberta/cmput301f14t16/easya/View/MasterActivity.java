@@ -41,12 +41,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 /**
- * Provides a general implementation of an {@link Activity} subclass. This class
- * is not intended to be used, but rather implements many basic methods that
- * will be used by potential subclasses.
+ * Provides a general implementation of an {@link android.app.Activity}
+ * subclass. This class is not intended to be used, but rather implements many
+ * basic methods that will be used by potential subclasses.
  * 
- * In general, this {@link Activity} is designed to display a list of question.
- * Effectivly, this is the base for the app's main page display.
+ * In general, this {@link android.app.Activity} is designed to display a list
+ * of question. Effectivly, this is the base for the app's main page display.
  * 
  * @author Cauani
  *
@@ -145,109 +145,145 @@ public abstract class MasterActivity extends SecureActivity implements
 			return true;
 		}
 		switch (item.getItemId()) {
-			case R.id.menu_sortByNewest:
-				displayedQuestions = Sort.dateSort(true, displayedQuestions);
-				SetAdapter(displayedQuestions);
-				return true;
-			case R.id.menu_sync:
-				if (!this.syncInProgress){
-					InternetCheck.forceCheckForInternet();
+		case R.id.menu_sortByNewest:
+			displayedQuestions = Sort.dateSort(true, displayedQuestions);
+			SetAdapter(displayedQuestions);
+			return true;
+		case R.id.menu_sync:
+			if (!this.syncInProgress) {
+				InternetCheck.forceCheckForInternet();
 					Queue.getInstance();
-					update();
-				}
-				return true;
-			case R.id.menu_sortByOldest:
-				displayedQuestions = Sort.dateSort(false, displayedQuestions);
-				SetAdapter(displayedQuestions);
-				return true;
-			case R.id.menu_sortByMostVotes:
-				displayedQuestions = Sort.sortUpVote(true, displayedQuestions);
-				SetAdapter(displayedQuestions);
-				return true;
-			case R.id.menu_sortByLeastVotes:
-				displayedQuestions = Sort.sortUpVote(false, displayedQuestions);
-				SetAdapter(displayedQuestions);
-				return true;
-			case R.id.menu_sortByPicture:
-				displayedQuestions = Sort.pictureSort(true, displayedQuestions);
-				SetAdapter(displayedQuestions);
-				return true;
-			case R.id.menu_sortByNoPicture:
-				displayedQuestions = Sort.pictureSort(false, displayedQuestions);
-				SetAdapter(displayedQuestions);
-				return true;
+				update();
+			}
+			return true;
+		case R.id.menu_sortByOldest:
+			displayedQuestions = Sort.dateSort(false, displayedQuestions);
+			SetAdapter(displayedQuestions);
+			return true;
+		case R.id.menu_sortByMostVotes:
+			displayedQuestions = Sort.sortUpVote(true, displayedQuestions);
+			SetAdapter(displayedQuestions);
+			return true;
+		case R.id.menu_sortByLeastVotes:
+			displayedQuestions = Sort.sortUpVote(false, displayedQuestions);
+			SetAdapter(displayedQuestions);
+			return true;
+		case R.id.menu_sortByPicture:
+			displayedQuestions = Sort.pictureSort(true, displayedQuestions);
+			SetAdapter(displayedQuestions);
+			return true;
+		case R.id.menu_sortByNoPicture:
+			displayedQuestions = Sort.pictureSort(false, displayedQuestions);
+			SetAdapter(displayedQuestions);
+			return true;
 		}
-		
+
 		return super.onOptionsItemSelected(item);
 	}
 
+	/**
+	 * Listener used by the activity to handle clicks on the Home/Favourites/My
+	 * Questions/Saved Questions menu.
+	 */
 	private OnItemClickListener folderClickListener = new OnItemClickListener() {
 		@Override
 		public void onItemClick(AdapterView<?> parent, View v, int pos, long id) {
 			switch (pos) {
-				case ListView.INVALID_POSITION:
-					break;
-				case 0: // Home
-					if (!(position == 0)) {
-						Intent i = new Intent(v.getContext(), MainActivity.class);
-						startActivity(i);
-					}
-					break;
-				case 1: // Favourites
-					if (!(position == 1)) {
-						Intent i = new Intent(v.getContext(),
-								FavouritesActivity.class);
-						startActivity(i);
-					}
-					break;
-				case 2: // My questions
-					if (!(position == 2)) {
-						Intent i = new Intent(v.getContext(),
-								MyQuestionActivity.class);
-						startActivity(i);
-					}
-					break;
-				case 3: // Saved questions
-					if (!(position == 3)) {
-						Intent i = new Intent(v.getContext(), SavedActivity.class);
-						startActivity(i);
-					}
-					break;
+			case ListView.INVALID_POSITION:
+				break;
+			case 0: // Home
+				if (!(position == 0)) {
+					Intent i = new Intent(v.getContext(), MainActivity.class);
+					startActivity(i);
 				}
+				break;
+			case 1: // Favourites
+				if (!(position == 1)) {
+					Intent i = new Intent(v.getContext(),
+							FavouritesActivity.class);
+					startActivity(i);
+				}
+				break;
+			case 2: // My questions
+				if (!(position == 2)) {
+					Intent i = new Intent(v.getContext(),
+							MyQuestionActivity.class);
+					startActivity(i);
+				}
+				break;
+			case 3: // Saved questions
+				if (!(position == 3)) {
+					Intent i = new Intent(v.getContext(), SavedActivity.class);
+					startActivity(i);
+				}
+				break;
+			}
 			if (closeViewOnSwitch())
 				finish();
-			else
-				if (mDrawerLayout.isDrawerOpen(mDrawerList)){
-					mDrawerLayout.closeDrawer(mDrawerList);
-				}
+			else if (mDrawerLayout.isDrawerOpen(mDrawerList)) {
+				mDrawerLayout.closeDrawer(mDrawerList);
+			}
 		}
 	};
 
+	/**
+	 * @see android.app.Activity#onPause()
+	 */
 	@Override
 	public void onPause() {
 		super.onPause();
 	}
 
+	/**
+	 * @see android.app.Activity#onDestroy()
+	 */
 	@Override
 	public void onDestroy() {
 		MainModel.getInstance().deleteView(this);
 		super.onDestroy();
 	}
 
+	/**
+	 * Sets the {@link ArrayAdapter} used by this {@link android.app.Activity}'s
+	 * question list to a newly created adapter using the list of
+	 * {@link ca.ualberta.cmput301f14t16.easya.Model.Question} objects provided
+	 * as content.
+	 * 
+	 * @param lst
+	 *            Will be used as the content for the new ArrayAdapter
+	 *            generated.
+	 */
 	private void SetAdapter(List<QuestionList> lst) {
 		ArrayAdapter<QuestionList> adapter = new MainViewAdapter(this, lst);
 		((ListView) findViewById(R.id.question_list)).setAdapter(adapter);
 	}
 
+	/**
+	 * Listener method that handles the onClick for the new question button.
+	 * Starts a new {@link SubmitQuestionActivity}.
+	 * 
+	 * @param v
+	 */
 	public void AddNewQuestion(View v) {
 		Intent i = new Intent(this, SubmitQuestionActivity.class);
 		this.startActivity(i);
 	}
 
+	/**
+	 * Listener method that handles the onClick for the change username button.
+	 * Calls {@link MasterActivity#changeUsernameDialog}.
+	 * 
+	 * @param v
+	 */
 	public void changeUsername(View v) {
 		changeUsernameDialog(v.getContext());
 	}
 
+	/**
+	 * Creates a new alert dialog to allow the user to submit a username change.
+	 * 
+	 * @param ctx
+	 */
 	public void changeUsernameDialog(Context ctx) {
 		AlertDialog.Builder builder = new AlertDialog.Builder(ctx);
 		LayoutInflater inflater = this.getLayoutInflater();
@@ -274,6 +310,9 @@ public abstract class MasterActivity extends SecureActivity implements
 		d.show();
 	}
 
+	/**
+	 * @see ca.ualberta.cmput301f14t16.easya.View.MainView#update()
+	 */
 	@Override
 	public void update() {
 		runOnUiThread(new Runnable() {
@@ -287,6 +326,9 @@ public abstract class MasterActivity extends SecureActivity implements
 
 	protected abstract void startUpdate();
 
+	/**
+	 * Displays a banner showing the text "New content found!".
+	 */
 	private void DisplayBanner() {
 		RelativeLayout conteiner = (RelativeLayout) findViewById(R.id.main_rl);
 		if (conteiner.findViewById(UPDATEBANNER) == null) {
@@ -315,6 +357,10 @@ public abstract class MasterActivity extends SecureActivity implements
 		}
 	}
 
+	/**
+	 * Listener that handles clicks on a banner created by
+	 * {@link MasterActivity#DisplayBanner} and closes it.
+	 */
 	private OnClickListener onclickUpdateListener = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
@@ -323,10 +369,21 @@ public abstract class MasterActivity extends SecureActivity implements
 		}
 	};
 
+	/**
+	 * Calls {@link MasterActivity#SetAdapter} with
+	 * {@link MasterActivity#displayedQuestions}
+	 */
 	protected void bindAdapter() {
 		SetAdapter(displayedQuestions);
 	}
 
+	/**
+	 * Refreshes the list of
+	 * {@link ca.ualberta.cmput301f14t16.easya.Model.Question} objects
+	 * displayed.
+	 * 
+	 * @see ca.ualberta.cmput301f14t16.easya.View.MainView#update(Object)
+	 */
 	@Override
 	public void update(List<QuestionList> lst) {
 		if (displayedQuestions == null || displayedQuestions.size() <= 0
@@ -345,6 +402,9 @@ public abstract class MasterActivity extends SecureActivity implements
 		}
 	}
 
+	/**
+	 * Creates a new drawer menu for this {@link android.app.Activity}
+	 */
 	public void createDrawerMenu() {
 		mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
 		mDrawerList = (LinearLayout) findViewById(R.id.drawer_menu);
@@ -352,7 +412,7 @@ public abstract class MasterActivity extends SecureActivity implements
 				R.drawable.ic_drawer, R.string.drawer_open,
 				R.string.drawer_close) {
 
-			/** Called when a drawer has settled in a completely closed state. */
+			/* Called when a drawer has settled in a completely closed state. */
 			public void onDrawerClosed(View view) {
 				super.onDrawerClosed(view);
 				// getActionBar().setTitle(mTitle);
@@ -360,7 +420,7 @@ public abstract class MasterActivity extends SecureActivity implements
 											// onPrepareOptionsMenu()
 			}
 
-			/** Called when a drawer has settled in a completely open state. */
+			/* Called when a drawer has settled in a completely open state. */
 			public void onDrawerOpened(View drawerView) {
 				super.onDrawerOpened(drawerView);
 				// getActionBar().setTitle(mDrawerTitle);
@@ -375,6 +435,9 @@ public abstract class MasterActivity extends SecureActivity implements
 		getActionBar().setHomeButtonEnabled(true);
 	}
 
+	/**
+	 * Starts a spinner animation to show when something is loading.
+	 */
 	public void animateSync() {
 		this.syncInProgress = true;
 		try {
@@ -393,6 +456,9 @@ public abstract class MasterActivity extends SecureActivity implements
 		} // Let it go...
 	}
 
+	/**
+	 * @see ca.ualberta.cmput301f14t16.easya.View.MainView#stopAnimateSync()
+	 */
 	public void stopAnimateSync() {
 		this.syncInProgress = false;
 		MenuItem m = menu.findItem(R.id.menu_sync);
@@ -402,6 +468,9 @@ public abstract class MasterActivity extends SecureActivity implements
 		}
 	}
 
+	/**
+	 * @return True
+	 */
 	protected boolean closeViewOnSwitch() {
 		return true;
 	}

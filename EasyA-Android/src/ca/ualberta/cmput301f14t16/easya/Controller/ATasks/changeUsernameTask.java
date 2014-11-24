@@ -13,7 +13,8 @@ import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 
 /**
  * Provides an {@link AsyncTask} subclass that processes a request to change a
- * {@link User} object's username field in the elastic search database.
+ * {@link ca.ualberta.cmput301f14t16.easya.Model.User} object's username field
+ * in the elastic search database.
  */
 public class changeUsernameTask extends AsyncTask<Void, Void, Boolean> {
 	/**

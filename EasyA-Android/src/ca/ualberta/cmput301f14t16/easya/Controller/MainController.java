@@ -43,20 +43,23 @@ public abstract class MainController {
 	/**
 	 * Attempts to submit {@link MainController#pending} to the elastic search
 	 * database. This method will initially attempt to check for an Internet
-	 * connection using {@link Queue#haveInternetConnection()}, and will fail if
-	 * it returns False.
+	 * connection using
+	 * {@link ca.ualberta.cmput301f14t16.easya.Model.InternetCheck} , and will
+	 * fail if it returns False.
 	 * 
-	 * @return True if {@link MainController#pending} was successfully submitted.
-	 *         False if not.
+	 * @return True if {@link MainController#pending} was successfully
+	 *         submitted. False if not.
 	 * @throws NoInternetException
 	 *             If the method's attempt to check for an Internet connection
-	 *             using {@link Queue#haveInternetConnection()} returns False.
+	 *             using
+	 *             {@link ca.ualberta.cmput301f14t16.easya.Model.InternetCheck}
+	 *             returns False.
 	 */
 	protected boolean submit() throws NoInternetException {
 		ESClient es = new ESClient();
 		if (InternetCheck.forceCheckForInternet()) {
 			try {
-				Content c = pending.getContent();				
+				Content c = pending.getContent();
 				c.setDate(Time.getDate());
 				if (c instanceof Question) {
 					return es.submitQuestion((Question) c);

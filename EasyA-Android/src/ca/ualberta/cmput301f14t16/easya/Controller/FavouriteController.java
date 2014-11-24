@@ -18,8 +18,8 @@ import ca.ualberta.cmput301f14t16.easya.Model.Data.ESClient;
  */
 public class FavouriteController {
 	/**
-	 * The {@link ca.ualberta.cmput301f14t16.easya.Model.Question} to be
-	 * added to {@link User#favourites}.
+	 * The {@link ca.ualberta.cmput301f14t16.easya.Model.Question} to be added
+	 * to {@link User#favourites}.
 	 */
 	private Question q;
 
@@ -36,7 +36,7 @@ public class FavouriteController {
 	/**
 	 * Factory method.
 	 * 
-	 * @param qId
+	 * @param q
 	 *            Setter for {@link FavouriteController#q}.
 	 * @return A new FavouriteController object with the given parameter.
 	 */
@@ -59,13 +59,13 @@ public class FavouriteController {
 			User u = MainModel.getInstance().getCurrentUser();
 			u.setFavourite(q.getId());
 			ESClient es = new ESClient();
-			if (es.updateUserFavourites(u)){
+			if (es.updateUserFavourites(u)) {
 				MainModel.getInstance().saveMainUser(u);
 				Cache.getInstance().SaveSingleQuestion(q);
 				return true;
 			}
 			return false;
-		}catch(IOException ex){
+		} catch (IOException ex) {
 			return false;
 		} catch (Exception ex) {
 			return false;

@@ -31,9 +31,31 @@
 
     <ImageView
         android:id="@+id/submit_answer_imageView_pic"
-        android:layout_width="240dp"
-        android:layout_height="240dp"
-        android:layout_below="@+id/submit_answer_body"
+        android:layout_width="210dp"
+        android:layout_height="210dp"
+        android:layout_above="@+id/submit_answer_picture_holder"
         android:layout_centerHorizontal="true" />
+
+    <CheckBox
+        android:id="@+id/gps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignLeft="@+id/submit_answer_picture_holder"
+        android:layout_alignRight="@+id/submit_answer_picture_holder"
+        android:layout_below="@+id/address"
+        android:text="Set geolocation from GPS" />
+
+    <EditText
+        android:id="@+id/address"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/submit_answer_body"
+        android:ems="10"
+        android:hint="Enter the address" >
+
+        <requestFocus />
+    </EditText>
     	
 </RelativeLayout>

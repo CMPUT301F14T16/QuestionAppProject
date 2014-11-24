@@ -105,8 +105,8 @@ public abstract class Content {
 	/**
 	 * Sets {@link Content#createdOn date.}
 	 * 
-	 * @param newId
-	 *            ID to set
+	 * @param date
+	 *            date to set
 	 */
 	public void setDate(Calendar date) {
 		this.createdOn = date;

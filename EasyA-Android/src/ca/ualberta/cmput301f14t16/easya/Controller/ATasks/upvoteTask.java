@@ -10,7 +10,8 @@ import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 
 /**
  * Provides an {@link AsyncTask} subclass that processes a request to add an
- * upvote associated with a given user to a {@link Content} object.
+ * upvote associated with a given user to a
+ * {@link ca.ualberta.cmput301f14t16.easya.Model.Content} object.
  */
 public class upvoteTask extends AsyncTask<Void, Void, Boolean> {
 	private BasicNameValuePair vp;
