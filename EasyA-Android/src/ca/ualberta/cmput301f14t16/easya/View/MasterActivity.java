@@ -17,6 +17,7 @@ import android.os.Bundle;
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.app.SearchManager;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.util.TypedValue;
@@ -54,7 +55,7 @@ import android.widget.Toast;
 public abstract class MasterActivity extends SecureActivity implements
 		MainView<List<QuestionList>> {
 	private DrawerLayout mDrawerLayout;
-	private ActionBarDrawerToggle mDrawerToggle;
+	protected ActionBarDrawerToggle mDrawerToggle;
 	private LinearLayout mDrawerList;
 	public List<QuestionList> displayedQuestions;
 	private final static int UPDATEBANNER = 250000025;
@@ -73,7 +74,22 @@ public abstract class MasterActivity extends SecureActivity implements
 		((ListView) findViewById(R.id.drawer_menu_options))
 				.setOnItemClickListener(folderClickListener);
 		createDrawerMenu();
-		getActionBar().setDisplayShowCustomEnabled(true);
+		Queue.getInstance();
+	}
+	
+	@Override
+	protected void onNewIntent(Intent intent) {
+	    searchQA(intent);
+		setIntent(null);
+	}
+
+	private void searchQA(Intent intent) {
+		if (Intent.ACTION_SEARCH.equals(intent.getAction())) {
+			String query = intent.getStringExtra(SearchManager.QUERY);
+			Intent i = new Intent(this, SearchActivity.class);
+			i.putExtra(SearchManager.QUERY, query);
+			startActivity(i);
+	    }
 	}
 
 	/**
@@ -82,19 +98,12 @@ public abstract class MasterActivity extends SecureActivity implements
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		getMenuInflater().inflate(R.menu.main, menu);
-		this.menu = menu;
-		// Update function moved to make sure everything is loaded up beforehand
-		update();
-		return true;
-	}
-
-	/**
-	 * @see android.app.Activity#onPrepareOptionsMenu(android.view.Menu)
-	 */
-	@Override
-	public boolean onPrepareOptionsMenu(Menu menu) {
+		if (this.menu == null){ 
+			this.menu = menu;
+			update();
+		}
 		hideIconsFromACBar();
-		return super.onPrepareOptionsMenu(menu);
+		return true;
 	}
 
 	/**
@@ -102,13 +111,13 @@ public abstract class MasterActivity extends SecureActivity implements
 	 */
 	private void hideIconsFromACBar() {
 		boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
-		menu.findItem(R.id.menu_search).setVisible(!drawerOpen);
+		menu.findItem(R.id.menu_search).setVisible(!drawerOpen && !(position==4));
 		menu.findItem(R.id.menu_sortByOldest).setVisible(!drawerOpen);
 		menu.findItem(R.id.menu_sortByNewest).setVisible(!drawerOpen);
 		menu.findItem(R.id.menu_sortByMostVotes).setVisible(!drawerOpen);
 		menu.findItem(R.id.menu_sortByLeastVotes).setVisible(!drawerOpen);
 		menu.findItem(R.id.menu_sync).setVisible(!drawerOpen);
-		// menu.findItem(R.id.menu_sortByPicture).setVisible(!drawerOpen);
+		menu.findItem(R.id.menu_sortByPicture).setVisible(!drawerOpen);
 	}
 
 	/**
@@ -141,10 +150,15 @@ public abstract class MasterActivity extends SecureActivity implements
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (mDrawerToggle.onOptionsItemSelected(item)) {
-			hideIconsFromACBar();
 			return true;
 		}
 		switch (item.getItemId()) {
+		case android.R.id.home:
+			onBackPressed();
+			break;
+		case R.id.menu_search:			
+			onSearchRequested();
+			return true;
 		case R.id.menu_sortByNewest:
 			displayedQuestions = Sort.dateSort(true, displayedQuestions);
 			SetAdapter(displayedQuestions);
@@ -450,10 +464,7 @@ public abstract class MasterActivity extends SecureActivity implements
 			imgV.startAnimation(anim);
 			MenuItem mi = ((MenuItem) menu.findItem(R.id.menu_sync));
 			mi.setActionView(imgV);
-		} catch (Exception ex) {
-			Toast.makeText(getApplicationContext(), ex.getMessage(),
-					Toast.LENGTH_SHORT).show();
-		} // Let it go...
+		} catch (Exception ex) {} // Let it go...
 	}
 
 	/**

@@ -160,6 +160,8 @@ public class QuestionList {
 			return sdf.format(getDate().getTime()) + " - @" + auxU;
 		}catch(NoContentAvailableException ex){
 			return "";
+		}catch(Exception ex){
+			return "";
 		}
 	}
 }

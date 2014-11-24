@@ -1,5 +1,7 @@
 package ca.ualberta.cmput301f14t16.easya.Model;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 import java.util.regex.Pattern;
 
@@ -45,7 +47,16 @@ public class GeneralHelper {
 		}
 	}
 	
-
+	public static List<QuestionList> lqToQuestionlist(List<Question> lq){
+		List<QuestionList> lst = new ArrayList<QuestionList>();
+		for (Question q : lq) {
+			lst.add(new QuestionList(q.getId(), q.getTitle(), q
+					.getAuthorName(), q.getAuthorId(), q
+					.getAnswerCountString(), q.getUpVoteCountString(),
+					q.hasPicture(), q.getDate()));
+		}
+		return lst;
+	}
 
 	/**
 	 * Creates a random username. The username will take the format of a random

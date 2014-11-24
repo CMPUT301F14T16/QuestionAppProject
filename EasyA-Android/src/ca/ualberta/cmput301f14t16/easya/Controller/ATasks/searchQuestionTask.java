@@ -1,18 +1,20 @@
 package ca.ualberta.cmput301f14t16.easya.Controller.ATasks;
 
+import java.io.IOException;
+import java.util.List;
+
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
+import ca.ualberta.cmput301f14t16.easya.Model.InternetCheck;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
+import ca.ualberta.cmput301f14t16.easya.Model.QuestionList;
+import ca.ualberta.cmput301f14t16.easya.Model.Data.ESClient;
 import ca.ualberta.cmput301f14t16.easya.View.MainView;
 
-/**
- * Provides an {@link AsyncTask} subclass that processes a request to get a
- * single {@link Question} object stored in the elastic search database.
- */
-public class searchQuestionTask extends AsyncTask<Void, Void, Question> {
+public class searchQuestionTask extends AsyncTask<Void, Void, List<QuestionList>> {
 	/**
 	 * The current {@link Context} for the application.
 	 */
@@ -21,25 +23,15 @@ public class searchQuestionTask extends AsyncTask<Void, Void, Question> {
 	/**
 	 * The unique ID of the {@link Question} requested.
 	 */
-	private String qId;
+	private String query;
 	/**
 	 * The main view of the application.
 	 */
-	private MainView<Question> v;
+	private MainView<List<QuestionList>> v;
 
-	/**
-	 * Creates a new getQuestionTask.
-	 * 
-	 * @param ctx
-	 *            Setter for {@link searchQuestionTask#ctx}.
-	 * @param v
-	 *            Setter for {@link searchQuestionTask#v}.
-	 * @param qId
-	 *            Setter for {@link searchQuestionTask#qId}.
-	 */
-	public searchQuestionTask(Context ctx, MainView<Question> v, String qId) {
+	public searchQuestionTask(Context ctx, MainView<List<QuestionList>> v, String query) {
 		this.ctx = ctx;
-		this.qId = qId;
+		this.query = query;
 		this.v = v;
 	}
 
@@ -53,7 +45,7 @@ public class searchQuestionTask extends AsyncTask<Void, Void, Question> {
 		// TODO Experimental if null block to try and fix crash upon submit question.
 		if (pd == null) {
 			pd = new ProgressDialog(ctx);
-			pd.setTitle("Loading question...");
+			pd.setTitle("Performing search...");
 			pd.setMessage("Please wait.");
 			pd.setCancelable(false);
 			pd.setIndeterminate(true);
@@ -61,19 +53,19 @@ public class searchQuestionTask extends AsyncTask<Void, Void, Question> {
 		pd.show();
 	}
 
-	/**
-	 * Gets the requested {@link Question} object from the elastic search
-	 * database.
-	 * 
-	 * @see android.os.AsyncTask#doInBackground(java.lang.Object[])
-	 */
+
 	@Override
-	protected Question doInBackground(Void... voids) {
+	protected List<QuestionList> doInBackground(Void... voids) {
 		try {
-			if (this.qId == null || this.qId.equals(""))
+			if (this.query == null || this.query.equals(""))
 				return null;
-			return MainModel.getInstance().getQuestionById(this.qId);
-		} catch (NoContentAvailableException ex) {
+			if (InternetCheck.haveInternet()){
+				ESClient es = new ESClient();
+				return es.searchQuestionListsByQuery(this.query, 99);
+			}else{
+				return MainModel.getInstance().searchSavedQuestionsByQuery(query);
+			}
+		} catch (IOException ex) {
 			return null;
 		}
 	}
@@ -85,7 +77,7 @@ public class searchQuestionTask extends AsyncTask<Void, Void, Question> {
 	 * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
 	 */
 	@Override
-	protected void onPostExecute(Question result) {
+	protected void onPostExecute(List<QuestionList> result) {
 		if (pd != null && pd.isShowing()) {
 			try {
 				pd.dismiss();

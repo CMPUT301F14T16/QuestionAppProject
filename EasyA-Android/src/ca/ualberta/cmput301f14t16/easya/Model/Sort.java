@@ -106,19 +106,27 @@ public class Sort {
 	public static List<QuestionList> dateSort(boolean sortOrder,
 			List<QuestionList> questionList) {
 		if (sortOrder) {
-			Collections.sort(questionList, new Comparator<QuestionList>() {
+			Collections.sort(questionList, new Comparator<QuestionList>() {				
 				public int compare(QuestionList questionList1,
 						QuestionList questionList2) {
-					return questionList2.getDate().compareTo(
-							questionList1.getDate());
-				}
+					try{
+						return questionList2.getDate().compareTo(
+								questionList1.getDate());
+					}catch(Exception ex){
+						return 0;
+					}
+				}				
 			});
 		} else {
 			Collections.sort(questionList, new Comparator<QuestionList>() {
 				public int compare(QuestionList questionList1,
 						QuestionList questionList2) {
-					return questionList1.getDate().compareTo(
-							questionList2.getDate());
+					try{
+						return questionList1.getDate().compareTo(
+								questionList2.getDate());
+					}catch(Exception ex){
+						return 0;
+					}
 				}
 			});
 		}

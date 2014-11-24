@@ -10,6 +10,7 @@ import com.google.gson.reflect.TypeToken;
 
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoInternetException;
+import ca.ualberta.cmput301f14t16.easya.Model.GeneralHelper;
 import ca.ualberta.cmput301f14t16.easya.Model.InternetCheck;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
@@ -174,8 +175,7 @@ public class Cache {
 		return aux;
 	}
 
-	public List<QuestionList> getSavedQuestions()
-			throws NoContentAvailableException {
+	public List<Question> getSavedQuestions() throws NoContentAvailableException{
 		Gson gson = new Gson();
 		Type listType = new TypeToken<List<Question>>() {
 		}.getType();
@@ -183,14 +183,13 @@ public class Cache {
 				PMDataParser.loadJson(PMFilesEnum.CACHEQUESTIONS), listType);
 		if (aux == null || aux.size() <= 0)
 			throw new NoContentAvailableException();
-		List<QuestionList> lst = new ArrayList<QuestionList>();
-		for (Question q : aux) {
-			lst.add(new QuestionList(q.getId(), q.getTitle(),
-					q.getAuthorName(), q.getAuthorId(), q
-							.getAnswerCountString(), q.getUpVoteCountString(),
-					q.hasPicture(), q.getDate()));
-		}
-		return lst;
+		return aux;
+	}
+	
+	public List<QuestionList> getSavedQuestionsList()
+			throws NoContentAvailableException {
+		List<Question> aux = getSavedQuestions();		
+		return GeneralHelper.lqToQuestionlist(aux);
 	}
 
 	private Question getQuestionFromCache(String id)

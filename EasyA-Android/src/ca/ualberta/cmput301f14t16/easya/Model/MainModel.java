@@ -2,7 +2,11 @@ package ca.ualberta.cmput301f14t16.easya.Model;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
+
+import com.google.gson.Gson;
+
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoInternetException;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.Cache;
@@ -137,7 +141,7 @@ public class MainModel {
 	
 	public List<QuestionList> getAllSavedQuestions()
 			throws NoContentAvailableException {
-		return Cache.getInstance().getSavedQuestions();
+		return Cache.getInstance().getSavedQuestionsList();
 	}
 	
 	public List<QuestionList> getAllCachedQuestions() {
@@ -170,5 +174,22 @@ public class MainModel {
 		Cache.getInstance().wipeCache();
 		PMClient pm = new PMClient();
 		pm.wipeData();
+	}
+
+	public List<QuestionList> searchSavedQuestionsByQuery(String query) {
+		try{
+			Gson g = new Gson();
+			List<Question> ql = Cache.getInstance().getSavedQuestions();
+			Iterator<Question> i = ql.iterator();
+			while (i.hasNext()){
+				Question q = i.next();
+				String aux = g.toJson(q);
+				if (!aux.contains(query))
+					i.remove();
+			}
+			return GeneralHelper.lqToQuestionlist(ql);
+		}catch(NoContentAvailableException ex){
+			return new ArrayList<QuestionList>();
+		}
 	}
 }
