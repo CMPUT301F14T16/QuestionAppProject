@@ -44,7 +44,7 @@ public class submitAnswerTask extends AsyncTask<Void, Void, Boolean> {
 	 * A picture attached to the {@link Answer} to be created.
 	 */
 	private byte[] pb;
-
+	private double[] coordinate;
 	/**
 	 * Creates a new submitAnswerTask.
 	 * 
@@ -58,12 +58,13 @@ public class submitAnswerTask extends AsyncTask<Void, Void, Boolean> {
 	 *            setter for {@link submitAnswerTaks#pb}
 	 */
 	public submitAnswerTask(Activity act, String question, String body,
-			byte[] pb) {
+			byte[] pb, double[] coordinate) {
 		this.act = act;
 		this.ctx = act;
 		this.qId = question;
 		this.body = body;
 		this.pb = pb;
+		this.coordinate=coordinate;
 	}
 
 	/**
@@ -94,7 +95,7 @@ public class submitAnswerTask extends AsyncTask<Void, Void, Boolean> {
 		try {
 			try {
 				controller = NewAnswerController.create(ctx, qId, body, pb,
-						MainModel.getInstance().getCurrentUser().getId());
+						MainModel.getInstance().getCurrentUser().getId(),coordinate);
 				return controller.submit();
 			} catch (Exception ex) {
 				System.out.println(ex.getMessage());

@@ -7,13 +7,16 @@ import java.io.InputStream;
 
 import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.submitAnswerTask;
+import ca.ualberta.cmput301f14t16.easya.Model.GPSTracker;
 import ca.ualberta.cmput301f14t16.easya.Model.GeneralHelper;
+import ca.ualberta.cmput301f14t16.easya.Model.geoCoder;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.PMClient;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -35,6 +38,8 @@ public class SubmitAnswerActivity extends SecureActivity {
     private ImageView imageview, addimage;
     private byte[] bytebitmap;
     private static final int SCALED_IMAGE_WIDTH = 600;
+    private GPSTracker gps;
+    private double[] coordinate=null;
     
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -70,7 +75,8 @@ public class SubmitAnswerActivity extends SecureActivity {
 	        			this,
 	        			(getIntent()).getStringExtra(GeneralHelper.AQUESTION_KEY),
 	        			((EditText)findViewById(R.id.submit_answer_body)).getText().toString(),
-	        			bytebitmap)).execute();
+	        			bytebitmap,
+	        			coordinate)).execute();
 	        	return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
@@ -135,7 +141,22 @@ public class SubmitAnswerActivity extends SecureActivity {
 			imageview.setImageBitmap(bmp);
 		}
 	}
-	
+    public void findlocation(View view){
+    	gps = new GPSTracker(SubmitAnswerActivity.this);
+    	coordinate = new double[2];
+    	if (gps.canGetLocation()){
+    		double latitude = gps.getLatitude();
+    		double longitude = gps.getLongitude();
+    		coordinate[0] = latitude;
+    		coordinate[1] = longitude;
+
+    		Toast.makeText(getApplicationContext(), latitude+"\n"+longitude+"Able to use geocoder: ", Toast.LENGTH_LONG).show();
+    		
+    	}
+    	else{
+    		gps.showSettingsAlert();
+    	}
+    }
 	public String getPath(Uri uri) {
 		String[] projection = { MediaStore.Images.Media.DATA };
 		Cursor cursor = managedQuery(uri, projection, null, null, null);

@@ -28,12 +28,21 @@
             android:layout_gravity="center"
             android:contentDescription="Add picture"/>
     </LinearLayout>
-
     <ImageView
         android:id="@+id/submit_answer_imageView_pic"
         android:layout_width="240dp"
         android:layout_height="240dp"
         android:layout_below="@+id/submit_answer_body"
         android:layout_centerHorizontal="true" />
+
+    <Button
+        android:id="@+id/geolocation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/submit_answer_picture_holder"
+        android:layout_alignParentLeft="true"
+        android:layout_alignRight="@+id/submit_answer_picture_holder"
+        android:onClick="findlocation"
+        android:text="Set Location" />
     	
 </RelativeLayout>
