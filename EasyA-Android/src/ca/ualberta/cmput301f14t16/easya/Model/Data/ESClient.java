@@ -28,11 +28,10 @@ public class ESClient {
 	
 	//ElasticSeach Urls
 	private static final String HOST_URL = "http://cmput301.softwareprocess.es:8080/testing/";
-	private static final String QUESTION_TYPE = "team16question20145"; // Edit Me to Change Question DB.
+	private static final String QUESTION_TYPE = "team16question201411225"; // Edit Me to Change Question DB.
 	private static final String USER_TYPE = "team16user";		   // Edit Me to Change User DB.
 	private static final String QUESTION_PATH = QUESTION_TYPE + "/";
 	private static final String USER_PATH = USER_TYPE + "/";
-	
 	
 	// JSON Utilities
 	private Gson gson = new Gson();

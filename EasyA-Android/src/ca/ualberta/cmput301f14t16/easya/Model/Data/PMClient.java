@@ -101,7 +101,9 @@ public class PMClient {
 	}
 	
 	public void deletePending(Pending p) {
-		Gson gson = new Gson();
+		Gson gson = new GsonBuilder()
+		.registerTypeAdapter(Content.class,
+                new ContentDeserializer()).create();
 		List<Pending> aux = getPendings();
 		if(aux == null)
 			aux = new ArrayList<Pending>();
