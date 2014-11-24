@@ -7,14 +7,15 @@ import junit.framework.TestCase;
 
 public class GeoLocationTest extends TestCase {
 	private GPSTracker gps;
+	//tests if gps initializes at 0,0.
 	public void testGPS() {
 		gps = new GPSTracker(gps);
     	double [] coordinate = new double[2];
-		int latitude = (int)gps.getLatitude();
-		int longitude = (int)gps.getLongitude();
+		double latitude = gps.getLatitude();
+		double longitude = gps.getLongitude();
 		coordinate[0] = latitude;
 		coordinate[1] = longitude;
-		assertTrue(latitude ==  -113 && longitude == 53);
+		assertTrue(Math.floor(latitude) == 0 && Math.floor(longitude) == 0);
 	}
 
 }
