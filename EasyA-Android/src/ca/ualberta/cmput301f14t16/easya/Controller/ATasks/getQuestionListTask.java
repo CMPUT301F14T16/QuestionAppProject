@@ -13,7 +13,8 @@ import ca.ualberta.cmput301f14t16.easya.View.MainView;
 
 /**
  * Provides an {@link AsyncTask} subclass that processes a request to get a list
- * of {@link Question} objects stored in the elastic search database.
+ * of {@link ca.ualberta.cmput301f14t16.easya.Model.Question} objects stored in
+ * the elastic search database.
  */
 public class getQuestionListTask extends
 		AsyncTask<Void, Void, List<QuestionList>> {
@@ -61,8 +62,9 @@ public class getQuestionListTask extends
 	}
 
 	/**
-	 * Gets the requested {@link Question} objects from the elastic search
-	 * database.
+	 * Gets the requested
+	 * {@link ca.ualberta.cmput301f14t16.easya.Model.Question} objects from the
+	 * elastic search database.
 	 * 
 	 * @see android.os.AsyncTask#doInBackground(java.lang.Object[])
 	 */

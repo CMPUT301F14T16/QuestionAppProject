@@ -49,13 +49,13 @@ public class submitAnswerTask extends AsyncTask<Void, Void, Boolean> {
 	 * Creates a new submitAnswerTask.
 	 * 
 	 * @param act
-	 *            setter for {@link submitAnswerTaks#act}
+	 *            setter for {@link submitAnswerTask#act}
 	 * @param question
-	 *            setter for {@link submitAnswerTaks#qId}
+	 *            setter for {@link submitAnswerTask#qId}
 	 * @param body
-	 *            setter for {@link submitAnswerTaks#body}
+	 *            setter for {@link submitAnswerTask#body}
 	 * @param pb
-	 *            setter for {@link submitAnswerTaks#pb}
+	 *            setter for {@link submitAnswerTask#pb}
 	 */
 	public submitAnswerTask(Activity act, String question, String body,
 			byte[] pb) {

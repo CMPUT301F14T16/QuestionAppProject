@@ -10,8 +10,9 @@ import ca.ualberta.cmput301f14t16.easya.View.QuestionActivity;
 
 /**
  * Provides an {@link AsyncTask} subclass that processes a request to add a
- * {@link Content} object to a {@link User} object's favourites field in the
- * elastic search database.
+ * {@link ca.ualberta.cmput301f14t16.easya.Model.Content} object to a
+ * {@link ca.ualberta.cmput301f14t16.easya.Model.User} object's favourites field
+ * in the elastic search database.
  */
 public class favouriteTask extends AsyncTask<Void, Void, Boolean> {
 	private Question q;
@@ -25,7 +26,7 @@ public class favouriteTask extends AsyncTask<Void, Void, Boolean> {
 	 * 
 	 * @param ctx
 	 *            Setter for {@link favouriteTask#ctx}.
-	 * @param vp
+	 * @param q
 	 */
 	public favouriteTask(Context ctx, Question q) {
 		this.ctx = ctx;
@@ -64,17 +65,17 @@ public class favouriteTask extends AsyncTask<Void, Void, Boolean> {
 	protected void onPostExecute(Boolean result) {
 		if (result) {
 			Toast.makeText(
-				ctx,
-				this.q.checkFavourite(MainModel.getInstance().getCurrentUser()) 
-					? "Favourite succesfully set!"
-					: "Favourite succesfully removed!",
-				Toast.LENGTH_LONG).show();
+					ctx,
+					this.q.checkFavourite(MainModel.getInstance()
+							.getCurrentUser()) ? "Favourite succesfully set!"
+							: "Favourite succesfully removed!",
+					Toast.LENGTH_LONG).show();
 			MainModel.getInstance().notifyViews();
 		} else {
 			Toast.makeText(
-				ctx,
-				"We were unable to save your favourite, check your internet connection and try again!",
-				Toast.LENGTH_LONG).show();
+					ctx,
+					"We were unable to save your favourite, check your internet connection and try again!",
+					Toast.LENGTH_LONG).show();
 		}
 	}
 }

@@ -5,7 +5,7 @@ import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import android.app.Activity;
 import android.content.Intent;
 
-/**
+/** 
  * Extends the {@link Activity} class in order to provide a specific handling of
  * it's onResume() method that will then be passed on to all of its children
  * classes. Specifically, onResume() will handle a given user's access to the

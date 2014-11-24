@@ -23,17 +23,21 @@ public class submitReplyTask extends AsyncTask<Void, Void, Boolean> {
 	 */
 	private Context ctx;
 	/**
-	 * The unique ID of the parent {@link Question} to the {@link Reply} being
-	 * submitted.
+	 * The unique ID of the parent
+	 * {@link ca.ualberta.cmput301f14t16.easya.Model.Question} to the
+	 * {@link ca.ualberta.cmput301f14t16.easya.Model.Reply} being submitted.
 	 */
 	private String qId;
 	/**
-	 * The unique ID of the parent {@link Answer} to the {@link Reply} being
-	 * submitted. May be Null.
+	 * The unique ID of the parent
+	 * {@link ca.ualberta.cmput301f14t16.easya.Model.Answer} to the
+	 * {@link ca.ualberta.cmput301f14t16.easya.Model.Reply} being submitted. May
+	 * be Null.
 	 */
 	private String aId;
 	/**
-	 * The data stored by the {@link Reply} to be created.
+	 * The data stored by the
+	 * {@link ca.ualberta.cmput301f14t16.easya.Model.Reply} to be created.
 	 */
 	private String body;
 	private TextView tv;
@@ -77,7 +81,9 @@ public class submitReplyTask extends AsyncTask<Void, Void, Boolean> {
 	}
 
 	/**
-	 * Submits a newly created {@link Reply} to the elastic search database.
+	 * Submits a newly created
+	 * {@link ca.ualberta.cmput301f14t16.easya.Model.Reply} to the elastic
+	 * search database.
 	 * 
 	 * @see android.os.AsyncTask#doInBackground(java.lang.Object[])
 	 */
