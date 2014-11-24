@@ -103,6 +103,7 @@ public class submitAnswerTask extends AsyncTask<Void, Void, Boolean> {
 			}
 		} catch (Exception ex) {
 			// Deal with this
+			System.out.println("Error: " + ex.getMessage());
 			return false;
 		}
 	}

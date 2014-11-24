@@ -12,6 +12,7 @@ import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Controller.NewUserController;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoInternetException;
+import ca.ualberta.cmput301f14t16.easya.Model.InternetCheck;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.User;
 import ca.ualberta.cmput301f14t16.easya.View.MainActivity;
@@ -67,6 +68,7 @@ public class signinTask extends AsyncTask<Void, Void, Boolean> {
 		pd.setCancelable(false);
 		pd.setIndeterminate(true);
 		pd.show();
+		InternetCheck.forceCheckForInternet();
 	}
 
 	/**

@@ -152,6 +152,7 @@ public abstract class MasterActivity extends SecureActivity implements
 			case R.id.menu_sync:
 				if (!this.syncInProgress){
 					InternetCheck.forceCheckForInternet();
+					Queue.getInstance();
 					update();
 				}
 				return true;

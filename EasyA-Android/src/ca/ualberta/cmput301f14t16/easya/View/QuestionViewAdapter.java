@@ -98,6 +98,8 @@ public class QuestionViewAdapter {
     		clear();
 	    	inflateQuestion();
 	    	for (Answer a : q.getAnswers()){
+	    		if (a == null)
+	    			continue;
 	    		inflateAnswer(a);
 	    	}
     	}catch(NoContentAvailableException ex){
