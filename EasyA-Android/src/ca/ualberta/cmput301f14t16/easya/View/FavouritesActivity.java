@@ -17,10 +17,6 @@ public class FavouritesActivity extends MasterActivity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		RelativeLayout.LayoutParams lp = (RelativeLayout.LayoutParams)((LinearLayout)findViewById(R.id.main_question_holder)).getLayoutParams();
-		lp.height = 0;
-		lp.setMargins(0,0,0,0);
-		((LinearLayout)findViewById(R.id.main_question_holder)).setLayoutParams(lp);
 		position = 1;
 		getActionBar().setTitle("Favourites");
     }
