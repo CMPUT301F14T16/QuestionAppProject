@@ -83,7 +83,7 @@ public class SubmitTest extends TestCase {
 		
 		
 		
-		if (Queue.getInstance().haveInternetConnection()) {
+		//if (Queue.getInstance().haveInternetConnection()) {
 		try {
 			//Try test if content are correctly submitted
 				Content c = pending.getContent();
@@ -103,18 +103,18 @@ public class SubmitTest extends TestCase {
 			}
 		}catch(IOException ex){
 			//Test if our app can identify the No Internet special case
-			if (Queue.getInstance().haveInternetConnection()){
-				assertFalse(false);
+			//if (Queue.getInstance().haveInternetConnection()){
+				//assertFalse(false);
 				//throw new NoInternetException();
-			}
+			//}
 		}catch(NoClassTypeSpecifiedException ex){
 			assertFalse(false);
 		//Test if our app can identify the other special cases and do the right thing
 		}catch(Exception ex){
 			assertFalse(false);
 		}
-		}else{
-			assertFalse(false);
-		}
+		//}else{
+			//assertFalse(false);
+		//}
 	}
 }
