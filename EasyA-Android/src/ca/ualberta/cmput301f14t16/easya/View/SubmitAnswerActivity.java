@@ -97,10 +97,10 @@ public class SubmitAnswerActivity extends SecureActivity {
 			Uri selectedImageUri = data.getData();
 			String imagepath = getPath(selectedImageUri);
 			Bitmap bitmap=BitmapFactory.decodeFile(imagepath);
-			ByteArrayOutputStream stream = new ByteArrayOutputStream();
-			bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
-			byte[] byteArray = stream.toByteArray();
-			long lengthbmp = byteArray.length;
+			long lengthbmp = bitmap.getRowBytes() * bitmap.getHeight();
+			
+			ByteArrayOutputStream stream;
+			byte[] byteArray;
 			
 			if (lengthbmp > 64000) {
 				int w = bitmap.getWidth();
@@ -108,21 +108,19 @@ public class SubmitAnswerActivity extends SecureActivity {
 				int inH = h*SCALED_IMAGE_WIDTH/w;
 	    		Bitmap resizedBmp = Bitmap.createScaledBitmap(bitmap, SCALED_IMAGE_WIDTH, inH, true);
 	    		stream = new ByteArrayOutputStream();
-				resizedBmp.compress(Bitmap.CompressFormat.JPEG, 100, stream);
+				resizedBmp.compress(Bitmap.CompressFormat.JPEG, 60, stream);
 				byteArray = stream.toByteArray();
 				lengthbmp = byteArray.length;
-	    		
-				if (lengthbmp > 64000) {
-					stream = new ByteArrayOutputStream();
-					resizedBmp.compress(Bitmap.CompressFormat.JPEG, 60, stream);
-					byteArray = stream.toByteArray();
-					lengthbmp = byteArray.length;
 					
-					if (lengthbmp > 64000) { 
-						Toast.makeText(getApplicationContext(), "Picture Still Too Big After Resizing", Toast.LENGTH_SHORT).show();
-						return;
-					}
+				if (lengthbmp > 64000) {
+					Toast.makeText(getApplicationContext(), "Picture Still Too Big After Resizing", Toast.LENGTH_SHORT).show();
+					return;
 				}
+				
+			} else {
+				stream = new ByteArrayOutputStream();
+				bitmap.compress(Bitmap.CompressFormat.PNG, 100, stream);
+				byteArray = stream.toByteArray();
 			}
 			
 			// Attach image to picture
