@@ -15,6 +15,7 @@ import java.io.InputStream;
 import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.submitQuestionTask;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.PMClient;
+import ca.ualberta.cmput301f14t16.easya.View.SubmitAnswerActivity.TodoCheckboxListerner;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -29,9 +30,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 
 /**
  * 
@@ -44,6 +48,8 @@ public class SubmitQuestionActivity extends SecureActivity {
     private GPSTracker gps;
     private byte[] bytebitmap;
     private double[] coordinate={0.0,0.0};
+    private boolean fromGPS=false;
+
     
     
 	@Override
@@ -52,6 +58,12 @@ public class SubmitQuestionActivity extends SecureActivity {
 		setContentView(R.layout.submit_question);
 		addimage = (ImageView)findViewById(R.id.submit_question_picture_add);
         imageview = (ImageView)findViewById(R.id.submit_question_imageView_pic);
+		CheckBox cb= (CheckBox) findViewById(R.id.gps);
+		cb.setOnCheckedChangeListener(null);
+		//check.setOnCheckedChangeListener(new TodoCheckboxListener(position));
+
+		cb.setChecked(false);
+		cb.setOnCheckedChangeListener(new TodoCheckboxListerner());
 		getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
         addimage.setOnClickListener(new OnClickListener() {          	  
@@ -75,6 +87,13 @@ public class SubmitQuestionActivity extends SecureActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
 	        case R.id.menu_submit:
+	        	String address=((EditText)findViewById(R.id.address)).getText().toString();
+	        	if (fromGPS){
+	        		findlocation();
+	        	}
+	        	else if (!address.equals("")){
+	        		coordinate = geoCoder.toLatLong(this, address);
+	        	}
 	        	(new submitQuestionTask(
 	        			this, 
 	        			((EditText)findViewById(R.id.submit_question_title)).getText().toString(),
@@ -147,8 +166,22 @@ public class SubmitQuestionActivity extends SecureActivity {
 			imageview.setImageBitmap(bmp);
 	    }
 	}
-	
-    public void findlocation(View view){
+
+	public class TodoCheckboxListerner implements OnCheckedChangeListener{
+
+		public void onCheckedChanged(CompoundButton buttonView, boolean checked){
+			if (checked){
+				fromGPS=true;
+			}
+			else{
+				fromGPS=false;
+			}
+			
+		}
+
+		
+	}	
+    public void findlocation(){
     	gps = new GPSTracker(SubmitQuestionActivity.this);
     	coordinate = new double[2];
     	if (gps.canGetLocation()){
@@ -156,15 +189,15 @@ public class SubmitQuestionActivity extends SecureActivity {
     		double longitude = gps.getLongitude();
     		coordinate[0] = latitude;
     		coordinate[1] = longitude;
-    		String address = geoCoder.toAdress(this, latitude,longitude);
-    		double lat=-115.23;
-    		double lon=63.78;
-    		
+    		//double lat=-115.23;
+    		//double lon=63.78;
+    		/*
     		boolean geo= Geocoder.isPresent();
-    		//String theaddress ="Calgary, AB";
-    		//double[] latlong = geoCoder.toLatLong(this, theaddress);
-    		Toast.makeText(getApplicationContext(), latitude+"\n"+longitude+"Able to use geocoder: "+ geo + "\n" + address, Toast.LENGTH_LONG).show();
-    		
+    		String theaddress ="Alberta";
+    		double[] latlong = geoCoder.toLatLong(this, theaddress);
+    		String address = geoCoder.toAdress(this, latlong[0],latlong[1]);
+    		Toast.makeText(getApplicationContext(), address+ geo, Toast.LENGTH_LONG).show();
+    		*/
     	}
     	else{
     		gps.showSettingsAlert();

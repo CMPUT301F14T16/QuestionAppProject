@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.InputStream;
 
+
 import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.submitAnswerTask;
 import ca.ualberta.cmput301f14t16.easya.Model.GPSTracker;
@@ -25,9 +26,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
+import android.widget.CompoundButton.OnCheckedChangeListener;
 
 /**
  * 
@@ -40,6 +44,7 @@ public class SubmitAnswerActivity extends SecureActivity {
     private static final int SCALED_IMAGE_WIDTH = 600;
     private GPSTracker gps;
     private double[] coordinate={0.0,0.0};
+    private boolean fromGPS=false;
     
 	@Override
 	public void onCreate(Bundle savedInstanceState){
@@ -47,6 +52,12 @@ public class SubmitAnswerActivity extends SecureActivity {
 		setContentView(R.layout.submit_answer);
 		addimage = (ImageView)findViewById(R.id.submit_answer_picture_add);
         imageview = (ImageView)findViewById(R.id.submit_answer_imageView_pic);
+		CheckBox cb= (CheckBox) findViewById(R.id.gps);
+		cb.setOnCheckedChangeListener(null);
+		//check.setOnCheckedChangeListener(new TodoCheckboxListener(position));
+
+		cb.setChecked(false);
+		cb.setOnCheckedChangeListener(new TodoCheckboxListerner());
 		getActionBar().setDisplayHomeAsUpEnabled(true);
         getActionBar().setHomeButtonEnabled(true);
         addimage.setOnClickListener(new OnClickListener() {          	  
@@ -71,6 +82,13 @@ public class SubmitAnswerActivity extends SecureActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
 	        case R.id.menu_submit:
+	        	String address=((EditText)findViewById(R.id.address)).getText().toString();
+	        	if (fromGPS){
+	        		findlocation();
+	        	}
+	        	else if (!address.equals("")){
+	        		coordinate = geoCoder.toLatLong(this, address);
+	        	}
 	        	(new submitAnswerTask(
 	        			this,
 	        			(getIntent()).getStringExtra(GeneralHelper.AQUESTION_KEY),
@@ -141,7 +159,21 @@ public class SubmitAnswerActivity extends SecureActivity {
 			imageview.setImageBitmap(bmp);
 		}
 	}
-    public void findlocation(View view){
+	public class TodoCheckboxListerner implements OnCheckedChangeListener{
+
+		public void onCheckedChanged(CompoundButton buttonView, boolean checked){
+			if (checked){
+				fromGPS=true;
+			}
+			else{
+				fromGPS=false;
+			}
+			
+		}
+
+		
+	}	
+    public void findlocation(){
     	gps = new GPSTracker(SubmitAnswerActivity.this);
     	coordinate = new double[2];
     	if (gps.canGetLocation()){
@@ -150,7 +182,7 @@ public class SubmitAnswerActivity extends SecureActivity {
     		coordinate[0] = latitude;
     		coordinate[1] = longitude;
 
-    		Toast.makeText(getApplicationContext(), latitude+"\n"+longitude+"Able to use geocoder: ", Toast.LENGTH_LONG).show();
+    		//Toast.makeText(getApplicationContext(), latitude+"\n"+longitude+"Able to use geocoder: ", Toast.LENGTH_LONG).show();
     		
     	}
     	else{
