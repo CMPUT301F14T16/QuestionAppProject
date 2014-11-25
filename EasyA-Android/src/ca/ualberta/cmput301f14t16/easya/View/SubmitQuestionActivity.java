@@ -14,7 +14,6 @@ import java.io.InputStream;
 import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.submitQuestionTask;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.PMClient;
-import ca.ualberta.cmput301f14t16.easya.View.SubmitAnswerActivity.TodoCheckboxListerner;
 import android.app.Activity;
 import android.content.Intent;
 import android.database.Cursor;
@@ -63,23 +62,8 @@ public class SubmitQuestionActivity extends SecureActivity {
 		setContentView(R.layout.submit_question);
 		addimage = (ImageView)findViewById(R.id.submit_question_picture_add);
         imageview = (ImageView)findViewById(R.id.submit_question_imageView_pic);
-		CheckBox cb= (CheckBox) findViewById(R.id.gps);
-		cb.setOnCheckedChangeListener(null);
-		//check.setOnCheckedChangeListener(new TodoCheckboxListener(position));
-
-		cb.setChecked(false);
-		cb.setOnCheckedChangeListener(new TodoCheckboxListerner());
-
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setHomeButtonEnabled(true);
-		addimage.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(Intent.ACTION_PICK, null);
-				intent.setType("image/*");
-				startActivityForResult(intent, 1);
-			}
-		});
 	}
 
 	/**

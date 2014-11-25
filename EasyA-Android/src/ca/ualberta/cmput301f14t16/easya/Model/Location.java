@@ -18,6 +18,11 @@ public class Location {
 		return GeoCoder.toAdress(dcoords[0], dcoords[1]);
 	}
 	
+	public static boolean isLocationEnabled(){
+		PMClient pm = new PMClient();
+		return (pm.getUserLocationPreference() != LocationPreferencesEnum.OFF);
+	}
+	
 	public static void forceCheckGPS(){
 		lastCheck = null;
 	}

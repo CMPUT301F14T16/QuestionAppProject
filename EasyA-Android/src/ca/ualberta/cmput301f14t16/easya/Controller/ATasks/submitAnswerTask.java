@@ -11,6 +11,7 @@ import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Controller.NewAnswerController;
 import ca.ualberta.cmput301f14t16.easya.Model.Answer;
 import ca.ualberta.cmput301f14t16.easya.Model.GeneralHelper;
+import ca.ualberta.cmput301f14t16.easya.Model.Location;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.PMClient;
@@ -44,7 +45,7 @@ public class submitAnswerTask extends AsyncTask<Void, Void, Boolean> {
 	 * A picture attached to the {@link Answer} to be created.
 	 */
 	private byte[] pb;
-	private double[] coordinate;
+	private boolean useLocation;
 	/**
 	 * Creates a new submitAnswerTask.
 	 * 
@@ -58,13 +59,13 @@ public class submitAnswerTask extends AsyncTask<Void, Void, Boolean> {
 	 *            setter for {@link submitAnswerTask#pb}
 	 */
 	public submitAnswerTask(Activity act, String question, String body,
-			byte[] pb, double[] coordinate) {
+			byte[] pb, boolean useLocation) {
 		this.act = act;
 		this.ctx = act;
 		this.qId = question;
 		this.body = body;
 		this.pb = pb;
-		this.coordinate=coordinate;
+		this.useLocation = useLocation;
 	}
 
 	/**
@@ -95,7 +96,7 @@ public class submitAnswerTask extends AsyncTask<Void, Void, Boolean> {
 		try {
 			try {
 				controller = NewAnswerController.create(ctx, qId, body, pb,
-						MainModel.getInstance().getCurrentUser().getId(),coordinate);
+						MainModel.getInstance().getCurrentUser().getId(),useLocation ? Location.getLocationCoordinates() : new double[]{0.0,0.0});
 				return controller.submit();
 			} catch (Exception ex) {
 				System.out.println(ex.getMessage());

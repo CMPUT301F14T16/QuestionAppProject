@@ -11,6 +11,7 @@ import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.submitAnswerTask;
 import ca.ualberta.cmput301f14t16.easya.Model.GPSTracker;
 import ca.ualberta.cmput301f14t16.easya.Model.GeneralHelper;
 import ca.ualberta.cmput301f14t16.easya.Model.GeoCoder;
+import ca.ualberta.cmput301f14t16.easya.Model.Location;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.PMClient;
 import android.app.Activity;
 import android.content.Intent;
@@ -30,6 +31,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 
@@ -41,12 +43,10 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
  *
  */
 public class SubmitAnswerActivity extends SecureActivity {
-	private ImageView imageview, addimage;
+	private ImageView imageview;
 	private byte[] bytebitmap;
     private static final int SCALED_IMAGE_WIDTH = 600;
-    private GPSTracker gps;
-    private double[] coordinate={0.0,0.0};
-    private boolean fromGPS=false;
+    private boolean useLocation = false;
     
 	/**
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
@@ -55,32 +55,46 @@ public class SubmitAnswerActivity extends SecureActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.submit_answer);
-		addimage = (ImageView)findViewById(R.id.submit_answer_picture_add);
         imageview = (ImageView)findViewById(R.id.submit_answer_imageView_pic);
-		CheckBox cb= (CheckBox) findViewById(R.id.gps);
-		cb.setOnCheckedChangeListener(null);
-		//check.setOnCheckedChangeListener(new TodoCheckboxListener(position));
-
-		cb.setChecked(false);
-		cb.setOnCheckedChangeListener(new TodoCheckboxListerner());
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+        getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setHomeButtonEnabled(true);
-		addimage.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Intent intent = new Intent(Intent.ACTION_PICK, null);
-				intent.setType("image/*");
-				startActivityForResult(intent, 1);
-			}
-		});
+		setLocationMethods();
+	}
+	
+	private void setLocationMethods(){
+		if (!Location.isLocationEnabled()){
+			((ImageView)findViewById(R.id.submit_answer_location)).setVisibility(View.GONE);
+			((TextView)findViewById(R.id.submit_answer_location_display)).setVisibility(View.GONE);
+		}else{
+			((ImageView)findViewById(R.id.submit_answer_location)).setVisibility(View.VISIBLE);
+			TextView tv = (TextView)findViewById(R.id.submit_answer_location_display);
+			tv.setVisibility(View.VISIBLE);
+			tv.setText(Location.getLocationName());
+		}
 	}
 
+	public void onAttachPictureClick(View v) {
+		Intent intent = new Intent(Intent.ACTION_PICK, null);
+		intent.setType("image/*");
+		startActivityForResult(intent, 1);
+	}
+	
+	public void onLocationClick(View v) {
+		this.useLocation = !this.useLocation;
+		int aux = this.useLocation ? R.drawable.ic_action_place_selected : R.drawable.ic_action_place ;
+		((ImageView)findViewById(R.id.submit_answer_location)).setImageResource(aux);
+	}
+	
+	public void onLocationSettingsClick(View v) {
+		Intent i = new Intent(this, SettingsActivity.class);
+		startActivity(i);
+	}
+	
 	/**
 	 * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
 	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.submit, menu);
 		return true;
 	}
@@ -92,19 +106,13 @@ public class SubmitAnswerActivity extends SecureActivity {
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
 	        case R.id.menu_submit:
-	        	String address=((EditText)findViewById(R.id.address)).getText().toString();
-	        	if (fromGPS){
-	        		findlocation();
-	        	}
-	        	else if (!address.equals("")){
-	        		coordinate = GeoCoder.toLatLong(address);
-	        	}
+	        	//TODO: modify the task, pass a boolean indicating whether localization will be used or not
 	        	(new submitAnswerTask(
 	        			this,
 	        			(getIntent()).getStringExtra(GeneralHelper.AQUESTION_KEY),
 	        			((EditText)findViewById(R.id.submit_answer_body)).getText().toString(),
 	        			bytebitmap,
-	        			coordinate)).execute();
+	        			useLocation)).execute();
 	        	return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
@@ -131,6 +139,7 @@ public class SubmitAnswerActivity extends SecureActivity {
 		PMClient pm = new PMClient();
 		((EditText) findViewById(R.id.submit_answer_body)).setText(pm
 				.getABody());
+		setLocationMethods();
 		super.onResume();
 	}
 
@@ -180,36 +189,6 @@ public class SubmitAnswerActivity extends SecureActivity {
 			imageview.setImageBitmap(bmp);
 		}
 	}
-	public class TodoCheckboxListerner implements OnCheckedChangeListener{
-
-		public void onCheckedChanged(CompoundButton buttonView, boolean checked){
-			if (checked){
-				fromGPS=true;
-			}
-			else{
-				fromGPS=false;
-			}
-			
-		}
-
-		
-	}	
-    public void findlocation(){
-    	gps = new GPSTracker(SubmitAnswerActivity.this);
-    	coordinate = new double[2];
-    	if (gps.canGetLocation()){
-    		double latitude = gps.getLatitude();
-    		double longitude = gps.getLongitude();
-    		coordinate[0] = latitude;
-    		coordinate[1] = longitude;
-
-    		//Toast.makeText(getApplicationContext(), latitude+"\n"+longitude+"Able to use geocoder: ", Toast.LENGTH_LONG).show();
-    		
-    	}
-    	else{
-    		gps.showSettingsAlert();
-		}
-    }
 
 	/**
 	 * @param uri
