@@ -16,6 +16,8 @@ import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
 import ca.ualberta.cmput301f14t16.easya.Model.Content;
 import ca.ualberta.cmput301f14t16.easya.Model.ContentDeserializer;
 import ca.ualberta.cmput301f14t16.easya.Model.GeneralHelper;
+import ca.ualberta.cmput301f14t16.easya.Model.GeoCoder;
+import ca.ualberta.cmput301f14t16.easya.Model.LocationPreferencesEnum;
 import ca.ualberta.cmput301f14t16.easya.Model.Pending;
 import ca.ualberta.cmput301f14t16.easya.Model.User;
 
@@ -87,6 +89,29 @@ public class PMClient {
 			throw new NoContentAvailableException();
 		}
 		return gson.fromJson(aux, User.class);
+	}
+	
+	public void saveUserLocationPreference(LocationPreferencesEnum pref){
+		PMDataParser.saveUserPreference(GeneralHelper.USERLOCATIONPREFERENCE, pref.toString());
+	}
+	
+	public LocationPreferencesEnum getUserLocationPreference(){
+		String aux = PMDataParser.recoverUserPreference(GeneralHelper.USERLOCATIONPREFERENCE);
+		if (aux.equals("")){
+			saveUserLocationPreference(LocationPreferencesEnum.OFF);
+		}
+		return LocationPreferencesEnum.valueOf(PMDataParser.recoverUserPreference(GeneralHelper.USERLOCATIONPREFERENCE));
+	}
+	
+	public void saveUserLocation(double[] dcoord){
+		PMDataParser.saveUserPreference(GeneralHelper.USERLOCATION, GeoCoder.coordinatesToString(dcoord));
+	}
+	
+	public double[] getUserLocation(){
+		String aux = PMDataParser.recoverUserPreference(GeneralHelper.USERLOCATION);
+		if (aux.equals(""))
+			PMDataParser.saveUserPreference(GeneralHelper.USERLOCATION, "0.0;0.0");
+		return GeoCoder.coordinatesFromString(PMDataParser.recoverUserPreference(GeneralHelper.USERLOCATION));
 	}
 
 	public void savePending(Pending p) {

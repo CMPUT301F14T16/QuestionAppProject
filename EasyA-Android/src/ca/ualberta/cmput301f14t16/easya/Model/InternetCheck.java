@@ -16,7 +16,7 @@ public final class InternetCheck {
 	 * The thread will not attempt to check for an active Internet connection
 	 * unless at least this amount of time has passed since the last check.
 	 */
-	private final static int check_for_internet = 300000; // in milliseconds 5 minutes
+	private final static int CHECK_FOR_INTERNET = 300000; // in milliseconds 5 minutes
 	/**
 	 * The time at which the last check for an active Internet connection was
 	 * made.
@@ -60,7 +60,7 @@ public final class InternetCheck {
 	 *         function.
 	 */
 	public static final boolean haveInternet(){
-		boolean auxTimer = (lastCheck != null && ((new Date()).getTime() - lastCheck.getTime()) >= check_for_internet);
+		boolean auxTimer = (lastCheck != null && ((new Date()).getTime() - lastCheck.getTime()) >= CHECK_FOR_INTERNET);
 		if (lastCheck == null || auxTimer) {
 			lastCheck = new Date();
 			internetStatus = checkInternet();

@@ -13,8 +13,11 @@ import ca.ualberta.cmput301f14t16.easya.Controller.NewUserController;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoInternetException;
 import ca.ualberta.cmput301f14t16.easya.Model.InternetCheck;
+import ca.ualberta.cmput301f14t16.easya.Model.Location;
+import ca.ualberta.cmput301f14t16.easya.Model.LocationPreferencesEnum;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.User;
+import ca.ualberta.cmput301f14t16.easya.Model.Data.PMClient;
 import ca.ualberta.cmput301f14t16.easya.View.MainActivity;
 
 /**
@@ -95,6 +98,11 @@ public class signinTask extends AsyncTask<Void, Void, Boolean> {
 					MainModel.getInstance().saveMainUser(auxUser);
 					this.userFound = true;
 					MainModel.getInstance().updateUsername(auxUser);
+					try{
+						PMClient pm = new PMClient();
+						pm.saveUserLocationPreference(LocationPreferencesEnum.GPS); //by default
+						Location.getLocationName(); // Save user current location
+					}catch(Exception ex){}
 					return true;
 				} catch (NoContentAvailableException ex) {
 					controller = NewUserController.create(email, username);
@@ -121,7 +129,7 @@ public class signinTask extends AsyncTask<Void, Void, Boolean> {
 	protected void onPostExecute(Boolean result) {
 		if (pd != null) {
 			pd.dismiss();
-		}
+		}	
 		if (result) {
 			if (userFound) {
 				new AlertDialog.Builder(ctx)

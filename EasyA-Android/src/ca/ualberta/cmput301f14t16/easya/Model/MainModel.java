@@ -24,7 +24,6 @@ import ca.ualberta.cmput301f14t16.easya.View.MainView;
  */
 public class MainModel {
 	private static MainModel m;
-	private MainView<?> currentView;
 	private List<User> usersList;
 	private User mainUser;
 	

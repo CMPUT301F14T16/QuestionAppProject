@@ -7,7 +7,7 @@ import java.io.File;
 import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.submitQuestionTask;
 import ca.ualberta.cmput301f14t16.easya.Model.GPSTracker;
-import ca.ualberta.cmput301f14t16.easya.Model.geoCoder;
+import ca.ualberta.cmput301f14t16.easya.Model.GeoCoder;
 
 import java.io.InputStream;
 
@@ -101,7 +101,7 @@ public class SubmitQuestionActivity extends SecureActivity {
 	        		findlocation();
 	        	}
 	        	else if (!address.equals("")){
-	        		coordinate = geoCoder.toLatLong(this, address);
+	        		coordinate = GeoCoder.toLatLong(address);
 	        	}
 	        	(new submitQuestionTask(
 	        			this, 

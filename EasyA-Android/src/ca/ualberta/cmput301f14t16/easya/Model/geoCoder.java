@@ -3,38 +3,47 @@ package ca.ualberta.cmput301f14t16.easya.Model;
 import java.util.List;
 import java.util.Locale;
 
+import ca.ualberta.cmput301f14t16.easya.Model.Data.ContextProvider;
+
 import android.content.Context;
 import android.location.Geocoder;
 import android.location.Address;
 
 
-public class geoCoder {
-
-	public static String toAdress(Context context, double latitude, double longitude){
+public class GeoCoder {
+	public static String toAdress(double latitude, double longitude){
 		String myAddress;
-		Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+		Geocoder geocoder = new Geocoder(ContextProvider.get(), Locale.getDefault());
 		List<Address> addresses;
 		StringBuilder strReturnedAddress = new StringBuilder("");
 		try{
 			addresses = geocoder.getFromLocation(latitude, longitude, 1);
 			if (addresses != null && addresses.size()>0){
 				Address returnedAddress =addresses.get(0);
+				/*
 				for (int i=0;i<returnedAddress.getMaxAddressLineIndex();i++){
 					strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
 				}
-				myAddress=strReturnedAddress.toString();
+				myAddress=strReturnedAddress.toString();*/
+				myAddress = returnedAddress.getLocality() != null
+							? returnedAddress.getLocality()
+							: returnedAddress.getSubAdminArea()
+						+ ", " 
+						+ returnedAddress.getAdminArea() 
+						+ "/" 
+						+ returnedAddress.getCountryCode();
 			}
 			else{
-				myAddress="No Address returned!";
+				myAddress="";
 			}
 		}
 		catch (Exception e){
-			myAddress="Exception found";
+			myAddress="";
 		}
 		return myAddress;
 	}
-	public static double[] toLatLong(Context context, String strAddress){
-		Geocoder geocoder = new Geocoder(context, Locale.getDefault());
+	public static double[] toLatLong(String strAddress){
+		Geocoder geocoder = new Geocoder(ContextProvider.get(), Locale.getDefault());
 		List<Address> addresses;
 		double[] returnLatLong = new double[2];
 		try{
@@ -46,6 +55,7 @@ public class geoCoder {
 			}
 		}
 		catch (Exception e){
+			return new double[]{0.0,0.0};
 		}
 		return returnLatLong;
 	}
@@ -64,5 +74,16 @@ public class geoCoder {
         double d = R * c;
 
         return d;
+	}
+	
+	public static String coordinatesToString(double[] coord){
+		return String.valueOf(coord[0]) + ";" + String.valueOf(coord[1]);
+	}
+	
+	public static double[] coordinatesFromString(String coord){
+		double[] dcoord = new double[2];
+		dcoord[0] = Double.valueOf((coord.split(";")[0]));
+		dcoord[1] = Double.valueOf((coord.split(";")[1]));
+		return dcoord;
 	}
 }

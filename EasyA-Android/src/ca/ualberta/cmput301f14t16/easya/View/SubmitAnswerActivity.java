@@ -10,7 +10,7 @@ import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.submitAnswerTask;
 import ca.ualberta.cmput301f14t16.easya.Model.GPSTracker;
 import ca.ualberta.cmput301f14t16.easya.Model.GeneralHelper;
-import ca.ualberta.cmput301f14t16.easya.Model.geoCoder;
+import ca.ualberta.cmput301f14t16.easya.Model.GeoCoder;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.PMClient;
 import android.app.Activity;
 import android.content.Intent;
@@ -97,7 +97,7 @@ public class SubmitAnswerActivity extends SecureActivity {
 	        		findlocation();
 	        	}
 	        	else if (!address.equals("")){
-	        		coordinate = geoCoder.toLatLong(this, address);
+	        		coordinate = GeoCoder.toLatLong(address);
 	        	}
 	        	(new submitAnswerTask(
 	        			this,

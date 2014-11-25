@@ -190,6 +190,10 @@ public abstract class MasterActivity extends SecureActivity implements
 			displayedQuestions = Sort.pictureSort(false, displayedQuestions);
 			SetAdapter(displayedQuestions);
 			return true;
+		case R.id.menu_settings:
+			Intent i = new Intent(this, SettingsActivity.class);
+			startActivity(i);
+			return true;
 		}
 
 		return super.onOptionsItemSelected(item);
