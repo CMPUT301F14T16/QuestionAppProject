@@ -5,12 +5,15 @@ import ca.ualberta.cmput301f14t16.easya.Model.GeoCoder;
 import ca.ualberta.cmput301f14t16.easya.Model.Location;
 import ca.ualberta.cmput301f14t16.easya.Model.LocationPreferencesEnum;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.PMClient;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class SettingsActivity extends SecureActivity {
 
@@ -94,9 +97,16 @@ public class SettingsActivity extends SecureActivity {
 	public void onSelectAddress(View v){
 		EditText txt = (EditText)findViewById(R.id.settings_location_select_input);
 		double[] dcoords = GeoCoder.toLatLong(txt.getText().toString());
-		PMClient pm = new PMClient();
-		pm.saveUserLocation(dcoords);
-		setupSettings();
-		txt.setText("");
+		if (dcoords[0]==0.0 && dcoords[1]==0.0){
+			Toast.makeText(v.getContext(), "Sorry, we were unable to find the address you provided. Try again!", Toast.LENGTH_LONG).show();
+		}else{
+			PMClient pm = new PMClient();
+			pm.saveUserLocation(dcoords);
+			setupSettings();
+		}
+		txt.setText("");		
+		v.getContext();
+		InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+		imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
 	}	
 }

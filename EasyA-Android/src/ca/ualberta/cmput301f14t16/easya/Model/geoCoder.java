@@ -2,10 +2,7 @@ package ca.ualberta.cmput301f14t16.easya.Model;
 
 import java.util.List;
 import java.util.Locale;
-
 import ca.ualberta.cmput301f14t16.easya.Model.Data.ContextProvider;
-
-import android.content.Context;
 import android.location.Geocoder;
 import android.location.Address;
 
@@ -15,7 +12,7 @@ public class GeoCoder {
 		String myAddress;
 		Geocoder geocoder = new Geocoder(ContextProvider.get(), Locale.getDefault());
 		List<Address> addresses;
-		StringBuilder strReturnedAddress = new StringBuilder("");
+		//StringBuilder strReturnedAddress = new StringBuilder("");
 		try{
 			addresses = geocoder.getFromLocation(latitude, longitude, 1);
 			if (addresses != null && addresses.size()>0){
@@ -25,13 +22,7 @@ public class GeoCoder {
 					strReturnedAddress.append(returnedAddress.getAddressLine(i)).append("\n");
 				}
 				myAddress=strReturnedAddress.toString();*/
-				myAddress = returnedAddress.getLocality() != null
-							? returnedAddress.getLocality()
-							: returnedAddress.getSubAdminArea()
-						+ ", " 
-						+ returnedAddress.getAdminArea() 
-						+ "/" 
-						+ returnedAddress.getCountryCode();
+				myAddress = formatAddress(returnedAddress);
 			}
 			else{
 				myAddress="";
@@ -42,6 +33,18 @@ public class GeoCoder {
 		}
 		return myAddress;
 	}
+	
+	private static String formatAddress(Address a){
+		StringBuilder sb = new StringBuilder();
+		String aux = "";
+		aux = a.getLocality();
+		sb.append(aux != null ? (aux + ", ") : (a.getSubAdminArea() != null) ? (a.getSubAdminArea() + ", ") : "");
+		aux = a.getAdminArea();
+		sb.append(aux != null ? (aux + "/") : "");
+		sb.append(aux != null ? a.getCountryCode() : a.getCountryName());
+		return sb.toString();
+	}
+	
 	public static double[] toLatLong(String strAddress){
 		Geocoder geocoder = new Geocoder(ContextProvider.get(), Locale.getDefault());
 		List<Address> addresses;
