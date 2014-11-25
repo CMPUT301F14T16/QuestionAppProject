@@ -70,4 +70,14 @@
         android:textSize="12sp"
         android:fadingEdge="horizontal"
         android:singleLine="true"/>
+    <TextView
+        android:id="@+id/questionLocation"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/questionAuthor"
+        android:layout_toLeftOf="@id/StatBox"
+        android:layout_alignParentLeft="true"
+        android:textSize="12sp"
+        android:fadingEdge="horizontal"
+        android:singleLine="true"/>
 </RelativeLayout>

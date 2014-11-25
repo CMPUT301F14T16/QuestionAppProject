@@ -11,6 +11,7 @@ import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.submitReplyTask;
 import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.upvoteTask;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
 import ca.ualberta.cmput301f14t16.easya.Model.Answer;
+import ca.ualberta.cmput301f14t16.easya.Model.GeoCoder;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Model.Reply;
@@ -152,7 +153,7 @@ public class QuestionViewAdapter {
 		View v = inflater.inflate(R.layout.question_question_fragment,
 				(ViewGroup) container, false);
 
-		TextView title, body, upvotescount, authordate;
+		TextView title, body, upvotescount, authordate, location;
 		LinearLayout replies;
 		EditText addReply;
 
@@ -162,6 +163,8 @@ public class QuestionViewAdapter {
 		body = (TextView) v.findViewById(R.id.question_fragment_body);
 		authordate = (TextView) v
 				.findViewById(R.id.question_fragment_authorDate);
+		location = (TextView) v
+				.findViewById(R.id.question_fragment_location);
 		upvotescount = (TextView) v
 				.findViewById(R.id.question_fragment_upvoteText);
 		addReply = ((EditText) v
@@ -180,6 +183,7 @@ public class QuestionViewAdapter {
 		body.setText(q.getBody());
 		authordate.setText(q.getAuthorDate());
 		upvotescount.setText(q.getUpVoteCountString());
+		location.setText(GeoCoder.coordinatesToString(q.getCoordinate()));
 
 		// Handle Question image
 		byte[] qImage = q.getImage();
@@ -217,13 +221,14 @@ public class QuestionViewAdapter {
 		View v = inflater.inflate(R.layout.question_answer_fragment,
 				(ViewGroup) container, false);
 
-		TextView body, upvotescount, authordate;
+		TextView body, upvotescount, authordate, location;
 		LinearLayout replies;
 		EditText addReply;
 		ImageView image2;
 
 		body = (TextView) v.findViewById(R.id.answer_fragment_body);
 		authordate = (TextView) v.findViewById(R.id.answer_fragment_authorDate);
+		location = (TextView) v.findViewById(R.id.answer_fragment_location);
 		upvotescount = (TextView) v
 				.findViewById(R.id.answer_fragment_upvoteText);
 		addReply = ((EditText) v
@@ -253,6 +258,7 @@ public class QuestionViewAdapter {
 		body.setText(a.getBody());
 		authordate.setText(a.getAuthorDate());
 		upvotescount.setText(a.getUpVoteCountString());
+		location.setText(GeoCoder.coordinatesToString(a.getCoordinate()));
 
 		((ImageButton) v.findViewById(R.id.answer_fragment_upvoteBtn))
 				.setTag(new BasicNameValuePair(q.getId(), a.getId()));

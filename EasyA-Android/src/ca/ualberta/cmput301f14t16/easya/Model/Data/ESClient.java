@@ -199,7 +199,7 @@ public class ESClient {
 			QuestionList questionList = new QuestionList(question.getId(), question.getTitle(), 
 					question.getAuthorName(), question.getAuthorId(), question.getAnswerCountString(), 
 					question.getUpVoteCountString(), question.hasPicture(), 
-					question.getDate());
+					question.getDate(), question.getCoordinate());
 			qlist.add(questionList);
 		}
 		
@@ -324,7 +324,7 @@ public class ESClient {
 			QuestionList questionList = new QuestionList(question.getId(), question.getTitle(), 
 					question.getAuthorName(), question.getAuthorId(), question.getAnswerCountString(), 
 					question.getUpVoteCountString(), question.hasPicture(), 
-					question.getDate());
+					question.getDate(), question.getCoordinate());
 			qlist.add(questionList);
 		}
 		return qlist;

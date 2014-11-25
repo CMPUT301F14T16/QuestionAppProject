@@ -66,6 +66,14 @@
             android:layout_alignParentRight="true"
             android:layout_marginTop="10dp"
             android:textStyle="italic"/>
+        <TextView
+            android:id="@+id/question_fragment_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/question_fragment_authorDate"
+            android:layout_alignParentRight="true"
+            android:layout_marginTop="10dp"
+            android:textStyle="italic"/>
     </RelativeLayout>
     <LinearLayout
         android:id="@+id/question_fragment_replies"
