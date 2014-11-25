@@ -105,19 +105,20 @@ public class SubmitAnswerActivity extends SecureActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
+		    case android.R.id.home:
+				onBackPressed();
+				return true;
 	        case R.id.menu_submit:
-	        	//TODO: modify the task, pass a boolean indicating whether localization will be used or not
 	        	(new submitAnswerTask(
 	        			this,
 	        			(getIntent()).getStringExtra(GeneralHelper.AQUESTION_KEY),
 	        			((EditText)findViewById(R.id.submit_answer_body)).getText().toString(),
-	        			bytebitmap,
-	        			useLocation)).execute();
+	        			this.bytebitmap,
+	        			this.useLocation)).execute();
 	        	return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
 	    }
-
 	}
 
 	/**

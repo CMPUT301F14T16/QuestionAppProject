@@ -1,12 +1,15 @@
 package ca.ualberta.cmput301f14t16.easya.View;
 
 import ca.ualberta.cmput301f14t16.easya.R;
+import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.submitAnswerTask;
+import ca.ualberta.cmput301f14t16.easya.Model.GeneralHelper;
 import ca.ualberta.cmput301f14t16.easya.Model.GeoCoder;
 import ca.ualberta.cmput301f14t16.easya.Model.Location;
 import ca.ualberta.cmput301f14t16.easya.Model.LocationPreferencesEnum;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.PMClient;
 import android.content.Context;
 import android.os.Bundle;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
@@ -40,6 +43,17 @@ public class SettingsActivity extends SecureActivity {
 		((RadioButton)findViewById(aux_id)).toggle();
 		setupSettings();
     }
+	
+	@Override
+	public boolean onOptionsItemSelected(MenuItem item) {
+	    switch (item.getItemId()) {
+		    case android.R.id.home:
+				onBackPressed();
+				return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+	    }
+	}	
 	
 	private void setupSettings(){
 		

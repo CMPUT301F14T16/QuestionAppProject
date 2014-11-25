@@ -11,6 +11,7 @@ import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Controller.NewQuestionController;
 import ca.ualberta.cmput301f14t16.easya.Model.Answer;
 import ca.ualberta.cmput301f14t16.easya.Model.GeneralHelper;
+import ca.ualberta.cmput301f14t16.easya.Model.Location;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.PMClient;
@@ -39,7 +40,7 @@ public class submitQuestionTask extends AsyncTask<Void, Void, Boolean> {
 	 */
 	private byte[] pb;
 	
-	private double[] coordinate;
+	private boolean useLocation;
 	
 	private Activity act;
 
@@ -55,20 +56,13 @@ public class submitQuestionTask extends AsyncTask<Void, Void, Boolean> {
 	 * @param pb
 	 *            setter for {@link submitQuestionTask#pb}
 	 */
-	public submitQuestionTask(Activity act, String title, String body, byte[] pb) {
+	public submitQuestionTask(Activity act, String title, String body, byte[] pb, boolean useLocation) {
 		this.act = act;
 		this.ctx = act;
 		this.title = title;
 		this.body = body;
 		this.pb = pb;
-	}
-	public submitQuestionTask(Activity act, String title, String body, byte[] pb, double[] coordinate) {
-		this.act = act;
-		this.ctx = act;
-		this.title = title;
-		this.body = body;
-		this.pb = pb;
-		this.coordinate= coordinate;
+		this.useLocation = useLocation;
 	}
 	/**
 	 * Displays a progress dialogue as this AsyncTask completes.
@@ -96,7 +90,7 @@ public class submitQuestionTask extends AsyncTask<Void, Void, Boolean> {
 			try {
 				controller = NewQuestionController.create(ctx, this.title,
 						this.body, this.pb, MainModel.getInstance()
-								.getCurrentUser().getId(), coordinate);
+								.getCurrentUser().getId(), this.useLocation ? Location.getLocationCoordinates() : new double[]{0.0,0.0});
 				return controller.submit();
 			} catch (Exception ex) {
 				System.out.println(ex.getMessage());

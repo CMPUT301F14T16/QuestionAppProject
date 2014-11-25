@@ -8,6 +8,7 @@ import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.submitQuestionTask;
 import ca.ualberta.cmput301f14t16.easya.Model.GPSTracker;
 import ca.ualberta.cmput301f14t16.easya.Model.GeoCoder;
+import ca.ualberta.cmput301f14t16.easya.Model.Location;
 
 import java.io.InputStream;
 
@@ -32,6 +33,7 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.CompoundButton.OnCheckedChangeListener;
 
@@ -44,15 +46,10 @@ import android.widget.CompoundButton.OnCheckedChangeListener;
  */
 public class SubmitQuestionActivity extends SecureActivity {
 	private static final int SCALED_IMAGE_WIDTH = 600;
-	private ImageView imageview, addimage;
-	private GPSTracker gps;
 	private byte[] bytebitmap;
-    private double[] coordinate={0.0,0.0};
-    private boolean fromGPS=false;
-
-    
-    
-
+	private ImageView imageview;
+	private boolean useLocation = false;
+	
 	/**
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
 	 */
@@ -60,11 +57,41 @@ public class SubmitQuestionActivity extends SecureActivity {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.submit_question);
-		addimage = (ImageView)findViewById(R.id.submit_question_picture_add);
         imageview = (ImageView)findViewById(R.id.submit_question_imageView_pic);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setHomeButtonEnabled(true);
 	}
+	
+
+	private void setLocationMethods(){
+		if (!Location.isLocationEnabled()){
+			((ImageView)findViewById(R.id.submit_question_location)).setVisibility(View.GONE);
+			((TextView)findViewById(R.id.submit_question_location_display)).setVisibility(View.GONE);
+		}else{
+			((ImageView)findViewById(R.id.submit_question_location)).setVisibility(View.VISIBLE);
+			TextView tv = (TextView)findViewById(R.id.submit_question_location_display);
+			tv.setVisibility(View.VISIBLE);
+			tv.setText(Location.getLocationName());
+		}
+	}
+
+	public void onAttachPictureClick(View v) {
+		Intent intent = new Intent(Intent.ACTION_PICK, null);
+		intent.setType("image/*");
+		startActivityForResult(intent, 1);
+	}
+	
+	public void onLocationClick(View v) {
+		this.useLocation = !this.useLocation;
+		int aux = this.useLocation ? R.drawable.ic_action_place_selected : R.drawable.ic_action_place ;
+		((ImageView)findViewById(R.id.submit_question_location)).setImageResource(aux);
+	}
+	
+	public void onLocationSettingsClick(View v) {
+		Intent i = new Intent(this, SettingsActivity.class);
+		startActivity(i);
+	}
+	
 
 	/**
 	 * @see android.app.Activity#onCreateOptionsMenu(android.view.Menu)
@@ -79,20 +106,16 @@ public class SubmitQuestionActivity extends SecureActivity {
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 	    switch (item.getItemId()) {
+		    case android.R.id.home:
+				onBackPressed();
+				return true;
 	        case R.id.menu_submit:
-	        	String address=((EditText)findViewById(R.id.address)).getText().toString();
-	        	if (fromGPS){
-	        		findlocation();
-	        	}
-	        	else if (!address.equals("")){
-	        		coordinate = GeoCoder.toLatLong(address);
-	        	}
 	        	(new submitQuestionTask(
 	        			this, 
 	        			((EditText)findViewById(R.id.submit_question_title)).getText().toString(),
 	        			((EditText)findViewById(R.id.submit_question_body)).getText().toString(),
-	        			bytebitmap,
-	        			coordinate)).execute();
+	        			this.bytebitmap,
+	        			this.useLocation)).execute();
 	        	return true;
 	        default:
 	            return super.onOptionsItemSelected(item);
@@ -123,6 +146,7 @@ public class SubmitQuestionActivity extends SecureActivity {
 				.getQTitle());
 		((EditText) findViewById(R.id.submit_question_body)).setText(pm
 				.getQBody());
+		setLocationMethods();
 		super.onResume();
 	}
 
@@ -173,45 +197,6 @@ public class SubmitQuestionActivity extends SecureActivity {
 			imageview.setImageBitmap(bmp);
 		}
 	}
-
-	public class TodoCheckboxListerner implements OnCheckedChangeListener{
-
-		public void onCheckedChanged(CompoundButton buttonView, boolean checked){
-			if (checked){
-				fromGPS=true;
-			}
-			else{
-				fromGPS=false;
-			}
-			
-		}
-
-		
-	}	
-    public void findlocation(){
-    	gps = new GPSTracker(SubmitQuestionActivity.this);
-    	coordinate = new double[2];
-    	if (gps.canGetLocation()){
-    		double latitude = gps.getLatitude();
-    		double longitude = gps.getLongitude();
-    		coordinate[0] = latitude;
-    		coordinate[1] = longitude;
-    		//double lat=-115.23;
-    		//double lon=63.78;
-    		/*
-    		boolean geo= Geocoder.isPresent();
-    		String theaddress ="Alberta";
-    		double[] latlong = geoCoder.toLatLong(this, theaddress);
-    		String address = geoCoder.toAdress(this, latlong[0],latlong[1]);
-    		Toast.makeText(getApplicationContext(), address+ geo, Toast.LENGTH_LONG).show();
-    		*/
-    	}
-    	else{
-    		gps.showSettingsAlert();
-    	}
-    	
-    	
-    }
 
 	public String getPath(Uri uri) {
 		String[] projection = { MediaStore.Images.Media.DATA };
