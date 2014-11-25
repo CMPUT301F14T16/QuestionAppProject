@@ -60,7 +60,7 @@ public class FavouriteTest extends TestCase {
 		} catch (Exception ex) {
 			assertFalse(false);
 		}
-			
+		assertNotNull(user.getFavourites());	
 		assertTrue(q1.checkFavourite(user));
 		assertTrue(a1.checkFavourite(user));
 		assertFalse(q2.checkFavourite(user));
