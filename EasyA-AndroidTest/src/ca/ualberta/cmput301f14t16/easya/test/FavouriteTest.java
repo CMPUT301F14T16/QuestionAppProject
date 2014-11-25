@@ -29,7 +29,7 @@ public class FavouriteTest extends TestCase {
 	
 	
 	
-	public void FavouriteTest() {
+	public void testFavouriteTest() {
 		
 		Question q1 = new Question("Title Submission Test", "Body of Question", "test@ualberta.ca");
 		Answer a1 = new Answer("Body of answer", "someone@ualberta.ca");
@@ -48,14 +48,14 @@ public class FavouriteTest extends TestCase {
 		user = new User(email,username);
 		
 		try {
-			//q1.setFavourite(user);
+			user.setFavourite(q1.getId());
 			assertTrue(favourites.contains(q1));
 		} catch (Exception ex) {
 			assertFalse(false);
 		}
 		
 		try {
-			//a1.setFavourite(user);
+			user.setFavourite(a1.getId());
 			assertTrue(favourites.contains(a1));
 		} catch (Exception ex) {
 			assertFalse(false);
