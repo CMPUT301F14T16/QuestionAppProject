@@ -50,7 +50,7 @@ public class MainViewAdapter extends ArrayAdapter<QuestionList> {
 		// Question item to display
 		QuestionList qItem = (QuestionList) this.getItem(id);
 		// The child views in each row.
-		TextView qTitle, qAuthor, qAnswers, qUpVotes;
+		TextView qTitle, qAuthor, qAnswers, qUpVotes, qLocation;
 
 		// Create a new row for the list
 		if (view == null) {
@@ -61,6 +61,7 @@ public class MainViewAdapter extends ArrayAdapter<QuestionList> {
 			qAuthor = (TextView) view.findViewById(R.id.questionAuthor);
 			qAnswers = (TextView) view.findViewById(R.id.questionComments);
 			qUpVotes = (TextView) view.findViewById(R.id.questionUpvotes);
+			qLocation = (TextView) view.findViewById(R.id.questionLocation);
 
 			view.setTag(new MainViewAdapterHolder(qTitle, qAuthor, qAnswers,
 					qUpVotes));
