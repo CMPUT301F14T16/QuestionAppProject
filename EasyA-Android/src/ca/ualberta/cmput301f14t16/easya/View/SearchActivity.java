@@ -38,7 +38,9 @@ public class SearchActivity extends MasterActivity {
 		searchParams = getLayoutInflater().inflate(R.layout.search_view_fragment, (ViewGroup)findViewById(R.id.question_list), false);
 		TextView tx = (TextView)searchParams.findViewById(R.id.search_fragment_hits);
 		tx.setText(String.valueOf(size));
-		((ListView)findViewById(R.id.question_list)).addHeaderView(searchParams);		
+		
+		// TODO Below works on newer versions.
+		//((ListView)findViewById(R.id.question_list)).addHeaderView(searchParams);		
 	}
 	
 	@Override
