@@ -3,39 +3,56 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="10dp"
-    android:background="#e9e9e9" >
-	<ImageView 
-	    android:id="@+id/welcome_image"
-	    android:layout_height="wrap_content"
-	    android:layout_width="wrap_content"
-	    android:layout_alignParentTop="true"
-	    android:layout_centerHorizontal="true"
-	    android:layout_marginTop="200dp"
-	    android:contentDescription="" />
-	<EditText 
-	    android:id="@+id/welcome_username"
-	    android:layout_height="wrap_content"
-	    android:layout_width="match_parent"
-	    android:layout_above="@+id/welcome_email"
-	    android:layout_alignParentLeft="true"
-	    android:hint="@string/welcome_username"
-	    android:maxLength="20"/>
-	<EditText 
-	    android:id="@+id/welcome_email"
-	    android:layout_height="wrap_content"
-	    android:layout_width="match_parent"
-	    android:layout_above="@+id/welcome_sigin"
-	    android:layout_alignParentLeft="true"
-	    android:inputType="textEmailAddress"
-	    android:hint="@string/welcome_email"
-	    android:maxLength="60"/>  
-	<Button 
-	    android:id="@+id/welcome_sigin"
-	    android:layout_height="wrap_content"
-	    android:layout_width="match_parent"
-	    android:layout_alignParentBottom="true"
-	    android:layout_alignParentLeft="true"
-	    android:text="@string/welcome_sigin"
-	    android:onClick="SignIn"/>  
-
+    android:background="@drawable/main_bg" >
+    <RelativeLayout 
+        android:layout_width="match_parent"
+        android:layout_height="165dp"
+        android:layout_margin="10dp"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:background="#ffffff"
+        android:layout_alignParentBottom="true">
+        <ImageButton 
+            android:id="@+id/welcome_random_username"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_above="@+id/welcome_email"
+            android:src="@drawable/action_refresh"
+            android:contentDescription="Generate a new random username!"
+            android:layout_marginLeft="5dp"
+            android:background="@android:color/holo_blue_light"
+            android:onClick="onRandomGenerateUsernameClick"/>
+		<EditText 
+		    android:id="@+id/welcome_username"
+		    android:layout_height="wrap_content"
+		    android:layout_width="0dp"
+		    android:layout_above="@+id/welcome_email"
+		    android:layout_alignParentLeft="true"
+		    android:layout_toLeftOf="@id/welcome_random_username"
+		    android:hint="@string/welcome_username"
+		    android:maxLength="20"/>
+		<EditText 
+		    android:id="@+id/welcome_email"
+		    android:layout_height="wrap_content"
+		    android:layout_width="match_parent"
+		    android:layout_above="@+id/welcome_sigin"
+		    android:layout_alignParentLeft="true"
+		    android:inputType="textEmailAddress"
+		    android:hint="@string/welcome_email"
+		    android:maxLength="60"/>    
+		<Button 
+		    android:id="@+id/welcome_sigin"
+		    android:layout_height="wrap_content"
+		    android:layout_width="match_parent"
+		    android:layout_alignParentBottom="true"
+		    android:layout_alignParentLeft="true"
+		    android:text="@string/welcome_sigin"
+		    android:background="@android:color/holo_blue_light"
+		    android:textColor="#ffffff"
+		    android:layout_marginTop="5dp"
+		    android:onClick="onSignInClick"/>         
+    </RelativeLayout>
 </RelativeLayout>

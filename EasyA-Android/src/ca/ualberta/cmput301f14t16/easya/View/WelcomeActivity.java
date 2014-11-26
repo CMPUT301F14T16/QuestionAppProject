@@ -75,8 +75,13 @@ public class WelcomeActivity extends Activity {
 	 * 
 	 * @param v
 	 */
-	public void SignIn(View v) {
+	public void onSignInClick(View v) {
 		(new signinTask(this)).execute();
+	}
+	
+	public void onRandomGenerateUsernameClick(View v){
+		((EditText) findViewById(R.id.welcome_username))
+				.setText(GeneralHelper.GenerateUserName());
 	}
 
 	/**
