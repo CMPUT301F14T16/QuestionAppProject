@@ -103,15 +103,23 @@ public class PMClient {
 		return LocationPreferencesEnum.valueOf(PMDataParser.recoverUserPreference(GeneralHelper.USERLOCATIONPREFERENCE));
 	}
 	
-	public void saveUserLocation(double[] dcoord){
-		PMDataParser.saveUserPreference(GeneralHelper.USERLOCATION, GeoCoder.coordinatesToString(dcoord));
+	public void saveUserCoordinates(double[] dcoord){
+		PMDataParser.saveUserPreference(GeneralHelper.USERCOORDINATES, GeoCoder.coordinatesToString(dcoord));
 	}
 	
-	public double[] getUserLocation(){
-		String aux = PMDataParser.recoverUserPreference(GeneralHelper.USERLOCATION);
+	public double[] getUserCoordinates(){
+		String aux = PMDataParser.recoverUserPreference(GeneralHelper.USERCOORDINATES);
 		if (aux.equals(""))
-			PMDataParser.saveUserPreference(GeneralHelper.USERLOCATION, "0.0;0.0");
-		return GeoCoder.coordinatesFromString(PMDataParser.recoverUserPreference(GeneralHelper.USERLOCATION));
+			PMDataParser.saveUserPreference(GeneralHelper.USERCOORDINATES, "0.0;0.0");
+		return GeoCoder.coordinatesFromString(PMDataParser.recoverUserPreference(GeneralHelper.USERCOORDINATES));
+	}
+	
+	public void saveUserLocation(String loc){
+		PMDataParser.saveUserPreference(GeneralHelper.USERLOCATION, loc);
+	}
+	
+	public String getUserLocation(){
+		return PMDataParser.recoverUserPreference(GeneralHelper.USERLOCATION);
 	}
 
 	public void savePending(Pending p) {

@@ -92,6 +92,7 @@ public class changeUsernameTask extends AsyncTask<Void, Void, Boolean> {
 			pd.dismiss();
 		}
 		if (result) {
+			MainModel.getInstance().RefreshMainUser();
 			MainModel.getInstance().notifyViews();
 		} else {
 			new AlertDialog.Builder(ctx)

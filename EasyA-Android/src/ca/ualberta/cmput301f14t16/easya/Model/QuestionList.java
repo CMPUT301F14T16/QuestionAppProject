@@ -59,6 +59,8 @@ public class QuestionList {
 
 	private double[] coordinates;
 	
+	private String location;
+	
 	/**
 	 * Creates an empty QuestionList.
 	 */
@@ -85,7 +87,7 @@ public class QuestionList {
 	 *            Setter for {@link QuestionList#image}
 	 */
 	public QuestionList(String id, String title, String username, String userid,
-			String answers, String upvotes, boolean image, Calendar date, double[] coords) {
+			String answers, String upvotes, boolean image, Calendar date, double[] coords, String location) {
 		this.id = id;
 		this.title = title;
 		this.answers = answers;
@@ -95,6 +97,7 @@ public class QuestionList {
 		this.image = image;
 		this.date = date;
 		this.coordinates = coords;
+		this.location = location;
 	}
 
 	/**
@@ -170,5 +173,9 @@ public class QuestionList {
 		}catch(Exception ex){
 			return "";
 		}
+	}
+
+	public String getLocation() {
+		return this.location;
 	}
 }

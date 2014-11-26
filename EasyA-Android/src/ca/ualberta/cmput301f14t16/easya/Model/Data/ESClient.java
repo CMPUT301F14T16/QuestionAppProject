@@ -28,8 +28,8 @@ public class ESClient {
 	
 	//ElasticSeach Urls
 	private static final String HOST_URL = "http://cmput301.softwareprocess.es:8080/testing/";
-	private static final String QUESTION_TYPE = "team16questiondemo"; // Edit Me to Change Question DB.
-	private static final String USER_TYPE = "team16user";		   // Edit Me to Change User DB.
+	private static final String QUESTION_TYPE = "team16questiondemo1"; // Edit Me to Change Question DB.
+	private static final String USER_TYPE = "team16user1";		   // Edit Me to Change User DB.
 	private static final String QUESTION_PATH = QUESTION_TYPE + "/";
 	private static final String USER_PATH = USER_TYPE + "/";
 	
@@ -199,7 +199,7 @@ public class ESClient {
 			QuestionList questionList = new QuestionList(question.getId(), question.getTitle(), 
 					question.getAuthorName(), question.getAuthorId(), question.getAnswerCountString(), 
 					question.getUpVoteCountString(), question.hasPicture(), 
-					question.getDate(), question.getCoordinate());
+					question.getDate(), question.getCoordinate(), question.getLocation());
 			qlist.add(questionList);
 		}
 		
@@ -324,7 +324,7 @@ public class ESClient {
 			QuestionList questionList = new QuestionList(question.getId(), question.getTitle(), 
 					question.getAuthorName(), question.getAuthorId(), question.getAnswerCountString(), 
 					question.getUpVoteCountString(), question.hasPicture(), 
-					question.getDate(), question.getCoordinate());
+					question.getDate(), question.getCoordinate(), question.getLocation());
 			qlist.add(questionList);
 		}
 		return qlist;

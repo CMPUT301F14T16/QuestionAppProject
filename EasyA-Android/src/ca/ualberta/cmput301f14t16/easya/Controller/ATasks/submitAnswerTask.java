@@ -1,5 +1,7 @@
 package ca.ualberta.cmput301f14t16.easya.Controller.ATasks;
 
+import org.apache.http.message.BasicNameValuePair;
+
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
@@ -95,8 +97,11 @@ public class submitAnswerTask extends AsyncTask<Void, Void, Boolean> {
 	protected Boolean doInBackground(Void... voids) {
 		try {
 			try {
+				BasicNameValuePair vp;
 				controller = NewAnswerController.create(ctx, qId, body, pb,
-						MainModel.getInstance().getCurrentUser().getId(),useLocation ? Location.getLocationCoordinates() : new double[]{0.0,0.0});
+						MainModel.getInstance().getCurrentUser().getId(),
+						useLocation ? Location.getLocationCoordinates() : new double[]{0.0,0.0},
+						useLocation ? Location.getLocationName() : "");
 				return controller.submit();
 			} catch (Exception ex) {
 				System.out.println(ex.getMessage());

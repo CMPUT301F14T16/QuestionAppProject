@@ -84,8 +84,10 @@ public class SettingsActivity extends SecureActivity {
             	em = LocationPreferencesEnum.OFF;
             break;
         case R.id.settings_location_GPS:
-            if (checked)
+            if (checked){
             	em = LocationPreferencesEnum.GPS;
+            	Location.forceCheckGPS();
+            }
             break;
         case R.id.settings_location_select:
             if (checked)
@@ -93,7 +95,7 @@ public class SettingsActivity extends SecureActivity {
             break;
 		}
 		PMClient pm = new PMClient();
-		pm.saveUserLocationPreference(em);
+		pm.saveUserLocationPreference(em);		
 		setupSettings();
 	}
 	
@@ -115,7 +117,8 @@ public class SettingsActivity extends SecureActivity {
 			Toast.makeText(v.getContext(), "Sorry, we were unable to find the address you provided. Try again!", Toast.LENGTH_LONG).show();
 		}else{
 			PMClient pm = new PMClient();
-			pm.saveUserLocation(dcoords);
+			pm.saveUserCoordinates(dcoords);
+			pm.saveUserLocation(GeoCoder.toAdress(dcoords[0],  dcoords[1]));
 			setupSettings();
 		}
 		txt.setText("");		

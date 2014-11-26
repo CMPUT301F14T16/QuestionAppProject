@@ -43,7 +43,7 @@ public abstract class Content {
 	
 	private double[] coordinate;
 	
-	private long timestamp;
+	private String location;
 	
 	// No args constructor used by deserializers in recreation of content.
 	public Content() {
@@ -68,16 +68,20 @@ public abstract class Content {
 		this.id = UUID.randomUUID().toString(); //TODO: unify the creation of ID's method
 	}
 	
-	public Content(String body, String userId, double[] coordinate) {
+	public Content(String body, String userId, double[] coordinate, String location) {
 		this.body = body;
 		this.userId = userId;
 		this.coordinate=coordinate;
 		this.id = UUID.randomUUID().toString(); //TODO: unify the creation of ID's method
+		this.location = location;
 	}
 	
 	public double[] getCoordinate(){
-		return this.coordinate;
-		
+		return this.coordinate;		
+	}
+	
+	public String getLocation(){
+		return this.location;
 	}
 	
 	/**
@@ -148,9 +152,5 @@ public abstract class Content {
 		}catch(Exception ex){
 			return "";
 		}
-	}
-	
-	public void setTimestamp(long timestamp) {
-		this.timestamp = timestamp;	
 	}
 }

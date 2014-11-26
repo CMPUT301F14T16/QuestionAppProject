@@ -51,21 +51,21 @@ public class MainModel {
 		getAllViews().remove(view);
 	}
 
+	public void RefreshMainUser(){
+		this.mainUser = null;
+	}
+	
 	public void notifyViews() {
-		synchronized(this){
-			if(!updating){
-				updating = true;
-				try{
-					for (MainView<?> view : getAllViews()) {
-						view.update();
-					}
-					this.usersList = null;
-				}catch(Exception ex){
-				}finally{
-					updating=false;
+		//if(!updating){
+			try{
+				for (MainView<?> view : getAllViews()) {
+					view.update();
 				}
+				this.usersList = null;
+			}catch(Exception ex){
+				System.out.println(ex.getMessage());
 			}
-		}
+		//}		
 	}
 
 	public List<MainView<?>> getAllViews() {

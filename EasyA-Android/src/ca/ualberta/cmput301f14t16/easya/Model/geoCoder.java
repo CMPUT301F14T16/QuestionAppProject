@@ -29,6 +29,7 @@ public class GeoCoder {
 			}
 		}
 		catch (Exception e){
+			System.out.println(e.getMessage());
 			myAddress="";
 		}
 		return myAddress;

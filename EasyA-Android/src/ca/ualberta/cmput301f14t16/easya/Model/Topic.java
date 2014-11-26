@@ -63,15 +63,13 @@ public abstract class Topic extends Content {
 		this.replies = new ArrayList<Reply>();
 		this.upVotes = new ArrayList<String>();
 	}
-	public Topic(String body, byte[] bitmap, String userId, double[] coordinate) {
-		super(body, userId, coordinate);
+	public Topic(String body, byte[] bitmap, String userId, double[] coordinate, String location) {
+		super(body, userId, coordinate, location);
 		this.picture = bitmap;
 		this.replies = new ArrayList<Reply>();
 		this.upVotes = new ArrayList<String>();
 	}
-	
-	
-	
+		
 	/**
 	 * Adds a {@link Reply} to {@link Topic#replies}.
 	 * 

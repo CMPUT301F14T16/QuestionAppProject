@@ -42,8 +42,8 @@ public class NewQuestionController extends MainController {
 	 * @return The newly created instance of NewQuestionController.
 	 */
 	public static NewQuestionController create(Context ctx, String title,
-			String body, byte[] bitmap, String authorID, double[] coordinate) {
-		Question newQuestion = new Question(title, body, bitmap, authorID, coordinate);
+			String body, byte[] bitmap, String authorID, double[] coordinate, String location) {
+		Question newQuestion = new Question(title, body, bitmap, authorID, coordinate, location);
 		Pending newPending = new Pending(newQuestion);
 		return new NewQuestionController(newPending, ctx);
 	}

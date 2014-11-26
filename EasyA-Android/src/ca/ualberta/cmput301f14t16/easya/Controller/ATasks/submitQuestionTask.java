@@ -90,7 +90,9 @@ public class submitQuestionTask extends AsyncTask<Void, Void, Boolean> {
 			try {
 				controller = NewQuestionController.create(ctx, this.title,
 						this.body, this.pb, MainModel.getInstance()
-								.getCurrentUser().getId(), this.useLocation ? Location.getLocationCoordinates() : new double[]{0.0,0.0});
+								.getCurrentUser().getId(),
+								useLocation ? Location.getLocationCoordinates() : new double[]{0.0,0.0},
+										useLocation ? Location.getLocationName() : "");
 				return controller.submit();
 			} catch (Exception ex) {
 				System.out.println(ex.getMessage());

@@ -27,6 +27,7 @@ public class GeneralHelper {
 	public final static String QUESTION_KEY = "ca.ualberta.cmput301f14t16.easya.QUESTIONKEY";
 	public final static String USERKEY = "ca.ualberta.cmput301f14t16.easya.USERKEY";
 	public static final String ASTATUS = "ca.ualberta.cmput301f14t16.easya.ASTATUS";
+	public static final String USERCOORDINATES = "ca.ualberta.cmput301f14t16.easya.USERCOORDINATES";
 	public static final String USERLOCATION = "ca.ualberta.cmput301f14t16.easya.USERLOCATION";
 	public static final String USERLOCATIONPREFERENCE = "ca.ualberta.cmput301f14t16.easya.USERLOCATIONPREFERENCE";
 	
@@ -55,7 +56,7 @@ public class GeneralHelper {
 			lst.add(new QuestionList(q.getId(), q.getTitle(), q
 					.getAuthorName(), q.getAuthorId(), q
 					.getAnswerCountString(), q.getUpVoteCountString(),
-					q.hasPicture(), q.getDate(), q.getCoordinate()));
+					q.hasPicture(), q.getDate(), q.getCoordinate(), q.getLocation()));
 		}
 		return lst;
 	}
@@ -71,7 +72,7 @@ public class GeneralHelper {
 	 */
 	public static String GenerateUserName() {
 		Random ran = new Random();
-		int name = ran.nextInt(5) + 1;
+		int name = ran.nextInt(12) + 1;
 		int number = ran.nextInt(8999) + 1000;
 		String aux = "";
 		switch (name) {
@@ -90,8 +91,30 @@ public class GeneralHelper {
 		case 5:
 			aux = "Newbie";
 			break;
+		case 6:
+			aux = "Unicorn";
+			break;
+		case 7:
+			aux = "Minion";
+			break;
+		case 8:
+			aux = "CookieGuy";
+			break;
+		case 9:
+			aux = "Geek";
+			break;
+		case 10:
+			aux = "CatLover";
+			break;
+		case 11:
+			aux = "Dino";
+			break;
+		case 12:
+			aux = "GoldenBear";
+			break;
 		default:
 			aux = "Guest";
+			break;
 		}
 		return aux + number;
 	}

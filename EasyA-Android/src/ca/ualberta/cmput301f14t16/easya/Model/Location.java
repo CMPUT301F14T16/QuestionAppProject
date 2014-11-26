@@ -11,15 +11,13 @@ public class Location {
 	private static Date lastCheck;
 		
 	public static String getLocationName(){
-		double[] dcoords = getLocationCoordinates();
-		if (dcoords == null){
-			dcoords = new double[]{0.0,0.0};
-		}
-		return GeoCoder.toAdress(dcoords[0], dcoords[1]);
+		PMClient pm = new PMClient();
+		getLocationCoordinates();
+		return pm.getUserLocation();
 	}
 	
 	public static boolean isLocationEnabled(){
-		PMClient pm = new PMClient();
+		PMClient pm = new PMClient();		
 		return (pm.getUserLocationPreference() != LocationPreferencesEnum.OFF);
 	}
 	
@@ -35,9 +33,11 @@ public class Location {
 		case SELECT:
 			break;
 		case GPS:
-			if(lastCheck == null || (new Date().getTime() - lastCheck.getTime() >= CHECK_PARAMETER)){
+			if(InternetCheck.haveInternet() && (lastCheck == null || (new Date().getTime() - lastCheck.getTime() >= CHECK_PARAMETER))){
 				try{
-					pm.saveUserLocation(findLocation());
+					double[] aux = findLocation();
+					pm.saveUserCoordinates(aux);
+					pm.saveUserLocation(GeoCoder.toAdress(aux[0], aux[1]));
 					lastCheck = new Date();
 				}catch(LocationNotReachableException ex){
 					return new double[]{0.0,0.0};
@@ -45,7 +45,7 @@ public class Location {
 			}
 			break;
 		}	
-		return pm.getUserLocation();
+		return pm.getUserCoordinates();
 	}
 	
 	private static double[] findLocation() throws LocationNotReachableException{
@@ -59,5 +59,5 @@ public class Location {
     	else{
     		throw new LocationNotReachableException();
 		}
-    }
+	}    
 }

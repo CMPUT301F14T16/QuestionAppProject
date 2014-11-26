@@ -33,7 +33,7 @@ public class Answer extends Topic {
 	public Answer(String body, String authorId) {
 		super(body, authorId);
 	}	
-	public Answer(String body, byte[] bitmap, String authorId, double[] coordinate) {
-		super(body, bitmap, authorId,coordinate);
+	public Answer(String body, byte[] bitmap, String authorId, double[] coordinate, String location) {
+		super(body, bitmap, authorId,coordinate, location);
 	}	
 }

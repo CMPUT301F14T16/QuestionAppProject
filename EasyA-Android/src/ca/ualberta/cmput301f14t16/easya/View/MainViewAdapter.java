@@ -117,7 +117,7 @@ public class MainViewAdapter extends ArrayAdapter<QuestionList> {
 		qAuthor.setText(qItem.getAuthorDate());
 		qAnswers.setText(qItem.getAnswers());
 		qUpVotes.setText(qItem.getUpvotes());
-		qLocation.setText(GeoCoder.toAdress(qItem.getCoordinates()[0], qItem.getCoordinates()[1]));
+		qLocation.setText(qItem.getLocation());
 		if (qLocation.getText().equals(""))
 			qLocation.setVisibility(View.GONE);		
 		

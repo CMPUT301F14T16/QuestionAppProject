@@ -102,8 +102,11 @@ public class signinTask extends AsyncTask<Void, Void, Boolean> {
 						PMClient pm = new PMClient();
 						pm.saveUserLocationPreference(LocationPreferencesEnum.GPS); //by default
 						Location.forceCheckGPS();
-						Location.getLocationName(); // Save user current location
-					}catch(Exception ex){}
+						Location.getLocationCoordinates(); // Save user current location
+					}catch(Exception ex){
+						PMClient pm = new PMClient();
+						pm.saveUserLocationPreference(LocationPreferencesEnum.OFF); //by default
+					}
 					return true;
 				} catch (NoContentAvailableException ex) {
 					controller = NewUserController.create(email, username);

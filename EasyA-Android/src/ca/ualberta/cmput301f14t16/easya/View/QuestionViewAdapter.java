@@ -167,7 +167,7 @@ public class QuestionViewAdapter {
 		body.setText(q.getBody());
 		authordate.setText(q.getAuthorDate());
 		upvotescount.setText(q.getUpVoteCountString());
-		location.setText(GeoCoder.toAdress(q.getCoordinate()[0], q.getCoordinate()[1]));
+		location.setText(q.getLocation());
 		if (location.getText().equals(""))
 			location.setVisibility(View.GONE);
 		
@@ -245,7 +245,7 @@ public class QuestionViewAdapter {
 		body.setText(a.getBody());
 		authordate.setText(a.getAuthorDate());
 		upvotescount.setText(a.getUpVoteCountString());
-		location.setText(GeoCoder.toAdress(a.getCoordinate()[0], a.getCoordinate()[1]));
+		location.setText(a.getLocation());
 		if (location.getText().equals(""))
 			location.setVisibility(View.GONE);
 
