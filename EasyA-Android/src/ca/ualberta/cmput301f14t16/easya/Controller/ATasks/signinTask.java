@@ -101,6 +101,7 @@ public class signinTask extends AsyncTask<Void, Void, Boolean> {
 					try{
 						PMClient pm = new PMClient();
 						pm.saveUserLocationPreference(LocationPreferencesEnum.GPS); //by default
+						Location.forceCheckGPS();
 						Location.getLocationName(); // Save user current location
 					}catch(Exception ex){}
 					return true;
