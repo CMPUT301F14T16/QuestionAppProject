@@ -80,7 +80,11 @@ public class GeoCoder {
 	}
 	
 	public static String coordinatesToString(double[] coord){
-		return String.valueOf(coord[0]) + ";" + String.valueOf(coord[1]);
+		try{
+			return String.valueOf(coord[0]) + ";" + String.valueOf(coord[1]);
+		}catch(Exception ex){
+			return "";
+		}
 	}
 	
 	public static double[] coordinatesFromString(String coord){
