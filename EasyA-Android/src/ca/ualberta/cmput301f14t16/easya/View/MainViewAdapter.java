@@ -118,7 +118,9 @@ public class MainViewAdapter extends ArrayAdapter<QuestionList> {
 		qAnswers.setText(qItem.getAnswers());
 		qUpVotes.setText(qItem.getUpvotes());
 		qLocation.setText(GeoCoder.toAdress(qItem.getCoordinates()[0], qItem.getCoordinates()[1]));
-
+		if (qLocation.getText().equals(""))
+			qLocation.setVisibility(View.GONE);		
+		
 		return view;
 	}
 

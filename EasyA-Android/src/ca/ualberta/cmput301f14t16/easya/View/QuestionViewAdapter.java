@@ -84,22 +84,6 @@ public class QuestionViewAdapter {
 			Context ctx = v.getContext();
 			BasicNameValuePair vp = (BasicNameValuePair) v.getTag();
 			String body = v.getText().toString();
-
-			new AlertDialog.Builder(context)
-			.setMessage("Set location?")
-			.setNegativeButton("Yes", new DialogInterface.OnClickListener() {
-				@Override
-				public void onClick(DialogInterface dialog, int which) {
-					// TODO Auto-generated method stub
-
-				}
-			})
-			.setPositiveButton("No", new DialogInterface.OnClickListener(){
-				public void onClick(DialogInterface dialog, int which) {
-					// TODO Auto-generated method stub
-
-				}				
-			}).create().show();
 			(new submitReplyTask(ctx, vp, body, v)).execute();
 			return true;
 		}
@@ -184,7 +168,10 @@ public class QuestionViewAdapter {
 		authordate.setText(q.getAuthorDate());
 		upvotescount.setText(q.getUpVoteCountString());
 		location.setText(GeoCoder.toAdress(q.getCoordinate()[0], q.getCoordinate()[1]));
-
+		if (location.getText().equals(""))
+			location.setVisibility(View.GONE);
+		
+		
 		// Handle Question image
 		byte[] qImage = q.getImage();
 		if (qImage != null) {
@@ -259,6 +246,8 @@ public class QuestionViewAdapter {
 		authordate.setText(a.getAuthorDate());
 		upvotescount.setText(a.getUpVoteCountString());
 		location.setText(GeoCoder.toAdress(a.getCoordinate()[0], a.getCoordinate()[1]));
+		if (location.getText().equals(""))
+			location.setVisibility(View.GONE);
 
 		((ImageButton) v.findViewById(R.id.answer_fragment_upvoteBtn))
 				.setTag(new BasicNameValuePair(q.getId(), a.getId()));
