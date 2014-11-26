@@ -2,7 +2,7 @@ package ca.ualberta.cmput301f14t16.easya.test;
 
 import android.util.Log;
 import ca.ualberta.cmput301f14t16.easya.Model.GPSTracker;
-import ca.ualberta.cmput301f14t16.easya.Model.geoCoder;
+import ca.ualberta.cmput301f14t16.easya.Model.GeoCoder;
 import ca.ualberta.cmput301f14t16.easya.View.SubmitAnswerActivity;
 import ca.ualberta.cmput301f14t16.easya.View.SubmitQuestionActivity;
 import junit.framework.TestCase;
@@ -20,11 +20,11 @@ public class GeoLocationTest extends TestCase {
 		coordinate[1] = longitude;
 		assertTrue(Math.floor(latitude) == 0 && Math.floor(longitude) == 0);
 		
-		String address = geoCoder.toAdress(gps, 53.5267620,-113.5271460);
+		String address = GeoCoder.toAdress(53.5267620,-113.5271460);
 		Log.d(LOG_TAG, address);
-		String testAddress =  "University of Alberta\n8900 114 St NW\nEdmonton, AB T6G 2S4\n";
+		String testAddress =  "Edmonton, Alberta/CA";
 		Log.d(LOG_TAG, testAddress);
-		assertEquals(address.length(), testAddress.length());
+		assertEquals(address, testAddress);
 		
 	}
 
