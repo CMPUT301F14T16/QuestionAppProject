@@ -10,6 +10,7 @@
     <string name="menu_sync">Sync</string>
     <string name="drawer_open">Open</string>
     <string name="drawer_close">Close</string>
+    <string name="sort">Sort</string>
     <string name="sortByNewest">Sort By Newest</string>
     <string name="sortByOldest">Sort By Oldest</string>
     <string name="sortByMostVotes">Sort By Most Votes</string>

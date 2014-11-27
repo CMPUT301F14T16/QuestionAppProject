@@ -142,11 +142,12 @@ public abstract class Content {
 	
 	public String getAuthorDate(){
 		try{
-			getDate().add(Calendar.MILLISECOND, TimeZone.getDefault().getOffset(getDate().getTimeInMillis()));
+			Calendar aux = getDate();
+			aux.add(Calendar.MILLISECOND, TimeZone.getDefault().getOffset(getDate().getTimeInMillis()));
 			String auxU = MainModel.getInstance().getUserById(this.getAuthorId()).getUsername();
 			SimpleDateFormat sdf = new SimpleDateFormat("MMM dd yyyy hh:mm", Locale.getDefault());
 			sdf.setTimeZone(TimeZone.getDefault());
-			return sdf.format(getDate().getTime()) + " - @" + auxU;
+			return sdf.format(aux.getTime()) + " - @" + auxU;
 		}catch(NoContentAvailableException ex){
 			return "";
 		}catch(Exception ex){

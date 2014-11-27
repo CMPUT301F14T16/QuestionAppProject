@@ -15,7 +15,6 @@ import android.widget.TextView;
 
 public class SearchActivity extends MasterActivity {
 	private String query;
-	private View searchParams;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -25,23 +24,12 @@ public class SearchActivity extends MasterActivity {
 		mDrawerToggle.setDrawerIndicatorEnabled(false);
 		Intent intent = getIntent();
 		try{
-			this.query = intent.getStringExtra(SearchManager.QUERY);
+			this.query = intent.getStringExtra(SearchManager.QUERY).trim();
 			getActionBar().setTitle("\""+this.query+"\"");
 	    }catch(Exception ex){
 	    	finish();
 	    }
     }
-	
-	private void searchSetup(int size){
-		if (searchParams != null)
-			((ListView)findViewById(R.id.question_list)).removeHeaderView(searchParams);
-		searchParams = getLayoutInflater().inflate(R.layout.search_view_fragment, (ViewGroup)findViewById(R.id.question_list), false);
-		TextView tx = (TextView)searchParams.findViewById(R.id.search_fragment_hits);
-		tx.setText(String.valueOf(size));
-		
-		// TODO Below works on newer versions.
-		//((ListView)findViewById(R.id.question_list)).addHeaderView(searchParams);		
-	}
 	
 	@Override
 	protected void startUpdate() {
@@ -49,14 +37,11 @@ public class SearchActivity extends MasterActivity {
 				.getInstance().getCurrentUser().getUsername());		
 		(new searchQuestionTask(this, this, this.query)).execute();
 	}
-	
 
 	@Override
 	public void update(List<QuestionList> lst) {
 		super.update(lst);
 		stopAnimateSync();
-		searchSetup(lst.size());
-		//TODO: if no results, display the no-results-found page
 	}
 
 }

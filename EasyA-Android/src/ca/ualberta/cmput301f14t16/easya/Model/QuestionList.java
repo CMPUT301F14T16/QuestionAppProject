@@ -163,11 +163,12 @@ public class QuestionList {
 
 	public String getAuthorDate(){
 		try{
-			getDate().add(Calendar.MILLISECOND, TimeZone.getTimeZone(Time.getTimezone()).getOffset(getDate().getTimeInMillis()));
+			Calendar aux = getDate();
+			aux.add(Calendar.MILLISECOND, TimeZone.getDefault().getOffset(getDate().getTimeInMillis()));
 			String auxU = MainModel.getInstance().getUserById(this.getAuthorId()).getUsername();
 			SimpleDateFormat sdf = new SimpleDateFormat("MMM dd yyyy hh:mm", Locale.getDefault());
-			sdf.setTimeZone(TimeZone.getTimeZone(Time.getTimezone()));
-			return sdf.format(getDate().getTime()) + " - @" + auxU;
+			sdf.setTimeZone(TimeZone.getDefault());
+			return sdf.format(aux.getTime()) + " - @" + auxU;
 		}catch(NoContentAvailableException ex){
 			return "";
 		}catch(Exception ex){

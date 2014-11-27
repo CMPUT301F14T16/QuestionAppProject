@@ -29,7 +29,7 @@ public class FavouritesActivity extends MasterActivity {
 	
 	@Override
 	public void update(List<QuestionList> lst) {
-		displayedQuestions = Sort.dateSort(true, lst);	
+		displayedQuestions = Sort.sortDate(true, lst);	
 		bindAdapter();
 		stopAnimateSync();
 	}

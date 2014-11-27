@@ -14,7 +14,8 @@
         android:paddingRight="5dp"
         android:paddingLeft="5dp"
         android:paddingBottom="10dp"
-        android:textSize="16sp"/>
+        android:textSize="16sp"
+        android:maxLength="20"/>
 	<ViewFlipper
 	    android:id="@+id/change_username_flipper"
 	    android:layout_width="wrap_content"

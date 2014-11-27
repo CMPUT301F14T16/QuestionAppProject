@@ -26,7 +26,7 @@ public class MainModel {
 	private static MainModel m;
 	private List<User> usersList;
 	private User mainUser;
-	
+	private Thread runner;	
 	private static boolean updating;
 	
 	private List<MainView<?>> views;
@@ -56,16 +56,28 @@ public class MainModel {
 	}
 	
 	public void notifyViews() {
-		//if(!updating){
-			try{
-				for (MainView<?> view : getAllViews()) {
-					view.update();
-				}
-				this.usersList = null;
-			}catch(Exception ex){
-				System.out.println(ex.getMessage());
-			}
-		//}		
+		if (runner == null || !runner.isAlive()){
+			runner = new Thread()
+			{
+			    @Override
+			    public void run() {			    	
+			        try {
+			        	//Delay introduced due to ESClient not being fast enough (sigh) ;;
+			        	sleep(200);
+			        	List<MainView<?>> l = getAllViews();
+						for (int i = l.size() - 1; i>=0;i--){
+							MainView<?> view = l.get(i);
+							System.out.println("Updating view 1");
+							view.update();
+						}
+						usersList = null;
+					}catch(Exception ex){
+						System.out.println("Error!!!!!!" + ex.getMessage());
+					}
+			    }
+			};
+			runner.start();
+		}
 	}
 
 	public List<MainView<?>> getAllViews() {

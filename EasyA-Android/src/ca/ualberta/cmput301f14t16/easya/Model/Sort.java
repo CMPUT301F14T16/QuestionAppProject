@@ -4,6 +4,8 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import ca.ualberta.cmput301f14t16.easya.View.SortEnum;
+
 /**
  * 
  * Sort is a helper class that provides several methods that can sort lists of
@@ -17,6 +19,28 @@ import java.util.List;
 
 public class Sort {
 
+	public static List<QuestionList> sort(List<QuestionList> ql, SortEnum se){
+		switch(se){
+		case NEWEST:
+			return sortDate(true, ql);
+		case OLDEST:
+			return sortDate(false, ql);
+		case MOSTVOTES:
+			return sortUpVote(true, ql);
+		case LEASTVOTES:
+			return sortUpVote(false, ql);
+		case HASPICTURE:
+			return sortPicture(true, ql);
+		case HASNOPICTURE:
+			return sortPicture(false, ql);
+		case CLOSETOME:
+			return ql;
+		case FARFROMME:
+			return ql;
+		}
+		return null;
+	}
+		
 	/**
 	 * Sorts the passed list by total number of upvotes received.
 	 * 
@@ -27,34 +51,19 @@ public class Sort {
 	 *            The list of {@link Topic} objects to be sorted.
 	 * @return The sorted list.
 	 */
-	public static List<QuestionList> sortUpVote(boolean sortOrder,
+	public static List<QuestionList> sortUpVote(final boolean sortOrder,
 			List<QuestionList> questionList) {
-		if (sortOrder) {
-			Collections.sort(questionList, new Comparator<QuestionList>() {
-				public int compare(QuestionList questionList1,
-						QuestionList questionList2) {
-					// int cmp = a > b ? +1 : a < b ? -1 : 0;
-					// compares the 2 upVotes.
-					return questionList1.getUpvotes().length() > questionList2
-							.getUpvotes().length() ? 1 : Integer
-							.parseInt(questionList2.getUpvotes()) < Integer
-							.parseInt(questionList1.getUpvotes()) ? -1 : 0;
-				}
-			});
-		} else {
-			Collections.sort(questionList, new Comparator<QuestionList>() {
-				public int compare(QuestionList questionList1,
-						QuestionList questionList2) {
-					// int cmp = a > b ? +1 : a < b ? -1 : 0;
-					// compares the 2 upVotes.
-					return questionList1.getUpvotes().length() > questionList2
-							.getUpvotes().length() ? 1 : Integer
-							.parseInt(questionList1.getUpvotes()) < Integer
-							.parseInt(questionList2.getUpvotes()) ? -1 : 0;
-				}
-			});
-		}
-
+		Comparator<QuestionList> upvoteComparator = new Comparator<QuestionList>() {
+			
+			@Override
+			public int compare(QuestionList lhs, QuestionList rhs) {
+				Long leftTime = lhs.getDate().getTimeInMillis();
+				Long rightTime = rhs.getDate().getTimeInMillis();
+				
+				return sortOrder ? leftTime.compareTo(rightTime) : rightTime.compareTo(leftTime);
+			}
+		};
+		Collections.sort(questionList, upvoteComparator);	
 		return questionList;
 	}
 
@@ -69,7 +78,7 @@ public class Sort {
 	 * @param questionList
 	 *            The list of {@link Topic} objects to be sorted.
 	 */
-	public static List<QuestionList> pictureSort(boolean sortOrder,
+	public static List<QuestionList> sortPicture(boolean sortOrder,
 			List<QuestionList> questionList) {
 		if (sortOrder) {
 		Collections.sort(questionList, new Comparator<QuestionList>() {
@@ -103,7 +112,7 @@ public class Sort {
 	 *            The list of {@link Topic} objects to be sorted.
 	 * @return The sorted list.
 	 */
-	public static List<QuestionList> dateSort(boolean sortOrder,
+	public static List<QuestionList> sortDate(boolean sortOrder,
 			List<QuestionList> questionList) {
 		if (sortOrder) {
 			Collections.sort(questionList, new Comparator<QuestionList>() {				

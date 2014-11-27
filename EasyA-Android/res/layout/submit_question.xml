@@ -7,7 +7,9 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:hint="@string/title_hint"
-        android:layout_alignParentLeft="true"/>
+        android:layout_alignParentLeft="true"
+        android:maxLines="1"
+        android:maxLength="60"/>
     <EditText 
         android:id="@+id/submit_question_body"
         android:layout_width="match_parent"

@@ -41,7 +41,7 @@ public class MainViewAdapter extends ArrayAdapter<QuestionList> {
 				questions);
 		inflater = LayoutInflater.from(context);
 	}
-
+	
 	/**
 	 * @see android.widget.ArrayAdapter#getView(int, android.view.View,
 	 *      android.view.ViewGroup)

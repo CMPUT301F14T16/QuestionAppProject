@@ -3,6 +3,7 @@ package ca.ualberta.cmput301f14t16.easya.Controller.ATasks;
 import android.os.AsyncTask;
 import android.widget.Toast;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
+import ca.ualberta.cmput301f14t16.easya.Model.InternetCheck;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.ContextProvider;
@@ -28,27 +29,22 @@ public class saveToDeviceTask extends AsyncTask<Void, Void, Boolean> {
 	}
 
 	/**
-	 * Displays a status message.
-	 * 
-	 * @see android.os.AsyncTask#onPreExecute()
-	 */
-	@Override
-	protected void onPreExecute() {
-		Toast.makeText(ContextProvider.get(),
-				"Your question is being saved to the device.",
-				Toast.LENGTH_SHORT).show();
-	}
-
-	/**
 	 * Saves the requested {@link Question} object to local memory.
 	 * 
 	 * @see android.os.AsyncTask#doInBackground(java.lang.Object[])
 	 */
 	@Override
 	protected Boolean doInBackground(Void... voids) {
-		try {
-			return (MainModel.getInstance().getQuestionById(qId) != null);
-		} catch (NoContentAvailableException ex) {
+		if (InternetCheck.haveInternet()){
+			try {
+				Toast.makeText(ContextProvider.get(),
+						"Your question is being saved to the device.",
+						Toast.LENGTH_SHORT).show();
+				return (MainModel.getInstance().getQuestionById(qId) != null);
+			} catch (NoContentAvailableException ex) {
+				return false;
+			}
+		}else{
 			return false;
 		}
 	}
@@ -63,7 +59,7 @@ public class saveToDeviceTask extends AsyncTask<Void, Void, Boolean> {
 		if (!result) {
 			Toast.makeText(
 					ContextProvider.get(),
-					"We were unable to save this question to the device. Check your internet connection and try again.",
+					"We were unable to save this question to your device. Check your internet connection and try again.",
 					Toast.LENGTH_LONG).show();
 		}
 	}

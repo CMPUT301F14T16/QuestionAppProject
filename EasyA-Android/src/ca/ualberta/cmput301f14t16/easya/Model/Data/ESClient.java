@@ -78,7 +78,7 @@ public class ESClient {
 		
 		// Post the object to the webservice
 		HttpHelper.putToUrl(HOST_URL + QUESTION_PATH + question.getId(), json);
-		
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ES QUESTION SUBMITTED");
 		//TODO: change that based on ESS response
 		return true;
 	}
@@ -100,6 +100,7 @@ public class ESClient {
 		
 		HttpHelper.putToUrl(HOST_URL + QUESTION_PATH + qid +"/_update", updateStr);
 		
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ES ANSWER SUBMITTED");
 		//TODO: change that based on ESS response
 		return true;
 	}
@@ -119,7 +120,7 @@ public class ESClient {
 		String updateStr = "{ \"doc\":{ \"replies\":" + json + "} }";
 		
 		HttpHelper.putToUrl(HOST_URL + QUESTION_PATH + qid + "/_update", updateStr);
-		
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ES REPLY SUBMITTED");
 		//TODO: change that based on ESS response
 		return true;
 	}
@@ -141,6 +142,7 @@ public class ESClient {
 		
 		HttpHelper.putToUrl(HOST_URL + QUESTION_PATH + qid +"/_update", updateStr);
 		
+		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ES REPLY SUBMITTED");
 		//TODO: change that based on ESS response
 		return true;
 	}
@@ -181,7 +183,7 @@ public class ESClient {
 	public List<QuestionList> searchQuestionListsByQuery(String query, int numResults) throws IOException {
 		List<QuestionList> qlist = new ArrayList<QuestionList>();
 		
-		String response = HttpHelper.getFromUrl(HOST_URL + QUESTION_PATH + "_search/?size="+ numResults + "&q=" + URLEncoder.encode(query, "UTF-8") + "&fields=_source,_timestamp");
+		String response = HttpHelper.getFromUrl(HOST_URL + QUESTION_PATH + "_search/?size="+ numResults + "&q=" + URLEncoder.encode(query, "UTF-8") + "&fields=_source");
 		
 		Type esSearchResponseType = new TypeToken<ESSearchResponse<Question>>(){}.getType();
 		ESSearchResponse<Question> esResponse = gson.fromJson(response, esSearchResponseType);
@@ -190,12 +192,7 @@ public class ESClient {
 				continue;
 			
 			Question question = q.getSource();
-			
-			ESFields fields = q.getFields();
-			if (q.getFields() != null) {
-				//question.setTimestamp(fields.getTimestamp());
-			}
-			
+						
 			QuestionList questionList = new QuestionList(question.getId(), question.getTitle(), 
 					question.getAuthorName(), question.getAuthorId(), question.getAnswerCountString(), 
 					question.getUpVoteCountString(), question.hasPicture(), 

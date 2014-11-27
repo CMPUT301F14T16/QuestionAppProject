@@ -252,15 +252,19 @@ public class Cache {
 		if (InternetCheck.haveInternet()) {
 			ESClient es = new ESClient();
 			try {
+				System.out.println("I'm in da house! CACHE PEACE LOVE BABY YEAH");
 				updateAllUsers();
 				List<QuestionList> aux = es
 						.searchQuestionListsByQuery("*", 100);
+				System.out.println("Qty of questions: " + aux.size());
 				UpdateQuestionList(aux);
 				return aux;
 			} catch (IOException ex) {
+				System.out.println("CACHE HAS ERROR! ARGH!");
 				throw new NoContentAvailableException();
 			}
 		} else {
+			System.out.println("CACHE HAS ERROR! DEEP ERROR! ARGH!");
 			throw new NoContentAvailableException();
 		}
 	}

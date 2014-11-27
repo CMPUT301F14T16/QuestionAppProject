@@ -14,7 +14,6 @@ import ca.ualberta.cmput301f14t16.easya.Model.Sort;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.SearchManager;
@@ -39,7 +38,6 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * Provides a general implementation of an {@link android.app.Activity}
@@ -62,6 +60,9 @@ public abstract class MasterActivity extends SecureActivity implements
 	protected int position;
 	public boolean syncInProgress = false;
 	public Menu menu;
+	public static SortEnum sorter = SortEnum.NEWEST;
+	private TextView sortHeader;
+	private boolean showingBanner = false;
 
 	/**
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
@@ -112,12 +113,8 @@ public abstract class MasterActivity extends SecureActivity implements
 	private void hideIconsFromACBar() {
 		boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
 		menu.findItem(R.id.menu_search).setVisible(!drawerOpen && !(position==4));
-		menu.findItem(R.id.menu_sortByOldest).setVisible(!drawerOpen);
-		menu.findItem(R.id.menu_sortByNewest).setVisible(!drawerOpen);
-		menu.findItem(R.id.menu_sortByMostVotes).setVisible(!drawerOpen);
-		menu.findItem(R.id.menu_sortByLeastVotes).setVisible(!drawerOpen);
 		menu.findItem(R.id.menu_sync).setVisible(!drawerOpen);
-		menu.findItem(R.id.menu_sortByPicture).setVisible(!drawerOpen);
+		menu.findItem(R.id.menu_sort).setVisible(!drawerOpen);
 	}
 
 	/**
@@ -159,9 +156,8 @@ public abstract class MasterActivity extends SecureActivity implements
 		case R.id.menu_search:			
 			onSearchRequested();
 			return true;
-		case R.id.menu_sortByNewest:
-			displayedQuestions = Sort.dateSort(true, displayedQuestions);
-			SetAdapter(displayedQuestions);
+		case R.id.menu_sort:			
+			buildSortDialog(this);
 			return true;
 		case R.id.menu_sync:
 			if (!this.syncInProgress) {
@@ -169,26 +165,6 @@ public abstract class MasterActivity extends SecureActivity implements
 					Queue.getInstance();
 				update();
 			}
-			return true;
-		case R.id.menu_sortByOldest:
-			displayedQuestions = Sort.dateSort(false, displayedQuestions);
-			SetAdapter(displayedQuestions);
-			return true;
-		case R.id.menu_sortByMostVotes:
-			displayedQuestions = Sort.sortUpVote(true, displayedQuestions);
-			SetAdapter(displayedQuestions);
-			return true;
-		case R.id.menu_sortByLeastVotes:
-			displayedQuestions = Sort.sortUpVote(false, displayedQuestions);
-			SetAdapter(displayedQuestions);
-			return true;
-		case R.id.menu_sortByPicture:
-			displayedQuestions = Sort.pictureSort(true, displayedQuestions);
-			SetAdapter(displayedQuestions);
-			return true;
-		case R.id.menu_sortByNoPicture:
-			displayedQuestions = Sort.pictureSort(false, displayedQuestions);
-			SetAdapter(displayedQuestions);
 			return true;
 		case R.id.menu_settings:
 			Intent i = new Intent(this, SettingsActivity.class);
@@ -251,6 +227,12 @@ public abstract class MasterActivity extends SecureActivity implements
 	public void onPause() {
 		super.onPause();
 	}
+	
+	@Override
+	public void onResume(){
+		super.onResume();
+		((ListView)findViewById(R.id.question_list)).refreshDrawableState();
+	}
 
 	/**
 	 * @see android.app.Activity#onDestroy()
@@ -272,8 +254,22 @@ public abstract class MasterActivity extends SecureActivity implements
 	 *            generated.
 	 */
 	private void SetAdapter(List<QuestionList> lst) {
+		ListView ls = (ListView) findViewById(R.id.question_list);		
+		ls.setAdapter(null);
+		ls.removeHeaderView(sortHeader);
 		ArrayAdapter<QuestionList> adapter = new MainViewAdapter(this, lst);
-		((ListView) findViewById(R.id.question_list)).setAdapter(adapter);
+		ls.addHeaderView(getSortHeader());
+		ls.setAdapter(adapter);
+	}
+	
+	private View getSortHeader(){
+		sortHeader = (TextView)getLayoutInflater().inflate(R.layout.sort_fragment, null, false);
+		try{
+			sortHeader.setText("Displaying " + displayedQuestions.size() + " question(s). Sorting by " + sorter.getDisplayName() + ".");
+		}catch(Exception ex){
+			sortHeader.setText("");
+		}
+		return sortHeader;
 	}
 
 	/**
@@ -336,6 +332,7 @@ public abstract class MasterActivity extends SecureActivity implements
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
+				System.out.println("This view is being updated, yeah!");
 				animateSync();
 				startUpdate();
 			}
@@ -349,7 +346,7 @@ public abstract class MasterActivity extends SecureActivity implements
 	 */
 	private void DisplayBanner() {
 		RelativeLayout conteiner = (RelativeLayout) findViewById(R.id.main_rl);
-		if (conteiner.findViewById(UPDATEBANNER) == null) {
+		if (!showingBanner) {
 			RelativeLayout.LayoutParams lp = new RelativeLayout.LayoutParams(
 					ViewGroup.LayoutParams.WRAP_CONTENT,
 					ViewGroup.LayoutParams.WRAP_CONTENT);
@@ -372,6 +369,7 @@ public abstract class MasterActivity extends SecureActivity implements
 			banner.setBackgroundResource(R.drawable.banner_background);
 			banner.setGravity(Gravity.CENTER);
 			conteiner.addView(banner, lp);
+			showingBanner = true;
 		}
 	}
 
@@ -384,6 +382,7 @@ public abstract class MasterActivity extends SecureActivity implements
 		public void onClick(View v) {
 			bindAdapter();
 			((RelativeLayout) v.getParent()).removeView(v);
+			showingBanner = false;
 		}
 	};
 
@@ -392,6 +391,9 @@ public abstract class MasterActivity extends SecureActivity implements
 	 * {@link MasterActivity#displayedQuestions}
 	 */
 	protected void bindAdapter() {
+		for (QuestionList ql : displayedQuestions){
+			System.out.println("Title: " + ql.getTitle() + " upvotes: " + ql.getUpvotes() + " answers: " + ql.getAnswers());
+		}
 		SetAdapter(displayedQuestions);
 	}
 
@@ -404,19 +406,21 @@ public abstract class MasterActivity extends SecureActivity implements
 	 */
 	@Override
 	public void update(List<QuestionList> lst) {
-		if (displayedQuestions == null || displayedQuestions.size() <= 0
-				|| lst.size() <= displayedQuestions.size()) {
+		System.out.println("I got in, now let's see what's what.");
+		if (displayedQuestions == null || lst.size() <= displayedQuestions.size()) {
 			ListView listView = ((ListView) findViewById(R.id.question_list));
 			int listPos = listView.getFirstVisiblePosition();
 			View view = listView.getChildAt(0);
 			int top = (view == null) ? 0 : view.getTop();
-			displayedQuestions = Sort.dateSort(true, lst);
+			displayedQuestions = Sort.sort(lst, sorter);
 			bindAdapter();
 			listView.setSelectionFromTop(listPos, top);
 			listView.requestFocus();
+			System.out.println("Refreshed without banner");
 		} else {
+			System.out.println("Showing the banner!");
 			DisplayBanner();
-			displayedQuestions = Sort.dateSort(true, lst);
+			displayedQuestions = Sort.sort(lst, sorter);
 		}
 	}
 
@@ -482,7 +486,23 @@ public abstract class MasterActivity extends SecureActivity implements
 			m.setActionView(null);
 		}
 	}
-
+	
+	public void buildSortDialog(Context ctx){
+		new AlertDialog.Builder(ctx)
+		.setTitle("Sort questions by:")
+		.setItems(SortEnum.getList(),
+		new DialogInterface.OnClickListener() {
+			public void onClick(
+					DialogInterface dialog,
+					int which) {
+				SortEnum actual = SortEnum.values()[which]; 
+				displayedQuestions = Sort.sort(displayedQuestions, actual);
+				sorter = actual;
+				SetAdapter(displayedQuestions);						
+			}
+		}).create().show();
+	}
+	
 	/**
 	 * @return True
 	 */
