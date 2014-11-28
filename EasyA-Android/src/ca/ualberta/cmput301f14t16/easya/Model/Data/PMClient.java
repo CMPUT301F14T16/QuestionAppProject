@@ -81,7 +81,10 @@ public class PMClient {
 		Gson gson = new Gson();
 		PMDataParser.saveUserPreference(GeneralHelper.USERKEY, gson.toJson(user, User.class));
 	}
-	
+	public void removeUser(){
+		Gson gson = new Gson();
+		PMDataParser.saveUserPreference(GeneralHelper.USERKEY, gson.toJson(null, User.class));
+	}
 	public User getUser() throws NoContentAvailableException{
 		Gson gson = new Gson();
 		String aux = PMDataParser.recoverUserPreference(GeneralHelper.USERKEY);
