@@ -4,6 +4,9 @@ import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
+import android.content.Context;
+import android.widget.Toast;
+
 import ca.ualberta.cmput301f14t16.easya.View.SortEnum;
 
 /**
@@ -34,9 +37,9 @@ public class Sort {
 		case HASNOPICTURE:
 			return sortPicture(false, ql);
 		case CLOSETOME:
-			return ql;
+			return sortDistance(false,ql);
 		case FARFROMME:
-			return ql;
+			return sortDistance(true,ql);
 		}
 		return null;
 	}
@@ -141,5 +144,53 @@ public class Sort {
 		}
 		return questionList;
 	}
-
+	
+	public static List<QuestionList> sortDistance(boolean sortOrder,
+			List<QuestionList> questionList) {
+		final double[] userLocation=Location.getLocationCoordinates();
+		if (sortOrder) {
+			Collections.sort(questionList, new Comparator<QuestionList>() {				
+				public int compare(QuestionList questionList1,
+						QuestionList questionList2) {
+					try{
+						double dis1=GeoCoder.toFindDistance(questionList1.getCoordinates(),userLocation);
+						double dis2=GeoCoder.toFindDistance(questionList2.getCoordinates(),userLocation);
+						if (dis1<dis2){
+							return 1;
+						}
+						else if (dis1>dis2){
+							return -1;
+						}
+						else{
+							return 0;
+						}
+					}catch(Exception ex){
+						return 0;
+					}
+				}				
+			});
+		} else {
+			Collections.sort(questionList, new Comparator<QuestionList>() {
+				public int compare(QuestionList questionList1,
+						QuestionList questionList2) {
+					try{
+						double dis1=GeoCoder.toFindDistance(questionList1.getCoordinates(),userLocation);
+						double dis2=GeoCoder.toFindDistance(questionList2.getCoordinates(),userLocation);
+						if (dis1<dis2){
+							return -1;
+						}
+						else if (dis1>dis2){
+							return 1;
+						}
+						else{
+							return 0;
+						}								
+					}catch(Exception ex){
+						return 0;
+					}
+				}
+			});
+		}
+		return questionList;
+	}
 }

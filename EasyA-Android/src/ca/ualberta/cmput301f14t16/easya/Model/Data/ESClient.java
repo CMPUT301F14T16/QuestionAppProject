@@ -28,7 +28,7 @@ public class ESClient {
 	
 	//ElasticSeach Urls
 	private static final String HOST_URL = "http://cmput301.softwareprocess.es:8080/testing/";
-	private static final String QUESTION_TYPE = "team16questiondemo1"; // Edit Me to Change Question DB.
+	private static final String QUESTION_TYPE = "team16questiondemo101"; // Edit Me to Change Question DB.
 	private static final String USER_TYPE = "team16user1";		   // Edit Me to Change User DB.
 	private static final String QUESTION_PATH = QUESTION_TYPE + "/";
 	private static final String USER_PATH = USER_TYPE + "/";

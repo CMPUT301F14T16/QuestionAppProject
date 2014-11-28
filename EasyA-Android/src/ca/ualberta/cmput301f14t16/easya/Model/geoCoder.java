@@ -65,7 +65,7 @@ public class GeoCoder {
 	}
 
 
-	public double toFindDistance(double[] coordinate1, double[] coordinate2){
+	public static double toFindDistance(double[] coordinate1, double[] coordinate2){
         double R = 6371000; // m
         double dLat = Math.toRadians(coordinate1[0] - coordinate2[0]);
         double dLon = Math.toRadians(coordinate1[1] - coordinate2[1]);
