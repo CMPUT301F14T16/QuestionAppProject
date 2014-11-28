@@ -81,9 +81,12 @@ public class QuestionViewAdapter {
 					return true;
 			} else
 				return false;
+			String body = v.getText().toString();
+			if (body.trim().equals(""))
+				return false;
 			Context ctx = v.getContext();
 			BasicNameValuePair vp = (BasicNameValuePair) v.getTag();
-			String body = v.getText().toString();
+			
 			(new submitReplyTask(ctx, vp, body, v)).execute();
 			return true;
 		}
