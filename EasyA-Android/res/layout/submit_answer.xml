@@ -9,9 +9,12 @@
         android:lines="6"
         android:gravity="top"
         android:layout_alignParentLeft="true"
-        android:inputType="textMultiLine|textLongMessage"
+        android:inputType="textMultiLine|textLongMessage|textCapSentences"
         android:textAlignment="textStart"                
-        android:hint="@string/hint_submit_answer"/>
+        android:hint="@string/hint_submit_answer"
+        android:imeOptions="actionDone">
+        <requestFocus />
+    </EditText>   
     <RelativeLayout 
         android:id="@+id/submit_answer_options_holder"
         android:layout_height="wrap_content"

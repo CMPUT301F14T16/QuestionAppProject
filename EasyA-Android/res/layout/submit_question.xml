@@ -9,7 +9,11 @@
         android:hint="@string/title_hint"
         android:layout_alignParentLeft="true"
         android:maxLines="1"
-        android:maxLength="60"/>
+        android:maxLength="60"
+        android:imeOptions="actionNext"
+        android:inputType="textCapSentences">
+        <requestFocus />
+    </EditText>   
     <EditText 
         android:id="@+id/submit_question_body"
         android:layout_width="match_parent"
@@ -18,9 +22,10 @@
         android:gravity="top"
         android:layout_below="@id/submit_question_title"
         android:layout_alignParentLeft="true"
-        android:inputType="textMultiLine|textLongMessage"
+        android:inputType="textMultiLine|textLongMessage|textCapSentences"
         android:textAlignment="textStart"                
-        android:hint="@string/hint_submit_question"/>
+        android:hint="@string/hint_submit_question"
+        android:imeOptions="actionDone"/>
     <RelativeLayout 
         android:id="@+id/submit_question_options_holder"
         android:layout_height="wrap_content"

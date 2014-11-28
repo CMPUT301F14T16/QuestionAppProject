@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/menu_submit_container"
+    android:layout_width="100dp"
+    android:layout_height="match_parent"
+    android:orientation="horizontal"
+    android:layout_marginRight="5dp" 
+    android:clickable="true">
+	<TextView
+	    android:id="@+id/menu_submit_text"
+	    android:layout_height="match_parent"
+	    android:layout_width="wrap_content" 
+	    android:layout_toLeftOf="@+id/menu_submit_btn"
+	    android:layout_alignParentLeft="true"
+	    android:text="@string/submit_text"
+	    android:clickable="false"
+	    android:gravity="center_vertical"/>
+	<ImageButton 
+	    android:id="@+id/menu_submit_btn"
+	    android:layout_height="wrap_content"
+	    android:layout_width="wrap_content"
+	    android:layout_alignParentRight="true"
+	    android:layout_marginLeft="5dp"
+	    android:layout_marginRight="5dp"
+	    android:src="@drawable/action_send"
+	    android:layout_centerVertical="true"	 
+	    android:clickable="false"   
+	    android:background="@android:color/holo_blue_light"/>
+</RelativeLayout>

@@ -30,6 +30,7 @@
     <string name="settings_localization_select">Select manually</string>
     <string name="settings_localization_select_hint">Enter the name of the closest city</string>
     <string name="menu_settings">Settings</string>
+    <string name="submit_text">SUBMIT</string>
     <string-array name="app_folders">
         <item>Home</item>
         <item>Favourites</item>

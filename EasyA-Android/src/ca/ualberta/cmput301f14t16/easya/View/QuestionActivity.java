@@ -36,6 +36,7 @@ public class QuestionActivity extends SecureActivity implements
 		setContentView(R.layout.question_view);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setHomeButtonEnabled(true);
+		getActionBar().setTitle("Question");
 		MainModel.getInstance().addView(this);
 		this.qId = (getIntent()).getStringExtra(GeneralHelper.QUESTION_KEY);
 	}
