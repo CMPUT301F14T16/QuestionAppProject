@@ -42,14 +42,14 @@ public class SortTest extends TestCase {
 		ArrayList<QuestionList> questionListTest = new ArrayList<QuestionList>();
 		//sorts from Topics with date most recent to oldest.
 		beforeOrAfter = true;
-		Sort.dateSort(beforeOrAfter, questionListTest);
+		Sort.sortDate(beforeOrAfter, questionListTest);
 			for(int i = 0; i < questionListTest.size(); i++){
 				assertTrue(questionListTest.get(i).getDate().before(questionListTest.get(i++).getDate()) );
 			}
 		
 		//sorts from oldest to most recent
 		beforeOrAfter = false;
-		Sort.dateSort(beforeOrAfter, questionListTest);
+		Sort.sortDate(beforeOrAfter, questionListTest);
 			for(int i = 0; i < questionListTest.size(); i++){
 				assertTrue(questionListTest.get(i).getDate().after(questionListTest.get(i++).getDate()) );
 			}
@@ -62,7 +62,7 @@ public class SortTest extends TestCase {
 		
 		//sorts from Topics with pictures to Topics without.
 		sortOrder = true;
-		Sort.pictureSort(sortOrder, questionListTest);
+		Sort.sortPicture(sortOrder, questionListTest);
 		//Assuming that the Topics are sorted from has a to doesn't have a picture,
 		//assert false if a previous picture doesn't have one but later one does. 
 			for(int i = 0; i < questionListTest.size(); i++){
