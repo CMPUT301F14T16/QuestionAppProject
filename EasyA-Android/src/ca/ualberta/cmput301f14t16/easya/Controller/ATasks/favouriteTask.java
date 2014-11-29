@@ -1,11 +1,13 @@
 package ca.ualberta.cmput301f14t16.easya.Controller.ATasks;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.AsyncTask;
 import android.widget.Toast;
 import ca.ualberta.cmput301f14t16.easya.Controller.FavouriteController;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
+import ca.ualberta.cmput301f14t16.easya.Model.Data.Cache;
 import ca.ualberta.cmput301f14t16.easya.View.QuestionActivity;
 
 /**
@@ -32,7 +34,18 @@ public class favouriteTask extends AsyncTask<Void, Void, Boolean> {
 		this.ctx = ctx;
 		this.q = q;
 	}
+	
 
+	@Override
+	protected void onPreExecute() {
+		Toast.makeText(
+				ctx,
+				!this.q.checkFavourite(MainModel.getInstance()
+						.getCurrentUser()) ? "Favourite succesfully set!"
+						: "Favourite succesfully removed!",
+				Toast.LENGTH_LONG).show();
+	}
+		
 	/**
 	 * Submits the requested changes to the elastic search database in a
 	 * background thread.
@@ -64,12 +77,7 @@ public class favouriteTask extends AsyncTask<Void, Void, Boolean> {
 	@Override
 	protected void onPostExecute(Boolean result) {
 		if (result) {
-			Toast.makeText(
-					ctx,
-					this.q.checkFavourite(MainModel.getInstance()
-							.getCurrentUser()) ? "Favourite succesfully set!"
-							: "Favourite succesfully removed!",
-					Toast.LENGTH_LONG).show();
+			Cache.getInstance().SaveSingleQuestion(this.q);			
 			MainModel.getInstance().notifyViews();
 		} else {
 			Toast.makeText(

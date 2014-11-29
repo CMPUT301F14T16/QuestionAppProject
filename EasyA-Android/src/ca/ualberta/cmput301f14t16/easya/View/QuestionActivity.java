@@ -3,14 +3,22 @@ package ca.ualberta.cmput301f14t16.easya.View;
 import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.favouriteTask;
 import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.getQuestionTask;
+import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
 import ca.ualberta.cmput301f14t16.easya.Model.GeneralHelper;
+import ca.ualberta.cmput301f14t16.easya.Model.InternetCheck;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
+import ca.ualberta.cmput301f14t16.easya.Model.Data.Cache;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 /**
@@ -23,9 +31,12 @@ import android.widget.LinearLayout;
  */
 public class QuestionActivity extends SecureActivity implements
 		MainView<Question> {
-	private Question question;
+	public static Question question;
 	private String qId;
 	public Menu menu;
+	private boolean syncInProgress;
+	private boolean favouriteSet;
+	public static SortEnum sorter = SortEnum.NEWEST;
 
 	/**
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
@@ -38,6 +49,7 @@ public class QuestionActivity extends SecureActivity implements
 		getActionBar().setHomeButtonEnabled(true);
 		getActionBar().setTitle("Question");
 		MainModel.getInstance().addView(this);
+		question = null;
 		this.qId = (getIntent()).getStringExtra(GeneralHelper.QUESTION_KEY);
 	}
 
@@ -46,7 +58,6 @@ public class QuestionActivity extends SecureActivity implements
 	 */
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.question, menu);
 		this.menu = menu;
 		update();
@@ -83,6 +94,10 @@ public class QuestionActivity extends SecureActivity implements
 		case android.R.id.home:
 			onBackPressed();
 			break;
+		case R.id.menu_sync:
+			this.question = null;
+			update();
+			break;
 		case R.id.menu_question_favourite:
 			setFavourite();
 			break;
@@ -94,7 +109,16 @@ public class QuestionActivity extends SecureActivity implements
 	 * Handles an action to set the displayed {@link Question} as a favourite.
 	 */
 	public void setFavourite() {
-		(new favouriteTask(this, this.question)).execute();
+		if (!this.favouriteSet){
+			this.favouriteSet = true;
+			MenuItem m = menu.findItem(R.id.menu_question_favourite);
+			if (!question.checkFavourite(MainModel.getInstance().getCurrentUser())) {
+				m.setIcon(R.drawable.ic_action_important);
+			} else {
+				m.setIcon(R.drawable.ic_action_not_important);
+			}
+			(new favouriteTask(this, this.question)).execute();
+		}
 	}
 
 	public void AddNewAnswer(View v) {
@@ -131,7 +155,16 @@ public class QuestionActivity extends SecureActivity implements
 	 * 
 	 */
 	private void startUpdate() {
-		(new getQuestionTask(this, this, this.qId)).execute();
+		if (question != null){
+			try{
+				update(Cache.getInstance().getQuestionFromCache(question.getId()));
+			}catch(NoContentAvailableException ex){
+				//TODO: show no content
+			}
+		}
+		if (question != null)
+			animateSync();
+		(new getQuestionTask(this, this, this.qId, question == null)).execute();
 	}
 
 	/**
@@ -140,12 +173,37 @@ public class QuestionActivity extends SecureActivity implements
 	@Override
 	public void update(Question q) {
 		SetAdapter(q);
+		stopAnimateSync();
+		favouriteSet = false;
+	}
+
+	/**
+	 * Starts a spinner animation to show when something is loading.
+	 */
+	public void animateSync() {
+		this.syncInProgress = true;
+		try {
+			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			ImageView imgV = (ImageView) inflater.inflate(
+					R.layout.refresh_asset, null);
+			Animation anim = AnimationUtils.loadAnimation(this,
+					R.anim.refresh_asset);
+			anim.setRepeatCount(Animation.INFINITE);
+			imgV.startAnimation(anim);
+			MenuItem mi = ((MenuItem) menu.findItem(R.id.menu_sync));
+			mi.setActionView(imgV);
+		} catch (Exception ex) {}
 	}
 
 	/**
 	 * @see ca.ualberta.cmput301f14t16.easya.View.MainView#stopAnimateSync()
 	 */
-	@Override
 	public void stopAnimateSync() {
+		this.syncInProgress = false;
+		MenuItem m = menu.findItem(R.id.menu_sync);
+		if (m.getActionView() != null) {
+			m.getActionView().clearAnimation();
+			m.setActionView(null);
+		}
 	}
 }

@@ -29,8 +29,15 @@ public class SubmitAnswerActivity extends SubmitMaster {
 	 */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
-		super.onCreate(savedInstanceState);
+		super.onCreate(savedInstanceState);		
 		setContentView(R.layout.submit_answer);
+		try{
+			if (QuestionActivity.question == null)
+				finalize();
+		}catch (Throwable e) {
+			e.printStackTrace();
+		}
+		
         imageview = (ImageView)findViewById(R.id.submit_answer_imageView_pic);
 		getActionBar().setDisplayHomeAsUpEnabled(true);
 		getActionBar().setHomeButtonEnabled(true);
@@ -55,7 +62,7 @@ public class SubmitAnswerActivity extends SubmitMaster {
 			public void onClick(View v) {
 				(new submitAnswerTask(
 						(Activity)v.getContext(),
-	        			(getIntent()).getStringExtra(GeneralHelper.AQUESTION_KEY),
+	        			QuestionActivity.question,
 	        			((EditText)findViewById(R.id.submit_answer_body)).getText().toString(),
 	        			bytebitmap,
 	        			useLocation)).execute();

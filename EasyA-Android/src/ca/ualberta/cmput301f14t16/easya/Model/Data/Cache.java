@@ -192,7 +192,7 @@ public class Cache {
 		return GeneralHelper.lqToQuestionlist(aux);
 	}
 
-	private Question getQuestionFromCache(String id)
+	public Question getQuestionFromCache(String id)
 			throws NoContentAvailableException {
 		Gson gson = new Gson();
 		Type listType = new TypeToken<List<Question>>() {
@@ -304,7 +304,7 @@ public class Cache {
 					SaveSingleQuestion(q);
 					lst.add(new QuestionList(q.getId(), q.getTitle(), q
 							.getAuthorName(), q.getAuthorId(), q
-							.getAnswerCountString(), q.getUpVoteCountString(),
+							.getAnswerCountString(), q.getUpVoteCount(),
 							q.hasPicture(), q.getDate(), q.getCoordinate(), q.getLocation()));
 				}
 				return lst;

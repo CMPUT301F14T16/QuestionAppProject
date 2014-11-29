@@ -2,9 +2,11 @@ package ca.ualberta.cmput301f14t16.easya.Controller;
 
 import android.content.Context;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoInternetException;
+import ca.ualberta.cmput301f14t16.easya.Model.Answer;
 import ca.ualberta.cmput301f14t16.easya.Model.Pending;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Model.Reply;
+import ca.ualberta.cmput301f14t16.easya.Model.SimpleObjectTrio;
 
 /**
  * Extends {@link MainController} to provide functionality specifically tailored
@@ -19,9 +21,10 @@ public class NewReplyController extends MainController {
 	 * @param ctx
 	 *            Setter for {@link MainController#ctx}.
 	 */
-	protected NewReplyController(Pending p, Context ctx) {
+	protected NewReplyController(Pending p, Context ctx, Question q, Answer a, Reply r) {
 		super(p);
 		this.ctx = ctx;
+		contentTrio = new SimpleObjectTrio<Question, Answer, Reply>(q, a, r);
 	}
 
 	/**
@@ -31,7 +34,7 @@ public class NewReplyController extends MainController {
 	 * @param ctx
 	 *            Setter for {@link MainController#ctx}.
 	 * @param qId
-	 *            The unique ID of the {@link Question} parent (if any) of the
+	 *            The unique {@link Question} parent of the
 	 *            {@link Reply} to be submitted.
 	 * @param body
 	 *            The data stored by the {@link Reply} to be created.
@@ -40,11 +43,11 @@ public class NewReplyController extends MainController {
 	 *            {@link Reply}.
 	 * @return The newly created instance of NewReplyController.
 	 */
-	public static NewReplyController create(Context ctx, String qId,
-			String aId, String body, String authorID) {
+	public static NewReplyController create(Context ctx, Question q,
+			Answer a, String body, String authorID) {
 		Reply newReply = new Reply(body, authorID);
-		Pending newPending = new Pending(newReply, qId, aId);
-		return new NewReplyController(newPending, ctx);
+		Pending newPending = new Pending(newReply, q != null ? q.getId() : null, a != null ? a.getId() : null);
+		return new NewReplyController(newPending, ctx, q, a, newReply);
 	}
 
 	/**
@@ -54,10 +57,15 @@ public class NewReplyController extends MainController {
 	 * @see ca.ualberta.cmput301f14t16.easya.Controller.MainController#submit()
 	 */
 	public boolean submit() {
-		try {
-			return super.submit();
+		try {			
+			if (super.submit()){
+				saveOfflineContent();
+				return true;
+			}
+			return false;
 		} catch (NoInternetException ex) {
 			super.submitOffline();
+			saveOfflineContent();
 			return true;
 		} catch (Exception ex) {
 			return false;

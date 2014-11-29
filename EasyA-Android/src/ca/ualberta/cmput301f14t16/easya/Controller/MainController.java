@@ -12,7 +12,9 @@ import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Model.Pending;
 import ca.ualberta.cmput301f14t16.easya.Model.Queue;
 import ca.ualberta.cmput301f14t16.easya.Model.Reply;
+import ca.ualberta.cmput301f14t16.easya.Model.SimpleObjectTrio;
 import ca.ualberta.cmput301f14t16.easya.Model.Time;
+import ca.ualberta.cmput301f14t16.easya.Model.Data.Cache;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.ESClient;
 
 /**
@@ -25,6 +27,7 @@ public abstract class MainController {
 	 */
 	protected Pending pending;
 	protected Context ctx;
+	protected SimpleObjectTrio<Question, Answer, Reply> contentTrio;
 	/**
 	 * Set to True if {@link MainController#submitOffline()} is called.
 	 */
@@ -98,6 +101,33 @@ public abstract class MainController {
 	protected void submitOffline() {
 		Queue.getInstance().AddPendingToQueue(pending);
 		submitedOffline = true;
+	}
+	
+	protected void saveOfflineContent(){
+		Question qAux = contentTrio.value1;
+		try{			
+			if (qAux == null)
+				//Must be an error
+				return;
+			if (contentTrio.value3 != null){
+				//It's a reply
+				if (contentTrio.value2 == null){
+					//Reply to a question
+					qAux.addReply(contentTrio.value3);
+				}else{
+					//Reply to a answer
+					if (qAux.getAnswers().contains(contentTrio.value2)){
+						//Just to be safe
+						(qAux.getAnswers().get(qAux.getAnswers().indexOf(contentTrio.value2)))
+							.addReply(contentTrio.value3);
+					}
+				}
+			}else if (contentTrio.value2 != null){
+				//It's an answer
+				qAux.addAnswer(contentTrio.value2);
+			}
+		}catch(Exception ex){ return; }
+		Cache.getInstance().SaveSingleQuestion(qAux);
 	}
 
 	/**

@@ -195,7 +195,7 @@ public class ESClient {
 						
 			QuestionList questionList = new QuestionList(question.getId(), question.getTitle(), 
 					question.getAuthorName(), question.getAuthorId(), question.getAnswerCountString(), 
-					question.getUpVoteCountString(), question.hasPicture(), 
+					question.getUpVoteCount(), question.hasPicture(), 
 					question.getDate(), question.getCoordinate(), question.getLocation());
 			qlist.add(questionList);
 		}
@@ -320,7 +320,7 @@ public class ESClient {
 			Question question = q.getSource();			
 			QuestionList questionList = new QuestionList(question.getId(), question.getTitle(), 
 					question.getAuthorName(), question.getAuthorId(), question.getAnswerCountString(), 
-					question.getUpVoteCountString(), question.hasPicture(), 
+					question.getUpVoteCount(), question.hasPicture(), 
 					question.getDate(), question.getCoordinate(), question.getLocation());
 			qlist.add(questionList);
 		}

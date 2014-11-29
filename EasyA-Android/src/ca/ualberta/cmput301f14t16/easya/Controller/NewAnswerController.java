@@ -5,6 +5,8 @@ import ca.ualberta.cmput301f14t16.easya.Exceptions.NoInternetException;
 import ca.ualberta.cmput301f14t16.easya.Model.Answer;
 import ca.ualberta.cmput301f14t16.easya.Model.Pending;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
+import ca.ualberta.cmput301f14t16.easya.Model.Reply;
+import ca.ualberta.cmput301f14t16.easya.Model.SimpleObjectTrio;
 
 /**
  * Extends {@link MainController} to provide functionality specifically tailored
@@ -19,9 +21,10 @@ public class NewAnswerController extends MainController {
 	 * @param ctx
 	 *            Setter for {@link MainController#ctx}.
 	 */
-	protected NewAnswerController(Pending p, Context ctx) {
+	protected NewAnswerController(Pending p, Context ctx, Question q, Answer a) {
 		super(p);
 		this.ctx = ctx;
+		contentTrio = new SimpleObjectTrio<Question, Answer, Reply>(q, a, null);
 	}
 
 	/**
@@ -42,11 +45,11 @@ public class NewAnswerController extends MainController {
 	 *            {@link Answer}.
 	 * @return The newly created instance of NewAnswerController.
 	 */
-	public static NewAnswerController create(Context ctx, String qId,
+	public static NewAnswerController create(Context ctx, Question q,
 			String body, byte[] bitmap, String authorID,double[] coordinate, String location) {
 		Answer newAnswer = new Answer(body, bitmap, authorID,coordinate, location);
-		Pending newPending = new Pending(qId, newAnswer);
-		return new NewAnswerController(newPending, ctx);
+		Pending newPending = new Pending(q.getId(), newAnswer);
+		return new NewAnswerController(newPending, ctx, q, newAnswer);
 	}
 
 	/**
@@ -56,10 +59,15 @@ public class NewAnswerController extends MainController {
 	 * @see ca.ualberta.cmput301f14t16.easya.Controller.MainController#submit()
 	 */
 	public boolean submit() {
-		try {
-			return super.submit();
+		try {			
+			if (super.submit()){
+				saveOfflineContent();
+				return true;
+			}
+			return false;
 		} catch (NoInternetException ex) {
 			super.submitOffline();
+			saveOfflineContent();
 			return true;
 		} catch (Exception ex) {
 			return false;

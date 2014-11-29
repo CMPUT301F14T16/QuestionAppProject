@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.concurrent.locks.ReentrantLock;
 
 import com.google.gson.Gson;
 
@@ -23,11 +24,11 @@ import ca.ualberta.cmput301f14t16.easya.View.MainView;
  * @author Brett Commandeur (commande)
  */
 public class MainModel {
+	private final ReentrantLock lock = new ReentrantLock();
 	private static MainModel m;
 	private List<User> usersList;
 	private User mainUser;
-	private Thread runner;	
-	private static boolean updating;
+	private static Thread runner;
 	
 	private List<MainView<?>> views;
 
@@ -55,13 +56,23 @@ public class MainModel {
 		this.mainUser = null;
 	}
 	
+	public void killNotify(){
+		try{
+		if (runner.isAlive())
+			runner.interrupt();
+			runner = null;
+			lock.unlock();
+		}catch(Exception ex){}
+	}
+	
 	public void notifyViews() {
+		lock.lock();
 		if (runner == null || !runner.isAlive()){
 			runner = new Thread()
 			{
 			    @Override
-			    public void run() {			    	
-			        try {
+			    public void run() {		
+				        try {
 			        	//Delay introduced due to ESClient not being fast enough (sigh) ;;
 			        	sleep(200);
 			        	List<MainView<?>> l = getAllViews();
@@ -73,7 +84,11 @@ public class MainModel {
 						usersList = null;
 					}catch(Exception ex){
 						System.out.println("Error!!!!!!" + ex.getMessage());
-					}
+					}finally{
+						try{
+							lock.unlock();
+						}catch(Exception ex){}
+					}			    	
 			    }
 			};
 			runner.start();

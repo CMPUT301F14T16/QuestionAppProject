@@ -55,7 +55,7 @@ public class GeneralHelper {
 		for (Question q : lq) {
 			lst.add(new QuestionList(q.getId(), q.getTitle(), q
 					.getAuthorName(), q.getAuthorId(), q
-					.getAnswerCountString(), q.getUpVoteCountString(),
+					.getAnswerCountString(), q.getUpVoteCount(),
 					q.hasPicture(), q.getDate(), q.getCoordinate(), q.getLocation()));
 		}
 		return lst;

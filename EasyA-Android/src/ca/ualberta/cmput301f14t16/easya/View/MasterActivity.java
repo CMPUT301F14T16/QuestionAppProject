@@ -226,6 +226,7 @@ public abstract class MasterActivity extends SecureActivity implements
 	@Override
 	public void onPause() {
 		super.onPause();
+		MainModel.getInstance().killNotify();
 	}
 	
 	@Override

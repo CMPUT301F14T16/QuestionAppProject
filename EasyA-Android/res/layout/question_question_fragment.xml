@@ -2,18 +2,23 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:layout_marginLeft="10dp"
-    android:layout_marginRight="10dp">
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:paddingBottom="10dp"
+    android:layout_marginTop="5dp"
+    android:layout_marginLeft="5dp"
+    android:layout_marginRight="5dp"
+    android:background="@android:color/background_light">
     <TextView
         android:id="@+id/question_fragment_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentLeft="true"
-        android:textSize="18sp"
+        android:textSize="20sp"
         android:textStyle="bold"
         android:paddingBottom="5dp"
         android:layout_marginBottom="5dp"
-        android:layout_marginTop="10dp"/>
+        android:layout_marginTop="5dp"/>
     <RelativeLayout
         android:id="@+id/question_fragment_rPanel"
         android:layout_width="match_parent"
@@ -31,8 +36,9 @@
 	            android:layout_alignParentLeft="true"
 	            android:src="@drawable/ic_action_good"
 	            android:layout_centerHorizontal="true"
-	            android:background="@android:color/transparent"
-	            android:contentDescription=""/>
+	            android:contentDescription="Upvote"
+	            android:padding="5dp"
+	            android:background="#d9d9d9"/>
 	        <TextView
 	            android:id="@+id/question_fragment_upvoteText"
 	            android:layout_width="40dp"
@@ -40,9 +46,12 @@
 	            android:layout_alignParentLeft="true"
 	            android:layout_below="@id/question_fragment_upvoteBtn"
 	            android:gravity="center"
+	            android:paddingLeft="5dp"
+	            android:paddingRight="5dp"
 	            android:layout_marginBottom="5dp"
 	            android:textSize="18sp"
-	            android:fadingEdge="horizontal"/>
+	            android:fadingEdge="horizontal"
+	            android:background="#d9d9d9"/>
 	        <TextView
 	            android:id="@+id/question_fragment_body"
 	            android:layout_width="wrap_content"
@@ -56,8 +65,9 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:layout_centerHorizontal="true"
+	        android:layout_marginTop="2dp"
 	        android:layout_below="@+id/question_fragment_container" 
-	        android:adjustViewBounds="true"/>
+        	android:scaleType="centerInside"/>
         <TextView
             android:id="@+id/question_fragment_authorDate"
             android:layout_width="wrap_content"
@@ -65,14 +75,15 @@
             android:layout_below="@id/question_fragment_image"
             android:layout_alignParentRight="true"
             android:layout_marginTop="10dp"
+            android:textSize="12sp"
             android:textStyle="italic"/>
         <TextView
             android:id="@+id/question_fragment_location"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/question_fragment_authorDate"
+            android:textSize="11sp"
             android:layout_alignParentRight="true"
-            android:layout_marginTop="10dp"
             android:textStyle="italic"/>
     </RelativeLayout>
     <LinearLayout
@@ -81,7 +92,8 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/question_fragment_rPanel"
         android:layout_alignParentLeft="true"
-        android:background="#c9c9c9"
+        android:background="#d9d9d9"
+        android:padding="5dp"
         android:orientation="vertical">
         <LinearLayout 
             android:id="@+id/question_fragment_replies_list"

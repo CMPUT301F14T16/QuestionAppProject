@@ -85,9 +85,9 @@ public class QuestionViewAdapter {
 			if (body.trim().equals(""))
 				return false;
 			Context ctx = v.getContext();
-			BasicNameValuePair vp = (BasicNameValuePair) v.getTag();
+			Answer a = v.getTag() != null ? (Answer)v.getTag() : null;
 			
-			(new submitReplyTask(ctx, vp, body, v)).execute();
+			(new submitReplyTask(ctx, QuestionActivity.question, a, body, v)).execute();
 			return true;
 		}
 	};
@@ -162,7 +162,7 @@ public class QuestionViewAdapter {
 		replies = (LinearLayout) v
 				.findViewById(R.id.question_fragment_replies_list);
 		replies = inflateReplies(replies, q.getReplies());
-		addReply.setTag(new BasicNameValuePair(q.getId(), null));
+		addReply.setTag(null);
 		addReply.setOnEditorActionListener(keyAction);
 		addReply.setImeActionLabel("Submit", KeyEvent.KEYCODE_ENTER);
 
@@ -196,8 +196,21 @@ public class QuestionViewAdapter {
 					.setImageResource(R.drawable.ic_action_good_selected);
 		}
 		container.addView(v);
+		if (q.getAnswerCount() > 0)
+			container.addView(inflateAnswerCount(q.getAnswerCount()));
 	}
 
+
+	private View inflateAnswerCount(int ac){
+		TextView tv = (TextView)inflater.inflate(R.layout.sort_question_fragment, null, false);
+		try{
+			tv.setText("Displaying " + ac + " answers(s). Sorting by " + QuestionActivity.sorter.getDisplayName() + ".");
+		}catch(Exception ex){
+			tv.setText("");
+		}
+		return tv;
+	}
+	
 	/**
 	 * Populates the view with the data from the {@link Answer} provided.
 	 * 
@@ -228,7 +241,7 @@ public class QuestionViewAdapter {
 		replies = (LinearLayout) v
 				.findViewById(R.id.answer_fragment_replies_list);
 		replies = inflateReplies(replies, a.getReplies());
-		addReply.setTag(new BasicNameValuePair(q.getId(), a.getId()));
+		addReply.setTag(a);
 		addReply.setOnEditorActionListener(keyAction);
 		addReply.setImeActionLabel("Submit", KeyEvent.KEYCODE_ENTER);
 		try {

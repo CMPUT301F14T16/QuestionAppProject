@@ -27,14 +27,14 @@ public class submitReplyTask extends AsyncTask<Void, Void, Boolean> {
 	 * {@link ca.ualberta.cmput301f14t16.easya.Model.Question} to the
 	 * {@link ca.ualberta.cmput301f14t16.easya.Model.Reply} being submitted.
 	 */
-	private String qId;
+	private Question q;
 	/**
 	 * The unique ID of the parent
 	 * {@link ca.ualberta.cmput301f14t16.easya.Model.Answer} to the
 	 * {@link ca.ualberta.cmput301f14t16.easya.Model.Reply} being submitted. May
 	 * be Null.
 	 */
-	private String aId;
+	private Answer a;
 	/**
 	 * The data stored by the
 	 * {@link ca.ualberta.cmput301f14t16.easya.Model.Reply} to be created.
@@ -56,11 +56,11 @@ public class submitReplyTask extends AsyncTask<Void, Void, Boolean> {
 	 * @param tv
 	 *            setter for {@link submitReplyTask#tv}
 	 */
-	public submitReplyTask(Context ctx, BasicNameValuePair vp, String body,
+	public submitReplyTask(Context ctx, Question q, Answer a, String body,
 			TextView tv) {
 		this.ctx = ctx;
-		this.qId = vp.getName();
-		this.aId = vp.getValue();
+		this.q = q;
+		this.a = a;
 		this.body = body;
 		this.tv = tv;
 	}
@@ -91,7 +91,7 @@ public class submitReplyTask extends AsyncTask<Void, Void, Boolean> {
 	protected Boolean doInBackground(Void... voids) {
 		try {
 			try {
-				controller = NewReplyController.create(ctx, qId, aId, body,
+				controller = NewReplyController.create(ctx, q, a, body,
 						MainModel.getInstance().getCurrentUser().getId());
 
 				return controller.submit();

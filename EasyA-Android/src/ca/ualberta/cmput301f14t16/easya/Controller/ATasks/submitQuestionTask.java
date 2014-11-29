@@ -120,20 +120,12 @@ public class submitQuestionTask extends AsyncTask<Void, Void, Boolean> {
 					.setText("");
 			((EditText) act.findViewById(R.id.submit_question_body))
 					.setText("");
-			if (controller.submitedOffline) {
-				act.finish();
-				Toast.makeText(
-						ctx,
-						"Your Question will be posted online when you connect to the internet!",
-						Toast.LENGTH_LONG).show();
-			} else {
-				String aux = controller.getQuestionId();
-				Intent i = new Intent(ctx, QuestionActivity.class);
-				i.putExtra(GeneralHelper.QUESTION_KEY, aux);
-				i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				act.startActivity(i);
-				act.finish();
-			}
+			String aux = controller.getQuestionId();
+			Intent i = new Intent(ctx, QuestionActivity.class);
+			i.putExtra(GeneralHelper.QUESTION_KEY, aux);
+			i.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+			act.startActivity(i);
+			act.finish();			
 		} else {
 			act.finish();
 			Toast.makeText(ctx,
@@ -144,6 +136,5 @@ public class submitQuestionTask extends AsyncTask<Void, Void, Boolean> {
 		if (pd != null) {
 			pd.dismiss();
 		}
-		MainModel.getInstance().notifyViews();
 	}
 }

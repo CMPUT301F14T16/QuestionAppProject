@@ -1,9 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android" >
     <item
-        android:id="@+id/menu_question_favourite"
+        android:id="@+id/menu_sync"
         android:orderInCategory="100"
+        android:showAsAction="always"
+        android:icon="@drawable/ic_action_refresh"
+        android:title="@string/menu_sync"/>
+    <item
+        android:id="@+id/menu_question_favourite"
+        android:orderInCategory="200"
         android:showAsAction="always"
         android:icon="@drawable/ic_action_not_important"
         android:title="Favourite"/>
+    <item
+        android:id="@+id/menu_sort"
+        android:orderInCategory="250"
+        android:showAsAction="never"
+        android:title="@string/sort"/>    
 </menu>

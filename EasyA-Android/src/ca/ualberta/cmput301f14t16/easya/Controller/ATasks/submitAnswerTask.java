@@ -38,7 +38,7 @@ public class submitAnswerTask extends AsyncTask<Void, Void, Boolean> {
 	 * The unique ID of the parent {@link Question} to the {@link Answer} being
 	 * submitted.
 	 */
-	private String qId;
+	private Question q;
 	/**
 	 * The data stored by the {@link Answer} to be created.
 	 */
@@ -60,11 +60,11 @@ public class submitAnswerTask extends AsyncTask<Void, Void, Boolean> {
 	 * @param pb
 	 *            setter for {@link submitAnswerTask#pb}
 	 */
-	public submitAnswerTask(Activity act, String question, String body,
+	public submitAnswerTask(Activity act, Question question, String body,
 			byte[] pb, boolean useLocation) {
 		this.act = act;
 		this.ctx = act;
-		this.qId = question;
+		this.q = question;
 		this.body = body;
 		this.pb = pb;
 		this.useLocation = useLocation;
@@ -98,7 +98,7 @@ public class submitAnswerTask extends AsyncTask<Void, Void, Boolean> {
 		try {
 			try {
 				BasicNameValuePair vp;
-				controller = NewAnswerController.create(ctx, qId, body, pb,
+				controller = NewAnswerController.create(ctx, q, body, pb,
 						MainModel.getInstance().getCurrentUser().getId(),
 						useLocation ? Location.getLocationCoordinates() : new double[]{0.0,0.0},
 						useLocation ? Location.getLocationName() : "");
@@ -130,13 +130,6 @@ public class submitAnswerTask extends AsyncTask<Void, Void, Boolean> {
 			PMClient pm = new PMClient();
 			pm.clearA(ctx);
 			((EditText) act.findViewById(R.id.submit_answer_body)).setText("");
-			if (controller.submitedOffline) {
-				act.finish();
-				Toast.makeText(
-						ctx,
-						"Your answer will be posted online when you connect to the internet!",
-						Toast.LENGTH_LONG).show();
-			}
 			MainModel.getInstance().notifyViews();
 		} else {
 			act.finish();

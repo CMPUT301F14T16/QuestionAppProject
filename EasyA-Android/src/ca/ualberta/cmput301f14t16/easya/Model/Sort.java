@@ -57,10 +57,10 @@ public class Sort {
 			
 			@Override
 			public int compare(QuestionList lhs, QuestionList rhs) {
-				Long leftTime = lhs.getDate().getTimeInMillis();
-				Long rightTime = rhs.getDate().getTimeInMillis();
+				Integer leftUpVote = lhs.getUpvotesInt();
+				Integer rightUpVote = rhs.getUpvotesInt();
 				
-				return sortOrder ? leftTime.compareTo(rightTime) : rightTime.compareTo(leftTime);
+				return !sortOrder ? leftUpVote.compareTo(rightUpVote) : rightUpVote.compareTo(leftUpVote);
 			}
 		};
 		Collections.sort(questionList, upvoteComparator);	
@@ -112,34 +112,18 @@ public class Sort {
 	 *            The list of {@link Topic} objects to be sorted.
 	 * @return The sorted list.
 	 */
-	public static List<QuestionList> sortDate(boolean sortOrder,
+	public static List<QuestionList> sortDate(final boolean sortOrder,
 			List<QuestionList> questionList) {
-		if (sortOrder) {
-			Collections.sort(questionList, new Comparator<QuestionList>() {				
-				public int compare(QuestionList questionList1,
-						QuestionList questionList2) {
-					try{
-						return questionList2.getDate().compareTo(
-								questionList1.getDate());
-					}catch(Exception ex){
-						return 0;
-					}
-				}				
-			});
-		} else {
-			Collections.sort(questionList, new Comparator<QuestionList>() {
-				public int compare(QuestionList questionList1,
-						QuestionList questionList2) {
-					try{
-						return questionList1.getDate().compareTo(
-								questionList2.getDate());
-					}catch(Exception ex){
-						return 0;
-					}
-				}
-			});
-		}
+			Comparator<QuestionList> dateComparator = new Comparator<QuestionList>() {
+			@Override
+			public int compare(QuestionList lhs, QuestionList rhs) {
+				Long leftTime = lhs.getDate() != null ? lhs.getDate().getTimeInMillis() : 0;
+				Long rightTime = rhs.getDate() != null ? rhs.getDate().getTimeInMillis() : 0;
+				
+				return !sortOrder ? leftTime.compareTo(rightTime) : rightTime.compareTo(leftTime);
+			}
+		};
+		Collections.sort(questionList, dateComparator);	
 		return questionList;
 	}
-
 }

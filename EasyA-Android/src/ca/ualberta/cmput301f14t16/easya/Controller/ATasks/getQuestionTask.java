@@ -18,6 +18,7 @@ public class getQuestionTask extends AsyncTask<Void, Void, Question> {
 	 */
 	private Context ctx;
 	private ProgressDialog pd;
+	private boolean showProgress;
 	/**
 	 * The unique ID of the {@link Question} requested.
 	 */
@@ -37,10 +38,11 @@ public class getQuestionTask extends AsyncTask<Void, Void, Question> {
 	 * @param qId
 	 *            Setter for {@link getQuestionTask#qId}.
 	 */
-	public getQuestionTask(Context ctx, MainView<Question> v, String qId) {
+	public getQuestionTask(Context ctx, MainView<Question> v, String qId, boolean showProgress) {
 		this.ctx = ctx;
 		this.qId = qId;
 		this.v = v;
+		this.showProgress = showProgress;
 	}
 
 	/**
@@ -51,14 +53,16 @@ public class getQuestionTask extends AsyncTask<Void, Void, Question> {
 	@Override
 	protected void onPreExecute() {
 		// TODO Experimental if null block to try and fix crash upon submit question.
-		if (pd == null) {
-			pd = new ProgressDialog(ctx);
-			pd.setTitle("Loading question...");
-			pd.setMessage("Please wait.");
-			pd.setCancelable(false);
-			pd.setIndeterminate(true);
+		if (this.showProgress){
+			if (pd == null) {
+				pd = new ProgressDialog(ctx);
+				pd.setTitle("Loading question...");
+				pd.setMessage("Please wait.");
+				pd.setCancelable(false);
+				pd.setIndeterminate(true);
+			}
+			pd.show();
 		}
-		pd.show();
 	}
 
 	/**

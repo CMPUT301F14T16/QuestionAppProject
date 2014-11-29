@@ -4,6 +4,9 @@ import android.content.Context;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoInternetException;
 import ca.ualberta.cmput301f14t16.easya.Model.Pending;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
+import ca.ualberta.cmput301f14t16.easya.Model.Answer;
+import ca.ualberta.cmput301f14t16.easya.Model.Reply;
+import ca.ualberta.cmput301f14t16.easya.Model.SimpleObjectTrio;
 
 /**
  * Extends {@link MainController} to provide functionality specifically tailored
@@ -18,9 +21,10 @@ public class NewQuestionController extends MainController {
 	 * @param ctx
 	 *            Setter for {@link MainController#ctx}.
 	 */
-	protected NewQuestionController(Pending p, Context ctx) {
+	protected NewQuestionController(Pending p, Context ctx, Question q) {
 		super(p);
 		this.ctx = ctx;
+		contentTrio = new SimpleObjectTrio<Question, Answer, Reply>(q, null, null);
 	}
 
 	/**
@@ -43,9 +47,9 @@ public class NewQuestionController extends MainController {
 	 */
 	public static NewQuestionController create(Context ctx, String title,
 			String body, byte[] bitmap, String authorID, double[] coordinate, String location) {
-		Question newQuestion = new Question(title, body, bitmap, authorID, coordinate, location);
+		Question newQuestion = new Question(title, body, bitmap, authorID, coordinate, location);		
 		Pending newPending = new Pending(newQuestion);
-		return new NewQuestionController(newPending, ctx);
+		return new NewQuestionController(newPending, ctx, newQuestion);
 	}
 
 	/**
@@ -55,10 +59,15 @@ public class NewQuestionController extends MainController {
 	 * @see ca.ualberta.cmput301f14t16.easya.Controller.MainController#submit()
 	 */
 	public boolean submit() {
-		try {
-			return super.submit();
+		try {			
+			if (super.submit()){
+				saveOfflineContent();
+				return true;
+			}
+			return false;
 		} catch (NoInternetException ex) {
 			super.submitOffline();
+			saveOfflineContent();
 			return true;
 		} catch (Exception ex) {
 			return false;

@@ -44,10 +44,9 @@ public class QuestionList {
 	 */
 	private String username;
 	/**
-	 * The number of upvotes given to the original {@link Question} (as a
-	 * {@link String}).
+	 * The number of upvotes given to the original {@link Question}.
 	 */
-	private String upvotes;
+	private int upvotes;
 	/**
 	 * The date at which the instance of Content was created.
 	 */
@@ -87,7 +86,7 @@ public class QuestionList {
 	 *            Setter for {@link QuestionList#image}
 	 */
 	public QuestionList(String id, String title, String username, String userid,
-			String answers, String upvotes, boolean image, Calendar date, double[] coords, String location) {
+			String answers, int upvotes, boolean image, Calendar date, double[] coords, String location) {
 		this.id = id;
 		this.title = title;
 		this.answers = answers;
@@ -122,10 +121,17 @@ public class QuestionList {
 	}
 
 	/**
-	 * @return {@link QuestionList#upvotes}
+	 * @return {@link QuestionList#upvotes} as a string
 	 */
 	public String getUpvotes() {
-		return this.upvotes;
+		return String.valueOf(upvotes);
+	}
+	
+	/**
+	 * @return {@link QuestionList#upvotes}
+	 */
+	public int getUpvotesInt() {
+		return upvotes;
 	}
 
 	/**
