@@ -78,7 +78,6 @@ public class SortTest extends TestCase {
 			}
 		}
 		
-	}
 	public void GeolocationTest() {
 		boolean sortOrder;
 		ArrayList<QuestionList> questionListTest = new ArrayList<QuestionList>();
@@ -95,5 +94,6 @@ public class SortTest extends TestCase {
 				assertFalse(questionListTest.get(i++).getImage() == false);
 			}
 		}
+	}
 	}
 
