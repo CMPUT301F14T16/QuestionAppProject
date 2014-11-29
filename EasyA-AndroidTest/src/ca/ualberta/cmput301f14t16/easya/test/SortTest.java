@@ -79,10 +79,10 @@ public class SortTest extends TestCase {
 			}
 		}
 		
+	//tests that Sort by location works.
 	public void GeolocationTest() {
 		boolean sortOrder;
 		ArrayList<QuestionList> questionListTest = new ArrayList<QuestionList>();
-		//double dis1=GeoCoder.toFindDistance(questionListTest.get(0).getCoordinates(),userLocation);
 		sortOrder = true;
 		Sort.sortDistance(sortOrder, questionListTest);
 		for(int i = 0; i < questionListTest.size(); i++){
