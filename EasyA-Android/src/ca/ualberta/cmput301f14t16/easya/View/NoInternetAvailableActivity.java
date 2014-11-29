@@ -33,11 +33,11 @@ public class NoInternetAvailableActivity extends Activity {
 		}
 	}
 
-	/*
+	
 	public void AddNewAnswer(View v){
 		Intent i = new Intent(v.getContext(), SubmitAnswerActivity.class);
 		i.putExtra(GeneralHelper.AQUESTION_KEY, qId);
 		this.startActivity(i);
 	}
-	*/
+
 }
