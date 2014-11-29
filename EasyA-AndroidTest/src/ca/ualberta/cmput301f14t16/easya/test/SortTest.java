@@ -2,6 +2,7 @@ package ca.ualberta.cmput301f14t16.easya.test;
 
 import java.util.ArrayList;
 
+import ca.ualberta.cmput301f14t16.easya.Model.GeoCoder;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Model.QuestionList;
 import ca.ualberta.cmput301f14t16.easya.Model.Sort;
@@ -78,22 +79,23 @@ public class SortTest extends TestCase {
 			}
 		}
 		
-	public void GeolocationTest() {
-		boolean sortOrder;
-		ArrayList<QuestionList> questionListTest = new ArrayList<QuestionList>();
-		sortOrder = true;
-		Sort.sortDistance(sortOrder, questionListTest);
-		for(int i = 0; i < questionListTest.size(); i++){
-			if(questionListTest.get(i).getImage() == false){
-				assertFalse(questionListTest.get(i++).getImage() == true);
-			}
-		}
-		sortOrder = false;
-		for(int i = 0; i < questionListTest.size(); i++){
-			if(questionListTest.get(i).getImage() == true){
-				assertFalse(questionListTest.get(i++).getImage() == false);
-			}
-		}
-	}
+//	public void GeolocationTest() {
+//		boolean sortOrder;
+//		ArrayList<QuestionList> questionListTest = new ArrayList<QuestionList>();
+//		double dis1=GeoCoder.toFindDistance(questionListTest.get(0).getCoordinates(),userLocation);
+//		sortOrder = true;
+//		Sort.sortDistance(sortOrder, questionListTest);
+//		for(int i = 0; i < questionListTest.size(); i++){
+//			if(questionListTest.get(i). == false){
+//				assertFalse(questionListTest.get(i++).getImage() == true);
+//			}
+//		}
+//		sortOrder = false;
+//		for(int i = 0; i < questionListTest.size(); i++){
+//			if(questionListTest.get(i).getCoordinates()){
+//				assertFalse(questionListTest.get(i++).getImage() == false);
+//			}
+//		}
+//	}
 	}
 
