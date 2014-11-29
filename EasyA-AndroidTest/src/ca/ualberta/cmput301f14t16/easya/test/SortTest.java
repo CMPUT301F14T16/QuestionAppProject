@@ -79,23 +79,23 @@ public class SortTest extends TestCase {
 			}
 		}
 		
-//	public void GeolocationTest() {
-//		boolean sortOrder;
-//		ArrayList<QuestionList> questionListTest = new ArrayList<QuestionList>();
-//		double dis1=GeoCoder.toFindDistance(questionListTest.get(0).getCoordinates(),userLocation);
-//		sortOrder = true;
-//		Sort.sortDistance(sortOrder, questionListTest);
-//		for(int i = 0; i < questionListTest.size(); i++){
-//			if(questionListTest.get(i). == false){
-//				assertFalse(questionListTest.get(i++).getImage() == true);
-//			}
-//		}
-//		sortOrder = false;
-//		for(int i = 0; i < questionListTest.size(); i++){
-//			if(questionListTest.get(i).getCoordinates()){
-//				assertFalse(questionListTest.get(i++).getImage() == false);
-//			}
-//		}
-//	}
+	public void GeolocationTest() {
+		boolean sortOrder;
+		ArrayList<QuestionList> questionListTest = new ArrayList<QuestionList>();
+		//double dis1=GeoCoder.toFindDistance(questionListTest.get(0).getCoordinates(),userLocation);
+		sortOrder = true;
+		Sort.sortDistance(sortOrder, questionListTest);
+		for(int i = 0; i < questionListTest.size(); i++){
+			double[] testDis1={0.0,0.0};
+			assertFalse(GeoCoder.toFindDistance(questionListTest.get(i).getCoordinates(), testDis1) < 
+					GeoCoder.toFindDistance(questionListTest.get(i++).getCoordinates(), testDis1));
+		}
+		sortOrder = false;
+		for(int i = 0; i < questionListTest.size(); i++){
+			double[] testDis1={0.0,0.0};
+			assertFalse(GeoCoder.toFindDistance(questionListTest.get(i).getCoordinates(), testDis1) > 
+					GeoCoder.toFindDistance(questionListTest.get(i++).getCoordinates(), testDis1));
+			}
+		}
 	}
 
