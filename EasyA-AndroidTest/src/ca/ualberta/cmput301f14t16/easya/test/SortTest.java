@@ -79,4 +79,21 @@ public class SortTest extends TestCase {
 		}
 		
 	}
+	public void GeolocationTest() {
+		boolean sortOrder;
+		ArrayList<QuestionList> questionListTest = new ArrayList<QuestionList>();
+		sortOrder = true;
+		Sort.sortDistance(sortOrder, questionListTest);
+		for(int i = 0; i < questionListTest.size(); i++){
+			if(questionListTest.get(i).getImage() == false){
+				assertFalse(questionListTest.get(i++).getImage() == true);
+			}
+		}
+		sortOrder = false;
+		for(int i = 0; i < questionListTest.size(); i++){
+			if(questionListTest.get(i).getImage() == true){
+				assertFalse(questionListTest.get(i++).getImage() == false);
+			}
+		}
+	}
 
