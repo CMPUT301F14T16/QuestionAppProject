@@ -49,4 +49,12 @@ public class UserTest extends TestCase{
 		assertEquals(user.getId(),userid);
 	}
 	
+	public void testCreateOn() {
+		username = "Lingbo";
+		email = "lingbo19.tang@gmail.com";
+		user = new User(email,username);
+		date = user.getCreatedOn();
+		assertEquals(user.getCreatedOn(),date); 
+	}
+	
 }
