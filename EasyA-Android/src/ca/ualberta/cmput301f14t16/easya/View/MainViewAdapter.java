@@ -73,9 +73,9 @@ public class MainViewAdapter extends ArrayAdapter<QuestionList> {
 			view.setOnClickListener(new View.OnClickListener() {
 				
 				public void onClick(View v) {
+					String qId = ((QuestionList) ((MainViewAdapterHolder) v
+							.getTag()).getTitle().getTag()).getId();
 					try{
-						String qId = ((QuestionList) ((MainViewAdapterHolder) v
-								.getTag()).getTitle().getTag()).getId();
 						List<QuestionList> saved= MainModel.getInstance().getAllSavedQuestions();
 						int a;
 						for (a=0;a<saved.size();a++){
@@ -99,6 +99,7 @@ public class MainViewAdapter extends ArrayAdapter<QuestionList> {
 					}
 					catch(NoInternetException e){
 						Intent i = new Intent(v.getContext(),NoInternetAvailableActivity.class);
+						i.putExtra(GeneralHelper.QUESTION_KEY, qId);
 						getContext().startActivity(i);
 					} catch (NoContentAvailableException e) {
 						// TODO Auto-generated catch block

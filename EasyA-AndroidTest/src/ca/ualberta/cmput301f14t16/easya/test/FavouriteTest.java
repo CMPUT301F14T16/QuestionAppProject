@@ -27,8 +27,7 @@ public class FavouriteTest extends TestCase {
 	private List<String> createdContent;
 	public final static String USERKEY = "ca.ualberta.cmput301f14t16.easya.USERKEY";
 	
-	
-	
+	//Tests to see if a Topic can be favorited
 	public void testFavouriteTest() {
 		
 		Question q1 = new Question("Title Submission Test", "Body of Question", "test@ualberta.ca");

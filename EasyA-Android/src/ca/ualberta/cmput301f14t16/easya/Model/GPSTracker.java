@@ -1,5 +1,11 @@
 package ca.ualberta.cmput301f14t16.easya.Model;
 
+
+/**
+ * see http://stackoverflow.com/questions/25421365/android-showing-alert-dialog-leads-to-badtokenexception-in-service-class on Nov 27, 2014 by eeadev
+ * 
+**/
+
 import android.app.AlertDialog;
 import android.app.Service;
 import android.content.Context;
