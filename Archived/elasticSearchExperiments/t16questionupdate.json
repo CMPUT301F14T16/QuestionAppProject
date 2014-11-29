@@ -1,9 +1,0 @@
-{
-    "script" : "ctx._source.answers = answers += new_answer",
-    "params" : {
-        "new_answer" : {
-            "authorEmail" : "commande@ualberta.ca",
-            "body" : "Body"
-        }
-    }
-}

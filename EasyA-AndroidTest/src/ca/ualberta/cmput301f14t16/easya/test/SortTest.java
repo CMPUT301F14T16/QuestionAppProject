@@ -2,6 +2,7 @@ package ca.ualberta.cmput301f14t16.easya.test;
 
 import java.util.ArrayList;
 
+import ca.ualberta.cmput301f14t16.easya.Model.GeoCoder;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Model.QuestionList;
 import ca.ualberta.cmput301f14t16.easya.Model.Sort;
@@ -78,5 +79,23 @@ public class SortTest extends TestCase {
 			}
 		}
 		
+	//tests that Sort by location works.
+	public void GeolocationTest() {
+		boolean sortOrder;
+		ArrayList<QuestionList> questionListTest = new ArrayList<QuestionList>();
+		sortOrder = true;
+		Sort.sortDistance(sortOrder, questionListTest);
+		for(int i = 0; i < questionListTest.size(); i++){
+			double[] testDis1={0.0,0.0};
+			assertFalse(GeoCoder.toFindDistance(questionListTest.get(i).getCoordinates(), testDis1) < 
+					GeoCoder.toFindDistance(questionListTest.get(i++).getCoordinates(), testDis1));
+		}
+		sortOrder = false;
+		for(int i = 0; i < questionListTest.size(); i++){
+			double[] testDis1={0.0,0.0};
+			assertFalse(GeoCoder.toFindDistance(questionListTest.get(i).getCoordinates(), testDis1) > 
+					GeoCoder.toFindDistance(questionListTest.get(i++).getCoordinates(), testDis1));
+			}
+		}
 	}
 
