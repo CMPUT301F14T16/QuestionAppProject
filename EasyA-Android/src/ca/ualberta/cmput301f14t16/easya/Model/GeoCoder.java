@@ -58,6 +58,12 @@ public class GeoCoder {
 		return sb.toString();
 	}
 
+	/**
+	 * Converts an address to a lat/lon coordinate pair.
+	 * 
+	 * @param strAddress
+	 * @return The lat/lon pair as an array of doubles.
+	 */
 	public static double[] toLatLong(String strAddress) {
 		Geocoder geocoder = new Geocoder(ContextProvider.get(),
 				Locale.getDefault());
@@ -76,6 +82,13 @@ public class GeoCoder {
 		return returnLatLong;
 	}
 
+	/**
+	 * Finds the distance between a pair of lat/lon coordinate pairs.
+	 * 
+	 * @param coordinate1
+	 * @param coordinate2
+	 * @return The distance between the two lat/lon coordinate pairs.
+	 */
 	public static double toFindDistance(double[] coordinate1,
 			double[] coordinate2) {
 		double R = 6371000; // m
@@ -92,6 +105,12 @@ public class GeoCoder {
 		return d;
 	}
 
+	/**
+	 * Converts a pair of lat/lon coordinates to a String represtentations.
+	 * 
+	 * @param coord
+	 * @return The lat/lon coordinates as a String represtentations.
+	 */
 	public static String coordinatesToString(double[] coord) {
 		try {
 			return String.valueOf(coord[0]) + ";" + String.valueOf(coord[1]);
@@ -100,6 +119,13 @@ public class GeoCoder {
 		}
 	}
 
+	/**
+	 * Converts a string representation of a pair of lat/lon coordinates to a
+	 * double array.
+	 * 
+	 * @param coord
+	 * @return The lat/lon coordinates as an array of doubles
+	 */
 	public static double[] coordinatesFromString(String coord) {
 		double[] dcoord = new double[2];
 		dcoord[0] = Double.valueOf((coord.split(";")[0]));
