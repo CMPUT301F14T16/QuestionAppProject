@@ -121,24 +121,16 @@ public class Sort {
 			Collections.sort(questionList, new Comparator<QuestionList>() {				
 				public int compare(QuestionList questionList1,
 						QuestionList questionList2) {
-					try{
-						return questionList2.getDate().compareTo(
+					return questionList2.getDate().compareTo(
 								questionList1.getDate());
-					}catch(Exception ex){
-						return 0;
-					}
 				}				
 			});
 		} else {
 			Collections.sort(questionList, new Comparator<QuestionList>() {
 				public int compare(QuestionList questionList1,
 						QuestionList questionList2) {
-					try{
-						return questionList1.getDate().compareTo(
+					return questionList1.getDate().compareTo(
 								questionList2.getDate());
-					}catch(Exception ex){
-						return 0;
-					}
 				}
 			});
 		}
