@@ -422,6 +422,15 @@ public class Cache {
 		}
 	}
 
+	/**
+	 * Acquires all {@link Question} objects from the elastic search database
+	 * marked as favourite by the current user, and addes them to the Cache.
+	 * 
+	 * @return A list of all {@link QuestionList} objects marked as the user's
+	 *         favourites.
+	 * @throws NoContentAvailableException
+	 *             If no relevant content was found.
+	 */
 	public List<QuestionList> getAllUserFavourites()
 			throws NoContentAvailableException {
 		if (InternetCheck.haveInternet()) {
@@ -449,6 +458,14 @@ public class Cache {
 		}
 	}
 
+	/**
+	 * Gets a list of {@link QuestionList} objects containing all questions
+	 * marked as favourite by the user.
+	 * 
+	 * @return All {@link QuestionList} objects from the Cache that have been
+	 *         marked as favourite by the current user.
+	 * @throws NoContentAvailableException
+	 */
 	public List<QuestionList> getAllUserFavouritesFromCache()
 			throws NoContentAvailableException {
 		List<String> userFavs = MainModel.getInstance().getCurrentUser()
