@@ -6,8 +6,12 @@ import java.util.Locale;
 
 import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.saveToDeviceTask;
+import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
+import ca.ualberta.cmput301f14t16.easya.Exceptions.NoInternetException;
 import ca.ualberta.cmput301f14t16.easya.Model.GeneralHelper;
 import ca.ualberta.cmput301f14t16.easya.Model.GeoCoder;
+import ca.ualberta.cmput301f14t16.easya.Model.InternetCheck;
+import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.QuestionList;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -67,13 +71,39 @@ public class MainViewAdapter extends ArrayAdapter<QuestionList> {
 			view.setTag(new MainViewAdapterHolder(qTitle, qAuthor, qAnswers,
 					qUpVotes, qLocation));
 			view.setOnClickListener(new View.OnClickListener() {
+				
 				public void onClick(View v) {
-					Intent i = new Intent(getContext(), QuestionActivity.class);
-					// Get the object in the title tag
-					String qId = ((QuestionList) ((MainViewAdapterHolder) v
-							.getTag()).getTitle().getTag()).getId();
-					i.putExtra(GeneralHelper.QUESTION_KEY, qId);
-					getContext().startActivity(i);
+					try{
+						String qId = ((QuestionList) ((MainViewAdapterHolder) v
+								.getTag()).getTitle().getTag()).getId();
+						List<QuestionList> saved= MainModel.getInstance().getAllSavedQuestions();
+						int a;
+						for (a=0;a<saved.size();a++){
+							if (qId.equals(saved.get(a).getId())){
+								Intent i = new Intent(getContext(), QuestionActivity.class);
+								// Get the object in the title tag
+
+								i.putExtra(GeneralHelper.QUESTION_KEY, qId);
+								getContext().startActivity(i);
+								return;
+							}
+						}
+						
+						if (!InternetCheck.forceCheckForInternet())
+							throw new NoInternetException();
+						Intent i = new Intent(getContext(), QuestionActivity.class);
+						// Get the object in the title tag
+
+						i.putExtra(GeneralHelper.QUESTION_KEY, qId);
+						getContext().startActivity(i);
+					}
+					catch(NoInternetException e){
+						Intent i = new Intent(v.getContext(),NoInternetAvailableActivity.class);
+						getContext().startActivity(i);
+					} catch (NoContentAvailableException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
 				}
 			});
 			view.setOnLongClickListener(new View.OnLongClickListener() {
