@@ -11,6 +11,9 @@ public class GeoLocationTest extends TestCase {
 	private GPSTracker gps;
 	private final static String LOG_TAG = "GeoLocationTest";
 	//tests if gps initializes and sets location.
+	//In order for this test to pass the emulator needs
+	//or device must have a working gps to properly test
+	//the coordinates.
 	public void testGPS() {
 		gps = new GPSTracker(gps);
     	double [] coordinate = new double[2];

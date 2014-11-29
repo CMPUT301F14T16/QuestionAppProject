@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="194dp"
+        android:text="No Internet found!"
+        android:textAppearance="?android:attr/textAppearanceLarge" />
+
+    	<LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+           android:background="@drawable/add_question_bar_background">
+    </LinearLayout>
+
+    	<EditText
+    	    android:id="@+id/question_add_answer"
+    	    android:layout_width="match_parent"
+    	    android:layout_height="wrap_content"
+    	    android:layout_alignParentBottom="true"
+    	    android:layout_alignParentLeft="true"
+    	    android:ems="10"
+    	    android:focusable="false"
+    	    android:focusableInTouchMode="false"
+    	    android:hint="@string/create_answer_hint"
+    	    android:onClick="AddNewAnswer" >
+
+    	    <requestFocus />
+    	</EditText>
+
+</RelativeLayout>

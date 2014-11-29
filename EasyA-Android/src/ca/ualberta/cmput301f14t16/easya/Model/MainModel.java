@@ -183,7 +183,7 @@ public class MainModel {
 		}
 	}
 
-	public void wipeData() {
+	public static void wipeData() {
 		Cache.getInstance().wipeCache();
 		PMClient pm = new PMClient();
 		pm.wipeData();

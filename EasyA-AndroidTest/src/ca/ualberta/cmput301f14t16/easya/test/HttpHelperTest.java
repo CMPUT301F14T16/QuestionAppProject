@@ -16,6 +16,7 @@ import com.google.gson.reflect.TypeToken;
  * 
  * @author Brett Commandeur
  *
+ *
  */
 public class HttpHelperTest extends TestCase {
 	
