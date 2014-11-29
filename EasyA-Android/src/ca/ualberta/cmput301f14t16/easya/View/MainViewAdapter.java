@@ -76,21 +76,22 @@ public class MainViewAdapter extends ArrayAdapter<QuestionList> {
 					String qId = ((QuestionList) ((MainViewAdapterHolder) v
 							.getTag()).getTitle().getTag()).getId();
 					try{
-						List<QuestionList> saved= MainModel.getInstance().getAllSavedQuestions();
-						int a;
-						for (a=0;a<saved.size();a++){
-							if (qId.equals(saved.get(a).getId())){
-								Intent i = new Intent(getContext(), QuestionActivity.class);
+						if (!InternetCheck.forceCheckForInternet()){
+
+							List<QuestionList> saved= MainModel.getInstance().getAllSavedQuestions();
+							int a;
+							for (a=0;a<saved.size();a++){
+								if (qId.equals(saved.get(a).getId())){
+									Intent i = new Intent(getContext(), QuestionActivity.class);
 								// Get the object in the title tag
 
-								i.putExtra(GeneralHelper.QUESTION_KEY, qId);
-								getContext().startActivity(i);
-								return;
+									i.putExtra(GeneralHelper.QUESTION_KEY, qId);
+									getContext().startActivity(i);
+									return;
+								}
 							}
-						}
-						
-						if (!InternetCheck.forceCheckForInternet())
 							throw new NoInternetException();
+						}
 						Intent i = new Intent(getContext(), QuestionActivity.class);
 						// Get the object in the title tag
 
