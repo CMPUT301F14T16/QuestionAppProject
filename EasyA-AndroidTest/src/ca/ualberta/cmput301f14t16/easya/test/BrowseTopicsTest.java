@@ -33,9 +33,8 @@ public class BrowseTopicsTest extends TestCase {
 		e.printStackTrace();
 	}
 	assertNotNull(ql);
-	//Topic Previews (not yet tested for part 3 as browse is not yet implemented)
-	//User will choose what topics he/she would like to browse if he has Internet connectivity.
-	//this is assuming topics is in the database. The user will select the topic he/she
-	//would like to browse then the browseTopicPreview will retrieve that topic.
+	//Topic Previews tests are covered in the
+	//search test as we test if a user
+	//can search for topics properly. 
 }
 }
