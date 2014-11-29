@@ -123,6 +123,16 @@
 	            android:name="android.support.PARENT_ACTIVITY"
 	            android:value="ca.ualberta.cmput301f14t16.easya.View.MainActivity" />            
         </activity>
+        <activity
+            android:name="ca.ualberta.cmput301f14t16.easya.View.NoInternetAvailableActivity"
+            android:label="@string/app_name"
+            android:screenOrientation="portrait"
+            android:parentActivityName="ca.ualberta.cmput301f14t16.easya.View.MainActivity">
+            <meta-data
+	            android:name="android.support.PARENT_ACTIVITY"
+	            android:value="ca.ualberta.cmput301f14t16.easya.View.MainActivity" />            
+        </activity>
+        
     </application>
 
 </manifest>

@@ -30,27 +30,36 @@ public class GeneralHelper {
 	public static final String USERCOORDINATES = "ca.ualberta.cmput301f14t16.easya.USERCOORDINATES";
 	public static final String USERLOCATION = "ca.ualberta.cmput301f14t16.easya.USERLOCATION";
 	public static final String USERLOCATIONPREFERENCE = "ca.ualberta.cmput301f14t16.easya.USERLOCATIONPREFERENCE";
-	
-	//TODO Docstring method description
+
+	// TODO Docstring method description
 	/**
+	 * Retrieves the first Account in the AccountManager that matches an email
+	 * pattern.
+	 * 
 	 * @return
 	 */
-	public final static String retrieveEmail(){
-		try{
+	public final static String retrieveEmail() {
+		try {
 			Pattern emailPattern = Patterns.EMAIL_ADDRESS;
-			Account[] accounts = AccountManager.get(ContextProvider.get()).getAccounts();
+			Account[] accounts = AccountManager.get(ContextProvider.get())
+					.getAccounts();
 			for (Account account : accounts) {
-			    if (emailPattern.matcher(account.name).matches()) {
-			        return account.name;
-			    }
+				if (emailPattern.matcher(account.name).matches()) {
+					return account.name;
+				}
 			}
 			return "";
-		}catch(Exception ex){
+		} catch (Exception ex) {
 			return "";
 		}
 	}
-	
-	public static List<QuestionList> lqToQuestionlist(List<Question> lq){
+
+	/**
+	 * Takes a list of {@link Question} objects, and converts it into a list of {@link QuestionList} objects.
+	 * @param lq The list of {@link Question} objects to convert.
+	 * @return The provided list of {@link Question} objects as a list of {@link QuestionList} objects.
+	 */
+	public static List<QuestionList> lqToQuestionlist(List<Question> lq) {
 		List<QuestionList> lst = new ArrayList<QuestionList>();
 		for (Question q : lq) {
 			lst.add(new QuestionList(q.getId(), q.getTitle(), q

@@ -1,6 +1,6 @@
 package ca.ualberta.cmput301f14t16.easya.test;
 
-import java.io.ByteArrayInputStream; 
+import java.io.ByteArrayInputStream;  
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 
@@ -26,8 +26,9 @@ public class AttatchPictureTest extends TestCase {
 
 		byte[] bytebitmap;
 		double[] coordinates = new double[2];
-		coordinates[0] = 14.22;
-		coordinates[1] = 33.64;
+		coordinates[0] = 52.45;
+		coordinates[1] = 13.37;
+		String location = "Berlin German";
 		Intent data = new Intent();
 		Uri selectedImageUri = data.getData();
 		String[] projection = { MediaStore.Images.Media.DATA};
@@ -42,7 +43,7 @@ public class AttatchPictureTest extends TestCase {
 			byte[] byteArray = stream.toByteArray();
 			bytebitmap = Base64.encode(byteArray, 1);
 			Question q1 = new Question("What are you doing?","This is what I'm doing",bytebitmap,"lingbo@ualberta.ca");
-			Answer a1 = new Answer("This is it",bytebitmap,"lingbo@ualberta.ca",coordinates);
+			Answer a1 = new Answer("This is it",bytebitmap,"lingbo@ualberta.ca",coordinates,location);
 			assertTrue(q1.getImage().equals(bytebitmap));
 			assertTrue(a1.getImage().equals(bytebitmap));
 			

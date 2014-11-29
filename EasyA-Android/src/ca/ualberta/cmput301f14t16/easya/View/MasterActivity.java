@@ -11,6 +11,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import ca.ualberta.cmput301f14t16.easya.Model.Sort;
+import ca.ualberta.cmput301f14t16.easya.Model.Data.PMClient;
 import android.content.res.Configuration;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -38,6 +39,7 @@ import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Provides a general implementation of an {@link android.app.Activity}
@@ -208,6 +210,16 @@ public abstract class MasterActivity extends SecureActivity implements
 			case 3: // Saved questions
 				if (!(position == 3)) {
 					Intent i = new Intent(v.getContext(), SavedActivity.class);
+					startActivity(i);
+				}
+				break;
+			case 4: // logout
+				if (!(position == 4)) {
+					PMClient pm = new PMClient();
+					pm.removeUser();
+					MainModel.getInstance().removeMainUser();
+					//MainModel.wipeData();
+					Intent i = new Intent(v.getContext(), WelcomeActivity.class);
 					startActivity(i);
 				}
 				break;
