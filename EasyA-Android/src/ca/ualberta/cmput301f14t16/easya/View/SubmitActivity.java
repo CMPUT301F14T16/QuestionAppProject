@@ -12,6 +12,8 @@ import android.provider.MediaStore;
  * A subclass of {@link Activity} that provides the basic functionality allowing
  * the user to submit a question or an answer.
  *
+ * see http://geekonjava.blogspot.ca/2014/03/upload-image-on-server-in-android-using.html on Nov 01, 2014 by Sawan Kumar
+ *
  * @author Cauani
  *
  */
