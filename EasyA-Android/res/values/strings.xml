@@ -36,5 +36,6 @@
         <item>Favourites</item>
         <item>My questions</item>
         <item>Saved questions</item>
+        <item>Log out</item>
     </string-array>
 </resources>

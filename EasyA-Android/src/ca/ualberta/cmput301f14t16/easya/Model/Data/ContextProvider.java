@@ -6,12 +6,18 @@ import android.content.Context;
 public class ContextProvider extends Application {
     private static Context ctx;
  
+    /**
+     * @see android.app.Application#onCreate()
+     */
     @Override
     public void onCreate() {
         super.onCreate(); 
         ctx = getApplicationContext(); 
     }
  
+    /**
+     * @return The current Context of the application.
+     */
     public static Context get() {
         return ctx;
     }	 

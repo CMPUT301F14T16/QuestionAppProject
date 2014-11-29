@@ -131,7 +131,9 @@ public class MainModel {
 		pm.saveUser(u);
 		this.mainUser = null;
 	}
-
+	public void removeMainUser() {
+		this.mainUser = null;
+	}
 	public boolean updateUsername(User u) {
 		ESClient es = new ESClient();
 		try {
