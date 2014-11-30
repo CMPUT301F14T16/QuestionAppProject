@@ -66,6 +66,7 @@ public abstract class Content {
 		this.body = body;
 		this.userId = userId;
 		this.id = UUID.randomUUID().toString(); //TODO: unify the creation of ID's method
+		this.createdOn = Calendar.getInstance();
 	}
 	
 	public Content(String body, String userId, double[] coordinate, String location) {
