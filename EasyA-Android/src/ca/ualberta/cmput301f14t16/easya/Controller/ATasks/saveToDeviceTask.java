@@ -28,6 +28,13 @@ public class saveToDeviceTask extends AsyncTask<Void, Void, Boolean> {
 		this.qId = qid;
 	}
 
+	@Override
+	protected void onPreExecute() {
+		Toast.makeText(ContextProvider.get(),
+				"Your question is being saved to the device.",
+				Toast.LENGTH_SHORT).show();
+	}
+
 	/**
 	 * Saves the requested {@link Question} object to local memory.
 	 * 
@@ -36,10 +43,7 @@ public class saveToDeviceTask extends AsyncTask<Void, Void, Boolean> {
 	@Override
 	protected Boolean doInBackground(Void... voids) {
 		if (InternetCheck.haveInternet()){
-			try {
-				Toast.makeText(ContextProvider.get(),
-						"Your question is being saved to the device.",
-						Toast.LENGTH_SHORT).show();
+			try {				
 				return (MainModel.getInstance().getQuestionById(qId) != null);
 			} catch (NoContentAvailableException ex) {
 				return false;
