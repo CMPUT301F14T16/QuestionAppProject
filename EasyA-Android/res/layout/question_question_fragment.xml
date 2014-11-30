@@ -67,7 +67,8 @@
 	        android:layout_centerHorizontal="true"
 	        android:layout_marginTop="2dp"
 	        android:layout_below="@+id/question_fragment_container" 
-        	android:scaleType="centerInside"/>
+        	android:scaleType="centerInside"
+        	android:adjustViewBounds="true"/>
         <TextView
             android:id="@+id/question_fragment_authorDate"
             android:layout_width="wrap_content"
