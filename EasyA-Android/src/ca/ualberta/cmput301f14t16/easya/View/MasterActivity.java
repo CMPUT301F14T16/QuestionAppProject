@@ -223,7 +223,7 @@ public abstract class MasterActivity extends SecureActivity implements
 					PMClient pm = new PMClient();
 					pm.removeUser();
 					MainModel.getInstance().removeMainUser();
-					//MainModel.wipeData();
+					MainModel.wipeData();
 					Intent i = new Intent(v.getContext(), WelcomeActivity.class);
 					startActivity(i);
 				}
