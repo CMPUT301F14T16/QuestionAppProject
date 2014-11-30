@@ -2,7 +2,6 @@ package ca.ualberta.cmput301f14t16.easya.Model;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.Locale;
 import java.util.TimeZone;
 import java.util.UUID;

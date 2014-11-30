@@ -66,33 +66,35 @@ public class MainModel {
 	}
 	
 	public void notifyViews() {
-		lock.lock();
-		if (runner == null || !runner.isAlive()){
-			runner = new Thread()
-			{
-			    @Override
-			    public void run() {		
-				        try {
-			        	//Delay introduced due to ESClient not being fast enough (sigh) ;;
-			        	sleep(200);
-			        	List<MainView<?>> l = getAllViews();
-						for (int i = l.size() - 1; i>=0;i--){
-							MainView<?> view = l.get(i);
-							System.out.println("Updating view 1");
-							view.update();
-						}
-						usersList = null;
-					}catch(Exception ex){
-						System.out.println("Error!!!!!!" + ex.getMessage());
-					}finally{
-						try{
-							lock.unlock();
-						}catch(Exception ex){}
-					}			    	
-			    }
-			};
-			runner.start();
-		}
+		try{
+			lock.lock();
+			if (runner == null || !runner.isAlive()){
+				runner = new Thread()
+				{
+				    @Override
+				    public void run() {		
+					        try {
+				        	//Delay introduced due to ESClient not being fast enough (sigh) ;;
+				        	sleep(300);
+				        	List<MainView<?>> l = getAllViews();
+							for (int i = l.size() - 1; i>=0;i--){
+								MainView<?> view = l.get(i);
+								System.out.println("Updating view 1");
+								view.update();
+							}
+							usersList = null;
+						}catch(Exception ex){
+							System.out.println("Error!!!!!!" + ex.getMessage());
+						}finally{
+							try{
+								lock.unlock();
+							}catch(Exception ex){}
+						}			    	
+				    }
+				};
+				runner.start();
+			}
+		}catch(Exception ex){}
 	}
 
 	public List<MainView<?>> getAllViews() {
