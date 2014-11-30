@@ -47,7 +47,7 @@ public class NewAnswerController extends MainController {
 	 */
 	public static NewAnswerController create(Context ctx, Question q,
 			String body, byte[] bitmap, String authorID,double[] coordinate, String location) {
-		Answer newAnswer = new Answer(body, bitmap, authorID,coordinate, location);
+		Answer newAnswer = new Answer(body, bitmap, authorID, coordinate, location);
 		Pending newPending = new Pending(q.getId(), newAnswer);
 		return new NewAnswerController(newPending, ctx, q, newAnswer);
 	}
