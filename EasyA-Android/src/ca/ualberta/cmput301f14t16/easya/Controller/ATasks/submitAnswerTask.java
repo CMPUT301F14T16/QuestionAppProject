@@ -130,6 +130,7 @@ public class submitAnswerTask extends AsyncTask<Void, Void, Boolean> {
 			PMClient pm = new PMClient();
 			pm.clearA(ctx);
 			((EditText) act.findViewById(R.id.submit_answer_body)).setText("");
+			MainModel.getInstance().killNotify();
 			MainModel.getInstance().notifyViews();
 		} else {
 			act.finish();

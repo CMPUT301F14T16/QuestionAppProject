@@ -20,6 +20,7 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.Toast;
 
 /**
  * An {@link android.app.Activity} subclass that displays a question page. It
@@ -95,8 +96,14 @@ public class QuestionActivity extends SecureActivity implements
 			onBackPressed();
 			break;
 		case R.id.menu_sync:
-			this.question = null;
-			update();
+			if (!syncInProgress){
+				question = null;
+				update();
+				if (!InternetCheck.haveInternet())
+					Toast.makeText(this, 
+							"We can't connect to the internet right now, check your internet connectivity and try again!", 
+							Toast.LENGTH_LONG).show();
+			}
 			break;
 		case R.id.menu_question_favourite:
 			setFavourite();
@@ -117,7 +124,7 @@ public class QuestionActivity extends SecureActivity implements
 			} else {
 				m.setIcon(R.drawable.ic_action_not_important);
 			}
-			(new favouriteTask(this, this.question)).execute();
+			(new favouriteTask(this, question)).execute();
 		}
 	}
 

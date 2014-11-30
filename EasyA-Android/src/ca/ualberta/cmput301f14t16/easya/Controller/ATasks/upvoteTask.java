@@ -64,6 +64,7 @@ public class upvoteTask extends AsyncTask<Void, Void, Boolean> {
 	@Override
 	protected void onPostExecute(Boolean result) {
 		if (result) {
+			MainModel.getInstance().killNotify();
 			MainModel.getInstance().notifyViews();
 		} else {
 			Toast.makeText(

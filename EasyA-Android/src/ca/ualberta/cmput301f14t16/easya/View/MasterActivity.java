@@ -65,6 +65,7 @@ public abstract class MasterActivity extends SecureActivity implements
 	public static SortEnum sorter = SortEnum.NEWEST;
 	private TextView sortHeader;
 	private boolean showingBanner = false;
+	protected boolean updateCalled = false;
 
 	/**
 	 * @see android.app.Activity#onCreate(android.os.Bundle)
@@ -166,6 +167,10 @@ public abstract class MasterActivity extends SecureActivity implements
 				InternetCheck.forceCheckForInternet();
 					Queue.getInstance();
 				update();
+				if (!InternetCheck.haveInternet())
+					Toast.makeText(this, 
+							"We can't connect to the internet right now, check your internet connectivity and try again!", 
+							Toast.LENGTH_LONG).show();
 			}
 			return true;
 		case R.id.menu_settings:
@@ -244,7 +249,9 @@ public abstract class MasterActivity extends SecureActivity implements
 	@Override
 	public void onResume(){
 		super.onResume();
-		((ListView)findViewById(R.id.question_list)).refreshDrawableState();
+		if (this.updateCalled)
+			update();
+		this.updateCalled = false;
 	}
 
 	/**
@@ -346,6 +353,7 @@ public abstract class MasterActivity extends SecureActivity implements
 			@Override
 			public void run() {
 				System.out.println("This view is being updated, yeah!");
+				updateCalled = true;
 				animateSync();
 				startUpdate();
 			}
@@ -404,9 +412,6 @@ public abstract class MasterActivity extends SecureActivity implements
 	 * {@link MasterActivity#displayedQuestions}
 	 */
 	protected void bindAdapter() {
-		for (QuestionList ql : displayedQuestions){
-			System.out.println("Title: " + ql.getTitle() + " upvotes: " + ql.getUpvotes() + " answers: " + ql.getAnswers());
-		}
 		SetAdapter(displayedQuestions);
 	}
 
@@ -492,7 +497,7 @@ public abstract class MasterActivity extends SecureActivity implements
 	 * @see ca.ualberta.cmput301f14t16.easya.View.MainView#stopAnimateSync()
 	 */
 	public void stopAnimateSync() {
-		this.syncInProgress = false;
+		this.syncInProgress = false;		
 		MenuItem m = menu.findItem(R.id.menu_sync);
 		if (m.getActionView() != null) {
 			m.getActionView().clearAnimation();

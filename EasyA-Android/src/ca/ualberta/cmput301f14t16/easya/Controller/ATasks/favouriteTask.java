@@ -77,7 +77,8 @@ public class favouriteTask extends AsyncTask<Void, Void, Boolean> {
 	@Override
 	protected void onPostExecute(Boolean result) {
 		if (result) {
-			Cache.getInstance().SaveSingleQuestion(this.q);			
+			Cache.getInstance().SaveSingleQuestion(this.q);		
+			MainModel.getInstance().killNotify();
 			MainModel.getInstance().notifyViews();
 		} else {
 			Toast.makeText(

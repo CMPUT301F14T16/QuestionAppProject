@@ -126,6 +126,7 @@ public class submitReplyTask extends AsyncTask<Void, Void, Boolean> {
 						Toast.LENGTH_LONG).show();
 				tv.setText("");
 			}
+			MainModel.getInstance().killNotify();
 			MainModel.getInstance().notifyViews();
 		} else {
 			Toast.makeText(ctx,
