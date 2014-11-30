@@ -74,10 +74,11 @@ public abstract class Content {
 		this.coordinate=coordinate;
 		this.id = UUID.randomUUID().toString(); //TODO: unify the creation of ID's method
 		this.location = location;
+		this.createdOn = Calendar.getInstance();
 	}
 	
 	public double[] getCoordinate(){
-		return this.coordinate;		
+		return this.coordinate;
 	}
 	
 	public String getLocation(){
