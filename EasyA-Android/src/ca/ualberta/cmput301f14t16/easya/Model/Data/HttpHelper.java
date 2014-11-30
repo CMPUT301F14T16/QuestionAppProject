@@ -17,9 +17,20 @@ import java.net.URL;
 
 public class HttpHelper {
 	
-	private static final String DEBUG_TAG = "HttpHelper";
+	//private static final String DEBUG_TAG = "HttpHelper";
 	
-	// This method referenced from http://developer.android.com/training/basics/network-ops/connecting.html On Oct 23, 2014
+	/**
+	 * Submits a GET request to a given URL. 
+	 * Given a URL, establishes an HttpUrlConnection and retrieves
+	 * the web page content as a InputStream, which it returns as 
+	 * a string.
+	 * 
+	 * @reference http://developer.android.com/training/basics/network-ops/connecting.html On Oct 23, 2014
+	 * 
+	 * @param myurl			The url to submit the get request to.
+	 * @return				The response as a string.
+	 * @throws IOException	Exception thrown on any failure to read from url.
+	 */
 	// Given a URL, establishes an HttpUrlConnection and retrieves
 	// the web page content as a InputStream, which it returns as
 	// a string.
@@ -54,7 +65,16 @@ public class HttpHelper {
 	    }
 	}
 	
-	// http://developer.android.com/reference/java/net/HttpURLConnection.html On Oct 23, 2014
+	/**
+	 * Submits a PUT request to a given url and writes the given data through the request.
+	 * 
+	 * @reference http://developer.android.com/reference/java/net/HttpURLConnection.html On Oct 23, 2014
+	 * 
+	 * @param myurl			The url to submit to.
+	 * @param jsonData		The data to submit to the url via POST request.
+	 * @return				The response as a string.
+	 * @throws IOException	Expception thrown on any failure to write to url.
+	 */
 	public static String putToUrl(String myurl, String jsonData) throws IOException {
 		InputStream is = null;
 		OutputStream os = null;
@@ -102,6 +122,14 @@ public class HttpHelper {
 	    }
 	}
 	
+	/**
+	 * Submits a GET request to a given url passing in additional data with the request.
+	 * 
+	 * @param myurl			The url to submit to.
+	 * @param jsonData		The data to pass along with the GET request.
+	 * @return				The response as a string.
+	 * @throws IOException	Exception thrown on any failure to read from or write to url.
+	 */
 	public static String getFromUrlWithData(String myurl, String jsonData) throws IOException {
 		InputStream is = null;
 		OutputStream os = null;
@@ -149,7 +177,16 @@ public class HttpHelper {
 	    }
 	}
 	
-	// This method from http://stackoverflow.com/questions/11766878/sending-files-using-post-with-httpurlconnection on Oct 23, 2014, User Mihai Todor
+	/**
+	 * Converts the input stream from a url connection into a response string.
+	 * 
+	 * @reference This method from http://stackoverflow.com/questions/11766878/sending-files-using-post-with-httpurlconnection on Oct 23, 2014, User Mihai Todor
+	 * 
+	 * @param stream						The stream to read from.
+	 * @return								The response as a string.
+	 * @throws IOException					Exception thrown on any failure to read from stream.
+	 * @throws UnsupportedEncodingException	Expceptino thrown on any non-recognized encoding type. 
+	 */
 	private static String readResponse(InputStream stream) throws IOException, UnsupportedEncodingException {
 		BufferedReader responseStreamReader = new BufferedReader(new InputStreamReader(stream));
 		String line = "";
