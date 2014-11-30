@@ -19,9 +19,10 @@ import ca.ualberta.cmput301f14t16.easya.Model.Queue;
 import ca.ualberta.cmput301f14t16.easya.Model.User;
 
 /**
- * Provides simplified access to {@link Content} objects stored as json data on
- * the device's local memory. This is effectively the offline cache for any data
- * seen or saved by the user.
+ * Provides simplified access to
+ * {@link ca.ualberta.cmput301f14t16.easya.Model.Content} objects stored as json
+ * data on the device's local memory. This is effectively the offline cache for
+ * any data seen or saved by the user.
  * 
  * @author Cauani
  *
@@ -275,7 +276,6 @@ public class Cache {
 		return GeneralHelper.lqToQuestionlist(aux);
 	}
 
-
 	/**
 	 * Returns a {@link Question} from the Cache with an ID matching the one
 	 * provided.
@@ -329,8 +329,6 @@ public class Cache {
 
 	/**
 	 * @return All {@link User} objects from the Cache.
-	 * @throws NoContentAvailableException
-	 *             If no relevant content was found in the Cache.
 	 */
 	public List<User> getUsersListFromCache() {
 		Gson gson = new Gson();
@@ -446,8 +444,9 @@ public class Cache {
 					SaveSingleQuestion(q);
 					lst.add(new QuestionList(q.getId(), q.getTitle(), q
 							.getAuthorName(), q.getAuthorId(), q
-							.getAnswerCountString(), q.getUpVoteCount(),
-							q.hasPicture(), q.getDate(), q.getCoordinate(), q.getLocation()));
+							.getAnswerCountString(), q.getUpVoteCount(), q
+							.hasPicture(), q.getDate(), q.getCoordinate(), q
+							.getLocation()));
 
 				}
 				return lst;

@@ -78,7 +78,7 @@ public class Location {
 	}
 
 	/**
-	 * Uses {@link GPSTracker to acquire the lat/lon coordinates of the device.
+	 * Uses {@link GPSTracker} to acquire the lat/lon coordinates of the device.
 	 * @return The device's lon/lat coordinates as an array of doubles.
 	 * @throws LocationNotReachableException If the GPSTracker cannot get the devices location.
 	 */

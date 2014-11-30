@@ -47,10 +47,10 @@ public class submitReplyTask extends AsyncTask<Void, Void, Boolean> {
 	 * 
 	 * @param ctx
 	 *            setter for {@link submitReplyTask#ctx}
-	 * @param vp
-	 *            setter for {@link submitReplyTask#qId} and
-	 *            {@link submitReplyTask#aId}. The values with be extracted from
-	 *            the value pair.
+	 * @param q
+	 *            Setter for {@link submitReplyTask#q}.
+	 * @param a
+	 *            setter for {@link submitReplyTask#a}.
 	 * @param body
 	 *            setter for {@link submitReplyTask#body}
 	 * @param tv
@@ -119,8 +119,9 @@ public class submitReplyTask extends AsyncTask<Void, Void, Boolean> {
 		}
 
 		if (result) {
-			if (controller.submitedOffline){
-				Toast.makeText(ctx,
+			if (controller.submitedOffline) {
+				Toast.makeText(
+						ctx,
 						"We couldn't connect to the internet, your content will be posted online automatically when you connect to the internet!",
 						Toast.LENGTH_LONG).show();
 			}

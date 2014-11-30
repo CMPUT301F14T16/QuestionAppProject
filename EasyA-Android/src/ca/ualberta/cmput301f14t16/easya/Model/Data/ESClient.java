@@ -19,7 +19,7 @@ import com.google.gson.reflect.TypeToken;
  * An interface for submitting and retrieving content from Elastic Search. 
  * Exceptions are thrown to allow the caller to react appropriately
  * 
- * This code references https://github.com/rayzhangcl/ESDemo/blob/master/ESDemo/src/ca/ualberta/cs/CMPUT301/chenlei/ESClient.java on Oct 23, 2014
+ * This code references <a href="https://github.com/rayzhangcl/ESDemo/blob/master/ESDemo/src/ca/ualberta/cs/CMPUT301/chenlei/ESClient.java">https://github.com/rayzhangcl/ESDemo/blob/master/ESDemo/src/ca/ualberta/cs/CMPUT301/chenlei/ESClient.java</a> on Oct 23, 2014
  * @author Brett Commandeur
  */
 public class ESClient {

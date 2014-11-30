@@ -54,7 +54,7 @@ public class submitAnswerTask extends AsyncTask<Void, Void, Boolean> {
 	 * @param act
 	 *            setter for {@link submitAnswerTask#act}
 	 * @param question
-	 *            setter for {@link submitAnswerTask#qId}
+	 *            setter for {@link submitAnswerTask#q}
 	 * @param body
 	 *            setter for {@link submitAnswerTask#body}
 	 * @param pb

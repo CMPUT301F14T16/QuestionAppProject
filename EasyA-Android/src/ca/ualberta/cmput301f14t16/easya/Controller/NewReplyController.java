@@ -33,7 +33,7 @@ public class NewReplyController extends MainController {
 	 * 
 	 * @param ctx
 	 *            Setter for {@link MainController#ctx}.
-	 * @param qId
+	 * @param q
 	 *            The unique {@link Question} parent of the
 	 *            {@link Reply} to be submitted.
 	 * @param body

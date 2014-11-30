@@ -38,7 +38,8 @@ public class PMClient {
 		PMDataParser.saveUserPreference(GeneralHelper.ASTATUS, "done");
 	}
 	/**
-	 * Returns a flag indicating whether the app have been thru it's first load or not 
+	 * Returns a flag indicating whether the app have been thru it's first load or not.
+	 * @return
 	 */
 	public boolean getAppStatus(){
 		return PMDataParser.recoverUserPreference(GeneralHelper.ASTATUS) != "";

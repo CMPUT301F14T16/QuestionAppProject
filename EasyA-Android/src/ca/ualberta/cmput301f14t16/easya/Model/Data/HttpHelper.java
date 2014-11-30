@@ -25,7 +25,7 @@ public class HttpHelper {
 	 * the web page content as a InputStream, which it returns as 
 	 * a string.
 	 * 
-	 * @reference http://developer.android.com/training/basics/network-ops/connecting.html On Oct 23, 2014
+	 * Reference: <a href="http://developer.android.com/training/basics/network-ops/connecting.html">http://developer.android.com/training/basics/network-ops/connecting.html</a> On Oct 23, 2014
 	 * 
 	 * @param myurl			The url to submit the get request to.
 	 * @return				The response as a string.
@@ -68,7 +68,7 @@ public class HttpHelper {
 	/**
 	 * Submits a PUT request to a given url and writes the given data through the request.
 	 * 
-	 * @reference http://developer.android.com/reference/java/net/HttpURLConnection.html On Oct 23, 2014
+	 * Reference: <a href="http://developer.android.com/reference/java/net/HttpURLConnection.html">http://developer.android.com/reference/java/net/HttpURLConnection.html</a> On Oct 23, 2014
 	 * 
 	 * @param myurl			The url to submit to.
 	 * @param jsonData		The data to submit to the url via POST request.
@@ -180,7 +180,7 @@ public class HttpHelper {
 	/**
 	 * Converts the input stream from a url connection into a response string.
 	 * 
-	 * @reference This method from http://stackoverflow.com/questions/11766878/sending-files-using-post-with-httpurlconnection on Oct 23, 2014, User Mihai Todor
+	 * Reference: <a href="http://stackoverflow.com/questions/11766878/sending-files-using-post-with-httpurlconnection">http://stackoverflow.com/questions/11766878/sending-files-using-post-with-httpurlconnection</a> on Oct 23, 2014, User Mihai Todor
 	 * 
 	 * @param stream						The stream to read from.
 	 * @return								The response as a string.

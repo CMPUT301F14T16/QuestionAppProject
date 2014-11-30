@@ -6,7 +6,7 @@ import java.util.Collection;
 /**
  * Used in processing elastic search query responses.
  * 
- * @reference https://github.com/rayzhangcl/ESDemo/blob/master/ESDemo/src/ca/ualberta/cs/CMPUT301/chenlei/Hits.java, on Oct 26, 2014.
+ * Reference: <a href="https://github.com/rayzhangcl/ESDemo/blob/master/ESDemo/src/ca/ualberta/cs/CMPUT301/chenlei/Hits.java">https://github.com/rayzhangcl/ESDemo/blob/master/ESDemo/src/ca/ualberta/cs/CMPUT301/chenlei/Hits.java</a>, on Oct 26, 2014.
  * @param <T>
  */
 public class ESSearchResponse<T> {
