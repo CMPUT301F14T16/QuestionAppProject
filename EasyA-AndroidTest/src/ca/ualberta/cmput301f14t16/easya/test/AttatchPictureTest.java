@@ -21,6 +21,8 @@ public class AttatchPictureTest extends TestCase {
   // To test all the attached pictures in all
 	// class type of object.
 	private Context ctx;
+	
+	
 	public void testAttatchPictureTest () {
 		
 
