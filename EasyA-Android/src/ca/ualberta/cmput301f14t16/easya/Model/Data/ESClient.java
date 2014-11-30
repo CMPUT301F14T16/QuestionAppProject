@@ -16,15 +16,13 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 /**
- * Design rationale: caller/user of ESClient should handle exceptions.
+ * An interface for submitting and retrieving content from Elastic Search. 
+ * Exceptions are thrown to allow the caller to react appropriately
  * 
- * see https://github.com/rayzhangcl/ESDemo/blob/master/ESDemo/src/ca/ualberta/cs/CMPUT301/chenlei/ESClient.java on Oct 23, 2014
+ * This code references https://github.com/rayzhangcl/ESDemo/blob/master/ESDemo/src/ca/ualberta/cs/CMPUT301/chenlei/ESClient.java on Oct 23, 2014
  * @author Brett Commandeur
  */
 public class ESClient {
-	
-	//Debug
-	//private static final String LOG_TAG = "ESClient";
 	
 	//ElasticSeach Urls
 	private static final String HOST_URL = "http://cmput301.softwareprocess.es:8080/testing/";
@@ -32,6 +30,9 @@ public class ESClient {
 	private static final String USER_TYPE = "team16user1";		   // Edit Me to Change User DB.
 	private static final String QUESTION_PATH = QUESTION_TYPE + "/";
 	private static final String USER_PATH = USER_TYPE + "/";
+	
+	//Function constants
+	private static final int NFAVOURITES = 999;
 	
 	// JSON Utilities
 	private Gson gson = new Gson();
@@ -56,13 +57,6 @@ public class ESClient {
 		
 		// Extract question from elastic search response;
 		Question question = esGetResponse.getSource();
-		ESFields fields = esGetResponse.getFields();
-		if (fields != null) {
-			//long timestamp = fields.getTimestamp();
-			//question.setTimestamp(timestamp);
-		}
-		
-		
 		
 		return question;
 	}
@@ -78,7 +72,6 @@ public class ESClient {
 		
 		// Post the object to the webservice
 		HttpHelper.putToUrl(HOST_URL + QUESTION_PATH + question.getId(), json);
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ES QUESTION SUBMITTED");
 		//TODO: change that based on ESS response
 		return true;
 	}
@@ -100,7 +93,6 @@ public class ESClient {
 		
 		HttpHelper.putToUrl(HOST_URL + QUESTION_PATH + qid +"/_update", updateStr);
 		
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ES ANSWER SUBMITTED");
 		//TODO: change that based on ESS response
 		return true;
 	}
@@ -120,7 +112,6 @@ public class ESClient {
 		String updateStr = "{ \"doc\":{ \"replies\":" + json + "} }";
 		
 		HttpHelper.putToUrl(HOST_URL + QUESTION_PATH + qid + "/_update", updateStr);
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ES REPLY SUBMITTED");
 		//TODO: change that based on ESS response
 		return true;
 	}
@@ -142,7 +133,6 @@ public class ESClient {
 		
 		HttpHelper.putToUrl(HOST_URL + QUESTION_PATH + qid +"/_update", updateStr);
 		
-		System.out.println("!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! ES REPLY SUBMITTED");
 		//TODO: change that based on ESS response
 		return true;
 	}
@@ -165,21 +155,22 @@ public class ESClient {
 		for (ESGetResponse<Question> q : esResponse.getHits()) {
 			if (q == null)
 				continue;
-			
 			Question question = q.getSource();
-			ESFields fields = q.getFields();
-			if (fields != null) {
-				//question.setTimestamp(fields.getTimestamp());
-			}
 			qlist.add(question);
 		}
 		
 		return qlist;
 	}
 	
-	// Same as method above, but returns a preview of a question instead of the full question object.
-	// Above method will most likely not be used...
-	// I'm using it :D
+	/**
+	 * Submits a search to elastic search and returns a list of question preview objects for
+	 * questions that match the search.
+	 * 
+	 * @param query			The search term(s) retrieved questions should contain.
+	 * @param numResults	The number of question preview objects to return.
+	 * @return				A list of question preview objects.
+	 * @throws IOException	Exception thrown on any failure to retrieve from Elastic Search.
+	 */
 	public List<QuestionList> searchQuestionListsByQuery(String query, int numResults) throws IOException {
 		List<QuestionList> qlist = new ArrayList<QuestionList>();
 		
@@ -203,6 +194,13 @@ public class ESClient {
 		return qlist;
 	}
 	
+	/**
+	 * Submits a user object to be saved on Elastic Search
+	 * 
+	 * @param user			The user object to be stored.
+	 * @return				True on success.
+	 * @throws IOException	Exception thrown on any failure to submit to Elastic Search.
+	 */
 	public boolean submitUser(User user) throws IOException {
 		String json = gson.toJson(user);
 		
@@ -213,6 +211,13 @@ public class ESClient {
 		return true;
 	}
 	
+	/**
+	 * Retrieves a user object from Elastic Search.
+	 * 
+	 * @param id			The user id of the user object to retrieve.
+	 * @return				The user object retrieved.
+	 * @throws IOException	Exception thrown on any failure to retrieve from Elastic Search.
+	 */
 	public User getUserById(String id) throws IOException {
 		String content = HttpHelper.getFromUrl(HOST_URL + USER_PATH + id);
 		Type esGetResponseType = new TypeToken<ESGetResponse<User>>(){}.getType();
@@ -222,12 +227,27 @@ public class ESClient {
 		return user;
 	}
 	
+	/**
+	 * Changes the username of a user object stored on Elastic Search
+	 * 
+	 * @param uid			The user id of the user objects to modify.
+	 * @param newUsername	The user name the user object should be modified to contain.
+	 * @return				True on success.
+	 * @throws IOException	Exception thrown on any failure to write to Elastic Search.
+	 */
 	public boolean setUsernameById(String uid, String newUsername) throws IOException {
 		String updateStr = "{ \"doc\":{ \"username\":\"" + newUsername + "\"} }";
 		HttpHelper.putToUrl(HOST_URL + USER_PATH + uid + "/_update", updateStr);
 		return true;
 	}
 	
+	/**
+	 * Returns a user id of the user object matching the given email address.
+	 * 
+	 * @param email			The email of the user object from which to retrieve the user id.
+	 * @return				The user id if match, null if no match.
+	 * @throws IOException	Exception thrown on any failure to retrieve from Elastic Search.
+	 */
 	public String getUserIdByEmail(String email) throws IOException {
 		
 		List<User> returnedUsers = searchUsersByQuery("email:"+email, 100);
@@ -245,6 +265,14 @@ public class ESClient {
 		return null;
 	}
 	
+	/**
+	 * Retrieves a list of users that match a given query.
+	 * 
+	 * @param query			The search term(s) which the returned users should contain.
+	 * @param numResults	The number of users to return.
+	 * @return				The list of matching user objects.
+	 * @throws IOException	Exception thrown on any failure to retrieve from Elastic Search.
+	 */
 	public List<User> searchUsersByQuery(String query, int numResults) throws IOException {
 		List<User> ulist = new ArrayList<User>();
 		
@@ -263,6 +291,14 @@ public class ESClient {
 		return ulist;
 	}
 	
+	/**
+	 * Updates the list of users who have up-voted a question on Elastic Search.
+	 * 
+	 * @param userId		The user who's up-vote status for the given question should be toggled.
+	 * @param qid			The id of the question to update.
+	 * @return				True on success.
+	 * @throws IOException	Exception thrown on any failure to write to Elastic Search.
+	 */
 	public boolean setQuestionUpvote(String userId, String qid) throws IOException {
 		Question q = this.getQuestionById(qid);
 		q.setUpvote(userId);
@@ -276,6 +312,15 @@ public class ESClient {
 		return true;
 	} 
 	
+	/**
+	 * Updates the list of users who have up-voted a given answer on Elastic Search.
+	 * 
+	 * @param userId		The id of the user who's up-vote status for the particular answer should be toggled.
+	 * @param qid			The id of the question in which the answer is contained.
+	 * @param aid			The id of the answer to update.
+	 * @return				True on success.
+	 * @throws IOException	Exception thrown on any failure to write to Elastic Search.
+	 */
 	public boolean setAnswerUpvote(String userId, String qid, String aid) throws IOException {
 		Question q = this.getQuestionById(qid);
 		q.getAnswerById(aid).setUpvote(userId);
@@ -289,6 +334,13 @@ public class ESClient {
 		return true;
 	}
 
+	/**
+	 * Retrieves a list of a given user's favourite questions.
+	 * 
+	 * @param u				The user object from which to retrieve favourites on Elastic Search.
+	 * @return				The list of the given user's favourite questions.
+	 * @throws IOException  Exception thrown on any failure to retrieve from Elastic Search.
+	 */
 	public List<Question> getFavouriteQuestionsByUser(User u) throws IOException {
 		List<String> favsList = u.getFavourites();
 		if (favsList == null || favsList.size() <= 0)
@@ -297,18 +349,16 @@ public class ESClient {
 		for (String s : favsList){
 			sb.append(" " + s);
 		}
-		return searchQuestionsByQuery(sb.toString(), 999);
+		return searchQuestionsByQuery(sb.toString(), NFAVOURITES);
 	}
 	
-//	public List<QuestionList> getQuestionListsByIds(List<String> ids) throws IOException {
-//		String json = gson.toJson(ids);
-//		String queryString = "{\"query\": {\"ids\": {\"type\": \"" +  QUESTION_TYPE + "\", \"values\": " + json +"}}}";
-//		String response = HttpHelper.getFromUrlWithData(HOST_URL + QUESTION_PATH + "_search", queryString);
-//		
-//		return getQuestionListsFromResponse(response);
-//		
-//	}
-	
+	/**
+	 * Extracts question preview objects from an Elastic Search response object.
+	 * 
+	 * @param response		The response from which to extract the question previews.
+	 * @return				The list of question previews.
+	 */
+	// TODO: Refactor with this method.
 	private List<QuestionList> getQuestionListsFromResponse(String response) {
 		List<QuestionList> qlist = new ArrayList<QuestionList>();
 		Type esSearchResponseType = new TypeToken<ESSearchResponse<Question>>(){}.getType();
@@ -327,6 +377,13 @@ public class ESClient {
 		return qlist;
 	}
 	
+	/**
+	 * Updates the favourites list of given user on Elastic Search
+	 * 
+	 * @param user			The user object to update.
+	 * @return				True on success.
+	 * @throws IOException	Exception thrown on any failure to write to Elastic Search
+	 */
 	public boolean updateUserFavourites(User user) throws IOException {
 		
 		String json = gson.toJson(user.getFavourites());
