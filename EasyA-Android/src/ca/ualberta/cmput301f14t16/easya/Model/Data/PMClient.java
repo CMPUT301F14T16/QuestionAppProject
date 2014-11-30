@@ -122,7 +122,8 @@ public class PMClient {
 	}
 	
 	public String getUserLocation(){
-		return PMDataParser.recoverUserPreference(GeneralHelper.USERLOCATION);
+		String aux = PMDataParser.recoverUserPreference(GeneralHelper.USERLOCATION);
+		return aux.equals("") ? "No location found" : aux;
 	}
 
 	public void savePending(Pending p) {

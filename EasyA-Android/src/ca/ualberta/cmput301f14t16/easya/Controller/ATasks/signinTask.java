@@ -91,22 +91,13 @@ public class signinTask extends AsyncTask<Void, Void, Boolean> {
 				String username = ((EditText) a
 						.findViewById(R.id.welcome_username)).getText()
 						.toString();
-
 				try {
 					User auxUser = MainModel.getInstance()
 							.getUserByEmail(email);
+					auxUser.setUserName(username);
+					MainModel.getInstance().updateUsername(auxUser);
 					MainModel.getInstance().saveMainUser(auxUser);
 					this.userFound = true;
-					MainModel.getInstance().updateUsername(auxUser);
-					try{
-						PMClient pm = new PMClient();
-						pm.saveUserLocationPreference(LocationPreferencesEnum.GPS); //by default
-						Location.forceCheckGPS();
-						Location.getLocationCoordinates(); // Save user current location
-					}catch(Exception ex){
-						PMClient pm = new PMClient();
-						pm.saveUserLocationPreference(LocationPreferencesEnum.OFF); //by default
-					}
 					return true;
 				} catch (NoContentAvailableException ex) {
 					controller = NewUserController.create(email, username);
@@ -135,6 +126,15 @@ public class signinTask extends AsyncTask<Void, Void, Boolean> {
 			pd.dismiss();
 		}	
 		if (result) {
+			try{
+				PMClient pm = new PMClient();
+				pm.saveUserLocationPreference(LocationPreferencesEnum.GPS); //by default
+				Location.forceCheckGPS();
+				Location.getLocationCoordinates(); // Save user current location
+			}catch(Exception ex){
+				PMClient pm = new PMClient();
+				pm.saveUserLocationPreference(LocationPreferencesEnum.OFF);
+			}
 			if (userFound) {
 				new AlertDialog.Builder(ctx)
 						.setTitle("User found!")

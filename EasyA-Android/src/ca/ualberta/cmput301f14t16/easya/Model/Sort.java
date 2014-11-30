@@ -16,7 +16,7 @@ import ca.ualberta.cmput301f14t16.easya.View.SortEnum;
  * sorts may be performed from smallest to greatest, or greatest to smallest.
  * 
  * @author Klinton
- * 
+ * @author Cauani
  */
 
 public class Sort {
@@ -115,9 +115,9 @@ public class Sort {
 	 * @return The sorted list.
 	 */
 	public static List<QuestionList> sortDate(final boolean sortOrder,
-			List<QuestionList> questionList) {
-			Comparator<QuestionList> dateComparator = new Comparator<QuestionList>() {
-			@Override
+		List<QuestionList> questionList) {
+		Comparator<QuestionList> dateComparator = new Comparator<QuestionList>() {
+		@Override
 			public int compare(QuestionList lhs, QuestionList rhs) {
 				Long leftTime = lhs.getDate() != null ? lhs.getDate().getTimeInMillis() : 0;
 				Long rightTime = rhs.getDate() != null ? rhs.getDate().getTimeInMillis() : 0;
@@ -129,52 +129,20 @@ public class Sort {
 		return questionList;
 	}
 	
-	public static List<QuestionList> sortDistance(boolean sortOrder,
+	public static List<QuestionList> sortDistance(final boolean sortOrder,
 			List<QuestionList> questionList) {
 		final double[] userLocation=Location.getLocationCoordinates();
-		if (sortOrder) {
-			Collections.sort(questionList, new Comparator<QuestionList>() {				
-				public int compare(QuestionList questionList1,
-						QuestionList questionList2) {
-					try{
-						double dis1=GeoCoder.toFindDistance(questionList1.getCoordinates(),userLocation);
-						double dis2=GeoCoder.toFindDistance(questionList2.getCoordinates(),userLocation);
-						if (dis1<dis2){
-							return 1;
-						}
-						else if (dis1>dis2){
-							return -1;
-						}
-						else{
-							return 0;
-						}
-					}catch(Exception ex){
-						return 0;
-					}
-				}				
-			});
-		} else {
-			Collections.sort(questionList, new Comparator<QuestionList>() {
-				public int compare(QuestionList questionList1,
-						QuestionList questionList2) {
-					try{
-						double dis1=GeoCoder.toFindDistance(questionList1.getCoordinates(),userLocation);
-						double dis2=GeoCoder.toFindDistance(questionList2.getCoordinates(),userLocation);
-						if (dis1<dis2){
-							return -1;
-						}
-						else if (dis1>dis2){
-							return 1;
-						}
-						else{
-							return 0;
-						}								
-					}catch(Exception ex){
-						return 0;
-					}
-				}
-			});
-		}
+		Comparator<QuestionList> locationComparator = new Comparator<QuestionList>() {
+		@Override
+			public int compare(QuestionList lhs, QuestionList rhs) {
+				Double leftLocation = (lhs.getCoordinates()[0] != 0.0 && lhs.getCoordinates()[1] != 0.0) ? GeoCoder.toFindDistance(lhs.getCoordinates(),userLocation) : (double)-1.0;
+				Double rightLocation = (rhs.getCoordinates()[0] != 0.0 && rhs.getCoordinates()[1] != 0.0) ? GeoCoder.toFindDistance(rhs.getCoordinates(),userLocation) : (double)-1.0;
+				if (leftLocation == -1 || rightLocation == -1)
+					return 0;
+				return !sortOrder ? leftLocation.compareTo(rightLocation) : rightLocation.compareTo(leftLocation);
+			}
+		};
+		Collections.sort(questionList, locationComparator);	
 		return questionList;
 	}
 }

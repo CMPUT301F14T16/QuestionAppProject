@@ -92,7 +92,7 @@ public class submitQuestionTask extends AsyncTask<Void, Void, Boolean> {
 						this.body, this.pb, MainModel.getInstance()
 								.getCurrentUser().getId(),
 								useLocation ? Location.getLocationCoordinates() : new double[]{0.0,0.0},
-										useLocation ? Location.getLocationName() : "");
+										useLocation ? Location.getLocationName().equals("No location found") ? "" : Location.getLocationName() : "");
 				return controller.submit();
 			} catch (Exception ex) {
 				System.out.println(ex.getMessage());
@@ -114,6 +114,11 @@ public class submitQuestionTask extends AsyncTask<Void, Void, Boolean> {
 	@Override
 	protected void onPostExecute(Boolean result) {
 		if (result) {
+			if (controller.submitedOffline){
+				Toast.makeText(ctx,
+					"We couldn't connect to the internet, your content will be posted online automatically when you connect to the internet!",
+					Toast.LENGTH_LONG).show();
+			}
 			PMClient pm = new PMClient();
 			pm.clearQ(ctx);
 			((EditText) act.findViewById(R.id.submit_question_title))

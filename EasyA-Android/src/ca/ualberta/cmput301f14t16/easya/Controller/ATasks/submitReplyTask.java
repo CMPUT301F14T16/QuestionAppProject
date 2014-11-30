@@ -119,12 +119,10 @@ public class submitReplyTask extends AsyncTask<Void, Void, Boolean> {
 		}
 
 		if (result) {
-			if (controller.submitedOffline) {
-				Toast.makeText(
-						ctx,
-						"Your reply will be posted online when you connect to the internet!",
+			if (controller.submitedOffline){
+				Toast.makeText(ctx,
+						"We couldn't connect to the internet, your content will be posted online automatically when you connect to the internet!",
 						Toast.LENGTH_LONG).show();
-				tv.setText("");
 			}
 			MainModel.getInstance().killNotify();
 			MainModel.getInstance().notifyViews();

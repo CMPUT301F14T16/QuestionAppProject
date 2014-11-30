@@ -425,7 +425,7 @@ public abstract class MasterActivity extends SecureActivity implements
 	@Override
 	public void update(List<QuestionList> lst) {
 		System.out.println("I got in, now let's see what's what.");
-		if (displayedQuestions == null || lst.size() <= displayedQuestions.size()) {
+		if (displayedQuestions == null || displayedQuestions.size() <= 0 || lst.size() <= displayedQuestions.size()) {
 			ListView listView = ((ListView) findViewById(R.id.question_list));
 			int listPos = listView.getFirstVisiblePosition();
 			View view = listView.getChildAt(0);
