@@ -33,9 +33,9 @@ public class SortTest extends TestCase {
 		c.set(1994, 10, 10);
 		List<QuestionList> questionListTest = new ArrayList<QuestionList>();
 		QuestionList first= new QuestionList("id","title","username","uerid",
-				"answer","upvote", false, c, dis1,"location");
+				"answer",1, false, c, dis1,"location");
 		QuestionList second= new QuestionList("id","title","username","uerid",
-				"answer","upvote", false, c2, dis2,"location");
+				"answer",2, false, c2, dis2,"location");
 		questionListTest.add(first);
 		questionListTest.add(second);
 		//highest to lowest sort.
@@ -64,9 +64,9 @@ public class SortTest extends TestCase {
 		c.set(1994, 10, 10);
 		List<QuestionList> questionListTest = new ArrayList<QuestionList>();
 		QuestionList first= new QuestionList("id","title","username","uerid",
-				"answer","upvote", false, c, dis1,"location");
+				"answer",1, false, c, dis1,"location");
 		QuestionList second= new QuestionList("id","title","username","uerid",
-				"answer","upvote", false, c2, dis2,"location");
+				"answer",2, false, c2, dis2,"location");
 		questionListTest.add(first);
 		questionListTest.add(second);
 		//sorts from Topics with date most recent to oldest.
@@ -91,9 +91,9 @@ public class SortTest extends TestCase {
 		Calendar c = new GregorianCalendar();
 		List<QuestionList> questionListTest = new ArrayList<QuestionList>();
 		QuestionList first= new QuestionList("id","title","username","uerid",
-				"answer","upvote", false, c, dis1,"location");
+				"answer",1, false, c, dis1,"location");
 		QuestionList second= new QuestionList("id","title","username","uerid",
-				"answer","upvote", false, c, dis2,"location");
+				"answer",2, false, c, dis2,"location");
 		questionListTest.add(first);
 		questionListTest.add(second);
 		//sorts from Topics with pictures to Topics without.
@@ -124,9 +124,9 @@ public class SortTest extends TestCase {
 		double[] dis2={1.0,-1.0};
 		Calendar c = new GregorianCalendar();
 		QuestionList first= new QuestionList("id","title","username","uerid",
-				"answer","upvote", false, c, dis1,"location");
+				"answer",1, false, c, dis1,"location");
 		QuestionList second= new QuestionList("id","title","username","uerid",
-				"answer","upvote", false, c, dis2,"location");
+				"answer",2, false, c, dis2,"location");
 		questionListTest.add(first);
 		questionListTest.add(second);
 		sortOrder = true;
