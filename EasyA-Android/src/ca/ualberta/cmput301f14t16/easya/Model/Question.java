@@ -13,6 +13,12 @@ import java.util.List;
  *
  */
 public class Question extends Topic {
+	
+	/**
+	 * Constants for formatting the answer count display string.
+	 */
+	private static final int MAX_ANS_NUM = 99;
+	private static final String MAX_ANS_DISP = "99+";
 
 	/**
 	 * A list of {@link Answer} objects associated with this Question.
@@ -93,8 +99,8 @@ public class Question extends Topic {
 	 */
 	public String getAnswerCountString() {
 		try {
-			return this.answers.size() <= 99 ? String.valueOf(this.answers
-					.size()) : "99+";
+			return this.answers.size() <= MAX_ANS_NUM ? String.valueOf(this.answers
+					.size()) : MAX_ANS_DISP;
 		} catch (Exception ex) {
 			return "0";
 		}
