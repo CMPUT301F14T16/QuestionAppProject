@@ -144,8 +144,7 @@ public class Cache {
 			aux = new ArrayList<Question>();
 		if (aux.contains(q)) {
 			int i = aux.indexOf(q);
-			aux.remove(i);
-			aux.add(i, q);
+			aux.set(i, q);
 		} else {
 			aux.add(0, q);
 		}
@@ -169,8 +168,7 @@ public class Cache {
 			aux = new ArrayList<User>();
 		if (aux.contains(u)) {
 			int i = aux.indexOf(u);
-			aux.remove(i);
-			aux.add(i, u);
+			aux.set(i, u);
 		} else {
 			aux.add(0, u);
 		}

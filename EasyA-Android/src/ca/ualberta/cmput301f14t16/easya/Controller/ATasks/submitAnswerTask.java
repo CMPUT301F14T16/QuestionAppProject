@@ -5,19 +5,16 @@ import org.apache.http.message.BasicNameValuePair;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
-import android.content.Intent;
 import android.os.AsyncTask;
 import android.widget.EditText;
 import android.widget.Toast;
 import ca.ualberta.cmput301f14t16.easya.R;
 import ca.ualberta.cmput301f14t16.easya.Controller.NewAnswerController;
 import ca.ualberta.cmput301f14t16.easya.Model.Answer;
-import ca.ualberta.cmput301f14t16.easya.Model.GeneralHelper;
 import ca.ualberta.cmput301f14t16.easya.Model.Location;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.PMClient;
-import ca.ualberta.cmput301f14t16.easya.View.QuestionActivity;
 
 /**
  * Provides an {@link AsyncTask} subclass that processes a request to store an
