@@ -22,7 +22,7 @@ public class CacheTest extends TestCase {
 		c.set(1993, 10, 10);
 		c.set(1994, 10, 10);
 		List<QuestionList> questionListTest = new ArrayList<QuestionList>();
-		Question testSavedq= new Question();
+		Question testSavedq= new Question("title", "body", "id");
 		String testID = testSavedq.getId();
 		Cache.getInstance().SaveSingleQuestion(testSavedq);
 		assertFalse(Cache.getInstance().getSavedQuestionsList().isEmpty());
