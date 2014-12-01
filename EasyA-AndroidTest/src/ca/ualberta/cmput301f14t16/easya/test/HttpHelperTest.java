@@ -14,10 +14,13 @@ import com.google.gson.reflect.TypeToken;
 
 /**
  * 
+ *  
  * @author Brett Commandeur
  *
  *
  */
+
+//This test is a reference for all use cases needed to check internet
 public class HttpHelperTest extends TestCase {
 	
 	private static final String HOST_URL = "http://cmput301.softwareprocess.es:8080/testing/t16question/";

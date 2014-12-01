@@ -11,6 +11,14 @@ import ca.ualberta.cmput301f14t16.easya.Model.Reply;
 import ca.ualberta.cmput301f14t16.easya.Model.User;
 import junit.framework.TestCase;
 
+/**
+ * 
+ *  
+ * @author Lingbo Tang,Klinton W Shmeid 
+ *
+ *
+ */
+
 //This test covers the use case of MarkQuestionAsFavourites
 //and ViewMyFavourites
 

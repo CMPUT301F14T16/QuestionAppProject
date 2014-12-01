@@ -15,6 +15,8 @@ import android.test.ActivityInstrumentationTestCase2;
  * @author Brett Commandeur
  *
  */
+
+//This test Can be used to all the which requires Inheritance from topic
 public class InheritanceTest extends ActivityInstrumentationTestCase2<MainActivity> {
 
 	public InheritanceTest() {

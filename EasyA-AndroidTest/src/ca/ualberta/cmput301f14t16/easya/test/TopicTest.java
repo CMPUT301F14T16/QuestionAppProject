@@ -7,6 +7,14 @@ import ca.ualberta.cmput301f14t16.easya.Model.Topic;
 import ca.ualberta.cmput301f14t16.easya.Model.User;
 import junit.framework.TestCase;
 
+/**
+ * 
+ *  
+ * @author Lingbo Tang,Klinton W Shmeid 
+ *
+ *
+ */
+
  //This Test Covers the User case of View Topic and Upvote Topic
  //Tests for Topic functions involving Q and A and R.
  //Since we are using MVC model, if model works, so does view

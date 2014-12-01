@@ -12,6 +12,15 @@ import ca.ualberta.cmput301f14t16.easya.Model.Sort;
 import ca.ualberta.cmput301f14t16.easya.Model.Topic;
 import junit.framework.TestCase;
 
+
+/**
+ * 
+ *  
+ * @author Lingbo Tang,Klinton W Shmeid 
+ *
+ *
+ */
+
 //This tests covers the 
 //use cases of SortUpVote, 
 //DateSort, PictureSort, and 

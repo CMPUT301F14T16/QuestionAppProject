@@ -15,6 +15,14 @@ import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.View.SubmitQuestionActivity;
 import junit.framework.TestCase;
 
+/**
+ * 
+ *  
+ * @author Lingbo Tang,Klinton W Shmeid 
+ *
+ *
+ */
+
 //This tests covers the 
 //use cases of AttatchPiture 
 //for both question and answer

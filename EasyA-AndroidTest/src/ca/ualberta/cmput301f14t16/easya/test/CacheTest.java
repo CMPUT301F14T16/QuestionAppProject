@@ -11,6 +11,14 @@ import ca.ualberta.cmput301f14t16.easya.Model.QuestionList;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.Cache;
 import junit.framework.TestCase;
 
+/**
+ * 
+ *  
+ * @author Lingbo Tang,Klinton W Shmeid 
+ *
+ *
+ */
+
 //This test is covers use cases of DownloadQuestionDevice
 //View my Saved Question and View my submitted Question
 //We test cache to implement the practical cases

@@ -21,7 +21,13 @@ import ca.ualberta.cmput301f14t16.easya.Model.InternetCheck;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.*;
 
 
-
+/**
+ * 
+ *  
+ * @author Lingbo Tang,Klinton W Shmeid 
+ *
+ *
+ */
 
 public class SubmitTest extends TestCase {
 	

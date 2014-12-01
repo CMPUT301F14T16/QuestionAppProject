@@ -23,6 +23,13 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.widget.TextView;
 import junit.framework.TestCase;
 
+/**
+ * 
+ *  
+ * @author Lingbo Tang,Klinton W Shmeid 
+ *
+ *
+ */
 
 //This test covers the Use case of search Question
 //Search is complicated,it involves all Model,View and Controller

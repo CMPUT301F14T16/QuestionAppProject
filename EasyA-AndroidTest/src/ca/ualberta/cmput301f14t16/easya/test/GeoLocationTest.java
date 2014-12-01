@@ -7,6 +7,14 @@ import ca.ualberta.cmput301f14t16.easya.View.SubmitAnswerActivity;
 import ca.ualberta.cmput301f14t16.easya.View.SubmitQuestionActivity;
 import junit.framework.TestCase;
 
+/**
+ * 
+ *  
+ * @author Lingbo Tang,Klinton W Shmeid 
+ *
+ *
+ */
+
 // This test covers the use case of
 // SetGeoLocation
 public class GeoLocationTest extends TestCase {

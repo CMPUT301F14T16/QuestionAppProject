@@ -16,6 +16,13 @@ import android.content.Context;
 import android.view.View;
 import junit.framework.TestCase;
 
+/**
+ * 
+ *  
+ * @author Lingbo Tang,Klinton W Shmeid 
+ *
+ *
+ */
 
 //This test covers tests for the use case Browse Topic Test.
 //Simply tests if views are visible.

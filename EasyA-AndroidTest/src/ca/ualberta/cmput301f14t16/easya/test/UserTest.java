@@ -7,6 +7,14 @@ import android.test.ActivityInstrumentationTestCase2;
 import junit.framework.TestCase;
 import ca.ualberta.cmput301f14t16.easya.Model.User;
 
+/**
+ * 
+ *  
+ * @author Lingbo Tang,Klinton W Shmeid 
+ *
+ *
+ */
+
 //This test covers the use case of Set Username
 //Simply test User creation and change username
 public class UserTest extends TestCase{
