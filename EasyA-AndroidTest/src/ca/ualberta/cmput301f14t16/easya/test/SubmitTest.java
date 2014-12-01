@@ -1,7 +1,7 @@
 package ca.ualberta.cmput301f14t16.easya.test;
 
 
-//All Packages needed to do the test
+//This tests submission of content into the server. 
 import junit.framework.TestCase; 
 import java.io.IOException;
 import android.content.Context;
