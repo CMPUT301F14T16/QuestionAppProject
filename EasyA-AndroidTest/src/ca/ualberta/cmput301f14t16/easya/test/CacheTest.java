@@ -36,15 +36,12 @@ public class CacheTest extends TestCase {
 		c.set(1993, 10, 10);
 		c.set(1994, 10, 10);
 		List<QuestionList> questionListTest = new ArrayList<QuestionList>();
-		
-		// Test if we can get questions from cache
+		// Test if cquestion can be stored in cache.
 		Question q1 = new Question("Title Submission Test", "Body of Question", "test@ualberta.ca");
 		String testID = q1.getId();
 		Cache.getInstance().SaveSingleQuestion(q1);
 		questionListTest = Cache.getInstance().getAllQuestions();
 		assertFalse(questionListTest.isEmpty());
 		assertTrue((Cache.getInstance().getQuestionById(testID).equals(q1)));
-		
 	}
-
 }
