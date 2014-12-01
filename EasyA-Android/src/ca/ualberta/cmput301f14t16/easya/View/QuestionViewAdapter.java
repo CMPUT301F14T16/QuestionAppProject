@@ -251,9 +251,6 @@ public class QuestionViewAdapter {
     		Bitmap bmpTobeResized = BitmapFactory.decodeStream(is);
     		Bitmap resizedBmp = Bitmap.createScaledBitmap(bmpTobeResized, (int)(bmpTobeResized.getWidth()*0.7), (int)(bmpTobeResized.getHeight()*0.5), true);
     		image2.setImageBitmap(resizedBmp);
-    		//InputStream is = new ByteArrayInputStream(decodedBytes);
-    		//Bitmap bmp = BitmapFactory.decodeStream(is);
-    		//image2.setImageBitmap(bmp);
 		} catch (NullPointerException e) {
 			e.printStackTrace();
 		}
