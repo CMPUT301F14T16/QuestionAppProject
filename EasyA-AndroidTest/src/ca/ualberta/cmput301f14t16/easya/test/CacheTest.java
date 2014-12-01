@@ -11,6 +11,12 @@ import ca.ualberta.cmput301f14t16.easya.Model.QuestionList;
 import ca.ualberta.cmput301f14t16.easya.Model.Data.Cache;
 import junit.framework.TestCase;
 
+//This test is covers use cases of DownloadQuestionDevice
+//View my Saved Question and View my submitted Question
+//We test cache to implement the practical cases
+//Since Cache is the Model which handles the test Cases
+//if we can getAllQuestions() from cache correctly
+//we have enough confidence to say we pass the test.
 public class CacheTest extends TestCase {
 	//tests if content is saved in the cache. 
 	
@@ -22,13 +28,12 @@ public class CacheTest extends TestCase {
 		c.set(1993, 10, 10);
 		c.set(1994, 10, 10);
 		List<QuestionList> questionListTest = new ArrayList<QuestionList>();
-		Question testSavedq= new Question("title", "body", "id");
-		String testID = testSavedq.getId();
-		Cache.getInstance().SaveSingleQuestion(testSavedq);
-		assertFalse(Cache.getInstance().getSavedQuestionsList().isEmpty());
-		//assertTrue((Cache.getInstance().getQuestionById(testID).getId().equals(testSavedq)));
-		
-		
+		// Test if cquestion can be stored in cache.
+		Question q1 = new Question("Title Submission Test", "Body of Question", "test@ualberta.ca");
+		String testID = q1.getId();
+		Cache.getInstance().SaveSingleQuestion(q1);
+		questionListTest = Cache.getInstance().getAllQuestions();
+		assertFalse(questionListTest.isEmpty());
+		assertTrue((Cache.getInstance().getQuestionById(testID).equals(q1)));
 	}
-
 }

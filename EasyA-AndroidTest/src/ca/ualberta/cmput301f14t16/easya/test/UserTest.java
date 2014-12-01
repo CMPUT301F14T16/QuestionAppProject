@@ -7,6 +7,8 @@ import android.test.ActivityInstrumentationTestCase2;
 import junit.framework.TestCase;
 import ca.ualberta.cmput301f14t16.easya.Model.User;
 
+//This test covers the use case of Set Username
+//Simply test User creation and change username
 public class UserTest extends TestCase{
 	
 	private static final String LOG_TAG = "UserTest";
@@ -49,6 +51,7 @@ public class UserTest extends TestCase{
 		assertEquals(user.getId(),userid);
 	}
 	
+	//Test if we can get Creation date
 	public void testCreateOn() {
 		username = "Lingbo";
 		email = "lingbo19.tang@gmail.com";

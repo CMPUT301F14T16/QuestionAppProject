@@ -23,7 +23,7 @@ public class InheritanceTest extends ActivityInstrumentationTestCase2<MainActivi
 	
 	public void testQuestionCreation () {
 		// Create a user.
-		List<Integer> NSC = null;
+		List<Integer> NSC = new ArrayList<Integer>();
 		NSC.add(1);
 		NSC.add(2);
 		User u = new User("commande@ualberta.ca", "Brett");

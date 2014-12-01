@@ -7,6 +7,8 @@ import ca.ualberta.cmput301f14t16.easya.View.SubmitAnswerActivity;
 import ca.ualberta.cmput301f14t16.easya.View.SubmitQuestionActivity;
 import junit.framework.TestCase;
 
+// This test covers the use case of
+// SetGeoLocation
 public class GeoLocationTest extends TestCase {
 	private GPSTracker gps;
 	private final static String LOG_TAG = "GeoLocationTest";

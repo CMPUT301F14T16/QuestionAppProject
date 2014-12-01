@@ -11,7 +11,12 @@ import ca.ualberta.cmput301f14t16.easya.Model.Reply;
 import ca.ualberta.cmput301f14t16.easya.Model.User;
 import junit.framework.TestCase;
 
+//This test covers the use case of MarkQuestionAsFavourites
+//and ViewMyFavourites
+
 public class FavouriteTest extends TestCase {
+	
+	//Set all the needed test object
 	private String picture;
 	private List<Reply> replies;
 	private List<String> favourites;
@@ -27,9 +32,10 @@ public class FavouriteTest extends TestCase {
 	private List<String> createdContent;
 	public final static String USERKEY = "ca.ualberta.cmput301f14t16.easya.USERKEY";
 	
-	//Tests to see if a Topic can be favorited
+	//Tests to see if a Topic can be set as favorite
 	public void testFavouriteTest() {
 		
+		// Intialize the test object
 		Question q1 = new Question("Title Submission Test", "Body of Question", "test@ualberta.ca");
 		Answer a1 = new Answer("Body of answer", "someone@ualberta.ca");
 		q1.addAnswer(a1);
@@ -46,6 +52,7 @@ public class FavouriteTest extends TestCase {
 		
 		user = new User(email,username);
 		
+		// Test set Question as Favourite
 		try {
 			user.setFavourite(q1.getId());
 			assertTrue(favourites.contains(q1));
@@ -53,12 +60,15 @@ public class FavouriteTest extends TestCase {
 			assertFalse(false);
 		}
 		
+		// Test set Answer as Favourite
 		try {
 			user.setFavourite(a1.getId());
 			assertTrue(favourites.contains(a1));
 		} catch (Exception ex) {
 			assertFalse(false);
 		}
+		
+		// Test if favourites matches with user
 		assertNotNull(user.getFavourites());	
 		assertTrue(q1.checkFavourite(user));
 		assertTrue(a1.checkFavourite(user));
