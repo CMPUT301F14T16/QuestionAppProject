@@ -27,6 +27,10 @@ import junit.framework.TestCase;
 //sort by location nearest.
 //These sorts all belong to
 //the Sort class. 
+//According to these, 
+//Nearby Location and
+//Nearby Questions are 
+//also covered in sort.
 
 public class SortTest extends TestCase {
 	
