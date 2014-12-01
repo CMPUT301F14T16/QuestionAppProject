@@ -7,6 +7,7 @@ import ca.ualberta.cmput301f14t16.easya.Model.GeneralHelper;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import android.app.Activity;
 import android.content.Intent;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextUtils;
@@ -62,11 +63,14 @@ public class WelcomeActivity extends Activity {
 				|| !android.util.Patterns.EMAIL_ADDRESS.matcher(
 						((EditText) findViewById(R.id.welcome_email)).getText()
 								.toString().trim()).matches()) {
-			if (((Button) findViewById(R.id.welcome_sigin)).isEnabled())
+			if (((Button) findViewById(R.id.welcome_sigin)).isEnabled()){
 				((Button) findViewById(R.id.welcome_sigin)).setEnabled(false);
+				((Button) findViewById(R.id.welcome_sigin)).setBackgroundResource(android.R.color.darker_gray);
+			}
 		} else {
 			if (!((Button) findViewById(R.id.welcome_sigin)).isEnabled())
 				((Button) findViewById(R.id.welcome_sigin)).setEnabled(true);
+				((Button) findViewById(R.id.welcome_sigin)).setBackgroundResource(android.R.color.holo_blue_light);
 		}
 	}
 
