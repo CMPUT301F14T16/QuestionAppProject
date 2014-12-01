@@ -23,9 +23,14 @@ import android.test.ActivityInstrumentationTestCase2;
 import android.widget.TextView;
 import junit.framework.TestCase;
 
+
+//This test covers the Use case of search Question
+//Search is complicated,it involves all Model,View and Controller
+//Therefore, we use activity test.
+
 public class SearchActivityTest extends ActivityInstrumentationTestCase2<SearchActivity> {
 	
-	
+	// Get all needed test object
 	private Context ctx;
 	private ProgressDialog pd;
 	private MainView<List<QuestionList>> v;
@@ -43,8 +48,10 @@ public class SearchActivityTest extends ActivityInstrumentationTestCase2<SearchA
 	public SearchActivityTest() {
 		super(SearchActivity.class);
 	}
-
+	
 	public void testSearchActivityTest() {
+		
+		//Initialize Test Object
 		ESClient esclient = new ESClient();
 		Question q1 = new Question("Title Submission Test", "Body of Question", "test@ualberta.ca");
 		Answer a1 = new Answer("Body of answer", "someone@ualberta.ca");
@@ -57,7 +64,7 @@ public class SearchActivityTest extends ActivityInstrumentationTestCase2<SearchA
 		QId2 = q2.getId();
 		AId2 = a2.getId();
 		
-		
+		//Initialize Result set
 		email = "lingbo19.tang@gmail.com";
 		username = "lingbo747";
 		String query = "Title Submission Test";
@@ -78,12 +85,14 @@ public class SearchActivityTest extends ActivityInstrumentationTestCase2<SearchA
 		List<QuestionList> rst2 = new ArrayList<QuestionList>();
 		rst2.add(qst2);
 		
+		//Submit the new test Question
 		try{
 			assertTrue(esclient.submitQuestion(q1));
 		}catch(IOException ex) {
 			ex.printStackTrace();
 		}
-			
+		
+		// Test submit by parsing the query from search bar
 		Intent intent = new Intent();
 		intent.putExtra((SearchManager.QUERY).trim(),"Title Submission Test");
 		query = intent.getStringExtra((SearchManager.QUERY).trim());
@@ -95,6 +104,7 @@ public class SearchActivityTest extends ActivityInstrumentationTestCase2<SearchA
 			assertFalse(false);
 		}
 		
+		// Test if the result set is not null and correct
 		assertNotNull(lst);
 		assertFalse(lst.get(0).equals(qst2));
 		assertEquals(lst.get(0).getTitle(),"Title Submission Test");

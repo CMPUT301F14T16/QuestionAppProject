@@ -1,7 +1,8 @@
 package ca.ualberta.cmput301f14t16.easya.test;
 
 
-//This tests submission of content into the server. 
+//This test submission of content into the server. 
+//This test covers the Usecase of Submit Q, Submit A and Submit R
 import junit.framework.TestCase; 
 import java.io.IOException;
 import android.content.Context;
@@ -70,7 +71,7 @@ public class SubmitTest extends TestCase {
 		Question q3 = new Question("Title Submission Test3", "Body of Question3", "test3@ualberta.ca");
 		QId3 = q3.getId();
 		
-		// TODO content is empty here, you should pass the question
+		
 		// answer and reply. To test all case, pass all case.
 		pending1 = new Pending(q1);
 		pending2 = new Pending(QId2,a2);

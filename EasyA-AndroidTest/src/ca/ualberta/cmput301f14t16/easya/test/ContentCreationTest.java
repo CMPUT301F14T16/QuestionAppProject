@@ -6,6 +6,8 @@ import ca.ualberta.cmput301f14t16.easya.Model.Reply;
 import ca.ualberta.cmput301f14t16.easya.Model.User;
 import junit.framework.TestCase;
 
+//This Test is part of the test cases for
+//all use cases that contains "Topic"
 public class ContentCreationTest extends TestCase {
 	
 	public void testContentCreationTest() {
