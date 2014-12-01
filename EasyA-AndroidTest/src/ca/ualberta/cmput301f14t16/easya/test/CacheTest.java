@@ -25,10 +25,10 @@ public class CacheTest extends TestCase {
 		Question testSavedq= new Question();
 		String testID = testSavedq.getId();
 		Cache.getInstance().SaveSingleQuestion(testSavedq);
+		assertTrue(questionListTest.isEmpty());
 		questionListTest = Cache.getInstance().getAllQuestions();
 		assertFalse(questionListTest.isEmpty());
-		//int size = Cache.getInstance().getSavedQuestionsList().size();
-		assertTrue((Cache.getInstance().getQuestionById(testID).equals(testSavedq)));
+		//assertTrue((Cache.getInstance().getQuestionById(testID).equals(testSavedq)));
 		
 		
 	}
