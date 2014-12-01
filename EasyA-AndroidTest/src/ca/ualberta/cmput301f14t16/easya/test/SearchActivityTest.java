@@ -72,9 +72,7 @@ public class SearchActivityTest extends ActivityInstrumentationTestCase2<SearchA
 				"Body of answer", 1, false, date, coordinates, location);
 		QuestionList qst2 = new QuestionList(QId2, "Different", username, userid,
 				"Different", 1, false, date, coordinates, location);
-		//List<QuestionList> lst = new ArrayList<QuestionList>();
-		//lst.add(qst);
-		//lst.add(qst2);
+
 		List<QuestionList> rst = new ArrayList<QuestionList>();
 		rst.add(qst);
 		List<QuestionList> rst2 = new ArrayList<QuestionList>();
