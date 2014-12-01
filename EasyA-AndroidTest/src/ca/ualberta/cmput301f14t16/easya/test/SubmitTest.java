@@ -2,7 +2,7 @@ package ca.ualberta.cmput301f14t16.easya.test;
 
 
 //All Packages needed to do the test
-import junit.framework.TestCase;
+import junit.framework.TestCase; 
 import java.io.IOException;
 import android.content.Context;
 import ca.ualberta.cmput301f14t16.easya.Controller.MainController;
@@ -16,6 +16,8 @@ import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Model.Queue;
 import ca.ualberta.cmput301f14t16.easya.Model.Content;
 import ca.ualberta.cmput301f14t16.easya.Model.Reply;
+import ca.ualberta.cmput301f14t16.easya.Model.InternetCheck;
+import ca.ualberta.cmput301f14t16.easya.Exceptions.*;
 
 
 
@@ -44,7 +46,7 @@ public class SubmitTest extends TestCase {
 	
 	
 	
-	public void tesSubmitBasisTest() {
+	public void testSubmitTest() throws NoInternetException {
 		
 		//Parse the value to the variabe for actural test 
 		ESClient es = new ESClient();
@@ -83,7 +85,7 @@ public class SubmitTest extends TestCase {
 		
 		
 		
-		//if (Queue.getInstance().haveInternetConnection()) {
+		if (InternetCheck.haveInternet()) {
 		try {
 			//Try test if content are correctly submitted
 				Content c = pending.getContent();
@@ -103,18 +105,18 @@ public class SubmitTest extends TestCase {
 			}
 		}catch(IOException ex){
 			//Test if our app can identify the No Internet special case
-			//if (Queue.getInstance().haveInternetConnection()){
-				//assertFalse(false);
-				//throw new NoInternetException();
-			//}
+			if (InternetCheck.haveInternet()){
+				assertFalse(false);
+				throw new NoInternetException();
+			}
 		}catch(NoClassTypeSpecifiedException ex){
 			assertFalse(false);
 		//Test if our app can identify the other special cases and do the right thing
 		}catch(Exception ex){
 			assertFalse(false);
 		}
-		//}else{
-			//assertFalse(false);
-		//}
+		}else{
+			assertFalse(false);
+		}
 	}
 }
