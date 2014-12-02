@@ -1,4 +1,6 @@
-QuestionAppProject
+EasyA - Easy as 3.14159.
 ==================
 
-All Project Part 3 Deliverables can be found on pages in the wiki. The home page of the wiki has links to each deliverable for quick reference.
+Watch our demo!
+
+http://youtu.be/JOdU2C66FtA
