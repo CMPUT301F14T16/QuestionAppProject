@@ -75,7 +75,7 @@ public class MainModel {
 				    public void run() {		
 					        try {
 				        	//Delay introduced due to ESClient not being fast enough (sigh) ;;
-				        	sleep(300);
+				        	sleep(100);
 				        	List<MainView<?>> l = getAllViews();
 							for (int i = l.size() - 1; i>=0;i--){
 								MainView<?> view = l.get(i);

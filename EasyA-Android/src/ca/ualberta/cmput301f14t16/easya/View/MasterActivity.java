@@ -251,7 +251,7 @@ public abstract class MasterActivity extends SecureActivity implements
 		super.onResume();
 		if (this.updateCalled)
 			update();
-		this.updateCalled = false;
+			this.updateCalled = false;
 	}
 
 	/**
