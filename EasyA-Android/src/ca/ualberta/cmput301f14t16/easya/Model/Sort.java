@@ -135,10 +135,8 @@ public class Sort {
 		Comparator<QuestionList> locationComparator = new Comparator<QuestionList>() {
 		@Override
 			public int compare(QuestionList lhs, QuestionList rhs) {
-				Double leftLocation = (lhs.getCoordinates()[0] != 0.0 && lhs.getCoordinates()[1] != 0.0) ? GeoCoder.toFindDistance(lhs.getCoordinates(),userLocation) : (double)-1.0;
-				Double rightLocation = (rhs.getCoordinates()[0] != 0.0 && rhs.getCoordinates()[1] != 0.0) ? GeoCoder.toFindDistance(rhs.getCoordinates(),userLocation) : (double)-1.0;
-				if (leftLocation == -1 || rightLocation == -1)
-					return 0;
+				Double leftLocation = (lhs.getCoordinates()[0] != 0.0 && lhs.getCoordinates()[1] != 0.0) ? GeoCoder.toFindDistance(lhs.getCoordinates(),userLocation) : !sortOrder ? 99999999999999.99 : -99999999999999.99;
+				Double rightLocation = (rhs.getCoordinates()[0] != 0.0 && rhs.getCoordinates()[1] != 0.0) ? GeoCoder.toFindDistance(rhs.getCoordinates(),userLocation) : !sortOrder ? 99999999999999.99 : -99999999999999.99;				
 				return !sortOrder ? leftLocation.compareTo(rightLocation) : rightLocation.compareTo(leftLocation);
 			}
 		};
