@@ -481,16 +481,18 @@ public abstract class MasterActivity extends SecureActivity implements
 	public void animateSync() {
 		this.syncInProgress = true;
 		try {
-			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			ImageView imgV = (ImageView) inflater.inflate(
-					R.layout.refresh_asset, null);
-			Animation anim = AnimationUtils.loadAnimation(this,
-					R.anim.refresh_asset);
-			anim.setRepeatCount(Animation.INFINITE);
-			imgV.startAnimation(anim);
 			MenuItem mi = ((MenuItem) menu.findItem(R.id.menu_sync));
-			mi.setActionView(imgV);
-		} catch (Exception ex) {} // Let it go...
+			if (mi.getActionView() != null) {
+				LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+				ImageView imgV = (ImageView) inflater.inflate(
+						R.layout.refresh_asset, null);
+				Animation anim = AnimationUtils.loadAnimation(this,
+						R.anim.refresh_asset);
+				anim.setRepeatCount(Animation.INFINITE);
+				imgV.startAnimation(anim);				
+				mi.setActionView(imgV);
+			}
+		} catch (Exception ex) {} // Let it go...		
 	}
 
 	/**
