@@ -362,7 +362,6 @@ public abstract class MasterActivity extends SecureActivity implements
 		runOnUiThread(new Runnable() {
 			@Override
 			public void run() {
-				System.out.println("This view is being updated, yeah!");
 				updateCalled = true;
 				animateSync();
 				startUpdate();
@@ -434,7 +433,6 @@ public abstract class MasterActivity extends SecureActivity implements
 	 */
 	@Override
 	public void update(List<QuestionList> lst) {
-		System.out.println("I got in, now let's see what's what.");
 		if (displayedQuestions == null || displayedQuestions.size() <= 0 || lst.size() <= displayedQuestions.size()) {
 			ListView listView = ((ListView) findViewById(R.id.question_list));
 			int listPos = listView.getFirstVisiblePosition();
@@ -444,9 +442,7 @@ public abstract class MasterActivity extends SecureActivity implements
 			bindAdapter();
 			listView.setSelectionFromTop(listPos, top);
 			listView.requestFocus();
-			System.out.println("Refreshed without banner");
 		} else {
-			System.out.println("Showing the banner!");
 			DisplayBanner();
 			displayedQuestions = Sort.sort(lst, sorter);
 		}

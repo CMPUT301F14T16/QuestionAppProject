@@ -106,7 +106,6 @@ public class signinTask extends AsyncTask<Void, Void, Boolean> {
 					return false;
 				}
 			} catch (Exception ex) {
-				System.out.println(ex.getMessage());
 				return false;
 			}
 		} catch (Exception ex) {

@@ -47,14 +47,11 @@ public class MainActivity extends MasterActivity {
 	 */
 	@Override
 	protected void startUpdate() {
-		System.out.println("MainView in da house, nigga!");
 		((TextView) findViewById(R.id.drawer_username)).setText(MainModel
 				.getInstance().getCurrentUser().getUsername());
 		if (displayedQuestions == null || displayedQuestions.size() <= 0)
 			update(MainModel.getInstance().getAllCachedQuestions());
-		System.out.println("Now is the async baby!");
 		(new getQuestionListTask(this, this)).execute();
-		System.out.println("I've called out the getQuestionListTask, my good lord!");
 	}
 
 	/**

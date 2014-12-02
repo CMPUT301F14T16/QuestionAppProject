@@ -77,10 +77,8 @@ public class getQuestionListTask extends
 				}
 			} catch (NoContentAvailableException ex) {
 			} // Do Nothing
-			System.out.println("Returning value right now");
 			return MainModel.getInstance().getAllQuestions();
 		} catch (NoContentAvailableException ex) {
-			System.out.println("EEERROOOORRRR!!!!:" + ex.getMessage());
 			return null;
 		}
 	}
@@ -97,10 +95,8 @@ public class getQuestionListTask extends
 			pd.dismiss();
 		}
 		if (result == null) {
-			System.out.println("Got null result. Whaaaaaaaaaat?");
 			// TODO: display the no content available screen
 		} else {
-			System.out.println("Now calling the update on my mainview, exciting!");
 			v.update(result);
 		}
 		if (!fullLoaded) {

@@ -72,7 +72,6 @@ public class changeUsernameTask extends AsyncTask<Void, Void, Boolean> {
 						MainModel.getInstance().getCurrentUser());
 				return controller.submit();
 			} catch (Exception ex) {
-				System.out.println(ex.getMessage());
 				return false;
 			}
 		} catch (Exception ex) {

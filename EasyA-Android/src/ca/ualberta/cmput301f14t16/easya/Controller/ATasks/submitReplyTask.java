@@ -94,7 +94,6 @@ public class submitReplyTask extends AsyncTask<Void, Void, Boolean> {
 
 				return controller.submit();
 			} catch (Exception ex) {
-				System.out.println(ex.getMessage());
 				return false;
 				// Deal with things as: user didn't fill out everything
 			}

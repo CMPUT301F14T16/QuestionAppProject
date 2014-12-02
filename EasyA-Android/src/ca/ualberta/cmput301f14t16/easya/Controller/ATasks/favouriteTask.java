@@ -59,7 +59,6 @@ public class favouriteTask extends AsyncTask<Void, Void, Boolean> {
 						.create(this.q);
 				return controller.submit();
 			} catch (Exception ex) {
-				System.out.println(ex.getMessage());
 				return false;
 			}
 		} catch (Exception ex) {

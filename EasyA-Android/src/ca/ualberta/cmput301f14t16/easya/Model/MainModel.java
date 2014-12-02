@@ -79,12 +79,10 @@ public class MainModel {
 				        	List<MainView<?>> l = getAllViews();
 							for (int i = l.size() - 1; i>=0;i--){
 								MainView<?> view = l.get(i);
-								System.out.println("Updating view 1");
 								view.update();
 							}
 							usersList = null;
 						}catch(Exception ex){
-							System.out.println("Error!!!!!!" + ex.getMessage());
 						}finally{
 							try{
 								lock.unlock();

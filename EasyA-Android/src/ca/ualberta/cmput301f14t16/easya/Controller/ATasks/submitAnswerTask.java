@@ -101,13 +101,11 @@ public class submitAnswerTask extends AsyncTask<Void, Void, Boolean> {
 						useLocation ? Location.getLocationName().equals("No location found") ? "" : Location.getLocationName() : "");
 				return controller.submit();
 			} catch (Exception ex) {
-				System.out.println(ex.getMessage());
 				return false;
 				// Deal with things as: user didn't fill out everything
 			}
 		} catch (Exception ex) {
 			// Deal with this
-			System.out.println("Error: " + ex.getMessage());
 			return false;
 		}
 	}

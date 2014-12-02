@@ -77,7 +77,6 @@ public class Queue extends Thread {
 			try {
 				if (!pendings.isEmpty()) {
 					if (InternetCheck.haveInternet()){
-						System.out.println("Processing pendings. Count:" + this.pendings.size());
 						ProcessPendings();
 						MainModel.getInstance().notifyViews();
 					}
@@ -108,9 +107,7 @@ public class Queue extends Thread {
 		PMClient pm = new PMClient();
 		pm.savePending(p);
 		this.pendings.add(p);
-		System.out.println("Pending saved. Count:" + this.pendings.size());
 		}catch(Exception ex){
-			System.out.println("Error: " + ex.getMessage());
 		}
 	}
 
@@ -125,7 +122,6 @@ public class Queue extends Thread {
 			PMClient pm = new PMClient();
 			pm.deletePending(p);
 		}catch(Exception ex){
-			System.out.println("Error when trying to remove this thing: " + ex.getMessage());
 		}
 	}
 
@@ -160,9 +156,7 @@ public class Queue extends Thread {
         try{
         	ESClient esClient = new ESClient();
             int tries = 0;
-            int qtP = pendings.size();
-            System.out.println("Processing pendings. Count:" + qtP);
-            
+            int qtP = pendings.size();            
             Iterator<Pending> iterator = pendings.iterator();
             while (iterator.hasNext()) {
             	Pending p = iterator.next();
@@ -170,20 +164,15 @@ public class Queue extends Thread {
         			Content c = p.getContent();   
         			c.setDate(Time.getDate());
                     if(c instanceof Question){
-                    	System.out.println("Type - Question");
                     	if (esClient.submitQuestion((Question) c)){
     						Cache.getInstance().SaveSingleQuestion((Question) c);						
     					}
                     }else if (c instanceof Answer){
-                    	System.out.println("Type - Answer");
                     	esClient.submitAnswer((Answer)c, p.getQuestionId());
                     }else if (c instanceof Reply){
-                    	System.out.println("Type - Reply");
                     	if (p.getAnswerId() != null && !p.getAnswerId().isEmpty()){
-                    		System.out.println("Type - Reply to answer");
                     		esClient.submitAnswerReply((Reply)c, p.getQuestionId(), p.getAnswerId());
                     	}else{
-                    		System.out.println("Type - Reply to question");
                     		esClient.submitQuestionReply((Reply)c, p.getQuestionId());
                     	}
                     }else{
@@ -191,10 +180,8 @@ public class Queue extends Thread {
                     }
                 }
                 catch(NoClassTypeSpecifiedException ex){
-                	System.out.println("Error:" + ex.getMessage());
                 	throw ex;
                 }catch(IOException ex){
-                	System.out.println("Error:" + ex.getMessage());
                 	if (!InternetCheck.haveInternet())
                 		return;
             		if (tries >3)
@@ -202,8 +189,7 @@ public class Queue extends Thread {
             		tries++;
                 }                            
                 RemovePending(p);
-    			iterator.remove();
-                System.out.println("Done!");                
+    			iterator.remove();                
             }
             
         	final String aux = qtP + " item(s) were uploaded from your pendings.";
