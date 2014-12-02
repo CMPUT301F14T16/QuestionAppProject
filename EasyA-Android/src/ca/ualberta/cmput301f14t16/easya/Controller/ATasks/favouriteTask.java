@@ -35,7 +35,6 @@ public class favouriteTask extends AsyncTask<Void, Void, Boolean> {
 		this.q = q;
 	}
 	
-
 	@Override
 	protected void onPreExecute() {
 		Toast.makeText(

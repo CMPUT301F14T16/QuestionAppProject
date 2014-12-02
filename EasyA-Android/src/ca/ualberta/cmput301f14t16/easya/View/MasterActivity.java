@@ -116,8 +116,14 @@ public abstract class MasterActivity extends SecureActivity implements
 	private void hideIconsFromACBar() {
 		boolean drawerOpen = mDrawerLayout.isDrawerOpen(mDrawerList);
 		menu.findItem(R.id.menu_search).setVisible(!drawerOpen && !(position==4));
+
+		try{
+			menu.findItem(R.id.menu_sync).getActionView().clearAnimation();
+			menu.findItem(R.id.menu_sync).setActionView(null);
+		}catch(Exception ex){}		
 		menu.findItem(R.id.menu_sync).setVisible(!drawerOpen);
 		menu.findItem(R.id.menu_sort).setVisible(!drawerOpen);
+		
 	}
 
 	/**
@@ -150,6 +156,10 @@ public abstract class MasterActivity extends SecureActivity implements
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		if (mDrawerToggle.onOptionsItemSelected(item)) {
+			try{
+				menu.findItem(R.id.menu_sync).getActionView().clearAnimation();
+				menu.findItem(R.id.menu_sync).setActionView(null);
+			}catch(Exception ex){}		
 			return true;
 		}
 		switch (item.getItemId()) {
@@ -480,18 +490,16 @@ public abstract class MasterActivity extends SecureActivity implements
 	 */
 	public void animateSync() {
 		this.syncInProgress = true;
-		try {
+		try {			
 			MenuItem mi = ((MenuItem) menu.findItem(R.id.menu_sync));
-			if (mi.getActionView() != null) {
-				LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-				ImageView imgV = (ImageView) inflater.inflate(
-						R.layout.refresh_asset, null);
-				Animation anim = AnimationUtils.loadAnimation(this,
-						R.anim.refresh_asset);
-				anim.setRepeatCount(Animation.INFINITE);
-				imgV.startAnimation(anim);				
-				mi.setActionView(imgV);
-			}
+			LayoutInflater inflater = (LayoutInflater) getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+			ImageView imgV = (ImageView) inflater.inflate(
+					R.layout.refresh_asset, null);
+			Animation anim = AnimationUtils.loadAnimation(this,
+					R.anim.refresh_asset);
+			anim.setRepeatCount(Animation.INFINITE);
+			imgV.startAnimation(anim);				
+			mi.setActionView(imgV);
 		} catch (Exception ex) {} // Let it go...		
 	}
 
@@ -503,8 +511,8 @@ public abstract class MasterActivity extends SecureActivity implements
 		MenuItem m = menu.findItem(R.id.menu_sync);
 		if (m.getActionView() != null) {
 			m.getActionView().clearAnimation();
-			m.setActionView(null);
 		}
+		m.setActionView(null);
 	}
 	
 	public void buildSortDialog(Context ctx){

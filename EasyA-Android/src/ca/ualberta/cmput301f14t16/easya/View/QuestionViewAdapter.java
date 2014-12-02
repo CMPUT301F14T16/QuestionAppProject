@@ -7,11 +7,13 @@ import java.util.List;
 import org.apache.http.message.BasicNameValuePair;
 
 import ca.ualberta.cmput301f14t16.easya.R;
+import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.favouriteTask;
 import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.submitReplyTask;
 import ca.ualberta.cmput301f14t16.easya.Controller.ATasks.upvoteTask;
 import ca.ualberta.cmput301f14t16.easya.Exceptions.NoContentAvailableException;
 import ca.ualberta.cmput301f14t16.easya.Model.Answer;
 import ca.ualberta.cmput301f14t16.easya.Model.GeoCoder;
+import ca.ualberta.cmput301f14t16.easya.Model.InternetCheck;
 import ca.ualberta.cmput301f14t16.easya.Model.MainModel;
 import ca.ualberta.cmput301f14t16.easya.Model.Question;
 import ca.ualberta.cmput301f14t16.easya.Model.Reply;
@@ -23,6 +25,7 @@ import android.graphics.BitmapFactory;
 import android.util.Base64;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
@@ -98,11 +101,18 @@ public class QuestionViewAdapter {
 	private OnClickListener upVote = new OnClickListener() {
 		@Override
 		public void onClick(View v) {
+			if (InternetCheck.haveInternet()){
+				if (!QuestionActivity.question.checkUpVote(MainModel.getInstance().getCurrentUser())) {
+					((ImageView)v).setImageResource(R.drawable.ic_action_good_selected);
+				} else {
+					((ImageView)v).setImageResource(R.drawable.ic_action_good);
+				}
+			}
 			(new upvoteTask(v.getContext(), (BasicNameValuePair) v.getTag()))
 					.execute();
 		}
 	};
-
+	
 	/**
 	 * Calls {@link QuestionViewAdapter#inflateQuestion()} and
 	 * {@link QuestionViewAdapter#inflateAnswer(Answer)} on all relevant

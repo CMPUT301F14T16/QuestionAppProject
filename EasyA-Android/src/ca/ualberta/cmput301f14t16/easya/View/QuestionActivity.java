@@ -118,11 +118,13 @@ public class QuestionActivity extends SecureActivity implements
 	public void setFavourite() {
 		if (!this.favouriteSet){
 			this.favouriteSet = true;
-			MenuItem m = menu.findItem(R.id.menu_question_favourite);
-			if (!question.checkFavourite(MainModel.getInstance().getCurrentUser())) {
-				m.setIcon(R.drawable.ic_action_important);
-			} else {
-				m.setIcon(R.drawable.ic_action_not_important);
+			if (InternetCheck.haveInternet()){
+				MenuItem m = menu.findItem(R.id.menu_question_favourite);
+				if (!question.checkFavourite(MainModel.getInstance().getCurrentUser())) {
+					m.setIcon(R.drawable.ic_action_important);
+				} else {
+					m.setIcon(R.drawable.ic_action_not_important);
+				}
 			}
 			(new favouriteTask(this, question)).execute();
 		}
