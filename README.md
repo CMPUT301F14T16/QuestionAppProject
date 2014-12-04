@@ -1,4 +1,4 @@
-EasyA - Easy as 3.14159.
+EasyA - Easy as 3.14159...
 ==================
 
 Watch our demo!
